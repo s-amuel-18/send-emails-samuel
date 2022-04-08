@@ -237,24 +237,24 @@ return [
 
         [
             'text'        => 'Inicio',
-            'url'         => 'admin/pages',
-            'icon'        => 'far fa-fw fa-file',
+            'route'         => 'home',
+            'icon'        => 'fas fa-home fa-fw',
         ],
         [
             'text'        => 'Usuarios',
-            'url'         => 'admin/pages',
-            'icon'        => 'far fa-fw fa-file',
+            'route'         => 'user.index',
+            'icon'        => 'fas fa-users fa-fw',
         ],
         [
             'text'        => 'Roles',
             'url'         => 'admin/pages',
-            'icon'        => 'far fa-fw fa-file',
+            'icon'        => 'fab fa-fw fa-critical-role',
         ],
         ['header' => 'Emails Registros'],
         [
             'text'        => 'Emails',
             'url'         => 'admin/pages',
-            'icon'        => 'far fa-fw fa-file',
+            'icon'        => 'fas fa-fw fa-mail-bulk',
             'submenu' => [
                 [
                     'text' => 'Envio de Email',
