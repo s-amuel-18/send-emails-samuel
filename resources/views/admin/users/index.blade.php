@@ -15,7 +15,7 @@
                 <div class="card-header">
                     <h3 class="card-title">Registro De Usuarios</h3>
                     <div class="card-tools">
-                        <a href="{{ route("user.create") }}" class="btn btn-tool">
+                        <a href="{{ route('user.create') }}" class="btn btn-tool">
                             <i class="fas fa-user-plus"></i>
                         </a>
                     </div>
@@ -30,36 +30,46 @@
                                 <th>Nombre</th>
                                 <th>UserName</th>
                                 <th>Email</th>
+                                <th>Actualizacion</th>
+                                <th>Creacion</th>
                                 <th>btns</th>
                             </tr>
                         </thead>
                         <tbody>
 
                             @foreach ($users as $i => $user)
-                            <tr>
-                                <td> {{ $i + 1 }} </td>
-                                <td> {{ $user->id }} </td>
-                                <td> {{ $user->name }} </td>
-                                <td> {{ $user->username }} </td>
-                                <td> {{ $user->email }} </td>
-                                <td>
-                                    <a href="{{ route("user.edit", ["user" => $user->id]) }}" class="btn btn-outline-success btn-sm">
-                                        <i class="fa fa-user-edit"></i>
-                                    </a>
+                                <tr>
+                                    <td> {{ $i + 1 }} </td>
+                                    <td> {{ $user->id }} </td>
+                                    <td> {{ $user->name }} </td>
+                                    <td> {{ $user->username }} </td>
+                                    <td> {{ $user->email }} </td>
+                                    <td>
+                                        <fecha-custom fecha="{{ $user->updated_at }}"></fecha-custom>
+                                    </td>
+                                    <td>
+                                        <fecha-custom fecha="{{ $user->created_at }}"></fecha-custom>
+                                    </td>
+                                    <td  style="width: 110px">
+                                        <a href="{{ route('user.edit', ['user' => $user->id]) }}"
+                                            class="btn btn-outline-success btn-sm">
+                                            <i class="fa fa-user-edit"></i>
+                                        </a>
 
-                                    <form class="d-inline" onsubmit="return confirm('Realmente Deseas Eliminar Este Usuario')" action="{{ route("user.destroy", ["user" => $user->id]) }}" method="POST">
+                                        <form class="d-inline"
+                                            onsubmit="return confirm('Realmente Deseas Eliminar Este Usuario')"
+                                            action="{{ route('user.destroy', ['user' => $user->id]) }}" method="POST">
 
-                                        @csrf
-                                        @method("DELETE")
-                                        <button type="submit" class="btn btn-outline-danger btn-sm">
-                                            <i class="fa fa-trash"></i>
-                                        </button>
+                                            @csrf
+                                            @method("DELETE")
+                                            <button type="submit" class="btn btn-outline-danger btn-sm">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
 
-                                    </form>
+                                        </form>
 
-                                </td>
-                            </tr>
-
+                                    </td>
+                                </tr>
                             @endforeach
 
                         </tbody>

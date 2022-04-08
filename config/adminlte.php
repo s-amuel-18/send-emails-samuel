@@ -247,13 +247,12 @@ return [
         ],
         [
             'text'        => 'Roles',
-            'url'         => 'admin/pages',
+            'route'         => 'user.create',
             'icon'        => 'fab fa-fw fa-critical-role',
         ],
         ['header' => 'Emails Registros'],
         [
             'text'        => 'Emails',
-            'url'         => 'admin/pages',
             'icon'        => 'fas fa-fw fa-mail-bulk',
             'submenu' => [
                 [
@@ -264,7 +263,7 @@ return [
                 [
                     'text' => 'Emails Registrados',
                     'icon_color' => 'success',
-                    'url'  => '#',
+                    'route'         => 'contact_email.index',
                 ],
                 [
                     'text' => 'Cuerpo De Emails',

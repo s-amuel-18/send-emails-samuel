@@ -32,12 +32,12 @@ Base de datos
         - user_id
         - Nombre Empresa ( Opcional )
         - url ( opcional )
-        - descripcion ( opcional )
         - email ( opcional en caso de que halla otra forma de contacto )
         - whatsapp ( opcional ) string ( Link )
         - Instagram ( opcional ) string ( Link )
         - Facebook( opcional ) string ( Link )
-        - Numero De Telefono ( opcional )
+
+        - descripcion ( opcional )
 
 DESARROLLO DE ENVIO DE EMAILS
     - nombre del remitente

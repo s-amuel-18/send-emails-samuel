@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ContactEmailController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,4 +23,9 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+// users
 Route::resource("user", UserController::class)->except("show")->middleware("auth")->names("user");
+
+// emails
+Route::resource("contact-email", ContactEmailController::class)->except("show")->middleware("auth")->names("contact_email");
+Route::get('/contact-email/datatable', [ContactEmailController::class, 'datatable'])->name('contact_email.datatable');
