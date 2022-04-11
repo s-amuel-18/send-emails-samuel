@@ -20,9 +20,12 @@ class Contact_emailFactory extends Factory
     {
         $nombre_empresa = $this->faker->sentence();
 
+        // $created  = $this->faker->dateTimeBetween($startDate = "-3 month", $endDate = "now +6 month");
+        $created  = $this->faker->dateTime();
+
         return [
             "user_id" => User::all()->random()->id,
-            "nombre_empresa" => $nombre_empresa,
+            "nombre_empresa" => $this->faker->randomElement([$nombre_empresa, null]),
             "url" => $this->faker->randomElement(["https://www." . Str::slug($nombre_empresa) . ".com", null]),
             "email" =>  $this->faker->randomElement([$this->faker->unique()->safeEmail(), null]) ,
             "estado" => $this->faker->randomElement([0, 1]),
@@ -30,6 +33,7 @@ class Contact_emailFactory extends Factory
             "instagram" => $this->faker->randomElement(["https://ins-" . Str::slug($nombre_empresa) . ".com", null]),
             "facebook" => $this->faker->randomElement(["https://facebook-" . Str::slug($nombre_empresa) . ".com", null]),
             "descripcion" => $this->faker->text(50),
+            "created_at" => $created,
         ];
     }
 }

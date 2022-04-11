@@ -261,14 +261,19 @@ return [
                     'url'  => '#',
                 ],
                 [
-                    'text' => 'Emails Registrados',
+                    'text' => 'Estadistica De Registros',
                     'icon_color' => 'success',
+                    'route'         => 'contact_email.estadisticas',
+                ],
+                [
+                    'text' => 'Registros Emails',
+                    'icon_color' => 'purple',
                     'route'         => 'contact_email.index',
                 ],
                 [
                     'text' => 'Cuerpo De Emails',
                     'icon_color' => 'primary',
-                    'url'  => '#',
+                    'route'         => 'bodyEmail.index',
                 ],
             ],
         ],
@@ -344,13 +349,38 @@ return [
                 ],
             ],
         ],
-        'Chartjs' => [
+        'Summernote' => [
             'active' => false,
             'files' => [
                 [
                     'type' => 'js',
-                    'asset' => false,
-                    'location' => '//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min.js',
+                    'asset' => true,
+                    'location' => 'vendor/summernote/summernote-bs4.min.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor/summernote/summernote-bs4.min.css',
+                ],
+            ],
+        ],
+        'Chartjs' => [
+            'active' => false,
+            'files' => [
+                // [
+                //     'type' => 'js',
+                //     'asset' => false,
+                //     'location' => '//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min.js',
+                // ],
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor/chart.js/Chart.min.css',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/chart.js/Chart.bundle.min.js',
                 ],
             ],
         ],

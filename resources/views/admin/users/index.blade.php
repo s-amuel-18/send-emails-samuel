@@ -15,7 +15,7 @@
                 <div class="card-header">
                     <h3 class="card-title">Registro De Usuarios</h3>
                     <div class="card-tools">
-                        <a href="{{ route('user.create') }}" class="btn btn-tool">
+                        <a href="{{ route('user.create') }}" class="btn btn-outline-light not-hover btn-tool">
                             <i class="fas fa-user-plus"></i>
                         </a>
                     </div>

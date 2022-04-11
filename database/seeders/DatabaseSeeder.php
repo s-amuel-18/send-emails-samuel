@@ -2,7 +2,12 @@
 
 namespace Database\Seeders;
 
+// use App\Models\body_email;
+
+use App\Models\Body_email;
+use App\Models\BodyEmail;
 use App\Models\Contact_email;
+// use Database\Factories\BodyEmailFactory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,8 +19,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\User::factory(20)->create();
+        \App\Models\User::factory(5)->create();
         $this->call(UserSeeder::class);
-        Contact_email::factory(500)->create();
+        Contact_email::factory(200)->create();
+        BodyEmail::factory(10)->create();
+        // Factory::factoryForModel("App\Models\Body_email");
     }
 }

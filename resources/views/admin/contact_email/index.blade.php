@@ -15,8 +15,11 @@
                 <div class="card-header">
                     <h3 class="card-title">Emails</h3>
                     <div class="card-tools">
-                        <a href="{{ route('contact_email.create') }}" class="btn btn-tool">
-                            <i class="fas fa-business-time"></i>
+                        <a href="{{ route('contact_email.estadisticas') }}" class="btn btn-outline-light btn-tool">
+                            <i class="fas fa-chart-pie"></i>
+                        </a>
+                        <a href="{{ route('contact_email.create') }}" class="btn btn-outline-light btn-tool">
+                            <i class="fas fa-plus"></i>
                         </a>
                     </div>
                 </div>
@@ -121,7 +124,7 @@
     <script>
         $(".table").DataTable({
             "ordering": false,
-            "pageLength": 20,
+            // "pageLength": 20,
             "ajax": "{{ route("contact_email.datatable") }}",
             "columns": [
                 {

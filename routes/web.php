@@ -1,8 +1,12 @@
 <?php
 
-use App\Http\Controllers\ContactEmailController;
-use App\Http\Controllers\UserController;
+// use App\Http\Controllers\contact_email\BodyEmailController;
+// use App\Http\Controllers\contact_email\BodyEmailsController;
+
+use App\Http\Controllers\BodyEmailController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\contact_email\ContactEmailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,3 +33,6 @@ Route::resource("user", UserController::class)->except("show")->middleware("auth
 // emails
 Route::resource("contact-email", ContactEmailController::class)->except("show")->middleware("auth")->names("contact_email");
 Route::get('/contact-email/datatable', [ContactEmailController::class, 'datatable'])->name('contact_email.datatable');
+Route::get('/contact-email/estadisticas', [ContactEmailController::class, 'estadisticas'])->name('contact_email.estadisticas');
+// body
+Route::resource("body-email", BodyEmailController::class)->except("show")->middleware("auth")->names("bodyEmail");
