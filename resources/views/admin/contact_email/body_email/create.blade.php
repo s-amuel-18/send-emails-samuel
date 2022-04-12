@@ -34,17 +34,17 @@
                 <div class="card-body table-responsive">
 
                     <div class="col-md-6 offset-md-3">
-                        <form action="">
+                        <form action="{{ route("bodyEmail.store") }}" method="POST">
+                            @csrf
 
                             {{-- Nombre --}}
-
                             <div class="input-group mb-3 ">
                                 <input type="text" name="nombre" class="form-control @error('nombre') is-invalid @enderror"
                                     value="{{ old('nombre') }}" placeholder="Nombre" autofocus>
 
                                 <div class="input-group-append">
                                     <div class="input-group-text">
-                                        <span class="fas fa-business-time"></span>
+                                        <span class="far fa-file"></span>
                                     </div>
                                 </div>
 
@@ -57,11 +57,17 @@
 
 
                             <div class="form-group">
-                                <textarea id="summernote"></textarea>
+                                <textarea id="summernote" name="body" class=" @error('body') is-invalid @enderror"
+                                >{{ old('body') }}</textarea>
+
+                                @error('body')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                             </div>
 
                             <div class="d-flex justify-content-end">
-
                                 <button class="btn btn-primary btn-sm" type="submit">Registrar</button>
                             </div>
                         </form>

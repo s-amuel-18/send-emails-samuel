@@ -38,19 +38,26 @@ class BodyEmailController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = request()->validate([
+            "nombre" => "required|string|max:255",
+            "body" => "required"
+        ]);
+
+        BodyEmail::create([
+            "user_id" => auth()->user()->id,
+            "nombre" => $data["nombre"],
+            "body" => $data["body"],
+        ]);
+
+        $message = [
+            "message" => "El Cuerpo de Email se ha resactado correctamente",
+            "color" => "success",
+            "icon" => "far fa-check-circle"
+        ];
+
+        return redirect()->route("bodyEmail.index")->with("message", $message );
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\BodyEmail  $bodyEmail
-     * @return \Illuminate\Http\Response
-     */
-    public function show(BodyEmail $bodyEmail)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -60,7 +67,7 @@ class BodyEmailController extends Controller
      */
     public function edit(BodyEmail $bodyEmail)
     {
-        //
+        return view("admin.contact_email.body_email.edit", compact("bodyEmail"));
     }
 
     /**
@@ -72,7 +79,23 @@ class BodyEmailController extends Controller
      */
     public function update(Request $request, BodyEmail $bodyEmail)
     {
-        //
+        $data = request()->validate([
+            "nombre" => "required|string|max:255",
+            "body" => "required"
+        ]);
+
+        $bodyEmail->nombre = $data["nombre"];
+        $bodyEmail->body = $data["body"];
+
+        $bodyEmail->save();
+
+        $message = [
+            "message" => "El Cuerpo de Email se ha Actualizado correctamente",
+            "color" => "success",
+            "icon" => "far fa-check-circle"
+        ];
+
+        return redirect()->route("bodyEmail.index")->with("message", $message );
     }
 
     /**

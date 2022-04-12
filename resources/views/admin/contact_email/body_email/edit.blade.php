@@ -1,11 +1,18 @@
 @extends('adminlte::page', ['use_ico_only' => true, 'use_full_favicon' => false])
-{{-- @section('plugins.Datatables', true) --}}
+@section('plugins.Summernote', true)
 
-@section('title', 'Administrador De Cuerpos De Emails')
+@section('title', 'Crear Cuerpo De Email')
 
 @section('content_header')
-    <h1>Administrador De Cuerpos De Emails</h1>
+    <h1>Editar Cuerpo De Email</h1>
 @stop
+
+<style>
+    .note-editable.card-block {
+        min-height: 300px
+    }
+
+</style>
 
 @section('content')
 
@@ -13,69 +20,50 @@
         <div class="col-md-12">
             <div class="card card-primary">
                 <div class="card-header">
-                    <h3 class="card-title">Cuerpos De Emails</h3>
-                    <div class="card-tools">
-                        <a href="{{ route('bodyEmail.create') }}" class="btn btn-outline-light btn-tool">
-                            <i class="fas fa-plus"></i>
-                        </a>
-                    </div>
+                    <h3 class="card-title">Editar Cuerpo De Email</h3>
                 </div>
 
                 <div class="card-body table-responsive">
 
+                    <div class="col-md-6 offset-md-3">
+                        <form action="{{ route("bodyEmail.update", ["body_email" => $bodyEmail->id]) }}" method="POST">
+                            @csrf
+                            @method("PUT")
+                            {{-- Nombre --}}
+                            <div class="input-group mb-3 ">
+                                <input type="text" name="nombre" class="form-control @error('nombre') is-invalid @enderror"
+                                    value="{{ old('nombre') ? old('nombre') : $bodyEmail->nombre }}" placeholder="Nombre" autofocus>
 
-                    <table class="table table-bordered table-hover">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>User</th>
-                                <th>nombre</th>
-                                <th>Creacion</th>
-                                <th>Btns</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <span class="far fa-file"></span>
+                                    </div>
+                                </div>
 
-                            @foreach ($bodys as $i => $body)
+                                @error('nombre')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
 
-                                <tr data-widget="expandable-table" aria-expanded="false">
-                                    <td>{{ $i + 1 }}</td>
-                                    <td>{{ $body->usuario->name }}</td>
-                                    <td>{{ $body->nombre }}</td>
-                                    <td>
-                                        <fecha-custom fecha="{{ $body->updated_at }}"></fecha-custom>
-                                    </td>
-                                    <td style="width: 110px">
-                                        <a href="{{ route("bodyEmail.edit", ["body_email" => $body->id]) }}"
-                                            class="btn btn-outline-success btn-sm">
-                                            <i class="fa fa-user-edit"></i>
-                                        </a>
 
-                                        <form class="d-inline"
-                                            onsubmit="return confirm('Realmente Deseas Eliminar Este Usuario')"
-                                            action="{{ route("bodyEmail.destroy", ["body_email" => $body->id]) }}" method="POST">
+                            <div class="form-group">
+                                <textarea id="summernote" name="body" class=" @error('body') is-invalid @enderror"
+                                >{!! old('body') ? old('body') : $bodyEmail->body !!}</textarea>
 
-                                            @csrf
-                                            @method("DELETE")
-                                            <button type="submit" class="btn btn-outline-danger btn-sm">
-                                                <i class="fa fa-trash"></i>
-                                            </button>
+                                @error('body')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                            </div>
 
-                                        </form>
-
-                                    </td>
-                                </tr>
-                                <tr class="expandable-body d-none">
-                                    <td colspan="5">
-                                        <p style="display: none;">
-                                            {!! $body->body !!}
-                                        </p>
-                                    </td>
-                                </tr>
-                            @endforeach
-
-                        </tbody>
-                    </table>
+                            <div class="d-flex justify-content-end">
+                                <button class="btn btn-primary btn-sm" type="submit">Registrar</button>
+                            </div>
+                        </form>
+                    </div>
 
 
                 </div>
@@ -89,4 +77,10 @@
 
 
 @section('js')
+    <script>
+        $(function() {
+            // Summernote
+            $('#summernote').summernote()
+        })
+    </script>
 @stop

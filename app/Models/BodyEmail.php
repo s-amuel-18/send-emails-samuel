@@ -9,6 +9,13 @@ class BodyEmail extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'user_id',
+        'nombre',
+        'body',
+
+    ];
+
     public function usuario()
     {
         return $this->belongsTo(User::class, "user_id");

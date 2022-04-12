@@ -48,7 +48,7 @@
                                     <td style="width: 110px">
                                         <a href="{{ route("bodyEmail.edit", ["body_email" => $body->id]) }}"
                                             class="btn btn-outline-success btn-sm">
-                                            <i class="fa fa-user-edit"></i>
+                                            <i class="fa fa-edit"></i>
                                         </a>
 
                                         <form class="d-inline"
