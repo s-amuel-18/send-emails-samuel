@@ -14,17 +14,28 @@ use Illuminate\Support\Facades\DB;
 
 class ContactEmailController extends Controller
 {
-      /**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct()
+    {
+        // $this->middleware("can:user.index");
+        $this->middleware("can:contact_email.index")->only("index");
+        $this->middleware("can:contact_email.estadisticas")->only("estadisticas");
+        $this->middleware("can:contact_email.create")->only("create", "store");
+        $this->middleware("can:contact_email.edit")->only("edit", "update");
+        $this->middleware("can:contact_email.destroy")->only("destroy");
+    }
+
+
     public function index()
     {
         $emails = Contact_email::orderBy("created_at", "DESC")->get();
 
         return view("admin.contact_email.index", compact("emails"));
-
     }
 
     public function estadisticas()
@@ -56,7 +67,6 @@ class ContactEmailController extends Controller
 
 
         return view("admin.contact_email.estadisticas", compact("users", "total_registros", "registros_promedio", "emials_sin_enviar", "emials_enviados", "registros_de_hoy"));
-
     }
 
     /**
@@ -67,7 +77,6 @@ class ContactEmailController extends Controller
     public function create()
     {
         return view("admin.contact_email.create");
-
     }
 
     /**
@@ -99,8 +108,6 @@ class ContactEmailController extends Controller
         ];
 
         return redirect()->route("contact_email.create")->with("message", $message);
-
-
     }
 
 
@@ -114,7 +121,6 @@ class ContactEmailController extends Controller
     public function edit(Contact_email $contact_email)
     {
         return view("admin.contact_email.edit", compact("contact_email"));
-
     }
 
     /**
@@ -168,7 +174,6 @@ class ContactEmailController extends Controller
         ];
 
         return redirect()->route("contact_email.index")->with("message", $message);
-
     }
 
     /**
@@ -188,7 +193,6 @@ class ContactEmailController extends Controller
         ];
 
         return redirect()->back()->with("message", $message);
-
     }
 
     public function datatable()

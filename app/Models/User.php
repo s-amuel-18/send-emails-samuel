@@ -48,4 +48,6 @@ class User extends Authenticatable
     {
         return $this->hasMany(Contact_email::class, "user_id");
     }
+
+
 }

@@ -6,27 +6,16 @@ Base de datos
         - rol
         - password
         - creacion
-    # config_informacion
-        - id
-        - user_id ( informacion del usuario que se desea ver en el cuerpo del email )
-    # info_contacto
-        - id
-        - nombre
-        - data
-        - icon ( opcional )
     # roles
         - id
         - nombre
-
         * administrador = Todo
         * Trabajador = crear
-
     # cuerpo de emails
         - id
         - user_id
         - nombre
         - descripcion
-
     # emails
         - id
         - user_id
@@ -36,12 +25,10 @@ Base de datos
         - whatsapp ( opcional ) string ( Link )
         - Instagram ( opcional ) string ( Link )
         - Facebook( opcional ) string ( Link )
-
         - descripcion ( opcional )
 
 DESARROLLO DE ENVIO DE EMAILS
     - nombre del remitente
-    - iconos de contacto
     - select de cuerpos de mensaje
     - editor de cuerpo de mensaje
 

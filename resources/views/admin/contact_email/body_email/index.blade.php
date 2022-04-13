@@ -15,9 +15,13 @@
                 <div class="card-header">
                     <h3 class="card-title">Cuerpos De Emails</h3>
                     <div class="card-tools">
-                        <a href="{{ route('bodyEmail.create') }}" class="btn btn-outline-light btn-tool">
-                            <i class="fas fa-plus"></i>
-                        </a>
+
+                        @can('bodyEmail.create')
+                            <a href="{{ route('bodyEmail.create') }}" class="btn btn-outline-light btn-tool">
+                                <i class="fas fa-plus"></i>
+                            </a>
+                        @endcan
+
                     </div>
                 </div>
 
@@ -37,7 +41,6 @@
                         <tbody>
 
                             @foreach ($bodys as $i => $body)
-
                                 <tr data-widget="expandable-table" aria-expanded="false">
                                     <td>{{ $i + 1 }}</td>
                                     <td>{{ $body->usuario->name }}</td>
@@ -46,22 +49,27 @@
                                         <fecha-custom fecha="{{ $body->updated_at }}"></fecha-custom>
                                     </td>
                                     <td style="width: 110px">
-                                        <a href="{{ route("bodyEmail.edit", ["body_email" => $body->id]) }}"
-                                            class="btn btn-outline-success btn-sm">
-                                            <i class="fa fa-edit"></i>
-                                        </a>
+                                        @can('bodyEmail.edit')
+                                            <a href="{{ route('bodyEmail.edit', ['body_email' => $body->id]) }}"
+                                                class="btn btn-outline-success btn-sm">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
+                                        @endcan
 
-                                        <form class="d-inline"
-                                            onsubmit="return confirm('Realmente Deseas Eliminar Este Usuario')"
-                                            action="{{ route("bodyEmail.destroy", ["body_email" => $body->id]) }}" method="POST">
+                                        @can('bodyEmail.destroy')
+                                            <form class="d-inline"
+                                                onsubmit="return confirm('Realmente Deseas Eliminar Este Usuario')"
+                                                action="{{ route('bodyEmail.destroy', ['body_email' => $body->id]) }}"
+                                                method="POST">
 
-                                            @csrf
-                                            @method("DELETE")
-                                            <button type="submit" class="btn btn-outline-danger btn-sm">
-                                                <i class="fa fa-trash"></i>
-                                            </button>
+                                                @csrf
+                                                @method("DELETE")
+                                                <button type="submit" class="btn btn-outline-danger btn-sm">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
 
-                                        </form>
+                                            </form>
+                                        @endcan
 
                                     </td>
                                 </tr>

@@ -123,6 +123,22 @@
                                 </div>
                             </div>
 
+                            <div class="col-md-9">
+                                <div class="form-group d-flex flex-wrap">
+
+                                    @foreach ($roles as $rol)
+                                        <div class="form-check m-2">
+                                            <input id="role_{{ $rol->id }}" {{ $user->roles->where("id", "=", $rol->id)->count() > 0 ? "checked": "" }} class="form-check-input" type="checkbox" name="roles[]"
+                                                value="{{ $rol->id }}">
+                                            <label for="role_{{ $rol->id }}" class="form-check-label">{{ $rol->name }}</label>
+                                        </div>
+                                    @endforeach
+
+                                </div>
+
+                            </div>
+
+
                             {{-- Register button --}}
                             <div class="col-md-12">
                                 <div class="d-flex justify-content-end">

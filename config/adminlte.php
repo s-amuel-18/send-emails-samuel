@@ -227,53 +227,67 @@ return [
     'menu' => [
         // Navbar items:
 
-        [
-            'type'         => 'fullscreen-widget',
-            'topnav_right' => true,
-        ],
+        // [
+        //     'type'         => 'fullscreen-widget',
+        //     'topnav_right' => true,
+        // ],
 
         // Sidebar items:
 
 
+        // [
+        //     'route'         => 'home',
+        //     'icon'        => 'fa fa-tools fa-fw',
+        //     'text'        => 'Configuracion',
+        //     'topnav_right' => true,
+        // ],
         [
             'text'        => 'Inicio',
             'route'         => 'home',
             'icon'        => 'fas fa-home fa-fw',
+            // 'topnav_right' => true,
         ],
         [
             'text'        => 'Usuarios',
             'route'         => 'user.index',
             'icon'        => 'fas fa-users fa-fw',
+            'can'        => 'user.index',
+
         ],
         [
             'text'        => 'Roles',
             'route'         => 'user.create',
             'icon'        => 'fab fa-fw fa-critical-role',
         ],
-        ['header' => 'Emails Registros'],
+        ['header' => 'Emails Registros', "can" => ["contact_email.index", "contact_email.estadisticas", "bodyEmail.index", "envio_email.index"]],
         [
             'text'        => 'Emails',
+            "can" => ["contact_email.index", "contact_email.estadisticas", "bodyEmail.index", "envio_email.index"],
             'icon'        => 'fas fa-fw fa-mail-bulk',
             'submenu' => [
                 [
                     'text' => 'Envio de Email',
+                    'can'        => 'envio_email.index',
                     'icon_color' => 'warning',
-                    'url'  => '#',
+                    'route'         => 'envio_email.index',
                 ],
                 [
                     'text' => 'Estadistica De Registros',
                     'icon_color' => 'success',
                     'route'         => 'contact_email.estadisticas',
+                    'can'        => 'contact_email.estadisticas',
                 ],
                 [
                     'text' => 'Registros Emails',
                     'icon_color' => 'purple',
                     'route'         => 'contact_email.index',
+                    'can'        => 'contact_email.index',
                 ],
                 [
                     'text' => 'Cuerpo De Emails',
                     'icon_color' => 'primary',
                     'route'         => 'bodyEmail.index',
+                    'can'        => 'bodyEmail.index',
                 ],
             ],
         ],

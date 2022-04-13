@@ -50,23 +50,29 @@
                                     <td>
                                         <fecha-custom fecha="{{ $user->created_at }}"></fecha-custom>
                                     </td>
-                                    <td  style="width: 110px">
-                                        <a href="{{ route('user.edit', ['user' => $user->id]) }}"
-                                            class="btn btn-outline-success btn-sm">
-                                            <i class="fa fa-user-edit"></i>
-                                        </a>
+                                    <td style="width: 110px">
 
-                                        <form class="d-inline"
-                                            onsubmit="return confirm('Realmente Deseas Eliminar Este Usuario')"
-                                            action="{{ route('user.destroy', ['user' => $user->id]) }}" method="POST">
+                                        @can('user.edit')
+                                            <a href="{{ route('user.edit', ['user' => $user->id]) }}"
+                                                class="btn btn-outline-success btn-sm">
+                                                <i class="fa fa-user-edit"></i>
+                                            </a>
+                                        @endcan
 
-                                            @csrf
-                                            @method("DELETE")
-                                            <button type="submit" class="btn btn-outline-danger btn-sm">
-                                                <i class="fa fa-trash"></i>
-                                            </button>
+                                        @can('user.destroy')
+                                            <form class="d-inline"
+                                                onsubmit="return confirm('Realmente Deseas Eliminar Este Usuario')"
+                                                action="{{ route('user.destroy', ['user' => $user->id]) }}" method="POST">
 
-                                        </form>
+                                                @csrf
+                                                @method("DELETE")
+                                                <button type="submit" class="btn btn-outline-danger btn-sm">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+
+                                            </form>
+                                        @endcan
+
 
                                     </td>
                                 </tr>

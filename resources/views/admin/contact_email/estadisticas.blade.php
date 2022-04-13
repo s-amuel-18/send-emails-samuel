@@ -17,12 +17,19 @@
                 <div class="card-header">
                     <h3 class="card-title">Estadistica De Registros</h3>
                     <div class="card-tools">
-                        <a href="{{ route('contact_email.index') }}" class="btn btn-outline-light btn-tool">
-                            <i class="fas fa-mail-bulk"></i>
-                        </a>
-                        <a href="{{ route('contact_email.create') }}" class="btn btn-outline-light btn-tool">
-                            <i class="fas fa-plus"></i>
-                        </a>
+
+                        @can('contact_email.index')
+                            <a href="{{ route('contact_email.index') }}" class="btn btn-outline-light btn-tool">
+                                <i class="fas fa-mail-bulk"></i>
+                            </a>
+                        @endcan
+
+                        @can('contact_email.create')
+                            <a href="{{ route('contact_email.create') }}" class="btn btn-outline-light btn-tool">
+                                <i class="fas fa-plus"></i>
+                            </a>
+                        @endcan
+
                     </div>
                 </div>
 
@@ -54,7 +61,8 @@
                                             <h3 class="card-title">Registros De Hoy</h3>
 
                                             <div class="card-tools">
-                                                <span class="badge badge-pill badge-primary">{{ $registros_de_hoy }}</span>
+                                                <span
+                                                    class="badge badge-pill badge-primary">{{ $registros_de_hoy }}</span>
                                             </div>
                                             <!-- /.card-tools -->
                                         </div>
@@ -66,7 +74,7 @@
                             <!-- /.card -->
                         </div>
 
-                        <div class="col-lg-6">
+                        <div class="col-lg-6 co">
 
                             <h4 class="h5 mb-3">Registros De Usuarios</h4>
 

@@ -3,10 +3,15 @@
 // use App\Http\Controllers\contact_email\BodyEmailController;
 // use App\Http\Controllers\contact_email\BodyEmailsController;
 
-use App\Http\Controllers\BodyEmailController;
+// use App\Http\Controllers\BodyEmailController;
+
+// use App\Http\Controllers\BodyEmailController;
+
+use App\Http\Controllers\contact_email\BodyEmailController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\contact_email\ContactEmailController;
+use App\Http\Controllers\contact_email\Email_send;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,3 +41,7 @@ Route::get('/contact-email/datatable', [ContactEmailController::class, 'datatabl
 Route::get('/contact-email/estadisticas', [ContactEmailController::class, 'estadisticas'])->name('contact_email.estadisticas');
 // body
 Route::resource("body-email", BodyEmailController::class)->except("show")->middleware("auth")->names("bodyEmail");
+// send emails
+Route::get('/envio-email', [Email_send::class, 'index'])->name('envio_email.index');
+
+
