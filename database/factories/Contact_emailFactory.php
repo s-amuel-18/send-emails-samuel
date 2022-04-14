@@ -21,7 +21,7 @@ class Contact_emailFactory extends Factory
         $nombre_empresa = $this->faker->sentence();
 
         // $created  = $this->faker->dateTimeBetween($startDate = "-3 month", $endDate = "now +6 month");
-        $created  = $this->faker->dateTime();
+        $created  = $this->faker->dateTimeThisMonth();
 
         return [
             "user_id" => User::all()->random()->id,

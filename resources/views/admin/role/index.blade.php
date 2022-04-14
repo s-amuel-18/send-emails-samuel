@@ -1,27 +1,28 @@
 @extends('adminlte::page', ['use_ico_only' => true, 'use_full_favicon' => false])
-{{-- @section('plugins.Datatables', true) --}}
+@section('plugins.Datatables', true)
 
-@section('title', 'Administrador de usuarios')
+@section('title', 'Administrador De Roles')
 
 @section('content_header')
-    <h1>Administrador De Usuarios</h1>
+    <h1>Administrador De Roles</h1>
 @stop
 
 @section('content')
+
 
     <div class="row">
         <div class="col-md-12">
             <div class="card card-primary">
                 <div class="card-header">
-                    <h3 class="card-title">Registro De Usuarios</h3>
+                    <h3 class="card-title">Registro De Roles</h3>
                     <div class="card-tools">
 
-                        @can('user.create')
-                        <a href="{{ route('user.create') }}" class="btn btn-outline-light not-hover btn-tool">
-                            <i class="fas fa-user-plus"></i>
-                        </a>
-
+                        @can('role.create')
+                            <a href="{{ route('role.create') }}" class="btn btn-outline-light not-hover btn-tool">
+                                <i class="fas fa-plus"></i>
+                            </a>
                         @endcan
+
                     </div>
                 </div>
 
@@ -32,52 +33,61 @@
                                 <th>#</th>
                                 <th>id</th>
                                 <th>Nombre</th>
-                                <th>UserName</th>
-                                <th>Email</th>
-                                <th>Actualizacion</th>
+                                <th>cantidad De Permisos</th>
+                                <th>actualizacion</th>
                                 <th>Creacion</th>
                                 <th>btns</th>
                             </tr>
                         </thead>
                         <tbody>
 
-                            @foreach ($users as $i => $user)
+                            @foreach ($roles as $i => $role)
                                 <tr>
                                     <td> {{ $i + 1 }} </td>
-                                    <td> {{ $user->id }} </td>
-                                    <td> {{ $user->name }} </td>
-                                    <td> {{ $user->username }} </td>
-                                    <td> {{ $user->email }} </td>
+                                    <td> {{ $role->id }} </td>
+                                    <td> {{ $role->name }} </td>
+                                    <td> {{ $role->permissions->count() }} </td>
                                     <td>
-                                        <fecha-custom fecha="{{ $user->updated_at }}"></fecha-custom>
+                                        <fecha-custom fecha="{{ $role->updated_at }}"></fecha-custom>
                                     </td>
                                     <td>
-                                        <fecha-custom fecha="{{ $user->created_at }}"></fecha-custom>
+                                        <fecha-custom fecha="{{ $role->created_at }}"></fecha-custom>
                                     </td>
                                     <td style="width: 110px">
 
 
-                                        @can('user.edit')
-                                            <a href="{{ route('user.edit', ['user' => $user->id]) }}"
+                                        @can('role.edit')
+                                            <a href="{{ route('role.edit', ['role' => $role->id]) }}"
                                                 class="btn btn-outline-success btn-sm">
-                                                <i class="fa fa-user-edit"></i>
+                                                <i class="fa fa-edit"></i>
                                             </a>
                                         @endcan
 
-                                        @can('user.destroy')
-                                            @if (auth()->user()->id == $user->id)
+                                        @can('role.destroy')
+                                            @php
+                                                $delete_rol_target =
+                                                    auth()
+                                                        ->user()
+                                                        ->roles->where('id', '=', $role->id)
+                                                        ->count() > 0;
+                                            @endphp
+
+                                            @if ($delete_rol_target)
                                                 <button data-toggle="tooltip" data-placement="top"
-                                                    title="No puedes Eliminar Tu propio Usuario" type="submit"
+                                                    title="No puedes Eliminar El Rol Que Estas Usando" type="submit"
                                                     class="btn btn-outline-danger btn-sm disabled">
                                                     <i class="fa fa-trash"></i>
                                                 </button>
                                             @else
                                                 <form class="d-inline"
-                                                    onsubmit="return confirm('Realmente Deseas Eliminar Este Usuario')"
-                                                    action="{{ route('user.destroy', ['user' => $user->id]) }}" method="POST">
+                                                    onsubmit="return confirm('Realmente Deseas Eliminar Este Rol')"
+                                                    action="{{ $delete_rol_target ? '' : route('role.destroy', ['role' => $role->id]) }}"
+                                                    method="POST">
 
                                                     @csrf
                                                     @method("DELETE")
+
+
                                                     <button type="submit" class="btn btn-outline-danger btn-sm">
                                                         <i class="fa fa-trash"></i>
                                                     </button>
@@ -100,9 +110,7 @@
     </div>
 
 
-
 @stop
-
 
 
 @section('js')

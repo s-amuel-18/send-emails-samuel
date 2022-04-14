@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\contact_email\ContactEmailController;
 use App\Http\Controllers\contact_email\Email_send;
+use App\Http\Controllers\RoleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,12 +25,9 @@ use App\Http\Controllers\contact_email\Email_send;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes();
 
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // users
@@ -39,9 +37,13 @@ Route::resource("user", UserController::class)->except("show")->middleware("auth
 Route::resource("contact-email", ContactEmailController::class)->except("show")->middleware("auth")->names("contact_email");
 Route::get('/contact-email/datatable', [ContactEmailController::class, 'datatable'])->name('contact_email.datatable');
 Route::get('/contact-email/estadisticas', [ContactEmailController::class, 'estadisticas'])->name('contact_email.estadisticas');
+
 // body
 Route::resource("body-email", BodyEmailController::class)->except("show")->middleware("auth")->names("bodyEmail");
+
 // send emails
 Route::get('/envio-email', [Email_send::class, 'index'])->name('envio_email.index');
 
+// roles
+Route::resource("role", RoleController::class)->except("show")->middleware("auth")->names("role");
 

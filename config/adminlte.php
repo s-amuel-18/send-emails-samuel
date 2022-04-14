@@ -245,6 +245,7 @@ return [
             'text'        => 'Inicio',
             'route'         => 'home',
             'icon'        => 'fas fa-home fa-fw',
+            // 'can'        => 'home',
             // 'topnav_right' => true,
         ],
         [
@@ -256,8 +257,9 @@ return [
         ],
         [
             'text'        => 'Roles',
-            'route'         => 'user.create',
-            'icon'        => 'fab fa-fw fa-critical-role',
+            'route'         => 'role.index',
+            'icon'        => 'fa fa-suitcase-rolling fa-fw',
+            'can'        => 'role.index',
         ],
         ['header' => 'Emails Registros', "can" => ["contact_email.index", "contact_email.estadisticas", "bodyEmail.index", "envio_email.index"]],
         [

@@ -33,19 +33,21 @@ class ContactEmailController extends Controller
 
     public function index()
     {
-        $emails = Contact_email::orderBy("created_at", "DESC")->get();
+        // $emails = Contact_email::orderBy("created_at", "DESC")->get();
 
-        return view("admin.contact_email.index", compact("emails"));
+        return view("admin.contact_email.index");
     }
 
     public function estadisticas()
     {
-        $total_registros = Contact_email::get()->count();
+        $total_registros = Contact_email::count();
 
         $date = Carbon::now();
         $date = $date->format('Y-m-d');
 
-        $registros_de_hoy = Contact_email::whereDate("created_at", $date)->get()->count();
+        $registros_de_hoy = Contact_email::whereDate("created_at", $date)->count();
+
+
 
         // dd($registros_de_hoy);
 
@@ -197,7 +199,21 @@ class ContactEmailController extends Controller
 
     public function datatable()
     {
-        $emails = Contact_email::orderBy("created_at", "DESC")->orderBy("estado", "ASC")->get();
+        $all_permission = auth()->user()->hasAllPermissions(["contact_email.index",
+        "contact_email.estadisticas",
+        "contact_email.create",
+        "contact_email.edit",
+        "contact_email.destroy"]);
+
+
+
+
+        if( $all_permission ) {
+            $emails = Contact_email::orderBy("created_at", "DESC")->orderBy("estado", "ASC")->get();
+        } else {
+
+            $emails = auth()->user()->emails_registros;
+        }
         // dd($emails[0]);
 
 

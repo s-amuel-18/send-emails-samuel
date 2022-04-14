@@ -41,7 +41,15 @@ class RoleSeeder extends Seeder
                 Permission::create(["name" => "bodyEmail.edit", "description" => "Editar Cuerpo de Email"])->syncRoles([$rol1]);
                 Permission::create(["name" => "bodyEmail.destroy", "description" => "Eliminar Cuerpo de Email"])->syncRoles([$rol1]);
 
+                // permisos para roles
+                Permission::create(["name" => "role.index", "description" => "Ver Rol"])->syncRoles([$rol1]);
+                Permission::create(["name" => "role.create", "description" => "Crear Rol"])->syncRoles([$rol1]);
+                Permission::create(["name" => "role.edit", "description" => "Editar Rol"])->syncRoles([$rol1]);
+                Permission::create(["name" => "role.destroy", "description" => "Eliminar Rol"])->syncRoles([$rol1]);
+
                 // permisos para envio de emails
                 Permission::create(["name" => "envio_email.index", "description" => "Enviar Emails"])->syncRoles([$rol1]);
+                // inicio
+                // Permission::create(["name" => "home", "description" => "Ver Inicio"])->syncRoles([$rol1]);
     }
 }
