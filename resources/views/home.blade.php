@@ -60,7 +60,7 @@
                                 <th>#</th>
                                 <th>ID</th>
                                 <th>username</th>
-                                <th>Canridad</th>
+                                <th>Cantidad</th>
                             </tr>
                         </thead>
                         <tbody>

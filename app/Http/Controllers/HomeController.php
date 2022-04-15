@@ -29,7 +29,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $permiso_estadisticas = auth()->user()->can("contact-email.estadisticas");
+        $permiso_estadisticas = auth()->user()->can("contact_email.estadisticas");
+
+        // dd($permiso_estadisticas);
 
         if( !$permiso_estadisticas ) {
             return redirect()->route("contact_email.index");

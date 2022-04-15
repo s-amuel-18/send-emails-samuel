@@ -18,7 +18,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="card card-primary">
+            <div class="card card-light">
                 <div class="card-header">
                     <h3 class="card-title">Crear Cuerpo De Email</h3>
 
@@ -34,7 +34,7 @@
                 <div class="card-body table-responsive">
 
                     <div class="col-md-6 offset-md-3">
-                        <form action="{{ route("bodyEmail.store") }}" method="POST">
+                        <form action="{{ route('bodyEmail.store') }}" method="POST">
                             @csrf
 
                             {{-- Nombre --}}
@@ -57,14 +57,13 @@
 
 
                             <div class="form-group">
-                                <textarea id="summernote" name="body" class=" @error('body') is-invalid @enderror"
-                                >{{ old('body') }}</textarea>
+                                <textarea id="summernote" name="body" class=" @error('body') is-invalid @enderror">{{ old('body') }}</textarea>
 
                                 @error('body')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
 
                             <div class="d-flex justify-content-end">

@@ -18,7 +18,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="card card-primary">
+            <div class="card card-light">
                 <div class="card-header">
                     <h3 class="card-title">Editar Cuerpo De Email</h3>
                 </div>

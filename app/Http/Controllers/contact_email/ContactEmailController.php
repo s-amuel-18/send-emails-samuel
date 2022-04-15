@@ -53,7 +53,7 @@ class ContactEmailController extends Controller
 
         $users = User::select(
             "users.id",
-            "users.name",
+            "users.username",
             DB::raw("COUNT(users.id) as cant_reg")
         )
             ->join("contact_emails AS co_em", "co_em.user_id", "=", "users.id")
@@ -197,6 +197,7 @@ class ContactEmailController extends Controller
         return redirect()->back()->with("message", $message);
     }
 
+    // okuneva.steve
     public function datatable()
     {
         $all_permission = auth()->user()->hasAllPermissions(["contact_email.index",
@@ -209,12 +210,15 @@ class ContactEmailController extends Controller
 
 
         if( $all_permission ) {
-            $emails = Contact_email::orderBy("created_at", "DESC")->orderBy("estado", "ASC")->get();
+            $emails = Contact_email::orderBy("estado", "ASC")->get();
+            // dd($emails[0]);
         } else {
 
             $emails = auth()->user()->emails_registros;
+            // dd($emails);
         }
         // dd($emails[0]);
+
 
 
         return datatables()
@@ -228,7 +232,7 @@ class ContactEmailController extends Controller
             ->addColumn("valid_email", "admin.components.datatable.contact_email.email")
             ->addColumn("word_nombre_empresa", "admin.components.datatable.contact_email.word_nombre_empresa")
             ->addColumn("usuario", function ($email) {
-                return $email->usuario->name;
+                return $email->usuario ? $email->usuario->name : "Sin Usuario" ;
             })
             ->rawColumns(["actions", "creacion", "links_buttons", "estado", "valid_email", "word_nombre_empresa", "usuario"])
             // ->rawColumns(["creacion"])

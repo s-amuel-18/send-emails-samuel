@@ -12,7 +12,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="card card-primary">
+            <div class="card card-light">
                 <div class="card-header">
                     <h3 class="card-title">Registro De Roles</h3>
                     <div class="card-tools">

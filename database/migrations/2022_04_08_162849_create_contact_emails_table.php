@@ -16,7 +16,7 @@ class CreateContactEmailsTable extends Migration
         Schema::create('contact_emails', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId("user_id")->references("id")->on("users");
+            $table->foreignId("user_id")->nullable()->references("id")->on("users")->nullOnDelete();
             $table->string("nombre_empresa")->nullable();
             $table->string("url")->nullable();
             $table->smallInteger("estado")->default(0);

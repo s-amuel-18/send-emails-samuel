@@ -11,7 +11,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="card card-primary">
+            <div class="card card-light">
                 <div class="card-header">
                     <h3 class="card-title">Emails</h3>
                     <div class="card-tools">
@@ -31,7 +31,7 @@
                     </div>
                 </div>
 
-                <div class="card-body table-responsive">
+                <div class="card card-body table-responsive">
                     <table class="table table-light table-striped table-hover text-nowrap table-valign-middle">
                         <thead class="">
                             <tr>
@@ -130,7 +130,7 @@
 @section('js')
     <script>
         $(".table").DataTable({
-            "ordering": false,
+            // "ordering": false,
             // "pageLength": 20,
             "ajax": "{{ route('contact_email.datatable') }}",
             "columns": [{

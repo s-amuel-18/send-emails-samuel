@@ -11,7 +11,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="card card-primary">
+            <div class="card card-light">
                 <div class="card-header">
                     <h3 class="card-title">Cuerpos De Emails</h3>
                     <div class="card-tools">
@@ -43,7 +43,7 @@
                             @foreach ($bodys as $i => $body)
                                 <tr data-widget="expandable-table" aria-expanded="false">
                                     <td>{{ $i + 1 }}</td>
-                                    <td>{{ $body->usuario->name }}</td>
+                                    <td>{{ $body->usuario ? $body->usuario->name : "Sin Usuario" }}</td>
                                     <td>{{ $body->nombre }}</td>
                                     <td>
                                         <fecha-custom fecha="{{ $body->updated_at }}"></fecha-custom>

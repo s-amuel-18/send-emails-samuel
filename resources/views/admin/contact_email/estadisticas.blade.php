@@ -1,5 +1,6 @@
 @extends('adminlte::page', ['use_ico_only' => true, 'use_full_favicon' => false])
 @section('plugins.Chartjs', true)
+@section('plugins.Datatables', true)
 
 @section('title', 'Administrador de usuarios')
 
@@ -13,7 +14,7 @@
 
 
         <div class="col-md-12">
-            <div class="card card-primary">
+            <div class="card card-light">
                 <div class="card-header">
                     <h3 class="card-title">Estadistica De Registros</h3>
                     <div class="card-tools">
@@ -74,61 +75,60 @@
                             <!-- /.card -->
                         </div>
 
-                        <div class="col-lg-6 co">
+                        <div class="col-xl-4 p-3">
 
                             <h4 class="h5 mb-3">Registros De Usuarios</h4>
 
-                            <table class="table table-light">
-                                <thead class="thead-light">
-                                    <tr>
-                                        <th>#</th>
-                                        <th>id</th>
-                                        <th>usuario</th>
-                                        <th>Cant. Registros</th>
-                                        <th>Porcentaje</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                    @foreach ($users as $i => $user)
+                            <div style="max-height: 380px; overflow-y: scroll;">
+                                <table class="table table-light">
+                                    <thead class="thead-light">
                                         <tr>
-                                            <td>
-                                                @if ($i + 1 == 1)
-                                                    <i class="text-warning fas fa-chess-king"></i>
-                                                @else
-                                                    {{ $i + 1 }}
-                                                @endif
-                                            </td>
-                                            <td>{{ $user->id }}</td>
-                                            <td>{{ $user->name }}</td>
-                                            <td>{{ $user->emails_registros->count() }}</td>
-                                            <td>
-                                                <span
-                                                    class="badge bg-{{ $user->emails_registros->count() > $registros_promedio? 'success': ($user->emails_registros->count() <= $registros_promedio? 'warning': 'danger') }}">{{ number_format(($user->emails_registros->count() * 100) / $total_registros, 2) }}%</span>
-                                            </td>
+                                            <th>#</th>
+                                            {{-- <th>id</th> --}}
+                                            <th>usuario</th>
+                                            <th>Cant. Registros</th>
+                                            <th>Porcentaje</th>
                                         </tr>
-                                    @endforeach
+                                    </thead>
+                                    <tbody>
 
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <th>#</th>
-                                    </tr>
-                                </tfoot>
-                            </table>
+                                        @foreach ($users as $i => $user)
+                                            <tr>
+                                                <td>
+                                                    @if ($i + 1 == 1)
+                                                        <i class="text-warning fas fa-chess-king"></i>
+                                                    @else
+                                                        {{ $i + 1 }}
+                                                    @endif
+                                                </td>
+                                                {{-- <td>{{ $user->id }}</td> --}}
+                                                <td>{{ $user->username }}</td>
+                                                <td>{{ $user->emails_registros->count() }}</td>
+                                                <td>
+                                                    <span
+                                                        class="badge bg-{{ $user->emails_registros->count() > $registros_promedio? 'success': ($user->emails_registros->count() <= $registros_promedio? 'warning': 'danger') }}">{{ number_format(($user->emails_registros->count() * 100) / $total_registros, 2) }}%</span>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+
+                                    </tbody>
+
+                                </table>
+                            </div>
+
 
                         </div>
 
-                        <div class="col-lg-3">
+                        <div class="col-xl-4 p-3">
                             <h4 class="h5 mb-3">Estadisticas De Usuarios</h4>
                             <canvas id="donutChart"
-                                style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                                style="min-height: 380px; height: 380px; max-height: 380px; max-width: 100%;"></canvas>
                         </div>
 
-                        <div class="col-lg-3">
+                        <div class="col-xl-4 p-3">
                             <h4 class="h5 mb-3">Estadisticas De Envio De Correos</h4>
                             <canvas id="donutChartEmailsEstado"
-                                style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                                style="min-height: 320px; height: 320px; max-height: 320px; max-width: 100%;"></canvas>
                         </div>
                     </div>
 
@@ -154,7 +154,7 @@
 
         data_users.forEach(el => {
             cantidades.push(el.cant_reg);
-            labels.push(el.name);
+            labels.push(el.username);
 
             let r = Math.floor(Math.random() * 255);
             let g = Math.floor(Math.random() * 255);
@@ -207,4 +207,7 @@
             options: donutOptions
         })
     </script>
+
+
+
 @stop

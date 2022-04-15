@@ -11,13 +11,13 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="card card-primary">
+            <div class="card card-light">
                 <div class="card-header">
                     <h3 class="card-title">Formulario Editar Usuario</h3>
                 </div>
 
                 <div class="card-body ">
-                    <form action="{{ route("user.update", ["user" => $user->id]) }}" method="POST">
+                    <form action="{{ route('user.update', ['user' => $user->id]) }}" method="POST">
 
                         @csrf
                         @method("PUT")
@@ -26,11 +26,13 @@
                             <div class="col-md-3">
                                 <div class="input-group mb-3 ">
                                     <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
-                                           value="{{ old('name') ? old('name') : $user->name   }}" placeholder="{{ __('adminlte::adminlte.full_name') }}" autofocus>
+                                        value="{{ old('name') ? old('name') : $user->name }}"
+                                        placeholder="{{ __('adminlte::adminlte.full_name') }}" autofocus>
 
                                     <div class="input-group-append">
                                         <div class="input-group-text">
-                                            <span class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
+                                            <span
+                                                class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
                                         </div>
                                     </div>
 
@@ -46,11 +48,13 @@
                             <div class="col-md-3">
                                 <div class="input-group mb-3 ">
                                     <input type="text" disabled class="form-control @error('username') is-invalid @enderror"
-                                           value="{{ old('username') ? old('username') : $user->username }}" placeholder="Username">
+                                        value="{{ old('username') ? old('username') : $user->username }}"
+                                        placeholder="Username">
 
                                     <div class="input-group-append">
                                         <div class="input-group-text">
-                                            <span class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
+                                            <span
+                                                class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
                                         </div>
                                     </div>
 
@@ -66,11 +70,13 @@
                             <div class="col-md-3">
                                 <div class="input-group mb-3 ">
                                     <input type="email" disabled class="form-control @error('email') is-invalid @enderror"
-                                           value="{{ old('email') ? old('email') : $user->email  }}" placeholder="{{ __('adminlte::adminlte.email') }}">
+                                        value="{{ old('email') ? old('email') : $user->email }}"
+                                        placeholder="{{ __('adminlte::adminlte.email') }}">
 
                                     <div class="input-group-append">
                                         <div class="input-group-text">
-                                            <span class="fas fa-envelope {{ config('adminlte.classes_auth_icon', '') }}"></span>
+                                            <span
+                                                class="fas fa-envelope {{ config('adminlte.classes_auth_icon', '') }}"></span>
                                         </div>
                                     </div>
 
@@ -85,12 +91,14 @@
                             {{-- Password field --}}
                             <div class="col-md-3">
                                 <div class="input-group mb-3 ">
-                                    <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"
-                                           placeholder="{{ __('adminlte::adminlte.password') }}">
+                                    <input type="password" name="password"
+                                        class="form-control @error('password') is-invalid @enderror"
+                                        placeholder="{{ __('adminlte::adminlte.password') }}">
 
                                     <div class="input-group-append">
                                         <div class="input-group-text">
-                                            <span class="fas fa-lock {{ config('adminlte.classes_auth_icon', '') }}"></span>
+                                            <span
+                                                class="fas fa-lock {{ config('adminlte.classes_auth_icon', '') }}"></span>
                                         </div>
                                     </div>
 
@@ -106,12 +114,13 @@
                             <div class="col-md-3">
                                 <div class="input-group mb-3 ">
                                     <input type="password" name="password_confirmation"
-                                           class="form-control @error('password_confirmation') is-invalid @enderror"
-                                           placeholder="{{ __('adminlte::adminlte.retype_password') }}">
+                                        class="form-control @error('password_confirmation') is-invalid @enderror"
+                                        placeholder="{{ __('adminlte::adminlte.retype_password') }}">
 
                                     <div class="input-group-append">
                                         <div class="input-group-text">
-                                            <span class="fas fa-lock {{ config('adminlte.classes_auth_icon', '') }}"></span>
+                                            <span
+                                                class="fas fa-lock {{ config('adminlte.classes_auth_icon', '') }}"></span>
                                         </div>
                                     </div>
 
@@ -126,13 +135,23 @@
                             <div class="col-md-9">
                                 <div class="form-group d-flex flex-wrap">
 
+                                    @role('Administrador')
+                                        <div class="p-2 bg-secondary" style="opacity: 0.4">
+                                            No puedes alterar tu propio rol
+                                        </div>
+                                    @else
                                     @foreach ($roles as $rol)
                                         <div class="form-check m-2">
-                                            <input id="role_{{ $rol->id }}" {{ $user->roles->where("id", "=", $rol->id)->count() > 0 ? "checked": "" }} class="form-check-input" type="checkbox" name="roles[]"
+                                            <input id="role_{{ $rol->id }}"
+                                                {{ $user->roles->where('id', '=', $rol->id)->count() > 0 ? 'checked' : '' }}
+                                                class="form-check-input" type="checkbox" name="roles[]"
                                                 value="{{ $rol->id }}">
-                                            <label for="role_{{ $rol->id }}" class="form-check-label">{{ $rol->name }}</label>
+                                            <label for="role_{{ $rol->id }}"
+                                                class="form-check-label">{{ $rol->name }}</label>
                                         </div>
                                     @endforeach
+                                    @endrole
+
 
                                 </div>
 
@@ -142,7 +161,8 @@
                             {{-- Register button --}}
                             <div class="col-md-12">
                                 <div class="d-flex justify-content-end">
-                                    <button type="submit" class="btn  {{ config('adminlte.classes_auth_btn', 'btn-flat btn-primary') }}">
+                                    <button type="submit"
+                                        class="btn  {{ config('adminlte.classes_auth_btn', 'btn-flat btn-primary') }}">
                                         <span class="fas fa-user-plus"></span>
                                         Crear Nuevo Usuario
                                     </button>

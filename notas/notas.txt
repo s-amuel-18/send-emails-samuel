@@ -1,0 +1,1 @@
+php artisan adminlte:plugins install --plugin=select2: instalar plugins

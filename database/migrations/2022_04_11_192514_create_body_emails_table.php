@@ -16,7 +16,7 @@ class CreateBodyEmailsTable extends Migration
         Schema::create('body_emails', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId("user_id")->references("id")->on("users");
+            $table->foreignId("user_id")->nullable()->references("id")->on("users")->nullOnDelete();
             $table->string("nombre");
             $table->text("body");
 
