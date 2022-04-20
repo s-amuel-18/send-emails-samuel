@@ -1,0 +1,2 @@
+01. configurar el archivo .env con las credenciales del servicio de correos que se va a usar.
+02. crear un maillable: php artisan make:mail NombreMaillable

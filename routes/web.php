@@ -14,6 +14,9 @@ use App\Http\Controllers\contact_email\ContactEmailController;
 use App\Http\Controllers\contact_email\EmailSendController;
 // use App\Http\Controllers\contact_email\Email_send;
 use App\Http\Controllers\RoleController;
+use App\Mail\ServicioMaillable;
+use App\Models\BodyEmail;
+use Illuminate\Support\Facades\Mail;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +29,7 @@ use App\Http\Controllers\RoleController;
 |
 */
 
-Auth::routes();
+Auth::routes(["register" => false]);
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home.index');

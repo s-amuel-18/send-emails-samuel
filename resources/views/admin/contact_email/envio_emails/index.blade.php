@@ -36,14 +36,15 @@
 
                     <div class="col-md-4">
 
-                        {{-- nombre --}}
-                        <div class="form-group">
-                            <label for="nombre_user">Nombre Del Remitente</label>
-                            <input id="nombre_user" value="{{ isset(auth()->user()->name) ? auth()->user()->name : '' }}"
-                                class="form-control @error('nombre_remitente') is-invalid @enderror" type="text"
-                                name="nombre_remitente">
 
-                            @error('nombre_remitente')
+
+                        {{-- asunto --}}
+                        <div class="form-group">
+                            <label for="asunto">Asunto</label>
+                            <input id="asunto" class="form-control @error('asunto') is-invalid @enderror" type="text"
+                                name="asunto" placeholder="Asunto De Email" value="{{ old('asunto') }}">
+
+                            @error('asunto')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -75,8 +76,10 @@
                         {{-- cyerpo de mensaje --}}
                         <div class="form-group">
                             <div class="custom-control custom-checkbox">
-                                <input class="custom-control-input @error("check_emails") is-invalid @enderror" type="checkbox" id="customCheckbox2" value="1"
-                                    name="check_emails">
+                                <input type="hidden" name="check_emails" value="">
+
+                                <input class="custom-control-input @error('check_emails') is-invalid @enderror"
+                                    type="checkbox" id="customCheckbox2" value="1" name="check_emails" checked>
                                 <label for="customCheckbox2" class="custom-control-label">Seleccionar los ultimos 200 Emails
                                     Sin Enviar</label>
                             </div>
@@ -89,9 +92,27 @@
 
                         {{-- cyerpo de mensaje --}}
                         <div class="form-group">
-                            <div style="max-height: 200px; overflow-y: scroll">
+                            <label for="">Seleccionar email</label><br>
+                            <select class="select2-check" name="emails[]" multiple="multiple">
 
-                                <label for="">Seleccionar email</label>
+                                @foreach ($emails as $email)
+                                    <option data-badge-color="{{ $email->estado == 0 ? "danger" : "success"  }}" data-badge-text="{{ $email->estado == 0 ? "Sin Enviar" : "Enviado"  }}" value="{{ $email->id }}">{{ $email->email }}</option>
+                                @endforeach
+
+                            </select>
+
+                            @error('emails')
+                                {{-- <span class="invalid-feedback" role="alert"> --}}
+                                <small class="text-danger">
+                                    <strong>{{ $message }}</strong>
+                                </small>
+                                {{-- </span> --}}
+                            @enderror
+
+
+
+                            {{-- <div style="max-height: 200px; overflow-y: scroll">
+
 
                                 <table class="table table">
                                     <tbody>
@@ -116,7 +137,9 @@
 
                                     </tbody>
                                 </table>
-                            </div>
+                            </div> --}}
+
+
                         </div>
 
 
@@ -158,8 +181,37 @@
         $(function() {
             // Summernote
             $('#summernote').summernote()
-            $('.select2').select2()
+            // $('.select2').select2()
+
+            $(".select2-check").select2({
+                closeOnSelect: false,
+                placeholder: "Seleccionar emails",
+                allowHtml: true,
+                allowClear: true,
+                width: "100%",
+                templateSelection: iformat,
+                templateResult: iformat,
+                tags: true // создает новые опции на лету
+            });
+
+
+
+            function iformat(icon, badge ) {
+
+                var originalOption = icon.element;
+                if(!originalOption ) {
+                    return icon.text ;
+                }
+                var originalOptionBadge = $(originalOption).data('badge-text');
+                var color= $(originalOption).data('badge-color');
+
+
+                return $('<div class="d-flex justify-content-between"><span>' + icon.text + '</span><div class=""><span class="badge badge-'+ color +'">'+ originalOptionBadge +'</span></div></div>');
+            }
         })
+
     </script>
 
 @stop
+
+

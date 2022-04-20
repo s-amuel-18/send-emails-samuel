@@ -13,14 +13,14 @@
 
         <div class="col-md-3">
             {{-- Registros de hoy --}}
-            <x-adminlte-small-box title="{{ $registros_de_hoy }}" text="Correos Registrados Hoy" icon="fas fa-mail-bulk"
-                theme="success" url="contact-email/estadisticas" url-text="Ver Correos" />
+            <x-adminlte-small-box title="{{ $registros_de_hoy }}" text="Registros De Hoy" icon="fas fa-mail-bulk"
+                theme="success" url="contact-email/estadisticas" url-text="Ver Registros" />
         </div>
 
         <div class="col-md-3">
             {{-- Registros Totales --}}
-            <x-adminlte-small-box title="{{ $total_registros }}" text="Correos Registrados" icon="fas fa-mail-bulk"
-                theme="primary" url="contact-email" url-text="Ver Correos" />
+            <x-adminlte-small-box title="{{ $total_registros }}" text="Registros Totales" icon="fas fa-mail-bulk"
+                theme="primary" url="contact-email" url-text="Ver Registros" />
         </div>
 
         <div class="col-md-3">
@@ -31,8 +31,8 @@
 
         <div class="col-md-3">
             {{-- usuarios --}}
-            <x-adminlte-small-box title="{{ $usuarios_registrados }}" text="Usuarios Registrados" icon="fas fa-users"
-                theme="purple" url="user" url-text="Ver Usuarios" />
+            <x-adminlte-small-box title="{{ $enviados_hoy}}" text="Correos Enviados Hoy" icon="fas fa-mail-bulk"
+                theme="purple" url="user" url-text="Enviar Correos" />
         </div>
         {{-- <div class="col-md-3"></div> --}}
     </div>
