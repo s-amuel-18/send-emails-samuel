@@ -34,6 +34,7 @@
                                 <th>Nombre</th>
                                 <th>UserName</th>
                                 <th>Email</th>
+                                <th>Rol</th>
                                 <th>Actualizacion</th>
                                 <th>Creacion</th>
                                 <th>btns</th>
@@ -48,6 +49,16 @@
                                     <td> {{ $user->name }} </td>
                                     <td> {{ $user->username }} </td>
                                     <td> {{ $user->email }} </td>
+                                    <td>
+                                        @if( $user->roles->count() > 0 )
+                                        @foreach ($user->roles as $rol)
+                                            <span class="badge badge-primary">{{$rol->name}}</span>
+                                        @endforeach
+                                        @else
+                                            <span class="badge badge-danger">Sin Rol</span>
+                                        @endif
+
+                                    </td>
                                     <td>
                                         <fecha-custom fecha="{{ $user->updated_at }}"></fecha-custom>
                                     </td>

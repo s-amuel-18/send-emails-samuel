@@ -28,6 +28,7 @@ class UserController extends Controller
 
     public function index()
     {
+        // dd( auth()->user()->roles );
         $users = User::orderBy("created_at", "DESC")->get();
 
         return view("admin.users.index", compact("users"));

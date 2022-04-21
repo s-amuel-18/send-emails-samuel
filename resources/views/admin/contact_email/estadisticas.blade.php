@@ -2,7 +2,7 @@
 @section('plugins.Chartjs', true)
 @section('plugins.Datatables', true)
 
-@section('title', 'Administrador de usuarios')
+@section('title', 'Estadistica De Registros')
 
 @section('content_header')
     <h1>Estadistica De Registros</h1>

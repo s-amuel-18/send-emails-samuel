@@ -1,10 +1,10 @@
 @extends('adminlte::page', ['use_ico_only' => true, 'use_full_favicon' => false])
 @section('plugins.Datatables', true)
 
-@section('title', 'Crear Rol')
+@section('title', "Editar Rol {{ $role->name }}")
 
 @section('content_header')
-    <h1>Editar Rol "{{ $role->name }}"</h1>
+    <h1>Editar Rol</h1>
 @stop
 
 @section('content')
@@ -17,7 +17,7 @@
             </div>
 
             <div class="card-body ">
-                <form action="{{ route('role.update', ["role" => $role->id]) }}" method="POST">
+                <form  class="form_disabled_button_send" action="{{ route('role.update', ["role" => $role->id]) }}" method="POST">
 
                     @csrf
                     @method("PUT")

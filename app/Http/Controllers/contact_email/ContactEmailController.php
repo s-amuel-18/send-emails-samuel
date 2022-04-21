@@ -42,6 +42,16 @@ class ContactEmailController extends Controller
     {
         $total_registros = Contact_email::count();
 
+        if( $total_registros == 0) {
+            $message = [
+                "message" => "No hay Registros realizados, Crea tu primer registro",
+                "color" => "warning",
+                "icon" => "fa fa-exclamation-circle"
+            ];
+
+            return redirect()->route("contact_email.create")->with("message", $message);
+        }
+
         $date = Carbon::now();
         $date = $date->format('Y-m-d');
 
@@ -61,7 +71,7 @@ class ContactEmailController extends Controller
             ->orderBy("cant_reg", "DESC")
             ->get();
 
-        $registros_promedio = $total_registros / $users->count();
+        $registros_promedio = $total_registros == 0 ? 0 :$total_registros / $users->count();
 
         $emials_sin_enviar = Contact_email::where("estado", "=", 0)->get()->count();
 
@@ -210,14 +220,11 @@ class ContactEmailController extends Controller
 
 
         if( $all_permission ) {
-            $emails = Contact_email::orderBy("estado", "ASC")->get();
-            // dd($emails[0]);
+            $emails = Contact_email::orderBy("created_at", "DESC")->get();
         } else {
-
             $emails = auth()->user()->emails_registros;
-            // dd($emails);
         }
-        // dd($emails[0]);
+// dd($emails[0]);
 
 
 
@@ -227,6 +234,9 @@ class ContactEmailController extends Controller
             ->addColumn("creacion", function ($email) {
                 return date_format($email->created_at, "d/m/Y");
             })
+            ->addColumn("envios", function ($email) {
+                return $email->envios->count();
+            })
             ->addColumn("links_buttons", "admin.components.datatable.contact_email.links_buttons")
             ->addColumn("estado", "admin.components.datatable.contact_email.estado")
             ->addColumn("valid_email", "admin.components.datatable.contact_email.email")
@@ -234,7 +244,7 @@ class ContactEmailController extends Controller
             ->addColumn("usuario", function ($email) {
                 return $email->usuario ? $email->usuario->name : "Sin Usuario" ;
             })
-            ->rawColumns(["actions", "creacion", "links_buttons", "estado", "valid_email", "word_nombre_empresa", "usuario"])
+            ->rawColumns(["actions", "creacion", "links_buttons", "estado", "valid_email", "word_nombre_empresa", "usuario", "envios"])
             // ->rawColumns(["creacion"])
             // ->rawColumns(["links_buttons"])
 

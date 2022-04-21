@@ -1,7 +1,7 @@
 @extends('adminlte::page', ['use_ico_only' => true, 'use_full_favicon' => false])
 @section('plugins.Summernote', true)
 
-@section('title', 'Crear Cuerpo De Email')
+@section('title', 'Editar Cuerpo De Email')
 
 @section('content_header')
     <h1>Editar Cuerpo De Email</h1>
@@ -26,7 +26,7 @@
                 <div class="card-body table-responsive">
 
                     <div class="col-md-6 offset-md-3">
-                        <form action="{{ route("bodyEmail.update", ["body_email" => $bodyEmail->id]) }}" method="POST">
+                        <form class="form_disabled_button_send" action="{{ route("bodyEmail.update", ["body_email" => $bodyEmail->id]) }}" method="POST">
                             @csrf
                             @method("PUT")
                             {{-- Nombre --}}

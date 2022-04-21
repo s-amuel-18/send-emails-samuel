@@ -9,6 +9,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
+
 
 class HomeController extends Controller
 {
@@ -30,19 +32,23 @@ class HomeController extends Controller
      */
     public function index()
     {
-
-
         $total_registros = Contact_email::count();
 
         $date = Carbon::now();
         $date = $date->format('Y-m-d');
 
-        $registros_de_hoy = Contact_email::whereDate("created_at", $date)->count();
+        if( auth()->user()->can("contact_email.estadisticas") ) {
+
+            $registros_de_hoy = Contact_email::whereDate("created_at", $date)->count();
+
+        } else {
+            $registros_de_hoy = auth()->user()->emails_registros->where("created_at", ">=", $date)->count();
+        }
+
 
         $correos_sin_enviar = Contact_email::where("estado", "=", 0)->count();
 
         $enviados_hoy = EmailEnviado::whereDate("created_at", $date)->count();
-        // $usuarios_registrados = User::count();
 
         // usuarios que han registrado emails hoy
         $usr_registros_hoy = User::select(

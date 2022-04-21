@@ -26,4 +26,8 @@ class Contact_email extends Model
     {
         return $this->belongsTo(User::class, "user_id");
     }
+
+    public function envios() {
+        return $this->hasMany(EmailEnviado::class, "contact_email_id");
+    }
 }

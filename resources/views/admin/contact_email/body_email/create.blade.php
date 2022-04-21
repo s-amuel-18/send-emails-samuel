@@ -34,7 +34,7 @@
                 <div class="card-body table-responsive">
 
                     <div class="col-md-6 offset-md-3">
-                        <form action="{{ route('bodyEmail.store') }}" method="POST">
+                        <form class="form_disabled_button_send" action="{{ route('bodyEmail.store') }}" method="POST">
                             @csrf
 
                             {{-- Nombre --}}

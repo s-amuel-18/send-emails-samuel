@@ -7,6 +7,7 @@ use App\Mail\ServicioMaillable;
 use App\Models\BodyEmail;
 use App\Models\Contact_email;
 use App\Models\EmailEnviado;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Mail;
@@ -84,9 +85,26 @@ class EmailSendController extends Controller
 
         $correo = new ServicioMaillable($info);
 
+        $date = Carbon::now();
+        $date = $date->format('Y-m-d');
+
+
         foreach ($emails as $email) {
             // dd($email->email);
             try {
+
+
+                $enviados_hoy = EmailEnviado::whereDate("created_at", $date)->count();
+
+                // vakidanis que la cantidad de correos diarios no sobre pase los 200
+                if( $enviados_hoy >= 200 ) {
+                    $message = [
+                        "message" => "La cantidad De correos diarios Ha llegado a su limite, Se enviaron Correctamente " . count($arr_enviados) . " correos y hubieron " . count($arr_sin_enviar) . " correos fallidos",
+                        "color" => "danger"
+                    ];
+
+                    return redirect()->back()->with("message", $message);
+                }
 
                 Mail::to($email->email)->send($correo);
 
@@ -102,7 +120,7 @@ class EmailSendController extends Controller
 
                 array_push($arr_enviados, $email->email);
             } catch (\Throwable $th) {
-                // dd($th);
+
                 array_push($arr_sin_enviar, $email->email);
             }
         }

@@ -1,10 +1,10 @@
 @extends('adminlte::page', ['use_ico_only' => true, 'use_full_favicon' => false])
 {{-- @section('plugins.Datatables', true) --}}
 
-@section('title', 'Nuevo Usuario')
+@section('title', 'tar Usuario "{{ $user->name }}"')
 
 @section('content_header')
-    <h1>Editar Usuario "{{ $user->name }}"</h1>
+    <h1>Editar Usuario </h1>
 @stop
 
 @section('content')
@@ -17,7 +17,7 @@
                 </div>
 
                 <div class="card-body ">
-                    <form action="{{ route('user.update', ['user' => $user->id]) }}" method="POST">
+                    <form action="{{ route('user.update', ['user' => $user->id]) }}" method="POST" class="form_disabled_button_send">
 
                         @csrf
                         @method("PUT")
@@ -135,22 +135,22 @@
                             <div class="col-md-9">
                                 <div class="form-group d-flex flex-wrap">
 
-                                    @role('Administrador')
+                                    @if( auth()->user()->id == $user->id )
                                         <div class="p-2 bg-secondary" style="opacity: 0.4">
                                             No puedes alterar tu propio rol
                                         </div>
                                     @else
-                                    @foreach ($roles as $rol)
-                                        <div class="form-check m-2">
-                                            <input id="role_{{ $rol->id }}"
-                                                {{ $user->roles->where('id', '=', $rol->id)->count() > 0 ? 'checked' : '' }}
-                                                class="form-check-input" type="checkbox" name="roles[]"
-                                                value="{{ $rol->id }}">
-                                            <label for="role_{{ $rol->id }}"
-                                                class="form-check-label">{{ $rol->name }}</label>
-                                        </div>
-                                    @endforeach
-                                    @endrole
+                                        @foreach ($roles as $rol)
+                                            <div class="form-check m-2">
+                                                <input id="role_{{ $rol->id }}"
+                                                    {{ $user->roles->where('id', '=', $rol->id)->count() > 0 ? 'checked' : '' }}
+                                                    class="form-check-input" type="checkbox" name="roles[]"
+                                                    value="{{ $rol->id }}">
+                                                <label for="role_{{ $rol->id }}"
+                                                    class="form-check-label">{{ $rol->name }}</label>
+                                            </div>
+                                        @endforeach
+                                    @endif
 
 
                                 </div>

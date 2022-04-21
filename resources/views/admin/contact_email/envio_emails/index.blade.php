@@ -29,7 +29,7 @@
 
         <div class="card-body ">
 
-            <form action="{{ route('envio_email.crear_informacio') }}" method="POST">
+            <form action="{{ route('envio_email.crear_informacio') }}" method="POST" class="form_disabled_button_send">
                 @csrf
 
                 <div class="row">
@@ -73,15 +73,15 @@
                             @enderror
                         </div>
 
-                        {{-- cyerpo de mensaje --}}
+                        {{-- Check correos aleatorios--}}
                         <div class="form-group">
                             <div class="custom-control custom-checkbox">
                                 <input type="hidden" name="check_emails" value="">
 
                                 <input class="custom-control-input @error('check_emails') is-invalid @enderror"
-                                    type="checkbox" id="customCheckbox2" value="1" name="check_emails" checked>
+                                    type="checkbox" id="customCheckbox2" value="1" name="check_emails" {{ old("check_emails") ? "checked" : ""}}>
                                 <label for="customCheckbox2" class="custom-control-label">Seleccionar los ultimos 200 Emails
-                                    Sin Enviar</label>
+                                    Sin Enviar </label>
                             </div>
                             @error('check_emails')
                                 <span class="invalid-feedback" role="alert">
@@ -90,7 +90,7 @@
                             @enderror
                         </div>
 
-                        {{-- cyerpo de mensaje --}}
+                        {{-- Email select--}}
                         <div class="form-group">
                             <label for="">Seleccionar email</label><br>
                             <select class="select2-check" name="emails[]" multiple="multiple">
@@ -181,7 +181,7 @@
         $(function() {
             // Summernote
             $('#summernote').summernote()
-            // $('.select2').select2()
+            $('.select2').select2()
 
             $(".select2-check").select2({
                 closeOnSelect: false,

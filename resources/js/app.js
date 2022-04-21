@@ -5,8 +5,10 @@
  */
 
 require('./bootstrap');
+import "./utilities";
 
 window.Vue = require('vue').default;
+
 
 /**
  * The following block of code may be used to automatically register your

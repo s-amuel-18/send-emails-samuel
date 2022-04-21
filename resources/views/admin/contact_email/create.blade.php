@@ -1,7 +1,7 @@
 @extends('adminlte::page', ['use_ico_only' => true, 'use_full_favicon' => false])
 {{-- @section('plugins.Datatables', true) --}}
 
-@section('title', 'Email contacto')
+@section('title', 'Nuevo Email')
 
 @section('content_header')
     <h1>Nuevo Email</h1>
@@ -17,7 +17,7 @@
                 </div>
 
                 <div class="card-body ">
-                    <form action="{{ route('contact_email.store') }}" method="POST">
+                    <form class="form_disabled_button_send" action="{{ route('contact_email.store') }}" method="POST">
 
                         @csrf
 

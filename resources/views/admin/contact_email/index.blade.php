@@ -1,7 +1,7 @@
 @extends('adminlte::page', ['use_ico_only' => true, 'use_full_favicon' => false])
 @section('plugins.Datatables', true)
 
-@section('title', 'Administrador de usuarios')
+@section('title', 'Administrador de Emails')
 
 @section('content_header')
     <h1>Administrador De Emails</h1>
@@ -35,11 +35,12 @@
                     <table class="table table-light table-striped table-hover text-nowrap table-valign-middle">
                         <thead class="">
                             <tr>
-                                {{-- <th>#</th> --}}
+                                <th>ID</th>
                                 <th>Nombre Empresa</th>
                                 <th>Usuario</th>
                                 <th>Estado</th>
                                 <th>Email</th>
+                                <th>Envios</th>
                                 <th>Contacts</th>
                                 <th>Creacion</th>
                                 <th>btns</th>
@@ -133,7 +134,11 @@
             // "ordering": false,
             // "pageLength": 20,
             "ajax": "{{ route('contact_email.datatable') }}",
-            "columns": [{
+            "columns": [
+                {
+                    "data": "id"
+                },
+                {
                     "data": "word_nombre_empresa"
                 },
                 {
@@ -144,6 +149,9 @@
                 },
                 {
                     "data": "valid_email"
+                },
+                {
+                    "data": "envios"
                 },
                 {
                     "data": "links_buttons"

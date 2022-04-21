@@ -17,7 +17,7 @@
             </div>
 
             <div class="card-body ">
-                <form action="{{ route('role.store') }}" method="POST">
+                <form action="{{ route('role.store') }}" method="POST" class="form_disabled_button_send">
 
                     @csrf
 
