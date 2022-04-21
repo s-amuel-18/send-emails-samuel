@@ -66,12 +66,13 @@ class ContactEmailController extends Controller
             "users.username",
             DB::raw("COUNT(users.id) as cant_reg")
         )
-            ->join("contact_emails AS co_em", "co_em.user_id", "=", "users.id")
+            ->leftJoin("contact_emails AS co_em", "co_em.user_id", "=", "users.id")
             ->groupBy("users.id")
             ->orderBy("cant_reg", "DESC")
             ->get();
 
-        $registros_promedio = $total_registros == 0 ? 0 :$total_registros / $users->count();
+        // dd($users->count());
+        $registros_promedio = $total_registros == 0 ? 0 : $total_registros / $users->count();
 
         $emials_sin_enviar = Contact_email::where("estado", "=", 0)->get()->count();
 

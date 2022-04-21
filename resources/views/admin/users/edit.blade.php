@@ -36,6 +36,8 @@
                                         </div>
                                     </div>
 
+
+
                                     @error('name')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>

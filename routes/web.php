@@ -12,10 +12,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\contact_email\ContactEmailController;
 use App\Http\Controllers\contact_email\EmailSendController;
+use App\Http\Controllers\RecomendacionMejoraController;
 // use App\Http\Controllers\contact_email\Email_send;
 use App\Http\Controllers\RoleController;
 use App\Mail\ServicioMaillable;
 use App\Models\BodyEmail;
+use App\Models\RecomendacionMejora;
 use Illuminate\Support\Facades\Mail;
 
 /*
@@ -51,4 +53,7 @@ Route::post('/envio-email/crear-informacio', [EmailSendController::class, 'crear
 
 // roles
 Route::resource("role", RoleController::class)->except("show")->middleware("auth")->names("role");
+
+// Recomendaciones asi el sistema
+Route::resource("recomendaciones", RecomendacionMejoraController::class)->middleware("auth")->names("recomendacion");
 
