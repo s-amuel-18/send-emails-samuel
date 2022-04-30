@@ -113,14 +113,14 @@ class EmailSendController extends Controller
                     "contact_email_id" => $email->id
                 ]);
 
-                $emails->estado = 1;
-                $emails->save();
+                $email->estado = 1;
+                $email->save();
 
                 Contact_email::where("id", $email->id)->update(["estado" => 1]);
 
                 array_push($arr_enviados, $email->email);
             } catch (\Throwable $th) {
-
+                // dd($th);
                 array_push($arr_sin_enviar, $email->email);
             }
         }
@@ -135,4 +135,10 @@ class EmailSendController extends Controller
 
         return redirect()->back()->with("message", $message);
     }
+
+    public function email()
+    {
+        return view("emails.servicio");
+    }
+
 }
