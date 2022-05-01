@@ -12,7 +12,7 @@
     <div class="row">
 
         @can('contact_email.index')
-            <div class="col-md-3">
+            <div class="col-md-3 col-6">
                 {{-- Registros de hoy --}}
                 <x-adminlte-small-box title="{{ $registros_de_hoy }}" text="Registros De Hoy" icon="fas fa-mail-bulk"
                     theme="success" url="contact-email/" url-text="Ver Registros" />
@@ -20,7 +20,7 @@
         @endcan
 
         @can('contact_email.estadisticas')
-            <div class="col-md-3">
+            <div class="col-md-3 col-6">
                 {{-- Registros Totales --}}
                 <x-adminlte-small-box title="{{ $total_registros }}" text="Registros Totales" icon="fas fa-mail-bulk"
                     theme="primary" url="contact-email/estadisticas" url-text="Ver Registros" />
@@ -28,7 +28,7 @@
         @endcan
 
         @can('envio_email.index')
-            <div class="col-md-3">
+            <div class="col-md-3 col-6">
                 {{-- Correos sin enviar --}}
                 <x-adminlte-small-box title="{{ $correos_sin_enviar }}" text="Correos Sin Enviar" icon="fas fa-mail-bulk"
                     theme="danger" url="envio-email" url-text="Enviar Correos" />
@@ -36,7 +36,7 @@
         @endcan
 
         @can('envio_email.index')
-            <div class="col-md-3">
+            <div class="col-md-3 col-6">
                 {{-- usuarios --}}
                 <x-adminlte-small-box title="{{ $enviados_hoy }}" text="Correos Enviados Hoy" icon="fas fa-mail-bulk"
                     theme="indigo" url="user" url-text="Enviar Correos" />
