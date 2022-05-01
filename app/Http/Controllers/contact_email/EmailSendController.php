@@ -142,3 +142,8 @@ class EmailSendController extends Controller
     }
 
 }
+
+
+// basededatos: avimarks_mail-samuel
+// user:        avimarks_samuel
+// pass:        0424Sam??
