@@ -38,7 +38,7 @@
         @can('envio_email.index')
             <div class="col-md-3 col-6">
                 {{-- usuarios --}}
-                <x-adminlte-small-box title="{{ $enviados_hoy }}" text="Correos Enviados Hoy" icon="fas fa-mail-bulk"
+                <x-adminlte-small-box title="{{ $enviados_hoy }}" text="Envios de Hoy" icon="fas fa-mail-bulk"
                     theme="indigo" url="user" url-text="Enviar Correos" />
             </div>
         @endcan
