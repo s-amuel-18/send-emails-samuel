@@ -135,7 +135,7 @@
                             <tr>
                                 <td style="width: 40px;" class="">
                                     <a target="_black" href="{{ $info["link_principal"] }}">
-                                        <img src="{{ asset('images/email-assets/gmail-dark.png') }}"
+                                        <img src="{{ asset('images/email-assets/logo-dark.png') }}"
                                             class="w-100" alt="logo">
                                     </a>
                                 </td>

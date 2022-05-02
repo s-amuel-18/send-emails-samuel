@@ -280,6 +280,12 @@ return [
                     'can'        => 'contact_email.estadisticas',
                 ],
                 [
+                    'text' => 'Crear Registro',
+                    'icon_color' => 'danger',
+                    'route'         => 'contact_email.create',
+                    'can'        => 'contact_email.create',
+                ],
+                [
                     'text' => 'Registros Emails',
                     'icon_color' => 'purple',
                     'route'         => 'contact_email.index',
