@@ -90,10 +90,8 @@
 
                                         </td>
                                         <td>
-                                            @if ($usr->emailEnviado->count() > 0)
-                                                <span class="badge badge-primary"
-                                                    style="background: #6610f2">{{ $usr->emailEnviado->where('created_at', '=', "date($date)")->count() }}</span>
-                                            @endif
+                                            <span class="badge badge-primary"
+                                                style="background: #6610f2">{{ $usr->emailEnviado->where('created_at', '=', "date($date)")->count() }}</span>
                                         </td>
                                     </tr>
                                 @endforeach
