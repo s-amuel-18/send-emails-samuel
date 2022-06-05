@@ -1,4 +1,4 @@
-@extends('adminlte::page', ['use_ico_only' => true, 'use_full_favicon' => false])
+@extends('layouts.app')
 @section('plugins.Datatables', true)
 
 @section('title', 'Inicio')
@@ -7,9 +7,52 @@
     <h1>Inicio</h1>
 @stop
 
-@section('content')
+@section('content_2')
 
     <div class="row">
+
+        @can('managment.index')
+            <div class="col-6 col-lg-3">
+                <div class="info-box">
+                    <span class="info-box-icon bg-warning"><i class="fa fa-coins"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Ingresos Brutos</span>
+                        <span class="info-box-number">${{ number_format($data['grossIncome'], 2) }}</span>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-6 col-lg-3">
+                <div class="info-box">
+                    <span class="info-box-icon bg-success"><i class="fa fa-arrow-up"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Ingresos Netos</span>
+                        <span class="info-box-number">${{ number_format($data['netIncome'], 2) }}</span>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-6 col-lg-3">
+                <div class="info-box">
+                    <span class="info-box-icon bg-pink"><i class="fa fa-dollar-sign"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Ingresos Diarios</span>
+                        <span class="info-box-number">${{ number_format($data['dailyEarnings'], 2) }}</span>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-6 col-lg-3">
+                <div class="info-box">
+                    <span class="info-box-icon bg-danger"><i class="fa fa-arrow-down"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Gastos</span>
+                        <span class="info-box-number">${{ number_format($data['totalSpents'], 2) }}</span>
+                    </div>
+
+                </div>
+            </div>
+        @endcan
 
         @can('contact_email.index')
             <div class="col-md-3 col-6">
@@ -117,8 +160,7 @@
                         <div class="card-tools">
 
                             @can('contact_email.create')
-                                <a href="{{ route('contact_email.create') }}"
-                                    class="btn btn-outline-light not-hover btn-tool">
+                                <a href="{{ route('contact_email.create') }}" class="btn btn-outline-light not-hover btn-tool">
                                     <i class="fas fa-plus"></i>
                                 </a>
                             @endcan
@@ -127,64 +169,65 @@
 
                     <div class="card-body table-responsive">
 
-                        @if ( $registros_de_hoy_completo->count() > 0 )
-                        <table class="table table-light table-striped table-hover text-nowrap table-valign-middle datatable">
-                            <thead class="">
-                                <tr>
-                                    <th>#</th>
-                                    <th>Nombre Empresa</th>
-                                    <th>Usuario</th>
-                                    <th>Email</th>
-                                    <th>Contacttos</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                                @foreach ($registros_de_hoy_completo as $i => $registro)
+                        @if ($registros_de_hoy_completo->count() > 0)
+                            <table
+                                class="table table-light table-striped table-hover text-nowrap table-valign-middle datatable">
+                                <thead class="">
                                     <tr>
-                                        <td>{{ $i + 1 }}</td>
-                                        <td>{{ $registro->nombre_empresa }}</td>
-                                        <td>{{ $registro->usuario->username }}</td>
-                                        <td>{{ $registro->email }}</td>
-                                        <td>
-                                            {{-- whatsapp --}}
-                                            @if ($registro->whatsapp)
-                                                <a target="_blanck" href="{{ $registro->whatsapp }}" class="btn btn-success btn-sm ">
-                                                    <i class="fab fa-whatsapp"></i>
-                                                </a>
-                                            @endif
-
-                                            {{-- facebook --}}
-                                            @if ($registro->facebook)
-                                                <a target="_blanck" href="{{ $registro->facebook }}"
-                                                    class="btn btn-primary btn-sm ">
-                                                    <i class="fab fa-facebook"></i>
-                                                </a>
-                                            @endif
-
-                                            {{-- instagram --}}
-                                            @if ($registro->instagram)
-                                                <a target="_blanck" href="{{ $registro->instagram }}"
-                                                    class="btn btn-danger btn-sm">
-                                                    <i class="fab fa-instagram"></i>
-                                                </a>
-                                            @endif
-
-                                            {{-- url --}}
-                                            @if ($registro->url)
-                                                <a target="_blanck" href="{{ $registro->url }}"
-                                                    class="btn btn-info btn-sm">
-                                                    <i class="fas fa-external-link-alt"></i>
-                                                </a>
-                                            @endif
-
-                                        </td>
+                                        <th>#</th>
+                                        <th>Nombre Empresa</th>
+                                        <th>Usuario</th>
+                                        <th>Email</th>
+                                        <th>Contacttos</th>
                                     </tr>
-                                @endforeach
+                                </thead>
+                                <tbody>
 
-                            </tbody>
-                        </table>
+                                    @foreach ($registros_de_hoy_completo as $i => $registro)
+                                        <tr>
+                                            <td>{{ $i + 1 }}</td>
+                                            <td>{{ $registro->nombre_empresa }}</td>
+                                            <td>{{ $registro->usuario->username }}</td>
+                                            <td>{{ $registro->email }}</td>
+                                            <td>
+                                                {{-- whatsapp --}}
+                                                @if ($registro->whatsapp)
+                                                    <a target="_blanck" href="{{ $registro->whatsapp }}"
+                                                        class="btn btn-success btn-sm ">
+                                                        <i class="fab fa-whatsapp"></i>
+                                                    </a>
+                                                @endif
 
+                                                {{-- facebook --}}
+                                                @if ($registro->facebook)
+                                                    <a target="_blanck" href="{{ $registro->facebook }}"
+                                                        class="btn btn-primary btn-sm ">
+                                                        <i class="fab fa-facebook"></i>
+                                                    </a>
+                                                @endif
+
+                                                {{-- instagram --}}
+                                                @if ($registro->instagram)
+                                                    <a target="_blanck" href="{{ $registro->instagram }}"
+                                                        class="btn btn-danger btn-sm">
+                                                        <i class="fab fa-instagram"></i>
+                                                    </a>
+                                                @endif
+
+                                                {{-- url --}}
+                                                @if ($registro->url)
+                                                    <a target="_blanck" href="{{ $registro->url }}"
+                                                        class="btn btn-info btn-sm">
+                                                        <i class="fas fa-external-link-alt"></i>
+                                                    </a>
+                                                @endif
+
+                                            </td>
+                                        </tr>
+                                    @endforeach
+
+                                </tbody>
+                            </table>
                         @else
                             Sin Registros De Hoy
                         @endif
@@ -205,8 +248,8 @@
 
 @section('js')
 
-<script>
-    $(".datatable").DataTable();
-</script>
+    <script>
+        $(".datatable").DataTable();
+    </script>
 
 @stop

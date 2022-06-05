@@ -1,4 +1,4 @@
-@extends('adminlte::page', ['use_ico_only' => true, 'use_full_favicon' => false])
+@extends('layouts.app')
 {{-- @section('plugins.Datatables', true) --}}
 @section('plugins.Summernote', true)
 
@@ -17,7 +17,7 @@
     <h1>Recomendaciones Al Sistema</h1>
 @stop
 
-@section('content')
+@section('content_2')
 
     <div class="callout callout-info">
         <h4 class="alert-heading">Haznos Saber Tus Recomendaciones</h4>

@@ -1,4 +1,4 @@
-@extends('adminlte::page', ['use_ico_only' => true, 'use_full_favicon' => false])
+@extends('layouts.app')
 @section('plugins.Datatables', true)
 
 @section('title', 'Administrador de Emails')
@@ -7,7 +7,7 @@
     <h1>Administrador De Emails</h1>
 @stop
 
-@section('content')
+@section('content_2')
 
     <div class="row">
         <div class="col-md-12">
@@ -134,8 +134,7 @@
             // "ordering": false,
             // "pageLength": 20,
             "ajax": "{{ route('contact_email.datatable') }}",
-            "columns": [
-                {
+            "columns": [{
                     "data": "id"
                 },
                 {

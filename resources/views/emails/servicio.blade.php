@@ -96,10 +96,10 @@
     </style>
 @endsection
 
-@section('content')
+@section('content_2')
     <div class="">
         <div class="banner_content">
-            <a target="_black" href="{{ $info["link_principal"] }}">
+            <a target="_black" href="{{ $info['link_principal'] }}">
                 <img src="{{ asset('images/email-assets/banner-servicio.png') }}" alt="banner Samuel"
                     class="banner">
             </a>
@@ -111,7 +111,7 @@
 
 
                 {{-- body --}}
-                {!! $info["body"] !!}
+                {!! $info['body'] !!}
 
                 <div class="body_buttos mt-3">
                     <table class="w-100 body_buttos_table">
@@ -122,7 +122,8 @@
                                     class="btn btn-outline-primary">Descargar CV</a>
                             </td>
                             <td style="padding: 6px">
-                                <a target="_black" href="{{ $info["link_principal"] }}" class="btn btn-primary">Ver Portafolio</a>
+                                <a target="_black" href="{{ $info['link_principal'] }}" class="btn btn-primary">Ver
+                                    Portafolio</a>
                             </td>
                         </tr>
                     </table>
@@ -134,9 +135,9 @@
                         <tbody>
                             <tr>
                                 <td style="width: 40px;" class="">
-                                    <a target="_black" href="{{ $info["link_principal"] }}">
-                                        <img src="{{ asset('images/email-assets/logo-dark.png') }}"
-                                            class="w-100" alt="logo">
+                                    <a target="_black" href="{{ $info['link_principal'] }}">
+                                        <img src="{{ asset('images/email-assets/logo-dark.png') }}" class="w-100"
+                                            alt="logo">
                                     </a>
                                 </td>
                                 <td></td>

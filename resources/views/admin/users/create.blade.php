@@ -1,4 +1,4 @@
-@extends('adminlte::page', ['use_ico_only' => true, 'use_full_favicon' => false])
+@extends('layouts.app')
 {{-- @section('plugins.Datatables', true) --}}
 
 @section('title', 'Nuevo Usuario')
@@ -7,7 +7,7 @@
     <h1>Nuevo Usuario</h1>
 @stop
 
-@section('content')
+@section('content_2')
 
     <div class="row">
         <div class="col-md-12">
@@ -137,9 +137,10 @@
 
                                     @foreach ($roles as $rol)
                                         <div class="form-check m-2">
-                                            <input id="role_{{ $rol->id }}" class="form-check-input" type="checkbox" name="roles[]"
-                                                value="{{ $rol->id }}">
-                                            <label for="role_{{ $rol->id }}" class="form-check-label">{{ $rol->name }}</label>
+                                            <input id="role_{{ $rol->id }}" class="form-check-input" type="checkbox"
+                                                name="roles[]" value="{{ $rol->id }}">
+                                            <label for="role_{{ $rol->id }}"
+                                                class="form-check-label">{{ $rol->name }}</label>
                                         </div>
                                     @endforeach
 

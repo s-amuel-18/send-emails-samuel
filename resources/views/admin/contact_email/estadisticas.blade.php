@@ -1,4 +1,4 @@
-@extends('adminlte::page', ['use_ico_only' => true, 'use_full_favicon' => false])
+@extends('layouts.app')
 @section('plugins.Chartjs', true)
 @section('plugins.Datatables', true)
 
@@ -8,7 +8,7 @@
     <h1>Estadistica De Registros</h1>
 @stop
 
-@section('content')
+@section('content_2')
 
     <div class="row">
 
@@ -106,7 +106,7 @@
                                                 <td>{{ $user->emails_registros->count() }}</td>
                                                 <td>
                                                     <span
-                                                        class="badge bg-{{ $user->emails_registros->count() > $registros_promedio? 'success': ($user->emails_registros->count() <= $registros_promedio? 'warning': 'danger') }}">{{ number_format(($user->emails_registros->count() * 100) / $total_registros, 2) }}%</span>
+                                                        class="badge bg-{{ $user->emails_registros->count() > $registros_promedio ? 'success' : ($user->emails_registros->count() <= $registros_promedio ? 'warning' : 'danger') }}">{{ number_format(($user->emails_registros->count() * 100) / $total_registros, 2) }}%</span>
                                                 </td>
                                             </tr>
                                         @endforeach

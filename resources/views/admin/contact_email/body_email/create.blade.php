@@ -1,4 +1,4 @@
-@extends('adminlte::page', ['use_ico_only' => true, 'use_full_favicon' => false])
+@extends('layouts.app')
 @section('plugins.Summernote', true)
 
 @section('title', 'Crear Cuerpo De Email')
@@ -14,7 +14,7 @@
 
 </style>
 
-@section('content')
+@section('content_2')
 
     <div class="row">
         <div class="col-md-12">

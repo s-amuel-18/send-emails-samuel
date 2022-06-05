@@ -56,10 +56,10 @@
 
                 @if ($data['income']->count() > 0)
                     <div class="card-header">
-                        <h3 class="card-title">Ingresos</h3>
+                        <h3 class="card-title">Ingresos ({{ $data['porcentegeIncome'] }} de ingresos brutos)</h3>
                         <div class="card-tools">
 
-                            <a href="{{ route('contact_email.create') }}" class=" btn-tool">
+                            <a href="{{ route('income.create') }}" class=" btn-tool">
                                 <i class="fa fa-coins"></i> Nuevo Ingreso
                             </a>
                         </div>
@@ -83,18 +83,18 @@
                                     <tr>
 
                                         <td>{{ Str::limit($income->name, 20) }}</td>
-                                        <td>{{ $income->billingTime->name }}</td>
+                                        <td>{{ $income->billingTime->name ?? 'sin' }}</td>
                                         <td>${{ number_format($income->price, 2) }}</td>
                                         <td style="width: 110px">
 
                                             <form
                                                 onsubmit="return confirm(`¿Estas seguro de querer elimimar este elemento?`)"
                                                 method="POST"
-                                                action="{{ route('income.delete', ['income' => $income->id]) }}">
+                                                action="{{ route('income.destroy', ['income' => $income->id]) }}">
                                                 @csrf
                                                 @method('DELETE')
 
-                                                <a href="http://127.0.0.1:8000/role/1/edit"
+                                                <a href="{{ route('income.edit', ['income' => $income->id]) }}"
                                                     class="btn btn-outline-success btn-sm">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
@@ -121,7 +121,8 @@
                         @if ($data['spents']->count() > 0)
                             <i class="text-warning fa fa-exclamation-triangle"></i>
                         @endif
-                        Sin Ingresos registrados <a class="d-inline" href="">Crea un nuevo ingreso</a>
+                        Sin Ingresos registrados <a class="d-inline" href="{{ route('income.create') }}">Crea un
+                            nuevo ingreso</a>
 
                     </p>
                 @endif
@@ -134,11 +135,13 @@
                 @if ($data['spents']->count() > 0)
 
                     <div class="card-header">
-                        <h3 class="card-title">Gastos</h3>
+                        <h3 class="card-title">Gastos
+                            ({{ $data['porcentegeSpent'] > 100 ? '+100' : $data['porcentegeSpent'] }} de ingresos brutos)
+                        </h3>
                         <div class="card-tools">
 
 
-                            <a href="{{ route('contact_email.create') }}" class="btn-tool">
+                            <a href="{{ route('spent.create') }}" class="btn-tool">
                                 <i class="fa fa-arrow-down"></i> Nuevo Gasto
                             </a>
                         </div>
@@ -163,7 +166,7 @@
                                     <tr>
 
                                         <td>{{ Str::limit($spent->name, 20) }}</td>
-                                        <td>{{ $spent->billingTime->name }}</td>
+                                        <td>{{ $spent->billingTime->name ?? 'sin' }}</td>
                                         <td>${{ number_format($spent->price, 2) }}</td>
                                         <td style="width: 110px">
 
@@ -172,11 +175,11 @@
                                             <form
                                                 onsubmit="return confirm(`¿Estas seguro de querer elimimar este elemento?`)"
                                                 method="POST"
-                                                action="{{ route('spent.delete', ['spent' => $spent->id]) }}">
+                                                action="{{ route('spent.destroy', ['spent' => $spent->id]) }}">
                                                 @csrf
                                                 @method('DELETE')
 
-                                                <a href="http://127.0.0.1:8000/role/1/edit"
+                                                <a href="{{ route('spent.edit', ['spent' => $spent->id]) }}"
                                                     class="btn btn-outline-success btn-sm">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
@@ -200,7 +203,8 @@
                     </div>
                 @else
                     <p class="p-3 h4 text-muted">
-                        Sin Gastos registrados <a class="d-inline" href="">Crea un nuevo ingreso</a>
+                        Sin Gastos registrados <a class="d-inline" href="{{ route('spent.create') }}">Crea un nuevo
+                            ingreso</a>
 
                     </p>
                 @endif

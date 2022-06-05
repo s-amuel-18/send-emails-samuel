@@ -1,4 +1,4 @@
-@extends('adminlte::page', ['use_ico_only' => true, 'use_full_favicon' => false])
+@extends('layouts.app')
 {{-- @section('plugins.Datatables', true) --}}
 
 @section('title', 'Administrador De Cuerpos De Emails')
@@ -7,7 +7,7 @@
     <h1>Administrador De Cuerpos De Emails</h1>
 @stop
 
-@section('content')
+@section('content_2')
 
     <div class="row">
         <div class="col-md-12">
@@ -64,7 +64,7 @@
                                                     method="POST">
 
                                                     @csrf
-                                                    @method("DELETE")
+                                                    @method('DELETE')
                                                     <button type="submit" class="btn btn-outline-danger btn-sm">
                                                         <i class="fa fa-trash"></i>
                                                     </button>
@@ -86,8 +86,8 @@
                             </tbody>
                         </table>
                     @else
-
-                    <h3 class="text-center">No Hay registros <a href="{{ route("bodyEmail.create") }}">Crear Cuerpo de email</a></h3>
+                        <h3 class="text-center">No Hay registros <a href="{{ route('bodyEmail.create') }}">Crear Cuerpo
+                                de email</a></h3>
 
                     @endif
 

@@ -28,4 +28,10 @@ class Spents extends Model
         )->join("billing_times", "billing_times.id", "=", "spents.billing_time_id")
             ->first()->sum_price ?? 0;
     }
+
+    public function scopePorcentegeSpent($query)
+    {
+        $grossIncome = Income::grossIncome();
+        return $grossIncome > 0 ? (($query->totalSpents() * 100) / $grossIncome) : "+100";
+    }
 }

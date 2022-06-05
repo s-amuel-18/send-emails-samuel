@@ -1,4 +1,4 @@
-@extends('adminlte::page', ['use_ico_only' => true, 'use_full_favicon' => false])
+@extends('layouts.app')
 {{-- @section('plugins.Datatables', true) --}}
 
 @section('title', 'tar Usuario "{{ $user->name }}"')
@@ -7,7 +7,7 @@
     <h1>Editar Usuario </h1>
 @stop
 
-@section('content')
+@section('content_2')
 
     <div class="row">
         <div class="col-md-12">
@@ -17,10 +17,11 @@
                 </div>
 
                 <div class="card-body ">
-                    <form action="{{ route('user.update', ['user' => $user->id]) }}" method="POST" class="form_disabled_button_send">
+                    <form action="{{ route('user.update', ['user' => $user->id]) }}" method="POST"
+                        class="form_disabled_button_send">
 
                         @csrf
-                        @method("PUT")
+                        @method('PUT')
                         <div class="row">
                             {{-- Name field --}}
                             <div class="col-md-3">
@@ -137,7 +138,7 @@
                             <div class="col-md-9">
                                 <div class="form-group d-flex flex-wrap">
 
-                                    @if( auth()->user()->id == $user->id )
+                                    @if (auth()->user()->id == $user->id)
                                         <div class="p-2 bg-secondary" style="opacity: 0.4">
                                             No puedes alterar tu propio rol
                                         </div>

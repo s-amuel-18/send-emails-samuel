@@ -15,7 +15,7 @@ class CreateSpentsTable extends Migration
     {
         Schema::create('spents', function (Blueprint $table) {
             $table->id();
-            $table->integer("billing_time_id")->index();
+            $table->integer("billing_time_id")->default(0)->index();
             $table->string("name");
             $table->text("desc");
             $table->float("price");

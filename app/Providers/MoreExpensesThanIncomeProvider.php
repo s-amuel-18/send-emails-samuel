@@ -27,8 +27,8 @@ class MoreExpensesThanIncomeProvider extends ServiceProvider
     public function boot()
     {
         View::composer('*', function ($view) {
-
-            if (auth()->user()) {
+            $user = auth()->user();
+            if ($user and $user->can("managment.index")) {
                 $netIncome = Income::netIncome();
                 $grossIncome = Income::grossIncome();
                 $totalSpents = Spents::totalSpents();
@@ -39,7 +39,7 @@ class MoreExpensesThanIncomeProvider extends ServiceProvider
                 if ($netIncome == 0 and $totalSpents == 0) {
                     $messageEncome = [
                         "color" => "warning",
-                        "title" => "!No tienes ganancias significativas!",
+                        "title" => "!No tienes ganancias!",
                         "description" => "Al no tener ganancias signoficaticas `puedes puedes tener conflictos com tu estavilidad economica.",
                     ];
                 } else if ($percetegeEncome < 30 and $percetegeEncome > 0) {

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\IncomeSpentRequest;
+use App\Models\BillingTime;
 use App\Models\Income;
 use Illuminate\Http\Request;
 
@@ -24,7 +26,13 @@ class IncomeController extends Controller
      */
     public function create()
     {
-        //
+        $data["title"] = "Crear Nuevo Ingreso";
+        $data["text_buttom"] = "Crear Nuevo Ingreso";
+        $data["billing_times"] = BillingTime::orderBy("days", "ASC")->get();
+        $data["route_send"] = Route("income.store");
+        $data["method"] = "POST";
+
+        return view("admin.managment.create", compact("data"));
     }
 
     /**
@@ -33,9 +41,27 @@ class IncomeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(IncomeSpentRequest $request)
     {
-        //
+        // dd($request);
+
+        $income = Income::create([
+            "name" => $request["name"],
+            "billing_time_id" => $request["billing_time_id"],
+            "price" => $request["price"],
+            "desc" => $request["desc"],
+        ]);
+
+        $income->billing_time_id = $request["billing_time_id"];
+        $income->save();
+
+        $message = [
+            "message" => "El Ingreso <b>{$income->name}</b> Se ha creado correctamente.",
+            "color" => "success",
+            "icon" => "far fa-check-circle"
+        ];
+
+        return redirect()->route("managment.index")->with("message", $message);
     }
 
     /**
@@ -57,7 +83,14 @@ class IncomeController extends Controller
      */
     public function edit(Income $income)
     {
-        //
+        $data["title"] = "Actualizar Ingreso " . $income->name;
+        $data["text_buttom"] = "Actualizar Ingreso";
+        $data["billing_times"] = BillingTime::orderBy("days", "ASC")->get();
+        $data["route_send"] = Route("income.update", ['income' => $income->id]);
+        $data["update"] = $income;
+        $data["method"] = "PUT";
+
+        return view("admin.managment.create", compact("data"));
     }
 
     /**
@@ -67,9 +100,25 @@ class IncomeController extends Controller
      * @param  \App\Models\Income  $income
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Income $income)
+    public function update(IncomeSpentRequest $request, Income $income)
     {
-        //
+        $incomeUpdate = Income::create([
+            "name" => $request["name"],
+            "billing_time_id" => $request["billing_time_id"],
+            "price" => $request["price"],
+            "desc" => $request["desc"],
+        ]);
+
+        $incomeUpdate->billing_time_id = $request["billing_time_id"];
+        $incomeUpdate->save();
+
+        $message = [
+            "message" => "El Ingreso <b>{$incomeUpdate->name}</b> Se ha Actualizado correctamente.",
+            "color" => "success",
+            "icon" => "far fa-check-circle"
+        ];
+
+        return redirect()->route("managment.index")->with("message", $message);
     }
 
     /**

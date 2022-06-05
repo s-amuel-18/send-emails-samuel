@@ -1,4 +1,4 @@
-@extends('adminlte::page', ['use_ico_only' => true, 'use_full_favicon' => false])
+@extends('layouts.app')
 {{-- @section('plugins.Datatables', true) --}}
 
 @section('title', 'Nuevo Email')
@@ -7,7 +7,7 @@
     <h1>Nuevo Email</h1>
 @stop
 
-@section('content')
+@section('content_2')
 
     <div class="row">
         <div class="col-md-12">
@@ -53,7 +53,8 @@
                                         <div class="input-group mb-3 ">
                                             <input type="text" name="url"
                                                 class="form-control @error('url') is-invalid @enderror"
-                                                value="{{ old('url') }}" placeholder="Pagina De Contacto o de referencia" autofocus>
+                                                value="{{ old('url') }}" placeholder="Pagina De Contacto o de referencia"
+                                                autofocus>
 
                                             <div class="input-group-append">
                                                 <div class="input-group-text">
@@ -95,8 +96,7 @@
                                         <div class="input-group mb-3 ">
                                             <input type="text" name="whatsapp"
                                                 class="form-control @error('whatsapp') is-invalid @enderror"
-                                                value="{{ old('whatsapp') }}" placeholder="whatsapp"
-                                                autofocus>
+                                                value="{{ old('whatsapp') }}" placeholder="whatsapp" autofocus>
 
                                             <div class="input-group-append">
                                                 <div class="input-group-text">
@@ -117,8 +117,7 @@
                                         <div class="input-group mb-3 ">
                                             <input type="text" name="instagram"
                                                 class="form-control @error('instagram') is-invalid @enderror"
-                                                value="{{ old('instagram') }}" placeholder="instagram"
-                                                autofocus>
+                                                value="{{ old('instagram') }}" placeholder="instagram" autofocus>
 
                                             <div class="input-group-append">
                                                 <div class="input-group-text">
@@ -140,8 +139,7 @@
                                         <div class="input-group mb-3 ">
                                             <input type="text" name="facebook"
                                                 class="form-control @error('facebook') is-invalid @enderror"
-                                                value="{{ old('facebook') }}" placeholder="facebook"
-                                                autofocus>
+                                                value="{{ old('facebook') }}" placeholder="facebook" autofocus>
 
                                             <div class="input-group-append">
                                                 <div class="input-group-text">
@@ -164,7 +162,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     {{-- <label for="descripcion">Descripcion</label> --}}
-                                    <textarea id="descripcion" class="form-control" name="descripcion" style="height: 146.5px;">{{ old('descripcion')  }}</textarea>
+                                    <textarea id="descripcion" class="form-control" name="descripcion"
+                                        style="height: 146.5px;">{{ old('descripcion') }}</textarea>
                                 </div>
                             </div>
 

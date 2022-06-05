@@ -299,12 +299,12 @@ return [
                 ],
             ],
         ],
-        ['header' => 'Administracion'],
+        ['header' => 'Administracion', 'can' => 'managment.index',],
         [
             'text'        => 'Administracion de ingresos',
             'route'         => 'managment.index',
             'icon'        => 'fa fa-coins',
-            'can'        => 'role.index',
+            'can'        => 'managment.index',
         ],
     ],
 

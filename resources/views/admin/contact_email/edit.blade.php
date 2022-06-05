@@ -1,4 +1,4 @@
-@extends('adminlte::page', ['use_ico_only' => true, 'use_full_favicon' => false])
+@extends('layouts.app')
 {{-- @section('plugins.Datatables', true) --}}
 
 @section('title', 'EmEditar Email')
@@ -7,7 +7,7 @@
     <h1>Editar Email</h1>
 @stop
 
-@section('content')
+@section('content_2')
 
     <div class="row">
         <div class="col-md-12">
@@ -17,10 +17,12 @@
                 </div>
 
                 <div class="card-body ">
-                    <form class="form_disabled_button_send" action="{{ route('contact_email.update', ["contact_email"=> $contact_email->id]) }}" method="POST" >
+                    <form class="form_disabled_button_send"
+                        action="{{ route('contact_email.update', ['contact_email' => $contact_email->id]) }}"
+                        method="POST">
 
                         @csrf
-                        @method("PUT")
+                        @method('PUT')
 
                         <div class="row">
 
@@ -32,8 +34,8 @@
                                         <div class="input-group mb-3 ">
                                             <input type="text" name="nombre_empresa"
                                                 class="form-control @error('nombre_empresa') is-invalid @enderror"
-                                                value="{{ old('nombre_empresa') ? old('nombre_empresa') : $contact_email->nombre_empresa }}" placeholder="Nombre De La Empresa"
-                                                autofocus>
+                                                value="{{ old('nombre_empresa') ? old('nombre_empresa') : $contact_email->nombre_empresa }}"
+                                                placeholder="Nombre De La Empresa" autofocus>
 
                                             <div class="input-group-append">
                                                 <div class="input-group-text">
@@ -54,7 +56,8 @@
                                         <div class="input-group mb-3 ">
                                             <input type="text" name="url"
                                                 class="form-control @error('url') is-invalid @enderror"
-                                                value="{{ old('url') ? old('url') : $contact_email->url }}" placeholder="Pagina De Contacto o de referencia" autofocus>
+                                                value="{{ old('url') ? old('url') : $contact_email->url }}"
+                                                placeholder="Pagina De Contacto o de referencia" autofocus>
 
                                             <div class="input-group-append">
                                                 <div class="input-group-text">
@@ -75,7 +78,8 @@
                                         <div class="input-group mb-3 ">
                                             <input type="email" name="email"
                                                 class="form-control @error('email') is-invalid @enderror"
-                                                value="{{ old('email') ? old('email') : $contact_email->email }}" placeholder="Correo Electronico" autofocus>
+                                                value="{{ old('email') ? old('email') : $contact_email->email }}"
+                                                placeholder="Correo Electronico" autofocus>
 
                                             <div class="input-group-append">
                                                 <div class="input-group-text">
@@ -96,8 +100,8 @@
                                         <div class="input-group mb-3 ">
                                             <input type="text" name="whatsapp"
                                                 class="form-control @error('whatsapp') is-invalid @enderror"
-                                                value="{{ old('whatsapp') ? old('whatsapp') : $contact_email->whatsapp }}" placeholder="whatsapp"
-                                                autofocus>
+                                                value="{{ old('whatsapp') ? old('whatsapp') : $contact_email->whatsapp }}"
+                                                placeholder="whatsapp" autofocus>
 
                                             <div class="input-group-append">
                                                 <div class="input-group-text">
@@ -118,8 +122,8 @@
                                         <div class="input-group mb-3 ">
                                             <input type="text" name="instagram"
                                                 class="form-control @error('instagram') is-invalid @enderror"
-                                                value="{{ old('instagram') ? old('instagram') : $contact_email->instagram }}" placeholder="instagram"
-                                                autofocus>
+                                                value="{{ old('instagram') ? old('instagram') : $contact_email->instagram }}"
+                                                placeholder="instagram" autofocus>
 
                                             <div class="input-group-append">
                                                 <div class="input-group-text">
@@ -141,8 +145,8 @@
                                         <div class="input-group mb-3 ">
                                             <input type="text" name="facebook"
                                                 class="form-control @error('facebook') is-invalid @enderror"
-                                                value="{{ old('facebook') ? old('facebook') : $contact_email->facebook }}" placeholder="facebook"
-                                                autofocus>
+                                                value="{{ old('facebook') ? old('facebook') : $contact_email->facebook }}"
+                                                placeholder="facebook" autofocus>
 
                                             <div class="input-group-append">
                                                 <div class="input-group-text">
@@ -165,7 +169,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     {{-- <label for="descripcion">Descripcion</label> --}}
-                                    <textarea id="descripcion" class="form-control" name="descripcion" style="height: 146.5px;">{{ old('descripcion') ? old('descripcion') : $contact_email->descripcion}}</textarea>
+                                    <textarea id="descripcion" class="form-control" name="descripcion"
+                                        style="height: 146.5px;">{{ old('descripcion') ? old('descripcion') : $contact_email->descripcion }}</textarea>
                                 </div>
                             </div>
 

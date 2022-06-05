@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Contact_email;
 use App\Models\EmailEnviado;
+use App\Models\Income;
+use App\Models\Spents;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -66,7 +68,13 @@ class HomeController extends Controller
             ->orderBy("cantidad_registros", "DESC")
             ->get();
 
+        if (auth()->user()->can("managment.index")) {
+            $data["netIncome"] = Income::netIncome();
+            $data["grossIncome"] = Income::grossIncome();
+            $data["totalSpents"] = Spents::totalSpents();
+            $data["dailyEarnings"] = Income::dailyEarnings();
+        }
 
-        return view('home', compact("total_registros", "registros_de_hoy", "correos_sin_enviar", "enviados_hoy", "usr_registros_hoy", "date", "registros_de_hoy_completo"));
+        return view('home', compact("data", "total_registros", "registros_de_hoy", "correos_sin_enviar", "enviados_hoy", "usr_registros_hoy", "date", "registros_de_hoy_completo"));
     }
 }

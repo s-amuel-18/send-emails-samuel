@@ -10,6 +10,7 @@ class ManagementController extends Controller
 {
     public function index()
     {
+
         $data["income"] = Income::orderByDesc("price")->get();
         $data["spents"] = Spents::orderByDesc("price")->get();
         $data["title"] = "Administracion De Ingresos";
@@ -17,6 +18,8 @@ class ManagementController extends Controller
         $data["grossIncome"] = Income::grossIncome();
         $data["totalSpents"] = Spents::totalSpents();
         $data["dailyEarnings"] = Income::dailyEarnings();
+        $data["porcentegeIncome"] = Income::porcentegeIncome();
+        $data["porcentegeSpent"] = Spents::porcentegeSpent();
 
         return view("admin.managment.index", compact("data"));
     }

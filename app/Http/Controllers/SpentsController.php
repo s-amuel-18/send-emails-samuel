@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\IncomeSpentRequest;
+use App\Models\BillingTime;
 use App\Models\Spents;
 use Illuminate\Http\Request;
 
@@ -25,6 +27,13 @@ class SpentsController extends Controller
     public function create()
     {
         //
+        $data["title"] = "Crear Nuevo Gasto";
+        $data["text_buttom"] = "Crear Nuevo Gasto";
+        $data["billing_times"] = BillingTime::orderBy("days", "ASC")->get();
+        $data["route_send"] = Route("spent.store");
+        $data["method"] = "POST";
+
+        return view("admin.managment.create", compact("data"));
     }
 
     /**
@@ -33,9 +42,27 @@ class SpentsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(IncomeSpentRequest $request)
     {
-        //
+        // dd($request);
+
+        $income = Spents::create([
+            "name" => $request["name"],
+            "billing_time_id" => $request["billing_time_id"],
+            "price" => $request["price"],
+            "desc" => $request["desc"],
+        ]);
+
+        $income->billing_time_id = $request["billing_time_id"];
+        $income->save();
+
+        $message = [
+            "message" => "El Ingreso <b>{$income->name}</b> Se ha creado correctamente.",
+            "color" => "success",
+            "icon" => "far fa-check-circle"
+        ];
+
+        return redirect()->route("managment.index")->with("message", $message);
     }
 
     /**
@@ -46,7 +73,6 @@ class SpentsController extends Controller
      */
     public function show(Spents $spents)
     {
-        //
     }
 
     /**
@@ -55,9 +81,17 @@ class SpentsController extends Controller
      * @param  \App\Models\Spents  $spents
      * @return \Illuminate\Http\Response
      */
-    public function edit(Spents $spents)
+    public function edit(Spents $spent)
     {
-        //
+
+        $data["title"] = "Actualizar Gasto " . $spent->name;
+        $data["text_buttom"] = "Actualizar Gasto";
+        $data["billing_times"] = BillingTime::orderBy("days", "ASC")->get();
+        $data["route_send"] = Route("spent.update", ["spent" => $spent->id]);
+        $data["update"] = $spent;
+        $data["method"] = "PUT";
+
+        return view("admin.managment.create", compact("data"));
     }
 
     /**
@@ -67,9 +101,25 @@ class SpentsController extends Controller
      * @param  \App\Models\Spents  $spents
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Spents $spents)
+    public function update(IncomeSpentRequest $request, Spents $spent)
     {
-        //
+        $spentUpdate = Spents::create([
+            "name" => $request["name"],
+            "billing_time_id" => $request["billing_time_id"],
+            "price" => $request["price"],
+            "desc" => $request["desc"],
+        ]);
+
+        $spentUpdate->billing_time_id = $request["billing_time_id"];
+        $spentUpdate->save();
+
+        $message = [
+            "message" => "El Ingreso <b>{$spentUpdate->name}</b> Se ha Actualizado correctamente.",
+            "color" => "success",
+            "icon" => "far fa-check-circle"
+        ];
+
+        return redirect()->route("managment.index")->with("message", $message);
     }
 
     /**

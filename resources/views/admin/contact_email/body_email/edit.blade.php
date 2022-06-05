@@ -1,4 +1,4 @@
-@extends('adminlte::page', ['use_ico_only' => true, 'use_full_favicon' => false])
+@extends('layouts.app')
 @section('plugins.Summernote', true)
 
 @section('title', 'Editar Cuerpo De Email')
@@ -14,7 +14,7 @@
 
 </style>
 
-@section('content')
+@section('content_2')
 
     <div class="row">
         <div class="col-md-12">
@@ -26,13 +26,15 @@
                 <div class="card-body table-responsive">
 
                     <div class="col-md-6 offset-md-3">
-                        <form class="form_disabled_button_send" action="{{ route("bodyEmail.update", ["body_email" => $bodyEmail->id]) }}" method="POST">
+                        <form class="form_disabled_button_send"
+                            action="{{ route('bodyEmail.update', ['body_email' => $bodyEmail->id]) }}" method="POST">
                             @csrf
-                            @method("PUT")
+                            @method('PUT')
                             {{-- Nombre --}}
                             <div class="input-group mb-3 ">
                                 <input type="text" name="nombre" class="form-control @error('nombre') is-invalid @enderror"
-                                    value="{{ old('nombre') ? old('nombre') : $bodyEmail->nombre }}" placeholder="Nombre" autofocus>
+                                    value="{{ old('nombre') ? old('nombre') : $bodyEmail->nombre }}" placeholder="Nombre"
+                                    autofocus>
 
                                 <div class="input-group-append">
                                     <div class="input-group-text">
@@ -49,14 +51,13 @@
 
 
                             <div class="form-group">
-                                <textarea id="summernote" name="body" class=" @error('body') is-invalid @enderror"
-                                >{!! old('body') ? old('body') : $bodyEmail->body !!}</textarea>
+                                <textarea id="summernote" name="body" class=" @error('body') is-invalid @enderror">{!! old('body') ? old('body') : $bodyEmail->body !!}</textarea>
 
                                 @error('body')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
 
                             <div class="d-flex justify-content-end">

@@ -58,16 +58,19 @@ Route::post('/envio-email/crear-informacio', [EmailSendController::class, 'crear
 // roles
 Route::resource("role", RoleController::class)->except("show")->middleware("auth")->names("role");
 
-// administracion
-Route::get("administracion", [ManagementController::class, "index"])
-    ->middleware(["auth"])
-    ->name("managment.index");
-Route::delete("ingresos/delete/{income}", [IncomeController::class, "destroy"])
-    ->middleware(["auth"])
-    ->name("income.delete");
-Route::delete("spent/delete/{spent}", [SpentsController::class, "destroy"])
-    ->middleware(["auth"])
-    ->name("spent.delete");
+
+Route::middleware(["can:managment.index", "auth"])->group(function () {
+
+    // administracion
+    Route::get("administracion", [ManagementController::class, "index"])
+        ->name("managment.index");
+    // income
+    Route::resource("income", IncomeController::class)->except("index")->names("income");
+
+    // spents
+    Route::resource("spent", SpentsController::class)->except("index")->names("spent");
+});
+
 
 // Recomendaciones asi el sistema
 Route::resource("recomendaciones", RecomendacionMejoraController::class)->middleware("auth")->names("recomendacion");

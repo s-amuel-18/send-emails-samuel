@@ -1,4 +1,4 @@
-@extends('adminlte::page', ['use_ico_only' => true, 'use_full_favicon' => false])
+@extends('layouts.app')
 {{-- @section('plugins.Datatables', true) --}}
 
 @section('title', 'Administrador de usuarios')
@@ -7,7 +7,7 @@
     <h1>Administrador De Usuarios</h1>
 @stop
 
-@section('content')
+@section('content_2')
 
     <div class="row">
         <div class="col-md-12">
@@ -17,10 +17,9 @@
                     <div class="card-tools">
 
                         @can('user.create')
-                        <a href="{{ route('user.create') }}" class="btn btn-outline-light not-hover btn-tool">
-                            <i class="fas fa-user-plus"></i>
-                        </a>
-
+                            <a href="{{ route('user.create') }}" class="btn btn-outline-light not-hover btn-tool">
+                                <i class="fas fa-user-plus"></i>
+                            </a>
                         @endcan
                     </div>
                 </div>
@@ -50,10 +49,10 @@
                                     <td> {{ $user->username }} </td>
                                     <td> {{ $user->email }} </td>
                                     <td>
-                                        @if( $user->roles->count() > 0 )
-                                        @foreach ($user->roles as $rol)
-                                            <span class="badge badge-primary">{{$rol->name}}</span>
-                                        @endforeach
+                                        @if ($user->roles->count() > 0)
+                                            @foreach ($user->roles as $rol)
+                                                <span class="badge badge-primary">{{ $rol->name }}</span>
+                                            @endforeach
                                         @else
                                             <span class="badge badge-danger">Sin Rol</span>
                                         @endif
@@ -85,10 +84,11 @@
                                             @else
                                                 <form class="d-inline"
                                                     onsubmit="return confirm('Realmente Deseas Eliminar Este Usuario')"
-                                                    action="{{ route('user.destroy', ['user' => $user->id]) }}" method="POST">
+                                                    action="{{ route('user.destroy', ['user' => $user->id]) }}"
+                                                    method="POST">
 
                                                     @csrf
-                                                    @method("DELETE")
+                                                    @method('DELETE')
                                                     <button type="submit" class="btn btn-outline-danger btn-sm">
                                                         <i class="fa fa-trash"></i>
                                                     </button>

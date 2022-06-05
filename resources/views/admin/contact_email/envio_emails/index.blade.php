@@ -1,4 +1,4 @@
-@extends('adminlte::page', ['use_ico_only' => true, 'use_full_favicon' => false])
+@extends('layouts.app')
 {{-- @section('plugins.Datatables', true) --}}
 @section('plugins.Summernote', true)
 @section('plugins.Select2', true)
@@ -20,7 +20,7 @@
 </style>
 
 
-@section('content')
+@section('content_2')
 
     <div class="card card-light">
         <div class="card-header">
@@ -73,13 +73,14 @@
                             @enderror
                         </div>
 
-                        {{-- Check correos aleatorios--}}
+                        {{-- Check correos aleatorios --}}
                         <div class="form-group">
                             <div class="custom-control custom-checkbox">
                                 <input type="hidden" name="check_emails" value="">
 
                                 <input class="custom-control-input @error('check_emails') is-invalid @enderror"
-                                    type="checkbox" id="customCheckbox2" value="1" name="check_emails" {{ old("check_emails") ? "checked" : ""}}>
+                                    type="checkbox" id="customCheckbox2" value="1" name="check_emails"
+                                    {{ old('check_emails') ? 'checked' : '' }}>
                                 <label for="customCheckbox2" class="custom-control-label">Seleccionar los ultimos 200 Emails
                                     Sin Enviar </label>
                             </div>
@@ -90,13 +91,15 @@
                             @enderror
                         </div>
 
-                        {{-- Email select--}}
+                        {{-- Email select --}}
                         <div class="form-group">
                             <label for="">Seleccionar email</label><br>
                             <select class="select2-check" name="emails[]" multiple="multiple">
 
                                 @foreach ($emails as $email)
-                                    <option data-badge-color="{{ $email->estado == 0 ? "danger" : "success"  }}" data-badge-text="{{ $email->estado == 0 ? "Sin Enviar" : "Enviado"  }}" value="{{ $email->id }}">{{ $email->email }}</option>
+                                    <option data-badge-color="{{ $email->estado == 0 ? 'danger' : 'success' }}"
+                                        data-badge-text="{{ $email->estado == 0 ? 'Sin Enviar' : 'Enviado' }}"
+                                        value="{{ $email->id }}">{{ $email->email }}</option>
                                 @endforeach
 
                             </select>
@@ -196,22 +199,21 @@
 
 
 
-            function iformat(icon, badge ) {
+            function iformat(icon, badge) {
 
                 var originalOption = icon.element;
-                if(!originalOption ) {
-                    return icon.text ;
+                if (!originalOption) {
+                    return icon.text;
                 }
                 var originalOptionBadge = $(originalOption).data('badge-text');
-                var color= $(originalOption).data('badge-color');
+                var color = $(originalOption).data('badge-color');
 
 
-                return $('<div class="d-flex justify-content-between"><span>' + icon.text + '</span><div class=""><span class="badge badge-'+ color +'">'+ originalOptionBadge +'</span></div></div>');
+                return $('<div class="d-flex justify-content-between"><span>' + icon.text +
+                    '</span><div class=""><span class="badge badge-' + color + '">' + originalOptionBadge +
+                    '</span></div></div>');
             }
         })
-
     </script>
 
 @stop
-
-

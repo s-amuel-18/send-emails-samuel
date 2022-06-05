@@ -31,7 +31,14 @@ class Income extends Model
 
     public function scopeNetIncome($query)
     {
-        return $this->grossIncome() > 0 ? ($this->grossIncome() - Spents::totalSpents()) : 0;
+        $grossIncome = $this->grossIncome();
+        $totalSpents = Spents::totalSpents();
+
+        if ($totalSpents > $grossIncome) {
+            return 0;
+        }
+
+        return $grossIncome > 0 ? ($grossIncome - $totalSpents) : 0;
     }
 
 
@@ -40,5 +47,11 @@ class Income extends Model
         $netIncome = $query->netIncome() ?? 0;
         // return $netIncome;
         return $netIncome > 0 ? ($netIncome / BillingTime::MONTHLY) : 0;
+    }
+
+    public function scopePorcentegeIncome($query)
+    {
+        $netIncome = $query->netIncome();
+        return $netIncome > 0 ? (($netIncome * 100) / $query->grossIncome()) : 0;
     }
 }
