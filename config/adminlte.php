@@ -121,7 +121,7 @@ return [
     |
     */
 
-    'classes_body' => '',
+    'classes_body' => 'sidebar-collapse',
     'classes_brand' => '',
     'classes_brand_text' => '',
     'classes_content_wrapper' => '',
@@ -298,6 +298,13 @@ return [
                     'can'        => 'bodyEmail.index',
                 ],
             ],
+        ],
+        ['header' => 'Administracion'],
+        [
+            'text'        => 'Administracion de ingresos',
+            'route'         => 'managment.index',
+            'icon'        => 'fa fa-coins',
+            'can'        => 'role.index',
         ],
     ],
 

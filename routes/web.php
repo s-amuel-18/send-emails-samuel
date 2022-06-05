@@ -12,9 +12,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\contact_email\ContactEmailController;
 use App\Http\Controllers\contact_email\EmailSendController;
+use App\Http\Controllers\IncomeController;
+use App\Http\Controllers\ManagementController;
 use App\Http\Controllers\RecomendacionMejoraController;
 // use App\Http\Controllers\contact_email\Email_send;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SpentsController;
 use App\Mail\ServicioMaillable;
 use App\Models\BodyEmail;
 use App\Models\RecomendacionMejora;
@@ -55,6 +58,16 @@ Route::post('/envio-email/crear-informacio', [EmailSendController::class, 'crear
 // roles
 Route::resource("role", RoleController::class)->except("show")->middleware("auth")->names("role");
 
+// administracion
+Route::get("administracion", [ManagementController::class, "index"])
+    ->middleware(["auth"])
+    ->name("managment.index");
+Route::delete("ingresos/delete/{income}", [IncomeController::class, "destroy"])
+    ->middleware(["auth"])
+    ->name("income.delete");
+Route::delete("spent/delete/{spent}", [SpentsController::class, "destroy"])
+    ->middleware(["auth"])
+    ->name("spent.delete");
+
 // Recomendaciones asi el sistema
 Route::resource("recomendaciones", RecomendacionMejoraController::class)->middleware("auth")->names("recomendacion");
-

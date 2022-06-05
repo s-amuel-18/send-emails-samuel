@@ -1,0 +1,29 @@
+tablas
+
+BillingTime (tiempo de facturacion)
+ - id
+ - name 
+ - days
+ - weeks
+ - fortnights
+ - monthlys
+ - softdelete
+ - timestamp
+Income (ingreso)
+ - id
+ - billing_time_id
+ - name
+ - desc 
+ - price
+ - softdelete
+ - timestamp
+
+Spents
+ - id
+ - billing_time_id
+ - name 
+ - desc 
+ - price
+ - softdelete
+ - timestamp
+
