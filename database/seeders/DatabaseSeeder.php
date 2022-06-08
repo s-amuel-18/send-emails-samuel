@@ -26,8 +26,8 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(9)->create();
         $this->call(UserSeeder::class);
         $this->call(BillingTimeSeeder::class);
-        Income::factory(7)->create();
-        Spents::factory(4)->create();
+        // Income::factory(7)->create();
+        // Spents::factory(4)->create();
         // BodyEmail::factory(10)->create();
         // $this->call(EnvioEmailSeeder::class);
         // Factory::factoryForModel("App\Models\Body_email");

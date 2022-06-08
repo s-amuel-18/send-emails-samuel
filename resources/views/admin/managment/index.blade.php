@@ -56,7 +56,7 @@
 
                 @if ($data['income']->count() > 0)
                     <div class="card-header">
-                        <h3 class="card-title">Ingresos ({{ $data['porcentegeIncome'] }} de ingresos brutos)</h3>
+                        <h3 class="card-title">Ingresos ({{ number_format($data['porcentegeIncome'], 2) }}%)</h3>
                         <div class="card-tools">
 
                             <a href="{{ route('income.create') }}" class=" btn-tool">
@@ -136,7 +136,7 @@
 
                     <div class="card-header">
                         <h3 class="card-title">Gastos
-                            ({{ $data['porcentegeSpent'] > 100 ? '+100' : $data['porcentegeSpent'] }} de ingresos brutos)
+                            ({{ number_format($data['porcentegeSpent'] > 100 ? '+100' : $data['porcentegeSpent'], 2) }}%)
                         </h3>
                         <div class="card-tools">
 

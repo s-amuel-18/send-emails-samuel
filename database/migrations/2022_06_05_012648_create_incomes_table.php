@@ -17,7 +17,7 @@ class CreateIncomesTable extends Migration
             $table->id();
             $table->bigInteger("billing_time_id")->default(0)->index();
             $table->string("name");
-            $table->text("desc");
+            $table->text("desc")->nullable();
             $table->float("price");
             $table->softDeletes();
             $table->timestamps();

@@ -102,18 +102,19 @@ class IncomeController extends Controller
      */
     public function update(IncomeSpentRequest $request, Income $income)
     {
-        $incomeUpdate = Income::create([
+
+        $income->update([
             "name" => $request["name"],
             "billing_time_id" => $request["billing_time_id"],
             "price" => $request["price"],
             "desc" => $request["desc"],
         ]);
 
-        $incomeUpdate->billing_time_id = $request["billing_time_id"];
-        $incomeUpdate->save();
+        $income->billing_time_id = $request["billing_time_id"];
+        $income->save();
 
         $message = [
-            "message" => "El Ingreso <b>{$incomeUpdate->name}</b> Se ha Actualizado correctamente.",
+            "message" => "El Ingreso Se ha Actualizado correctamente.",
             "color" => "success",
             "icon" => "far fa-check-circle"
         ];

@@ -57,7 +57,7 @@
                         <option value="">-- Seleccionar Tiempo De Facturacion</option>
                         @foreach ($data['billing_times'] as $billing)
                             <option
-                                {{ old('billing_time_id') == $billing->id ? 'selected' : ($data['update']['billing_time_id'] ?? null == $billing->id ? 'selected' : '') }}
+                                {{ old('billing_time_id') == $billing->id ? 'selected' : (($data['update']['billing_time_id'] ?? null) == $billing->id ? 'selected' : '') }}
                                 value="{{ $billing->id }}">{{ $billing->name }}</option>
                         @endforeach
                     </select>
