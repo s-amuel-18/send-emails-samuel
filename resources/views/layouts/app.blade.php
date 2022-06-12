@@ -17,7 +17,7 @@
     @if (session('message'))
         <div class="alert alert-{{ session('message')['color'] ?? false }} alert-dismissible fade show" role="alert">
             <i class="{{ session('message')['icon'] ?? false }}"></i>
-            {{ session('message')['message'] ?? false }}
+            {!! session('message')['message'] ?? false !!}
 
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>

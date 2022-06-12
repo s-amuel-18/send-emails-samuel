@@ -103,18 +103,19 @@ class SpentsController extends Controller
      */
     public function update(IncomeSpentRequest $request, Spents $spent)
     {
-        $spentUpdate = Spents::create([
+
+        $spent->update([
             "name" => $request["name"],
             "billing_time_id" => $request["billing_time_id"],
             "price" => $request["price"],
             "desc" => $request["desc"],
         ]);
 
-        $spentUpdate->billing_time_id = $request["billing_time_id"];
-        $spentUpdate->save();
+        $spent->billing_time_id = $request["billing_time_id"];
+        $spent->save();
 
         $message = [
-            "message" => "El Ingreso <b>{$spentUpdate->name}</b> Se ha Actualizado correctamente.",
+            "message" => "El Gasto Se ha Actualizado correctamente.",
             "color" => "success",
             "icon" => "far fa-check-circle"
         ];
