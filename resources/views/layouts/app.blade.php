@@ -2,6 +2,8 @@
 
 @section('content')
 
+@include('admin.components.loading')
+
 @can('managment.index')
 @if ($messageEncome ?? false)
 <div class="callout callout-{{ $messageEncome['color'] }}">
