@@ -46,11 +46,11 @@
                                 <th>btns</th>
                             </tr>
                         </thead>
-                        {{-- <tbody>
+                        <tbody>
 
-                            @foreach ($emails as $i => $email)
+                            @foreach ($contact_emails as $i => $email)
                                 <tr>
-                                    <td> {{ $i + 1 }} </td>
+                                    <td> {{ $email->id }} </td>
                                     <td> {{ Str::limit($email->nombre_empresa, 15, '...') }} </td>
                                     <td> {{ $email->usuario->username }} </td>
                                     <td>
@@ -65,6 +65,7 @@
                                             <b class="text-danger">Sin Email</b>
                                         @endif
                                     </td>
+                                    <td>{{ $email->envios->count() }}</td>
                                     <td>
                                         <a target="_blanck" href="{{ $email->whatsapp }}"
                                             class="btn btn-success btn-sm {{ !$email->whatsapp ? 'disabled' : '' }}">
@@ -88,7 +89,7 @@
 
                                     </td>
                                     <td>
-                                        <fecha-custom fecha="{{ $email->created_at }}"></fecha-custom>
+                                        {{ $email->created_at->diffForHumans() }}
                                     </td>
                                     <td style="width: 110px">
                                         <a href="{{ route('contact_email.edit', ['contact_email' => $email->id]) }}"
@@ -102,7 +103,7 @@
                                             method="POST">
 
                                             @csrf
-                                            @method("DELETE")
+                                            @method('DELETE')
                                             <button type="submit" class="btn btn-outline-danger btn-sm">
                                                 <i class="fa fa-trash"></i>
                                             </button>
@@ -113,9 +114,12 @@
                                 </tr>
                             @endforeach
 
-                        </tbody> --}}
+                        </tbody>
                     </table>
+                    <div class="mt-3 d-flex justify-content-end">
+                        {{ $contact_emails->links() }}
 
+                    </div>
 
 
                 </div>
@@ -130,38 +134,38 @@
 
 @section('js')
     <script>
-        $(".table").DataTable({
-            // "ordering": false,
-            // "pageLength": 20,
-            "ajax": "{{ route('contact_email.datatable') }}",
-            "columns": [{
-                    "data": "id"
-                },
-                {
-                    "data": "word_nombre_empresa"
-                },
-                {
-                    "data": "usuario"
-                },
-                {
-                    "data": "estado"
-                },
-                {
-                    "data": "valid_email"
-                },
-                {
-                    "data": "envios"
-                },
-                {
-                    "data": "links_buttons"
-                },
-                {
-                    "data": "creacion"
-                },
-                {
-                    "data": "actions"
-                },
-            ]
-        });
+        // $(".table").DataTable({
+        //     // "ordering": false,
+        //     // "pageLength": 20,
+        //     "ajax": "{{ route('contact_email.datatable') }}",
+        //     "columns": [{
+        //             "data": "id"
+        //         },
+        //         {
+        //             "data": "word_nombre_empresa"
+        //         },
+        //         {
+        //             "data": "usuario"
+        //         },
+        //         {
+        //             "data": "estado"
+        //         },
+        //         {
+        //             "data": "valid_email"
+        //         },
+        //         {
+        //             "data": "envios"
+        //         },
+        //         {
+        //             "data": "links_buttons"
+        //         },
+        //         {
+        //             "data": "creacion"
+        //         },
+        //         {
+        //             "data": "actions"
+        //         },
+        //     ]
+        // });
     </script>
 @stop

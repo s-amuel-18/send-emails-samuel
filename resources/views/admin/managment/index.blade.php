@@ -1,5 +1,5 @@
 @extends('layouts.app')
-{{-- @section('plugins.Datatables', true) --}}
+
 
 @section('title', $data['title'])
 
@@ -8,6 +8,24 @@
 @stop
 
 @section('content_2')
+    <div class="d-flex justify-content-between mb-3">
+        <div class="d-flex align-items-center px-3">
+            <h3 class="h5 mb-0 font-weight-bold">Menú</h3>
+        </div>
+
+
+        <div class="">
+            <a href="#" class="btn btn-outline-primary btn-sm active">
+                <i class="fa fa-coins"></i>
+                <span class="d-none d-md-inline">Administracion De Ingresos</span>
+            </a>
+            <a href="{{ route('debt.index') }}" class="btn btn-outline-primary btn-sm">
+                <i class="fa fa-arrow-down"></i>
+                <span class="d-none d-md-inline">Deudas y consultas</span>
+            </a>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-6 col-lg-3">
             <div class="info-box">

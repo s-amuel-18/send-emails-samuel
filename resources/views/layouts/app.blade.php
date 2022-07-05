@@ -26,6 +26,8 @@
         </div>
     @endif
 
+    @include('admin.components.alerts.send_emails')
+
 
     @yield('content_2')
 

@@ -34,15 +34,18 @@ class ContactEmailController extends Controller
     public function index()
     {
         // $emails = Contact_email::orderBy("created_at", "DESC")->get();
+        $contact_emails = Contact_email::with(["usuario", "envios"])
+            ->orderBy("created_at", "DESC")->paginate(10);
 
-        return view("admin.contact_email.index");
+
+        return view("admin.contact_email.index", compact("contact_emails"));
     }
 
     public function estadisticas()
     {
         $total_registros = Contact_email::count();
 
-        if( $total_registros == 0) {
+        if ($total_registros == 0) {
             $message = [
                 "message" => "No hay Registros realizados, Crea tu primer registro",
                 "color" => "warning",
@@ -55,7 +58,7 @@ class ContactEmailController extends Controller
         $date = Carbon::now();
         $date = $date->format('Y-m-d');
 
-        $registros_de_hoy = Contact_email::whereDate("created_at", $date)->count();
+        $registros_de_hoy = Contact_email::whereDate("created_at", Carbon::today())->count();
 
 
 
@@ -213,21 +216,23 @@ class ContactEmailController extends Controller
     // okuneva.steve
     public function datatable()
     {
-        $all_permission = auth()->user()->hasAllPermissions(["contact_email.index",
-        "contact_email.estadisticas",
-        "contact_email.create",
-        "contact_email.edit",
-        "contact_email.destroy"]);
+        $all_permission = auth()->user()->hasAllPermissions([
+            "contact_email.index",
+            "contact_email.estadisticas",
+            "contact_email.create",
+            "contact_email.edit",
+            "contact_email.destroy"
+        ]);
 
 
 
 
-        if( $all_permission ) {
+        if ($all_permission) {
             $emails = Contact_email::orderBy("created_at", "DESC")->get();
         } else {
             $emails = auth()->user()->emails_registros;
         }
-// dd($emails[0]);
+        // dd($emails[0]);
 
 
 
@@ -235,17 +240,18 @@ class ContactEmailController extends Controller
             ->of($emails)
             ->addColumn("actions", "admin.components.datatable.contact_email.actions")
             ->addColumn("creacion", function ($email) {
-                return date_format($email->created_at, "d/m/Y");
+                return $email->created_at->diffForHumans();
             })
             ->addColumn("envios", function ($email) {
-                return $email->envios->count();
+                return $email->envios()->count();
             })
             ->addColumn("links_buttons", "admin.components.datatable.contact_email.links_buttons")
             ->addColumn("estado", "admin.components.datatable.contact_email.estado")
             ->addColumn("valid_email", "admin.components.datatable.contact_email.email")
             ->addColumn("word_nombre_empresa", "admin.components.datatable.contact_email.word_nombre_empresa")
             ->addColumn("usuario", function ($email) {
-                return $email->usuario ? $email->usuario->name : "Sin Usuario" ;
+                $user = $email->usuario;
+                return $user ? $user->name : "Sin Usuario";
             })
             ->rawColumns(["actions", "creacion", "links_buttons", "estado", "valid_email", "word_nombre_empresa", "usuario", "envios"])
             // ->rawColumns(["creacion"])

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ServicioMaillable;
 use App\Models\Contact_email;
 use App\Models\EmailEnviado;
 use App\Models\Income;
@@ -11,6 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Spatie\Permission\Models\Role;
 
 
@@ -41,32 +43,29 @@ class HomeController extends Controller
 
         if (auth()->user()->can("contact_email.estadisticas")) {
 
-            $registros_de_hoy_completo = Contact_email::whereDate("created_at", $date)->get();
+            $registros_de_hoy_take = Contact_email::today()->take(5)->get();
         } else {
-            $registros_de_hoy_completo = auth()->user()->emails_registros->where("created_at", ">=", $date)->get();
+            $registros_de_hoy_take = auth()->user()->emails_registros->today()->take(5)->get();
         }
-        $registros_de_hoy = $registros_de_hoy_completo->count();
+        $registros_de_hoy = Contact_email::today()->count();
 
-        $correos_sin_enviar = Contact_email::where("estado", "=", 0)->count();
+        $correos_sin_enviar = Contact_email::sinEnviar()->count();
 
-        $enviados_hoy = EmailEnviado::whereDate("created_at", $date)->count();
-        // $enviados_hoy = $enviados_hoy_all->count();
+        $enviados_hoy = Contact_email::correos_enviados_hoy();
 
         // usuarios que han registrado emails hoy
-        $usr_registros_hoy = User::select(
-            "users.id",
-            "users.username",
-            DB::raw("COUNT(con_em.id) AS cantidad_registros")
-        )
-            ->leftJoin("contact_emails AS con_em", function ($join) {
-                $date = Carbon::now();
-                $date = $date->format('Y-m-d');
-                $join->on('con_em.user_id', '=', 'users.id')
-                    ->whereDate("con_em.created_at", $date);
-            })
-            ->groupBy("users.id")
-            ->orderBy("cantidad_registros", "DESC")
+        $usr_registros_hoy = User::whereHas("emails_registros", function ($q) {
+            return $q->whereDate("created_at", Carbon::today());
+        })
+            ->withCount(["emails_registros" => function ($q) {
+                return $q->whereDate("created_at", Carbon::today());
+            }])
+            ->withCount(["emailEnviado" => function ($q) {
+                // dd($q->whereDate("created_at", Carbon::today()));
+                return $q->whereDate("contact_email_user.created_at", Carbon::today());
+            }])
             ->get();
+
 
         if (auth()->user()->can("managment.index")) {
             $data["netIncome"] = Income::netIncome();
@@ -75,6 +74,6 @@ class HomeController extends Controller
             $data["dailyEarnings"] = Income::dailyEarnings();
         }
 
-        return view('home', compact("data", "total_registros", "registros_de_hoy", "correos_sin_enviar", "enviados_hoy", "usr_registros_hoy", "date", "registros_de_hoy_completo"));
+        return view('home', compact("data", "total_registros", "registros_de_hoy", "correos_sin_enviar", "enviados_hoy", "usr_registros_hoy", "date", "registros_de_hoy_take"));
     }
 }

@@ -29,14 +29,11 @@ class EnvioEmailSeeder extends Seeder
 
             $enviados_hoy = EmailEnviado::whereDate("created_at", $date)->count();
 
-            if( $enviados_hoy < 200 ){
+            if ($enviados_hoy < Contact_email::DAILY_EMAIL_LIMIT) {
                 $user_admin->emailEnviado()->create([
                     "contact_email_id" => $email->id
                 ]);
-
             }
-
         }
-
     }
 }

@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\contact_email\ContactEmailController;
 use App\Http\Controllers\contact_email\EmailSendController;
+use App\Http\Controllers\DebtController;
 use App\Http\Controllers\IncomeController;
 use App\Http\Controllers\ManagementController;
 use App\Http\Controllers\RecomendacionMejoraController;
@@ -51,7 +52,8 @@ Route::get('/contact-email/estadisticas', [ContactEmailController::class, 'estad
 Route::resource("body-email", BodyEmailController::class)->except("show")->middleware("auth")->names("bodyEmail");
 
 // send emails
-Route::get('/envio-email', [EmailSendController::class, 'index'])->name('envio_email.index');
+Route::get('envio-email/redaccion-detallada', [EmailSendController::class, 'index'])->name('envio_email.index');
+Route::get('/envio-email', [EmailSendController::class, 'envioEmail'])->name('envio_email.envioEmail');
 Route::get('/envio-email/servicio', [EmailSendController::class, 'email'])->name('envio_email.email');
 Route::post('/envio-email/crear-informacio', [EmailSendController::class, 'crear_informacio'])->name('envio_email.crear_informacio');
 
@@ -66,6 +68,9 @@ Route::middleware(["can:managment.index", "auth"])->group(function () {
         ->name("managment.index");
     // income
     Route::resource("income", IncomeController::class)->except("index")->names("income");
+
+    Route::resource("debt", DebtController::class)->names("debt");
+    Route::get("managment/consult_debts", [DebtController::class, "consult_debts_view"])->name("debt.consult_debts_view");
 
     // spents
     Route::resource("spent", SpentsController::class)->except("index")->names("spent");

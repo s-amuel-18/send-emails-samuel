@@ -45,7 +45,7 @@ class EmailSendController extends Controller
         // seleccionamos los ids en caso de que el usuario halla escogido algun correo en espesifico
         $ids_emails = $request->has("emails") ? $data["emails"] : [];
 
-        // validamos que el check de los emails extra este presionado (200 emails extra)
+        // validamos que el check de los emails extra este presionado (100 emails extra)
         if ($data["check_emails"]) {
 
             // realizamos una consulta para buscar ids de correos extra
@@ -53,7 +53,7 @@ class EmailSendController extends Controller
                 ->where("estado", "=", "0")
                 ->whereNotIn("id", $ids_emails)
                 ->whereNotNull("email")
-                ->limit(200 - count($ids_emails))
+                ->limit(Contact_email::DAILY_EMAIL_LIMIT - count($ids_emails))
                 ->get();
 
 
@@ -96,8 +96,8 @@ class EmailSendController extends Controller
 
                 $enviados_hoy = EmailEnviado::whereDate("created_at", $date)->count();
 
-                // vakidanis que la cantidad de correos diarios no sobre pase los 200
-                if( $enviados_hoy >= 200 ) {
+                // vakidanis que la cantidad de correos diarios no sobre pase los 100
+                if ($enviados_hoy >= Contact_email::DAILY_EMAIL_LIMIT) {
                     $message = [
                         "message" => "La cantidad De correos diarios Ha llegado a su limite, Se enviaron Correctamente " . count($arr_enviados) . " correos y hubieron " . count($arr_sin_enviar) . " correos fallidos",
                         "color" => "danger"
@@ -141,6 +141,37 @@ class EmailSendController extends Controller
         return view("emails.servicio");
     }
 
+    public function envioEmail(/* Request $request */)
+    {
+        // validacion de informacion
+        /* $data = request()->validate([
+            "select_body" => "nullable|integer|exists:body_emails,id",
+            "emails" => "required_if:check_emails,null|nullable|array",
+            "asunto" => "required|string",
+        ]); */
+
+        $emailsNotSend = Contact_email::limitDaily()
+            ->get();
+
+        $info["subject"] =  "Holaa";
+        $info["body"] =  "este es el escrito";
+        $info["link_principal"] =  "https://negociaecuador.com/samuel-graterol-dev/";
+
+        foreach ($emailsNotSend as $email) {
+            $emailsToday = Contact_email::correos_enviados_hoy();
+
+            try {
+                // retraso del email
+                sleep(5);
+                if ($emailsToday < Contact_email::DAILY_EMAIL_LIMIT) {
+                    $correo = new ServicioMaillable($info, $email);
+                    Mail::to($email->email)->send($correo);
+                }
+            } catch (\Throwable $th) {
+                //throw $th;
+            }
+        }
+    }
 }
 
 

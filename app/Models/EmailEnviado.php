@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class EmailEnviado extends Model
 {
     use HasFactory;
+    public const DAILY_EMAIL_LIMIT = 100;
 
     protected $fillable = [
         'user_id',

@@ -112,7 +112,6 @@
                         <table class="table table-light table-striped table-hover text-nowrap table-valign-middle">
                             <thead class="">
                                 <tr>
-                                    <th>#</th>
                                     <th>ID</th>
                                     <th>username</th>
                                     <th>Cantidad</th>
@@ -123,18 +122,18 @@
 
                                 @foreach ($usr_registros_hoy as $i => $usr)
                                     <tr>
-                                        <td>{{ $i + 1 }}</td>
                                         <td>{{ $usr->id }}</td>
                                         <td>{{ $usr->username }}</td>
                                         <td>
                                             <span
-                                                class="badge  badge-{{ $usr->cantidad_registros > 0 ? 'success' : 'danger' }}">{{ $usr->cantidad_registros }}</span>
+                                                class="badge  badge-{{ $usr->emails_registros_count > 0 ? 'success' : 'danger' }}">{{ $usr->emails_registros_count }}</span>
 
 
                                         </td>
                                         <td>
+
                                             <span class="badge badge-primary"
-                                                style="background: #6610f2">{{ $usr->emailEnviado->where('created_at', '=', "date($date)")->count() }}</span>
+                                                style="background: #6610f2">{{ $usr->email_enviado_count }}</span>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -156,7 +155,7 @@
 
                 <div class="card card-light">
                     <div class="card-header">
-                        <h3 class="card-title">Registros De Hoy</h3>
+                        <h3 class="card-title">Ultimos 5 Registros De Hoy</h3>
                         <div class="card-tools">
 
                             @can('contact_email.create')
@@ -169,25 +168,20 @@
 
                     <div class="card-body table-responsive">
 
-                        @if ($registros_de_hoy_completo->count() > 0)
-                            <table
-                                class="table table-light table-striped table-hover text-nowrap table-valign-middle datatable">
+                        @if ($registros_de_hoy_take->count() > 0)
+                            <table class="table table-light table-striped table-hover text-nowrap table-valign-middle">
                                 <thead class="">
                                     <tr>
-                                        <th>#</th>
                                         <th>Nombre Empresa</th>
-                                        <th>Usuario</th>
                                         <th>Email</th>
                                         <th>Contacttos</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
-                                    @foreach ($registros_de_hoy_completo as $i => $registro)
+                                    @foreach ($registros_de_hoy_take as $i => $registro)
                                         <tr>
-                                            <td>{{ $i + 1 }}</td>
-                                            <td>{{ $registro->nombre_empresa }}</td>
-                                            <td>{{ $registro->usuario->username }}</td>
+                                            <td>{{ Str::limit($registro->nombre_empresa, 20) }}</td>
                                             <td>{{ $registro->email }}</td>
                                             <td>
                                                 {{-- whatsapp --}}
