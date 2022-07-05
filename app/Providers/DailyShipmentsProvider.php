@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\Contact_email;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
+use Carbon\Carbon;
 
 class DailyShipmentsProvider extends ServiceProvider
 {
@@ -26,9 +27,25 @@ class DailyShipmentsProvider extends ServiceProvider
     public function boot()
     {
         View::composer('*', function ($view) {
-            $emailsToday = Contact_email::correos_enviados_hoy();
+            $emailsToday = 0;
 
-            $view->with("puedo_enviar_emails", ($emailsToday < Contact_email::DAILY_EMAIL_LIMIT));
+            $hora = Carbon::now()->format("H");
+            $dia = Carbon::now()->format("d");
+            $minutos = Carbon::now()->format("i");
+            $segundos = Carbon::now()->addSeconds(500)->format("s");
+            
+
+            
+            $timesLastEmail = [
+                "hora" => $hora,
+                "dia" => $dia,
+                "minutos" => $minutos,
+                "segundos" => $segundos
+            ];
+            
+            $view->with("puedo_enviar_emails", [
+                "puedo_enviar_emails" => ($emailsToday < Contact_email::DAILY_EMAIL_LIMIT),
+                "timesLastEmail" => $timesLastEmail]);
         });
     }
 }

@@ -2,33 +2,33 @@
 
 @section('content')
 
-    @can('managment.index')
-        @if ($messageEncome ?? false)
-            <div class="callout callout-{{ $messageEncome['color'] }}">
-                <h5 class="font-weight-bold text-muted">{{ $messageEncome['title'] }}</h5>
-                <p>
-                    {{ $messageEncome['description'] }}
+@can('managment.index')
+@if ($messageEncome ?? false)
+<div class="callout callout-{{ $messageEncome['color'] }}">
+    <h5 class="font-weight-bold text-muted">{{ $messageEncome['title'] }}</h5>
+    <p>
+        {{ $messageEncome['description'] }}
 
-                </p>
-            </div>
-        @endif
-    @endcan
+    </p>
+</div>
+@endif
+@endcan
 
-    @if (session('message'))
-        <div class="alert alert-{{ session('message')['color'] ?? false }} alert-dismissible fade show" role="alert">
-            <i class="{{ session('message')['icon'] ?? false }}"></i>
-            {!! session('message')['message'] ?? false !!}
+@if (session('message'))
+<div class="alert alert-{{ session('message')['color'] ?? false }} alert-dismissible fade show" role="alert">
+    <i class="{{ session('message')['icon'] ?? false }}"></i>
+    {!! session('message')['message'] ?? false !!}
 
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
 
-        </div>
-    @endif
-
-    @include('admin.components.alerts.send_emails')
+</div>
+@endif
 
 
-    @yield('content_2')
+
+
+@yield('content_2')
 
 @stop

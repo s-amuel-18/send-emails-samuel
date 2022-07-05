@@ -41,6 +41,19 @@ class HomeController extends Controller
         $date = Carbon::now();
         $date = $date->format('Y-m-d');
 
+        // dd(Carbon::now()->format("H"));
+        // dd(Carbon::now()->format("d"));
+        // dd(Carbon::now()->format("i"));
+        // dd(Carbon::now()->format("s"));
+
+        
+// let hora = @json($data["hora"]);
+// let dia = @json($data["dia"]);
+// let minutos = @json($data["minutos"]);
+// let segundos = @json($data["segundos"]);
+
+        
+
         if (auth()->user()->can("contact_email.estadisticas")) {
 
             $registros_de_hoy_take = Contact_email::today()->take(5)->get();
@@ -51,7 +64,7 @@ class HomeController extends Controller
 
         $correos_sin_enviar = Contact_email::sinEnviar()->count();
 
-        $enviados_hoy = Contact_email::correos_enviados_hoy();
+        $enviados_hoy = 0;
 
         // usuarios que han registrado emails hoy
         $usr_registros_hoy = User::whereHas("emails_registros", function ($q) {
