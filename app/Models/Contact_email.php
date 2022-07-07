@@ -70,6 +70,7 @@ class Contact_email extends Model
             ->where("estado", "=", 0)
             ->whereNotNull("email");
     }
+
     public function scopeLimitDaily($q)
     {
         return $q->sinEnviar()->take($this::DAILY_EMAIL_LIMIT);

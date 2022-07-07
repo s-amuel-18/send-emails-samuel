@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -58,5 +60,20 @@ class User extends Authenticatable
     public function emailEnviado()
     {
         return $this->belongsToMany(Contact_email::class)->withPivot('created_at');
+    }
+
+    public function correos_enviados_hoy()
+    {
+        return DB::table("contact_email_user")->whereDate("created_at", Carbon::today())->count();
+    }
+
+    public function correos_por_enviar_hoy()
+    {
+        return Contact_email::DAILY_EMAIL_LIMIT - $this->correos_enviados_hoy();
+    }
+
+    public function validSendEmailDaily()
+    {
+        return $this->correos_enviados_hoy() < Contact_email::DAILY_EMAIL_LIMIT;
     }
 }

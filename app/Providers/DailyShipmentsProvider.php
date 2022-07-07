@@ -27,25 +27,26 @@ class DailyShipmentsProvider extends ServiceProvider
     public function boot()
     {
         View::composer('*', function ($view) {
-            $emailsToday = 0;
+            $emailsToday = auth()->user()->correos_enviados_hoy();
 
             $hora = Carbon::now()->format("H");
             $dia = Carbon::now()->format("d");
-            $minutos = Carbon::now()->format("i");
-            $segundos = Carbon::now()->addSeconds(500)->format("s");
-            
+            $minutos = Carbon::now()->addMinutes(2)->format("i");
+            $segundos = Carbon::now()->format("s");
 
-            
+
+
             $timesLastEmail = [
                 "hora" => $hora,
                 "dia" => $dia,
                 "minutos" => $minutos,
                 "segundos" => $segundos
             ];
-            
+            // dd($timesLastEmail);
             $view->with("puedo_enviar_emails", [
-                "puedo_enviar_emails" => ($emailsToday < Contact_email::DAILY_EMAIL_LIMIT),
-                "timesLastEmail" => $timesLastEmail]);
+                "puedo_enviar_emails" => /* ($emailsToday < Contact_email::DAILY_EMAIL_LIMIT) */ false,
+                "timesLastEmail" => $timesLastEmail
+            ]);
         });
     }
 }

@@ -143,33 +143,54 @@ class EmailSendController extends Controller
 
     public function envioEmail(/* Request $request */)
     {
-        // validacion de informacion
-        /* $data = request()->validate([
-            "select_body" => "nullable|integer|exists:body_emails,id",
-            "emails" => "required_if:check_emails,null|nullable|array",
-            "asunto" => "required|string",
-        ]); */
+        $dalyEmailsValid = auth()->user()->validSendEmailDaily();
 
-        $emailsNotSend = Contact_email::limitDaily()
-            ->get();
+        $emailsToSend = auth()->user()->correos_por_enviar_hoy();
+
+        if (!$dalyEmailsValid) {
+
+            return [
+                "success_email_send" => false,
+                "emails_to_send" => $emailsToSend,
+                "message" => [
+                    "type" => "danger",
+                    "message" => "Se llego al limite de envios diarios",
+                ],
+            ];
+        }
+
+        $emailsNotSend = Contact_email::sinEnviar()
+            ->first();
 
         $info["subject"] =  "Holaa";
         $info["body"] =  "este es el escrito";
         $info["link_principal"] =  "https://negociaecuador.com/samuel-graterol-dev/";
 
-        foreach ($emailsNotSend as $email) {
-            $emailsToday = Contact_email::correos_enviados_hoy();
+        try {
+            //code...
+            $correo = new ServicioMaillable($info, $emailsNotSend);
+            Mail::to($emailsNotSend->email)->send($correo);
 
-            try {
-                // retraso del email
-                sleep(5);
-                if ($emailsToday < Contact_email::DAILY_EMAIL_LIMIT) {
-                    $correo = new ServicioMaillable($info, $email);
-                    Mail::to($email->email)->send($correo);
-                }
-            } catch (\Throwable $th) {
-                //throw $th;
-            }
+            $emailsToSend = auth()->user()->correos_por_enviar_hoy();
+
+            return [
+                "success_email_send" => true,
+                "emails_to_send" => $emailsToSend,
+                "message" => [
+                    "type" => "danger",
+                    "message" => "Email enviado correctamente"
+                ]
+            ];
+        } catch (\Throwable $th) {
+            //throw $th;
+            return [
+                "success_email_send" => false,
+                "emails_to_send" => $emailsToSend,
+                "message" => [
+                    "type" => "danger",
+                    "message" => "Ha ocurrido un error"
+                ]
+            ];
         }
     }
 }
