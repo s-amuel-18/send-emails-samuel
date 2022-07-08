@@ -27,7 +27,13 @@ class DailyShipmentsProvider extends ServiceProvider
     public function boot()
     {
         View::composer('*', function ($view) {
-            $emailsToday = auth()->user()->correos_enviados_hoy();
+            $user = auth()->user();
+
+            if (!$user) {
+                return null;
+            }
+
+            $emailsToday = $user->correos_enviados_hoy();
 
             $hora = Carbon::now()->format("H");
             $dia = Carbon::now()->format("d");
