@@ -64,24 +64,28 @@ class ContactEmailController extends Controller
 
         // dd($registros_de_hoy);
 
-        $users = User::select(
-            "users.id",
-            "users.username",
-            DB::raw("COUNT(co_em.id) as cant_reg")
-        )
-            ->leftJoin("contact_emails AS co_em", "co_em.user_id", "=", "users.id")
-            ->groupBy("users.id")
-            ->orderBy("cant_reg", "DESC")
+        $users = User::whereHas("emails_registros", null, ">", 0)
+            ->withCount("emails_registros")
             ->get();
+
+        // $users = User::select(
+        //     "users.id",
+        //     "users.username",
+        //     DB::raw("COUNT(co_em.id) as cant_reg")
+        // )
+        //     ->leftJoin("contact_emails AS co_em", "co_em.user_id", "=", "users.id")
+        //     ->groupBy("users.id")
+        //     ->orderBy("cant_reg", "DESC")
+        //     ->get();
 
         // return $users;
 
         // dd($users->count());
         $registros_promedio = $total_registros == 0 ? 0 : $total_registros / $users->count();
 
-        $emials_sin_enviar = Contact_email::where("estado", "=", 0)->get()->count();
+        $emials_sin_enviar = Contact_email::sinEnviar()->count();
 
-        $emials_enviados = Contact_email::where("estado", ">", 0)->get()->count();
+        $emials_enviados = Contact_email::enviados()->count();
 
 
         return view("admin.contact_email.estadisticas", compact("users", "total_registros", "registros_promedio", "emials_sin_enviar", "emials_enviados", "registros_de_hoy"));
