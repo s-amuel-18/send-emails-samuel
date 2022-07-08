@@ -8,7 +8,7 @@
   left: 0;
   top: 0;
   z-index: 9999;
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.85);
   visibility: hidden;
   transition: visibility 1s linear 300ms, opacity 300ms;
 }
@@ -52,7 +52,7 @@
 </style>
 
 
-    <div class=" loading-show loading d-flex flex-column justify-content-center align-items-center">
+    {{-- <div class=" loading-show loading d-flex flex-column justify-content-center align-items-center">
     
         <div class="spinner-border text-primary my-3" style="width: 3rem; height: 3rem;" role="status">
             <span class="spinner sr-only">Loading...</span>
@@ -64,7 +64,5 @@
                     aria-valuemin="0" aria-valuemax="100" style="width:100%"><div class="text-center"> 10%</div></div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
-<!-- eviando emails
-progress spinner -->

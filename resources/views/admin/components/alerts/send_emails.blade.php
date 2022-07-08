@@ -9,7 +9,7 @@
     background: #fff;
     width: 90px;
     height: 90px;
-    margin: 0 15px;
+    padding: 10px;
     border-radius: 5px;
     display: flex;
     align-items: center;
@@ -18,7 +18,8 @@
 
 .simply-amount {
     display: block;
-    font-size: 35px;
+    text-align: center!important;
+    font-size: 30px;
     font-weight: 700;
 }
 
@@ -44,7 +45,7 @@
 </div>
 <div class="container row">
 
-    <div class="col-3 ml-4 cuenta  {{ $puedo_enviar_emails['puedo_enviar_emails'] ? 'd-none' : 'd-flex' }} "
+    <div class="col-4 ml-2 cuenta  {{ $puedo_enviar_emails['puedo_enviar_emails'] ? 'd-none' : 'd-flex' }} "
         id="cuenta">
     </div>
 </div>
