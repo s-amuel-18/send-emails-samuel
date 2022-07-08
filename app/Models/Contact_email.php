@@ -71,6 +71,13 @@ class Contact_email extends Model
             ->whereNotNull("email");
     }
 
+    public function scopeEnviados($q)
+    {
+        return $q->whereHas("envios", null, ">", 0)
+            ->where("estado", "=", 1)
+            ->whereNotNull("email");
+    }
+
     public function scopeLimitDaily($q)
     {
         return $q->sinEnviar()->take($this::DAILY_EMAIL_LIMIT);

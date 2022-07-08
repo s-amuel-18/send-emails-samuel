@@ -103,10 +103,10 @@
                                                 </td>
                                                 {{-- <td>{{ $user->id }}</td> --}}
                                                 <td>{{ $user->username }}</td>
-                                                <td>{{ $user->emails_registros->count() }}</td>
+                                                <td>{{ $user->emails_registros_count }}</td>
                                                 <td>
                                                     <span
-                                                        class="badge bg-{{ $user->emails_registros->count() > $registros_promedio ? 'success' : ($user->emails_registros->count() <= $registros_promedio ? 'warning' : 'danger') }}">{{ number_format(($user->emails_registros->count() * 100) / $total_registros, 2) }}%</span>
+                                                        class="badge bg-{{ $user->emails_registros_count > $registros_promedio ? 'success' : ($user->emails_registros_count <= $registros_promedio ? 'warning' : 'danger') }}">{{ number_format(($user->emails_registros_count * 100) / $total_registros, 2) }}%</span>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -148,12 +148,13 @@
         //- DONUT CHART - Estadisticas usuarios
         //-------------
         let data_users = {!! $users !!};
+        console.log(data_users);
         let cantidades = [];
         let labels = [];
         let colors = [];
 
         data_users.forEach(el => {
-            cantidades.push(el.cant_reg);
+            cantidades.push(el.emails_registros_count);
             labels.push(el.username);
 
             let r = Math.floor(Math.random() * 255);
