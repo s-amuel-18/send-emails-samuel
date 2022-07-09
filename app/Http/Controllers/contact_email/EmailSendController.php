@@ -141,11 +141,20 @@ class EmailSendController extends Controller
         return view("emails.servicio");
     }
 
-    public function envioEmail(/* Request $request */)
+    public function envioEmail(Request $request)
     {
+        $data = request()->validate([
+            "subject" => "required|string",
+            "body_email" => "required|exists:body_emails,id"
+        ]);
+
+
         $dalyEmailsValid = auth()->user()->validSendEmailDaily();
 
         $emailsToSend = auth()->user()->correos_por_enviar_hoy();
+        $emailsToSend = $emailsToSend == 0 ? null : $emailsToSend;
+
+
 
         if (!$dalyEmailsValid) {
 
@@ -162,8 +171,8 @@ class EmailSendController extends Controller
         $emailsNotSend = Contact_email::sinEnviar()
             ->first();
 
-        $info["subject"] =  "Holaa";
-        $info["body"] =  "este es el escrito";
+        $info["subject"] =  $data["subject"];
+        $info["body"] =  $data["body_email"];
         $info["link_principal"] =  "https://negociaecuador.com/samuel-graterol-dev/";
 
         try {
@@ -172,10 +181,21 @@ class EmailSendController extends Controller
             Mail::to($emailsNotSend->email)->send($correo);
 
             $emailsToSend = auth()->user()->correos_por_enviar_hoy();
+            $emailsToSend = $emailsToSend == 0 ? null : $emailsToSend;
+
+            $send_today = auth()->user()->correos_enviados_hoy();
+
+            $percentage = $send_today ? (($send_today * Contact_email::DAILY_EMAIL_LIMIT) / 100) : 0;
+
+            $enviado = auth()->user()->emailEnviado()->attach($emailsNotSend->id);
+
+            $emailsNotSend->update(["estado" => 1]);
+
 
             return [
                 "success_email_send" => true,
                 "emails_to_send" => $emailsToSend,
+                "percentage" => $percentage,
                 "message" => [
                     "type" => "danger",
                     "message" => "Email enviado correctamente"
@@ -188,7 +208,7 @@ class EmailSendController extends Controller
                 "emails_to_send" => $emailsToSend,
                 "message" => [
                     "type" => "danger",
-                    "message" => "Ha ocurrido un error"
+                    "message" => "Ha ocurrido un error, El motivo del error puede ser que se ha llegado al limite de envio de correos diarios"
                 ]
             ];
         }

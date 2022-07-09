@@ -2,10 +2,12 @@
 
 namespace App\Providers;
 
+use App\Models\BodyEmail;
 use App\Models\Contact_email;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class DailyShipmentsProvider extends ServiceProvider
 {
@@ -26,7 +28,8 @@ class DailyShipmentsProvider extends ServiceProvider
      */
     public function boot()
     {
-        View::composer('*', function ($view) {
+        View::composer('home', function ($view) {
+
             $user = auth()->user();
 
             if (!$user) {
@@ -35,23 +38,39 @@ class DailyShipmentsProvider extends ServiceProvider
 
             $emailsToday = $user->correos_enviados_hoy();
 
-            $hora = Carbon::now()->format("H");
-            $dia = Carbon::now()->format("d");
-            $minutos = Carbon::now()->addMinutes(2)->format("i");
-            $segundos = Carbon::now()->format("s");
+            // $lastEmailSend = Contact_email::enviadosHoy();
+
+            $lastEmailSend = DB::table("contact_email_user")->orderBy("created_at", "DESC")->first();
+
+            $bodyEmails = BodyEmail::select("nombre", "id")->get();
+
+            $puedo_enviar = ($emailsToday < Contact_email::DAILY_EMAIL_LIMIT);
+
+            if (!$puedo_enviar) {
+
+                $hora = Carbon::now()->parse($lastEmailSend->created_at)->format("H");
+
+                $dia = Carbon::now()->parse($lastEmailSend->created_at)->addDays(1)->format("d");
+                $minutos = Carbon::now()->parse($lastEmailSend->created_at)->format("i");
+                $segundos = Carbon::now()->parse($lastEmailSend->created_at)->format("s");
+                $timesLastEmail = [
+                    "hora" => $hora,
+                    "dia" => $dia,
+                    "minutos" => $minutos,
+                    "segundos" => $segundos
+                ];
+            }
 
 
 
-            $timesLastEmail = [
-                "hora" => $hora,
-                "dia" => $dia,
-                "minutos" => $minutos,
-                "segundos" => $segundos
-            ];
+
+
+
             // dd($timesLastEmail);
             $view->with("puedo_enviar_emails", [
-                "puedo_enviar_emails" => /* ($emailsToday < Contact_email::DAILY_EMAIL_LIMIT) */ false,
-                "timesLastEmail" => $timesLastEmail
+                "puedo_enviar_emails" => $puedo_enviar,
+                "timesLastEmail" => $timesLastEmail ?? null,
+                "bodyEmails" => $bodyEmails
             ]);
         });
     }

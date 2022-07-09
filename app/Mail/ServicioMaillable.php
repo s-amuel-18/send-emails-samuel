@@ -34,11 +34,7 @@ class ServicioMaillable extends Mailable
      */
     public function build()
     {
-        if ($this->contactEmail ?? false) {
-            $enviado = auth()->user()->emailEnviado()->attach($this->contactEmail->id);
 
-            $this->contactEmail->update(["estado" => 1]);
-        }
 
         return $this->view('emails.servicio');
     }

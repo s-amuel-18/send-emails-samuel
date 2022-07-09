@@ -53,7 +53,7 @@ Route::resource("body-email", BodyEmailController::class)->except("show")->middl
 
 // send emails
 Route::get('envio-email/redaccion-detallada', [EmailSendController::class, 'index'])->name('envio_email.index');
-Route::get('/envio-email', [EmailSendController::class, 'envioEmail'])->name('envio_email.envioEmail');
+Route::post('/envio-email', [EmailSendController::class, 'envioEmail'])->name('envio_email.envioEmail');
 Route::get('/envio-email/servicio', [EmailSendController::class, 'email'])->name('envio_email.email');
 Route::post('/envio-email/crear-informacio', [EmailSendController::class, 'crear_informacio'])->name('envio_email.crear_informacio');
 

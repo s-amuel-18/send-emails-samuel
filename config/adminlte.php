@@ -364,7 +364,7 @@ return [
             ],
         ],
         'Select2' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
@@ -375,6 +375,26 @@ return [
                     'type' => 'css',
                     'asset' => true,
                     'location' => 'vendor/select2/css/select2.css',
+                ],
+            ],
+        ],
+        'jqueryValidation        ' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/jquery-validation/jquery.validate.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/jquery-validation/additional-methods.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/jquery-validation/localization/messages_es.min.js',
                 ],
             ],
         ],

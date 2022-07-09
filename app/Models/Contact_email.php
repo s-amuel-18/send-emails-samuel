@@ -64,6 +64,11 @@ class Contact_email extends Model
         return $q->whereDate("created_at", Carbon::today());
     }
 
+    public function scopeLastEmailToday($q)
+    {
+        return $q->enviadosHoy();
+    }
+
     public function scopeSinEnviar($q)
     {
         return $q->whereHas("envios", null, "=", 0)
@@ -76,6 +81,13 @@ class Contact_email extends Model
         return $q->whereHas("envios", null, ">", 0)
             ->where("estado", "=", 1)
             ->whereNotNull("email");
+    }
+
+    public function scopeEnviadosHoy($q)
+    {
+        return $q->enviados()->whereHas("envios", function ($q) {
+            $q->whereDate("contact_email_user.created_at", Carbon::today());
+        });
     }
 
     public function scopeLimitDaily($q)
