@@ -1,4 +1,24 @@
 $(function () {
+    // $.validator.setDefaults({
+    //     submitHandler: async function (e) {
+    //         // e.preventDefault();
+    //         console.log(e.submit = false);
+    //         return false;
+
+    //         // const submiter = e.submitter;
+
+    //         // submiter.disabled = true;
+
+    //         // const params = {
+    //         //     subject: e.target.subject.value,
+    //         //     body_email: e.target.body_email.value,
+    //         // };
+
+    //         // const resp = await send_emails(urlHttpSendEmail, params, submiter);
+
+    //     }
+    // });
+
     // VALIDACION
     $('#form_send_emails').validate({
         rules: {

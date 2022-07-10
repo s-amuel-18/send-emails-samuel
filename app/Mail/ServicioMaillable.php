@@ -20,7 +20,7 @@ class ServicioMaillable extends Mailable
      *
      * @return void
      */
-    public function __construct($data, $contactData)
+    public function __construct($data, $contactData = null)
     {
         $this->info = $data;
         $this->contactEmail = $contactData;

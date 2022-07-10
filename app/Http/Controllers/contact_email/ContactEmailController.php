@@ -68,19 +68,6 @@ class ContactEmailController extends Controller
             ->withCount("emails_registros")
             ->get();
 
-        // $users = User::select(
-        //     "users.id",
-        //     "users.username",
-        //     DB::raw("COUNT(co_em.id) as cant_reg")
-        // )
-        //     ->leftJoin("contact_emails AS co_em", "co_em.user_id", "=", "users.id")
-        //     ->groupBy("users.id")
-        //     ->orderBy("cant_reg", "DESC")
-        //     ->get();
-
-        // return $users;
-
-        // dd($users->count());
         $registros_promedio = $total_registros == 0 ? 0 : $total_registros / $users->count();
 
         $emials_sin_enviar = Contact_email::sinEnviar()->count();

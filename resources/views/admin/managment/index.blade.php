@@ -27,6 +27,21 @@
     </div>
 
     <div class="row">
+        @foreach ($data['pays_time'] as $pay)
+            <div class="col-md-3">
+
+                <div class="card card-outline card-secondary">
+                    <div class="card-header">
+                        <h3 class="card-title">{{ $pay->name }}: <b>{{ $pay->spemts_sum_price ?? 0 }}$</b></h3>
+
+                        <!-- /.card-tools -->
+                    </div>
+                    <!-- /.card-header -->
+                </div>
+
+            </div>
+        @endforeach
+
         <div class="col-6 col-lg-3">
             <div class="info-box">
                 <span class="info-box-icon bg-warning"><i class="fa fa-coins"></i></span>

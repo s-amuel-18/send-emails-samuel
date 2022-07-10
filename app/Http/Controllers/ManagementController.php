@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BillingTime;
 use App\Models\Income;
 use App\Models\Spents;
 use Illuminate\Http\Request;
@@ -10,7 +11,7 @@ class ManagementController extends Controller
 {
     public function index()
     {
-
+        $data["pays_time"] =  BillingTime::withSum("spemts", "price")->get();
         $data["income"] = Income::orderByDesc("price")->get();
         $data["spents"] = Spents::orderByDesc("price")->get();
         $data["title"] = "Administracion De Ingresos";

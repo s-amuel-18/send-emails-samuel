@@ -79,3 +79,8 @@ Route::middleware(["can:managment.index", "auth"])->group(function () {
 
 // Recomendaciones asi el sistema
 Route::resource("recomendaciones", RecomendacionMejoraController::class)->middleware("auth")->names("recomendacion");
+
+// preview email fluxel
+Route::get("email", function () {
+    return view("emails.fluxel_code_service");
+});

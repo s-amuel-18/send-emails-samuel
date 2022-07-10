@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\ServicioMaillable;
+use App\Models\BillingTime;
 use App\Models\Contact_email;
 use App\Models\EmailEnviado;
 use App\Models\Income;
@@ -36,23 +37,12 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $pays_time = BillingTime::withSum("spemts", "price")->get();
+        // dd($pays_time->toArray));
         $total_registros = Contact_email::count();
 
         $date = Carbon::now();
         $date = $date->format('Y-m-d');
-
-        // dd(Carbon::now()->format("H"));
-        // dd(Carbon::now()->format("d"));
-        // dd(Carbon::now()->format("i"));
-        // dd(Carbon::now()->format("s"));
-
-
-        // let hora = @json($data["hora"]);
-        // let dia = @json($data["dia"]);
-        // let minutos = @json($data["minutos"]);
-        // let segundos = @json($data["segundos"]);
-
-
 
         if (auth()->user()->can("contact_email.estadisticas")) {
 
@@ -87,6 +77,6 @@ class HomeController extends Controller
             $data["dailyEarnings"] = Income::dailyEarnings();
         }
 
-        return view('home', compact("data", "total_registros", "registros_de_hoy", "correos_sin_enviar", "enviados_hoy", "usr_registros_hoy", "date", "registros_de_hoy_take"));
+        return view('home', compact("data", "total_registros", "registros_de_hoy", "correos_sin_enviar", "enviados_hoy", "usr_registros_hoy", "date", "registros_de_hoy_take", "pays_time"));
     }
 }
