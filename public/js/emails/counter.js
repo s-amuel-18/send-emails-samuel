@@ -1,7 +1,12 @@
 $(function () {
 
-    let date = dataServer['timesLastEmail'];
 
+
+
+})
+
+
+function counter(date) {
     if (!date) return false;
 
     let hora = date["hora"];
@@ -9,7 +14,11 @@ $(function () {
     let minutos = date["minutos"];
     let segundos = date["segundos"];
     let contador = document.getElementById('cuenta');
+    let content_counter = document.getElementById('content_counter');
 
+    if (content_counter.classList.contains("d-none")) {
+        content_counter.classList.remove("d-none")
+    }
 
     simplyCountdown("#cuenta", {
         year: 2022, // Requerido
@@ -20,10 +29,10 @@ $(function () {
         seconds: segundos, // Default is 0 [0-59] integer
         words: {
             //Palabras que se muestran en el contador
-            days: "Día",
-            hours: "Hora",
-            minutes: "Minuto",
-            seconds: "Segundo",
+            days: "Días",
+            hours: "Horas",
+            minutes: "Mins",
+            seconds: "Segs",
             pluralLetter: "s", //letra que se utiliza para el prural
         },
         plural: true, //Usar plurales
@@ -59,4 +68,4 @@ $(function () {
     simplyCountdown(multipleElements, {
         /* options */
     });
-})
+}

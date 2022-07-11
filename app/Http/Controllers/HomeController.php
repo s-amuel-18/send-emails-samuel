@@ -15,7 +15,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Spatie\Permission\Models\Role;
-
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\App;
 
 class HomeController extends Controller
 {
@@ -24,11 +25,7 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('auth');
-        // $this->middleware("can:home")->only("index");
-    }
+
 
     /**
      * Show the application dashboard.
@@ -38,7 +35,7 @@ class HomeController extends Controller
     public function index()
     {
         $pays_time = BillingTime::withSum("spemts", "price")->get();
-        // dd($pays_time->toArray));
+
         $total_registros = Contact_email::count();
 
         $date = Carbon::now();

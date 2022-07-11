@@ -76,4 +76,9 @@ class User extends Authenticatable
     {
         return $this->correos_enviados_hoy() < Contact_email::DAILY_EMAIL_LIMIT;
     }
+
+    public function lastEmailSend()
+    {
+        return DB::table("contact_email_user")->orderBy("created_at", "DESC")->first();
+    }
 }

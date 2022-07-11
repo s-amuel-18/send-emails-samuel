@@ -1,0 +1,13 @@
+<svg id="Icon" xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <g id="Border" opacity="0.06">
+    <rect id="Shape" width="64" height="64" rx="16" fill="#7f1fd4"/>
+  </g>
+  <g id="Icon_Pie_Cart" data-name="Icon Pie Cart" transform="translate(12 12)">
+    <rect id="Base" width="40" height="40" rx="20" fill="#7f1fd4"/>
+    <g id="confirm_2_" transform="translate(6.056 6.056)">
+      <g id="Grupo_11" data-name="Grupo 11">
+        <path id="Trazado_1" data-name="Trazado 1" d="M13.539,7.376a1.4,1.4,0,0,0-1.98,1.98l4.183,4.183a1.414,1.414,0,0,0,1.98,0l9.761-9.761A1.4,1.4,0,0,0,25.5,1.8l-8.771,8.785ZM24.6,10.611a11.4,11.4,0,0,1,.5,3.333,11.155,11.155,0,1,1-5.856-9.816l2.036-2.036a13.9,13.9,0,1,0,5.48,6.344Z" fill="#fff" fill-rule="evenodd"/>
+      </g>
+    </g>
+  </g>
+</svg>

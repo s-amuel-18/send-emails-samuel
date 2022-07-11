@@ -16,7 +16,7 @@
         @can('managment.index')
 
             @foreach ($pays_time as $pay)
-                <div class="col-md-3">
+                <div class="col-md-3 col-6">
 
                     <div class="card card-outline card-secondary">
                         <div class="card-header">
@@ -99,8 +99,8 @@
         @can('envio_email.index')
             <div class="col-md-3 col-6">
                 {{-- usuarios --}}
-                <x-adminlte-small-box title="{{ $enviados_hoy }}" text="Envios de Hoy" icon="fas fa-mail-bulk" theme="indigo"
-                    url="user" url-text="Enviar Correos" />
+                <x-adminlte-small-box id="emails_sent_today" title="{{ $enviados_hoy }}" text="Envios de Hoy"
+                    icon="fas fa-mail-bulk" theme="indigo" url="user" url-text="Enviar Correos" />
             </div>
         @endcan
 

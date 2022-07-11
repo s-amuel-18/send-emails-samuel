@@ -20,7 +20,7 @@
             .simply-amount {
                 display: block;
                 text-align: center !important;
-                font-size: 30px;
+                font-size: 27px;
                 font-weight: 700;
             }
 
@@ -89,10 +89,12 @@
 
 
     </div>
-    <div class="row">
+    <div id="content_counter" class="row {{ $puedo_enviar_emails['puedo_enviar_emails'] ? 'd-none' : '' }}">
+        <div class="col-md-3 pb-3">
+            <h5>Tiempo Restante</h5>
+            <div class=" cuenta d-flex" id="cuenta">
+            </div>
 
-        <div class="col-md-4 ml-2 cuenta  {{ $puedo_enviar_emails['puedo_enviar_emails'] ? 'd-none' : 'd-flex' }} "
-            id="cuenta">
         </div>
     </div>
 @endcan
@@ -108,4 +110,10 @@
     <script src="{{ asset('js/Plugins/axios.min.js') }}"></script>
     <script src="{{ asset('js/emails/validation.js') }}"></script>
     <script src="{{ asset('js/emails/send.js') }}"></script>
+
+    <script>
+        if (!dataServer.puedo_enviar_emails) {
+            counter(dataServer["timesLastEmail"]);
+        }
+    </script>
 @endpush

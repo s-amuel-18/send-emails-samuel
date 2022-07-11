@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="42" height="40" viewBox="0 0 42 40">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectángulo_170" data-name="Rectángulo 170" width="27" height="28" fill="#fff" stroke="#707070" stroke-width="1"/>
+    </clipPath>
+  </defs>
+  <g id="Grupo_1134" data-name="Grupo 1134" transform="translate(0 -133.387)">
+    <g id="Icon" transform="translate(0 133.387)">
+      <g id="Layer">
+        <rect id="Shadow" width="42" height="40" rx="20" fill="#7f1fd4"/>
+        <rect id="Fill" width="42" height="40" rx="20" fill="#7f1fd4"/>
+      </g>
+    </g>
+    <g id="Enmascarar_grupo_75" data-name="Enmascarar grupo 75" transform="translate(8 139.387)" clip-path="url(#clip-path)">
+      <g id="Instagram" transform="translate(-0.181 0.466)">
+        <path id="Trazado_79" data-name="Trazado 79" d="M13.389,26.828c-1.752,0-3.5-.007-5.255,0A7.953,7.953,0,0,1,.319,21.189a7.688,7.688,0,0,1-.311-2.342C-.005,15.223.012,11.6,0,7.979A7.971,7.971,0,0,1,5.589.339a7.248,7.248,0,0,1,2.2-.324C11.54,0,15.293-.013,19.046.015a7.851,7.851,0,0,1,7.77,7.939c.015,3.636,0,7.269.007,10.9a7.964,7.964,0,0,1-5.086,7.466,7.443,7.443,0,0,1-2.736.5C17.132,26.838,15.261,26.828,13.389,26.828Zm0-2.43c1.954,0,3.907,0,5.861,0a4.156,4.156,0,0,0,1.784-.4A5.336,5.336,0,0,0,24.4,18.829c0-3.576-.017-7.149.01-10.725a5.478,5.478,0,0,0-1.084-3.481,5.043,5.043,0,0,0-4.044-2.17c-3.907-.045-7.812-.012-11.72-.015a4.2,4.2,0,0,0-1.814.426A5.34,5.34,0,0,0,2.43,8.026c0,3.576.02,7.149-.01,10.725a5.45,5.45,0,0,0,1.116,3.506,5.1,5.1,0,0,0,3.995,2.128C9.482,24.438,11.438,24.4,13.392,24.4Z" transform="translate(0 0.001)" fill="#fff"/>
+        <path id="Trazado_80" data-name="Trazado 80" d="M24.614,17.333a7.3,7.3,0,1,1-7.291-7.3A7.291,7.291,0,0,1,24.614,17.333Zm-2.37,0a4.9,4.9,0,0,0-4.909-4.9,4.9,4.9,0,1,0-.007,9.8A4.9,4.9,0,0,0,22.244,17.337Z" transform="translate(-3.911 -3.915)" fill="#fff"/>
+        <path id="Trazado_81" data-name="Trazado 81" d="M33.146,8.426a1.074,1.074,0,0,1-.015,2.148,1.074,1.074,0,1,1,.015-2.148Z" transform="translate(-12.505 -3.287)" fill="#fff"/>
+      </g>
+    </g>
+  </g>
+</svg>

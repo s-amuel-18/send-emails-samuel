@@ -5,6 +5,7 @@ function show_loader_sende() {
 
     if (send_emails_loader) {
         if (!send_emails_loader.classList.contains("loading-show")) {
+            send_emails_loader.classList.remove("loading-hidden")
             send_emails_loader.classList.add("loading-show")
         }
     }
@@ -26,6 +27,9 @@ function hide_loader_sende() {
 
 async function send_emails(url = null, params, submiter = null) {
     const insert_text_error = document.getElementById("insert_text_error");
+    const select_alert_new_email = document.getElementById("select_alert_new_email");
+    const emails_sent_today = document.querySelector("#emails_sent_today .inner h3");
+
 
     if (!url) {
         alert("No se pasó parametro 'url' en la funcion 'send_emails'");
@@ -39,6 +43,10 @@ async function send_emails(url = null, params, submiter = null) {
 
         console.log(resp);
 
+        if (emails_sent_today && data.emails_sent_today) {
+
+            emails_sent_today.textContent = data.emails_sent_today;
+        }
 
 
         if (insert_text_error) {
@@ -56,18 +64,21 @@ async function send_emails(url = null, params, submiter = null) {
             insert_text_error.textContent = "";
             send_emails(url, params);
         } else {
-            if (send_emails_loader) {
-                if (send_emails_loader.classList.contains("loading-show")) {
-                    send_emails_loader.classList.remove("loading-show")
-                    send_emails_loader.classList.add("loading-hidden")
-                }
-            }
+            hide_loader_sende()
 
             if (submiter) {
                 submiter.disabled = false;
             }
 
             insert_text_error.textContent = data.message.message;
+
+            if (data.times_last_email) {
+                select_alert_new_email.classList.add("d-none")
+                counter(data.times_last_email);
+
+            }
+
+
 
             return resp;
         }

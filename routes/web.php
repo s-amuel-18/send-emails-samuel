@@ -13,8 +13,10 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\contact_email\ContactEmailController;
 use App\Http\Controllers\contact_email\EmailSendController;
 use App\Http\Controllers\DebtController;
+use App\Http\Controllers\FrontController;
 use App\Http\Controllers\IncomeController;
 use App\Http\Controllers\ManagementController;
+use App\Http\Controllers\PdfController;
 use App\Http\Controllers\RecomendacionMejoraController;
 // use App\Http\Controllers\contact_email\Email_send;
 use App\Http\Controllers\RoleController;
@@ -37,8 +39,9 @@ use Illuminate\Support\Facades\Mail;
 
 Auth::routes(["register" => false]);
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home.index');
+Route::get('/', [FrontController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->middleware('auth')
+    ->name('home.index');
 
 // users
 Route::resource("user", UserController::class)->except("show")->middleware("auth")->names("user");
@@ -84,3 +87,6 @@ Route::resource("recomendaciones", RecomendacionMejoraController::class)->middle
 Route::get("email", function () {
     return view("emails.fluxel_code_service");
 });
+
+// pdf
+Route::get("pdf/presentacion", [PdfController::class, "cartaPresentacion"])->name("pdf.cartaPresentacion");

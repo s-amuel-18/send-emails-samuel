@@ -10,6 +10,7 @@ use App\Models\EmailEnviado;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
 class EmailSendController extends Controller
@@ -157,10 +158,30 @@ class EmailSendController extends Controller
 
 
         if (!$dalyEmailsValid) {
+            $send_today = auth()->user()->correos_enviados_hoy();
+
+            $lastEmailSend = auth()->user()->lastEmailSend();
+
+            $hora = Carbon::now()->parse($lastEmailSend->created_at)->format("H");
+
+            $dia = Carbon::now()->parse($lastEmailSend->created_at)->addDays(1)->format("d");
+
+            $minutos = Carbon::now()->parse($lastEmailSend->created_at)->format("i");
+
+            $segundos = Carbon::now()->parse($lastEmailSend->created_at)->format("s");
+
+            $timesLastEmail = [
+                "hora" => $hora,
+                "dia" => $dia,
+                "minutos" => $minutos,
+                "segundos" => $segundos
+            ];
 
             return [
                 "success_email_send" => false,
                 "emails_to_send" => $emailsToSend,
+                "times_last_email" => $timesLastEmail,
+                "emails_sent_today" => $send_today,
                 "message" => [
                     "type" => "danger",
                     "message" => "Se llego al limite de envios diarios",
@@ -183,29 +204,33 @@ class EmailSendController extends Controller
             $emailsToSend = auth()->user()->correos_por_enviar_hoy();
             $emailsToSend = $emailsToSend == 0 ? null : $emailsToSend;
 
-            $send_today = auth()->user()->correos_enviados_hoy();
-
-            $percentage = $send_today ? (($send_today * Contact_email::DAILY_EMAIL_LIMIT) / 100) : 0;
 
             $enviado = auth()->user()->emailEnviado()->attach($emailsNotSend->id);
 
             $emailsNotSend->update(["estado" => 1]);
 
+            $send_today = auth()->user()->correos_enviados_hoy();
+
+            $percentage = $send_today ? (($send_today * 100) / Contact_email::DAILY_EMAIL_LIMIT) : 0;
 
             return [
                 "success_email_send" => true,
                 "emails_to_send" => $emailsToSend,
+                "emails_sent_today" => $send_today,
                 "percentage" => $percentage,
                 "message" => [
-                    "type" => "danger",
+                    "type" => "success",
                     "message" => "Email enviado correctamente"
                 ]
             ];
         } catch (\Throwable $th) {
+            $send_today = auth()->user()->correos_enviados_hoy();
+
             //throw $th;
             return [
                 "success_email_send" => false,
                 "emails_to_send" => $emailsToSend,
+                "emails_sent_today" => $send_today,
                 "message" => [
                     "type" => "danger",
                     "message" => "Ha ocurrido un error, El motivo del error puede ser que se ha llegado al limite de envio de correos diarios"

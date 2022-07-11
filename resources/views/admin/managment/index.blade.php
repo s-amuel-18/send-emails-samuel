@@ -28,7 +28,7 @@
 
     <div class="row">
         @foreach ($data['pays_time'] as $pay)
-            <div class="col-md-3">
+            <div class="col-md-3 col-6">
 
                 <div class="card card-outline card-secondary">
                     <div class="card-header">

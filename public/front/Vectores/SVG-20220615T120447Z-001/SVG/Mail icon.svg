@@ -1,0 +1,13 @@
+<svg id="Icon" xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <g id="Border" opacity="0.06">
+    <rect id="Shape" width="64" height="64" rx="16" fill="#7f1fd4"/>
+  </g>
+  <g id="Icon_Email" transform="translate(12 12)">
+    <g id="Group">
+      <rect id="Base" width="40" height="40" fill="none"/>
+      <path id="path" d="M0,0H40V40H0Z" fill="none"/>
+      <path id="path-2" data-name="path" d="M33.6,4.949V20A5.6,5.6,0,0,1,28,25.6H5.6A5.6,5.6,0,0,1,0,20V4.949A2.388,2.388,0,0,1,1.025,2.99L5.115.143a.8.8,0,0,1,.914,1.313L1.939,4.3a.788.788,0,0,0-.339.634,2.4,2.4,0,0,1,2.017.195L16.8,12.889,29.983,5.132A2.4,2.4,0,0,1,32,4.938a.788.788,0,0,0-.339-.635L27.688,1.538A.8.8,0,1,1,28.6.225L32.575,2.99A2.388,2.388,0,0,1,33.6,4.949Z" transform="translate(3.333 10.833)" fill="#7f1fd4"/>
+      <path id="path-3" data-name="path" d="M12,19.2h0L0,12V4A4,4,0,0,1,4,0H20a4,4,0,0,1,4,4v8L12,19.2Zm-4.8-8a.8.8,0,0,0,0,1.6h9.6a.8.8,0,0,0,0-1.6Zm0-4.8A.8.8,0,1,0,7.2,8h9.6a.8.8,0,0,0,0-1.6Z" transform="translate(8.333 3.333)" fill="#786589"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,9 @@
+<svg id="Icon" xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <g id="Border" opacity="0.06">
+    <rect id="Shape" width="64" height="64" rx="16" fill="#7f1fd4"/>
+  </g>
+  <g id="Icon_Call" transform="translate(12 12)">
+    <rect id="Base" width="40" height="40" fill="none"/>
+    <path id="Path" d="M11.755,15.2l5.523,5.829a2.427,2.427,0,0,0,2.892.127c3.075-1.275,4.1-1.586,4.682-.969l6.349,6.7a2.21,2.21,0,0,1-.289,3,10.771,10.771,0,0,1-15.8,0L3.252,17.369a12.159,12.159,0,0,1,0-16.554A2.033,2.033,0,0,1,6.2.51l6.349,6.7c.55.581.255,1.662-.946,4.885A2.867,2.867,0,0,0,11.755,15.2Z" transform="translate(3.333 3.333)" fill="#7f1fd4"/>
+  </g>
+</svg>

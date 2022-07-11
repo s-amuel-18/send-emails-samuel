@@ -30,8 +30,8 @@ return [
     |
     */
 
-    'use_ico_only' => false,
-    'use_full_favicon' => false,
+    'use_ico_only' => true,
+    'use_full_favicon' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -235,6 +235,12 @@ return [
         // Sidebar items:
 
 
+        [
+            'route'         => 'home',
+            'icon'        => 'fas fa-home fa-fw ',
+            'text'        => 'Pagina Web',
+            'topnav_right' => true,
+        ],
         [
             'route'         => 'recomendacion.index',
             'icon'        => 'fa fa-tools fa-fw',
