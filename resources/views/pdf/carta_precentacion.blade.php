@@ -16,15 +16,12 @@
 </style>
 
 <body>
-    Carta De precentacion
+    {{-- <img src="{{ asset('images/PDF-assets/Artboard 12.png') }}" alt="">
+    <img src="{{ asset('images/PDF-assets/Artboard 22.png') }}" alt="">
+    <img src="{{ asset('images/PDF-assets/Artboard 12 copy.png') }}" alt=""> --}}
 
-    <div class="" style="background-color: red; height:300px;">
 
-        <div class="">3</div>
-        <div class="">3</div>
-        <div class="">3</div>
-        <div class="">3</div>
-    </div>
+
 </body>
 
 </html>
