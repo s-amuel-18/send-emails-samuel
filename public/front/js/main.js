@@ -82,17 +82,18 @@ $(document).ready(function(){
 
     $('.slick-slider-clients').slick({
       slidesToShow: 5,
-      slidesToScroll: 1,
+      slidesToScroll: 2,
       autoplay: true,
-      autoplaySpeed: 4000,
+      dots:true,
+      autoplaySpeed: 2000,
       prevArrow: false,
       nextArrow: false,
-      autoplaySpeed: 2000,
       infinite: true,
       responsive: [
         {
           breakpoint: 1024,
           settings: {
+            dots: true,
             slidesToShow: 3,
             slidesToScroll: 2,
             infinite: true,
@@ -102,6 +103,7 @@ $(document).ready(function(){
         {
           breakpoint: 600,
           settings: {
+            dots: true,
             slidesToShow: 3,
             slidesToScroll: 1,
           }
@@ -109,6 +111,7 @@ $(document).ready(function(){
         {
           breakpoint: 480,
           settings: {
+            dots: true,
             slidesToShow: 2,
             slidesToScroll: 1,
           }

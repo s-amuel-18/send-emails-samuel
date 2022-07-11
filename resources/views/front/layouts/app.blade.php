@@ -24,8 +24,9 @@
     <link rel="stylesheet" href="{{ asset('front/js/animate.css/animete.css') }}">
     <!--~~~~~~~~~~~~~~~~ wow ~~~~~~~~~~~~~~~~~-->
     <script src="{{ asset('front/js/wow.js/wow.min.js') }}"></script>
-
-
+    {{-- flagsicon --}}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" rel="stylesheet"
+        type="text/css" />
 
     <title>Fluxel Code</title>
 </head>
@@ -50,6 +51,22 @@
     <script src="{{ asset('front/js/plugins/magnific-popup.min.js') }}"></script>
     <!-- Main Js-->
     <script src="{{ asset('front/js/main.js') }}"></script>
+
+    {{-- jquery validator --}}
+    <script src="{{ asset('vendor/jquery-validation/jquery.validate.min.js') }}"></script>
+    <script src="{{ asset('vendor/jquery-validation/additional-methods.min.js') }}"></script>
+    <script src="{{ asset('vendor/jquery-validation/localization/messages_es.min.js') }}"></script>
+    <script src="{{ asset('front/js/validation.js') }}"></script>
+    {{-- recaptcha --}}
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+    <script src="{{ asset('front/js/recaptcha.js') }}"></script>
+    <!-- Google Translate -->
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+        < script src = "{{ asset('front/js/google-translate.js') }}" >
+            <
+            />
+    </script>
     <script>
         var wow = new WOW({
             boxClass: 'wow', // animated element css class (default is wow)

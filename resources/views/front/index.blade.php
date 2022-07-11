@@ -1,22 +1,21 @@
 @extends('front.layouts.app')
 
 @section('content')
+    <!-- contenedor oculto de google translate -->
+    <div id="google_translate_element" style="display:none"></div>
     <!-- Page Loading -->
     <div class="se-pre-con"></div>
     <!-- ======== Start Navbar ======== -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dar fixed-top ">
         <div class="container ">
-            <a class="navbar-brand" href="#"><img class="icon-tec" src="./Vectores/Logo/Artboard 35.svg"
-                    alt="Logo Fluxel-code" /></a>
+            <a class="navbar-brand" href="#"><img class="icon-tec"
+                    src="{{ asset('front/Vectores/Logo/Artboard 35.svg') }}" alt="Logo Fluxel-code" /></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
                 aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#slider">Inicio</a>
-                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#features">Características</a>
                     </li>
@@ -26,16 +25,24 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#testimonials">Testimonio</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#funciona">¿Cómo funciona?</a>
+                    <li class="nav-item ">
+                        <a class="nav-link" href="#funciona">Funcionamiento</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#faq">FAQ</a>
+                    <li class="nav-item ">
+                        <a class="nav-link" href="#faq" translate="no">FAQ</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link text-capitalize" href="{{ route('home.index') }}" translate="no">Login</a>
                     </li>
 
 
                 </ul>
                 <a href="#contact" class="btn-1">Contactanos!</a>
+                <li class="d-flex nav-item p-2">
+                    <a class="flag_link eng pr-2" data-lang="en"><span class="flag-icon flag-icon-us"></span></a>
+                    <a class="flag_link es" data-lang="es"><span class="flag-icon flag-icon-es"></span></a>
+                </li>
+
             </div>
         </div>
     </nav>
@@ -47,7 +54,7 @@
             <div class="content">
                 <div class="row d-flex align-items-center">
                     <div class="col-lg-5 p-3">
-                        <h1 class="" data-w>Estrategia digital</h1>
+                        <h1 class="text-capitalize" data-w>Estrategia digital</h1>
                         <p>
                             Nos especializamos en diseño web y desarrollo de sistemas,
                             soluciones simples para empresas y emprendedores, que buscan una
@@ -57,7 +64,8 @@
                         <a href="#contact" class="btn-g">Conocenos</a>
                     </div>
                     <div class="col-lg-7 p-3 wow animate__zoomIn" data-wow-duration="2s">
-                        <img src="./Vectores/1.svg" alt="Principal" class="img-fluid header-img-custom" />
+                        <img src="{{ asset('front/Vectores/1.svg') }}" alt="Principal"
+                            class="img-fluid header-img-custom" />
                     </div>
                 </div>
             </div>
@@ -73,8 +81,8 @@
                     <!-- Developer -->
                     <div class="col-md-6">
                         <div class="box left-box wow animate__slideInUp" data-wow-duration="2s">
-                            <img class="wow animate__fadeInDown" data-wow-duration="1s" src="img/developer.png"
-                                alt="atomo" />
+                            <img class="wow animate__fadeInDown" data-wow-duration="1s"
+                                src="{{ asset('front/img/developer.png') }}" alt="atomo" />
                             <h3 class="" data-wow-duration="1s">Programacion</h3>
                             <ul class="ul-join text-left ">
                                 <li class="text-left" data-wow-duration="1.2s">Desarrollo de sistema financieros</li>
@@ -87,8 +95,8 @@
                     <!-- Designer -->
                     <div class="col-md-6">
                         <div class="box wow animate__slideInUp" data-wow-duration="2s">
-                            <img class="wow animate__fadeInDown" data-wow-duration="1s" src="img/designer.png"
-                                alt="persona usuario" />
+                            <img class="wow animate__fadeInDown" data-wow-duration="1s"
+                                src="{{ asset('front/img/designer.png') }}" alt="persona usuario" />
                             <h3 class="dark-pink " data-wow-duration="1s">Diseño Audiovisual</h3>
                             <ul class="ul-join text-left">
                                 <li class="text-left" data-wow-duration="1.2s">Creacion de marca personal</li>
@@ -122,7 +130,8 @@
             <div class="slick-slider">
                 <!-- Box-1 -->
                 <div class="box">
-                    <img src="./Vectores/Slider/desarrollo.svg" alt="grafico" class="m-auto icons" />
+                    <img src="{{ asset('front/Vectores/Slider/desarrollo.svg') }}" alt="grafico"
+                        class="m-auto icons" />
                     <h3>Desarrollo de sistema financieros</h3>
                     <p>
                         Te ayudamos a generar sistemas optimizados de manera eficiente
@@ -131,7 +140,8 @@
                 </div>
                 <!-- Box-2 -->
                 <div class="box">
-                    <img src="./Vectores/Slider/tienda.svg" alt="logo tienda" class="m-auto icons" />
+                    <img src="{{ asset('front/Vectores/Slider/tienda.svg') }}" alt="logo tienda"
+                        class="m-auto icons" />
                     <h3>Desarrollo de tienda virtual</h3>
                     <p>
                         Asesoramos a asegurar que el diseño de la tienda virtual se base
@@ -141,7 +151,8 @@
                 </div>
                 <!-- Box-3 -->
                 <div class="box">
-                    <img src="./Vectores/Slider/aplicativos.svg" alt="monitor" class="m-auto icons" />
+                    <img src="{{ asset('front/Vectores/Slider/aplicativos.svg') }}" alt="monitor"
+                        class="m-auto icons" />
                     <h3>Creacion de Aplicativos Web</h3>
                     <p>
                         Aplicamos las tecnologias mas novedosas y adaptables a cualquier
@@ -150,7 +161,8 @@
                 </div>
                 <!-- Box-1 -->
                 <div class="box">
-                    <img src="./Vectores/Slider/marca.svg" alt="banner con corazon" class="m-auto img-fluid icons" />
+                    <img src="{{ asset('front/Vectores/Slider/marca.svg') }}" alt="banner con corazon"
+                        class="m-auto img-fluid icons" />
                     <h3>Creacion de Marca personal</h3>
                     <p>
                         Brindamos el apoyo en crear un logo y imagen de manera actractiva
@@ -159,7 +171,8 @@
                 </div>
                 <!-- Box-2 -->
                 <div class="box">
-                    <img src="./Vectores/Slider/audiovisual.svg" alt="iconos media" class="m-auto icons" />
+                    <img src="{{ asset('front/Vectores/Slider/audiovisual.svg') }}" alt="iconos media"
+                        class="m-auto icons" />
                     <h3>Creacion Audiovisual</h3>
                     <p>Implementamos todos los medios audiovisuales</p>
                 </div>
@@ -185,12 +198,13 @@
             <div class="row d-flex align-items-center">
                 <div class="col-md-6">
                     <div class="left">
-                        <img src="./Vectores/historia.svg" class="img-fluid" alt="construcción de codigo ">
+                        <img src="{{ asset('front/Vectores/historia.svg') }}" class="img-fluid"
+                            alt="construcción de codigo ">
                     </div>
                 </div>
                 <div class="col-md-6 wow animate__fadeInUp" data-wow-duration="2s">
                     <div class="right">
-                        <img src="img/customer-icon.png" alt="enchufe" />
+                        <img src="{{ asset('front/img/customer-icon.png') }}" alt="enchufe" />
                         <h5>Nuestra Historia</h5>
                         <p class="p-1">
                             Fluxel-code, presentándonos como una agencia de desarrollo
@@ -228,9 +242,9 @@
                         <div class="carousel-inner vh-36">
                             <!-- Item-1 -->
                             <div class="carousel-item active text-center">
-                                <img src="./Vectores/Testimonios/fumimark logo.png" alt="Fumimark logo "
-                                    class="center-block team " width="100" height="100" />
-                                <h3>Otilio Toro</h3>
+                                <img src="{{ asset('front/Vectores/Testimonios/fumimark logo.png') }}"
+                                    alt="Fumimark logo " class="center-block team " width="100" height="100" />
+                                <h3>Otilio Graterol</h3>
                                 <h4>Fumimark</h4>
                                 <p>
                                     Necesitábamos un Sistema que cubriera las necesidades de
@@ -241,9 +255,9 @@
                             </div>
                             <!-- Item-2 -->
                             <div class="carousel-item text-center">
-                                <img src="./Vectores/Testimonios/avimark logo.png" alt="Avimark logo"
-                                    class="center-block team " width="100" height="100" />
-                                <h3>Armando Glaterol</h3>
+                                <img src="{{ asset('front/Vectores/Testimonios/avimark logo.png') }}"
+                                    alt="Avimark logo" class="center-block team " width="100" height="100" />
+                                <h3>Armando Graterol</h3>
                                 <h4>Avimark</h4>
                                 <p>
                                     Dejar en vuestras manos la construcción de nuestra página
@@ -254,8 +268,8 @@
                             </div>
                             <!-- Item-3 -->
                             <div class="carousel-item text-center ">
-                                <img src="./Vectores/Testimonios/logo bm.png" alt="Bm Logo" class="center-block team "
-                                    width="100" height="100" />
+                                <img src="{{ asset('front/Vectores/Testimonios/logo bm.png') }}" alt="Bm Logo"
+                                    class="center-block team " width="100" height="100" />
                                 <h3>Marcos Vizcaino</h3>
                                 <h4>BM</h4>
                                 <p>
@@ -312,8 +326,8 @@
 
                                     <h3 class="h3-funcion">1. Evaluación</h3>
                                     <p>
-                                        Iniciamos el plan con una evaluación intensa de sus requerimientos para
-                                        comprender los objetivos de
+                                        Iniciamos el plan con una evaluación intensa de sus requerimientos para comprender
+                                        los objetivos de
                                         su requerimiento sea pagina web. </p>
 
 
@@ -334,8 +348,8 @@
                                 <div class="carousel-item ">
                                     <h3 class="h3-funcion">4. Revisión Final</h3>
                                     <p>
-                                        Su sitio está casi completo. Después de presentar el sitio, ud. crea una
-                                        comprensiva lista de
+                                        Su sitio está casi completo. Después de presentar el sitio, ud. crea una comprensiva
+                                        lista de
                                         cambios.
                                     </p>
                                 </div>
@@ -357,7 +371,8 @@
                 </div>
                 <!-- Right -->
                 <div class="col-lg-6 ">
-                    <img src="./Vectores/como-funciona.svg" alt="Hombre con signo de interrogacion" class="img-fluid" />
+                    <img src="{{ asset('front/Vectores/como-funciona.svg') }}" alt="Hombre con signo de interrogacion"
+                        class="img-fluid" />
                 </div>
             </div>
     </section>
@@ -368,14 +383,13 @@
         <div class="container">
             <div class="row d-flex justify-content-center align-items-center icon ">
                 <div class="col-md-8">
-                    <h2 class="wow animate__slideInLeft flow-h" data-wow-duration="2s">Puedes descargar nuestra carta
-                        de
+                    <h2 class="wow animate__slideInLeft flow-h" data-wow-duration="2s">Puedes descargar nuestra carta de
                         presentacion!
                     </h2>
                 </div>
                 <div class=" col-md-4 wow animate__slideInRight " data-wow-duration=" 2s">
                     <div>
-                        <a href="#" class="btn-1"> Descargar</a>
+                        <a href="#" class="btn-1">Descargar</a>
                     </div>
                 </div>
             </div>
@@ -411,8 +425,8 @@
                         <div class="line"></div>
                         <p>
 
-                            En ese caso, nosotros nos encargamos de optimizarla, mejorando su aspecto visual,
-                            rendimiento, relevancia,
+                            En ese caso, nosotros nos encargamos de optimizarla, mejorando su aspecto visual, rendimiento,
+                            relevancia,
                             usabilidad y posicionamiento en Google.
                         </p>
 
@@ -424,8 +438,8 @@
                         <h5 class="h5-faq">¿Cuando se demoraria en hacer la landing page?</h5>
                         <div class="line"></div>
                         <p>
-                            Nosotros en Fluxel-code, gracias a nuestra experiencia podemos hacerte llegar el producto
-                            entre 3 dias a
+                            Nosotros en Fluxel-code, gracias a nuestra experiencia podemos hacerte llegar el producto entre
+                            3 dias a
                             una semana dependiendo de su requerimiento de manera optima.
 
                         </p>
@@ -447,15 +461,15 @@
                 <!-- Box-1 -->
                 <div class="col-md-6">
                     <div class="box d-flex align-items-center">
-                        <div class="image"><img src="img/media-1.png" alt="Lupa" /> </div>
+                        <div class="image"><img src="{{ asset('front/img/media-1.png') }}" alt="Lupa" /> </div>
                         <h2>Aumento de trafico web</h2>
                     </div>
                 </div>
                 <!-- Box-2 -->
                 <div class="col-md-6">
                     <div class="box d-flex align-items-center">
-                        <div class="image"><img src="img/media-2.png" alt="Globo" /></div>
-                        <h2>Alcance internacional</h2>
+                        <div class="image"><img src="{{ asset('front/img/media-2.png') }}" alt="Globo" /></div>
+                        <h2 class="text-capitalize">Alcance internacional</h2>
                     </div>
                 </div>
             </div>
@@ -468,48 +482,48 @@
         <div class="container">
             <div class="slick-slider-clients d-flex justify-content-between ">
                 <div class="item d-flex align-items-center justify-content-center">
-                    <img style="height: 100px;" src="./Vectores/Icons-tec/css.svg" alt="Css logo"
+                    <img style="height: 100px;" src="{{ asset('front/Vectores/Icons-tec/css.svg') }}" alt="Css logo"
                         class="img-fluid icon-tec" />
                 </div>
                 <div class="item d-flex align-items-center justify-content-center">
-                    <img style="height: 100px;" src="./Vectores/Icons-tec/html.svg" alt="html logo"
+                    <img style="height: 100px;" src="{{ asset('front/Vectores/Icons-tec/html.svg') }}" alt="html logo"
                         class="img-fluid icon-tec" />
                 </div>
                 <div class="item d-flex align-items-center justify-content-center">
-                    <img style="height: 100px;" src="./Vectores/Icons-tec/javascript.svg" alt=" javascript logo"
+                    <img style="height: 100px;" src="{{ asset('front/Vectores/Icons-tec/javascript.svg') }}"
+                        alt=" javascript logo" class="img-fluid icon-tec" />
+                </div>
+                <div class="item d-flex align-items-center justify-content-center">
+                    <img style="height: 100px;" src="{{ asset('front/Vectores/Icons-tec/jquery.svg') }}"
+                        alt="jquery logo" class="img-fluid icon-tec" />
+                </div>
+                <div class="item d-flex align-items-center justify-content-center">
+                    <img style="height: 100px;" src="{{ asset('front/Vectores/Icons-tec/js.svg') }}" alt="js logo"
                         class="img-fluid icon-tec" />
                 </div>
                 <div class="item d-flex align-items-center justify-content-center">
-                    <img style="height: 100px;" src="./Vectores/Icons-tec/jquery.svg" alt="jquery logo"
+                    <img style="height: 100px;" src="{{ asset('front/Vectores/Icons-tec/laravel.svg') }}"
+                        alt="laravel logo" class="img-fluid icon-tec" />
+                </div>
+                <div class="item d-flex align-items-center justify-content-center">
+                    <img style="height: 100px;" src="{{ asset('front/Vectores/Icons-tec/mysql.svg') }}"
+                        alt="mysql logo" class="img-fluid icon-tec" />
+                </div>
+                <div class="item d-flex align-items-center justify-content-center">
+                    <img style="height: 100px;" src="{{ asset('front/Vectores/Icons-tec/php.svg') }}" alt="php logo"
                         class="img-fluid icon-tec" />
                 </div>
                 <div class="item d-flex align-items-center justify-content-center">
-                    <img style="height: 100px;" src="./Vectores/Icons-tec/js.svg" alt="js logo"
+                    <img style="height: 100px;" src="{{ asset('front/Vectores/Icons-tec/Sass.svg') }}" alt="sass logo"
                         class="img-fluid icon-tec" />
                 </div>
                 <div class="item d-flex align-items-center justify-content-center">
-                    <img style="height: 100px;" src="./Vectores/Icons-tec/laravel.svg" alt=""
-                        class="img-fluid icon-tec" />
+                    <img style="height: 100px;" src="{{ asset('front/Vectores/Icons-tec/wordpress.svg') }}"
+                        alt="wordpress logo" class="img-fluid icon-tec" />
                 </div>
                 <div class="item d-flex align-items-center justify-content-center">
-                    <img style="height: 100px;" src="./Vectores/Icons-tec/mysql.svg" alt="laravel logo"
-                        class="img-fluid icon-tec" />
-                </div>
-                <div class="item d-flex align-items-center justify-content-center">
-                    <img style="height: 100px;" src="./Vectores/Icons-tec/php.svg" alt="php logo"
-                        class="img-fluid icon-tec" />
-                </div>
-                <div class="item d-flex align-items-center justify-content-center">
-                    <img style="height: 100px;" src="./Vectores/Icons-tec/Sass.svg" alt="sass logo"
-                        class="img-fluid icon-tec" />
-                </div>
-                <div class="item d-flex align-items-center justify-content-center">
-                    <img style="height: 100px;" src="./Vectores/Icons-tec/wordpress.svg" alt="wordpress logo"
-                        class="img-fluid icon-tec" />
-                </div>
-                <div class="item d-flex align-items-center justify-content-center">
-                    <img style="height: 100px;" src="./Vectores/Icons-tec/bootstrap.svg" alt="bootstrap logo"
-                        class="img-fluid icon-tec" />
+                    <img style="height: 100px;" src="{{ asset('front/Vectores/Icons-tec/bootstrap.svg') }}"
+                        alt="bootstrap logo" class="img-fluid icon-tec" />
                 </div>
 
             </div>
@@ -525,25 +539,32 @@
                     <div class="col-lg-8 left">
                         <h3>Enviar mensaje</h3>
 
-                        <form>
+                        <form id="form_contact">
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" placeholder="Nombre" />
+
+                                    <input type="text" class="form-control" id="nombre" name="nombre"
+                                        placeholder="Nombre" />
                                 </div>
                                 <div class="col-sm-6">
-                                    <input type="email" class="form-control" placeholder="Correo" />
+
+                                    <input type="email" id="email" name="email" class="form-control"
+                                        placeholder="Correo" />
                                 </div>
                             </div>
                             <div class="form-group">
-                                <textarea class="form-control" rows="5" id="comment" placeholder="Mensaje"></textarea>
+
+                                <textarea class="form-control" rows="5" name="comment" id="comment" placeholder="Mensaje"></textarea>
                             </div>
+                            <div class="g-recaptcha" data-sitekey="6Ld0CuEgAAAAALsiUxgfPlwW2kFfFt4a2smgi-s5"></div>
+                            <br />
                             <button class="btn btn-block" type="submit">Enviar</button>
                         </form>
                     </div>
                     <!-- Left -->
                     <div class="col-lg-4">
                         <div class="right">
-                            <h4>Mantente en contacto</h4>
+                            <h4> <span class="text-capitalize">Mantente</span> en contacto</h4>
                             <div class="info d-flex align-items-center">
                                 <i class="fa fa-map-marker" aria-hidden="true"></i>
                                 <span></span>
@@ -579,9 +600,9 @@
     <footer class="footer flow-h">
         <div class="container text-center text-white">
             <div class="content">
-                <a href="#"><img class="icon-tec" src="./Vectores/Logo/Artboard 35.svg"
+                <a href="#"><img class="icon-tec" src="{{ asset('front/Vectores/Logo/Artboard 35.svg') }}"
                         alt="Logo Fluxel-code" /></a>
-                <p>© 2022 Fluxel-code. All rights reserved.</p>
+                <p>© 2022 Fluxel-code. Todos los derechos recervados.</p>
             </div>
         </div>
     </footer>
