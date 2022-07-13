@@ -89,5 +89,22 @@ return array (
     '800' => $fontDir . '/poppins_800_ef86a7722c08a791e114b6649bbd6ae4',
     '900' => $fontDir . '/poppins_900_c60a07be40ef8f258a248a492dd87245',
   ),
+  'font awesome 6 brands' => array(
+    'normal' => $fontDir . '/font_awesome_6_brands_normal_ba95da0e0ed26cb50aa2f3bfa6de4224',
+  ),
+  'font awesome 6 free' => array(
+    'normal' => $fontDir . '/font_awesome_6_free_normal_d14e05f732166b536c9f3e3c128da324',
+    '900' => $fontDir . '/font_awesome_6_free_900_fc6b653d35d5d856773a176618f15b8a',
+  ),
+  'font awesome 5 brands' => array(
+    'normal' => $fontDir . '/font_awesome_5_brands_normal_ba95da0e0ed26cb50aa2f3bfa6de4224',
+  ),
+  'font awesome 5 free' => array(
+    '900' => $fontDir . '/font_awesome_5_free_900_fc6b653d35d5d856773a176618f15b8a',
+    'normal' => $fontDir . '/font_awesome_5_free_normal_d14e05f732166b536c9f3e3c128da324',
+  ),
+  'fontawesome' => array(
+    'normal' => $fontDir . '/fontawesome_normal_e1a313ca83905f53a32ee29693775520',
+  ),
 );
 }; ?>
