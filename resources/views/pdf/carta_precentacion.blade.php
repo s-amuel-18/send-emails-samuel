@@ -137,12 +137,40 @@
 
     footer {
         position: fixed;
-        bottom: 2.7cm;
+        bottom: 0cm;
         left: 0cm;
         right: 0cm;
         height: 2cm;
 
     }
+
+    .bg-img {
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 8cm;
+    }
+
+    .logo-fluxel {
+        width: 150px;
+    }
+
+    .logo-fluxel-h {
+        margin-top: -0.5rem;
+        padding: 2.5rem;
+    }
+
+    .logo-fluxel-f {
+        margin-top: 4.5cm;
+        margin-left: 15cm;
+        margin-right: 3cm;
+        padding: 2.5rem;
+
+    }
+
+
+
+
 
     /* { @page { margin: 100px 25px; }
     header { position: fixed; top: -60px; left: 0px; right: 0px; background-color: lightblue; height: 50px; }
@@ -152,12 +180,14 @@
 </style>
 
 <body>
-    <header>
-        <img src="{{ public_path('images\pdf_assets\header-3.png') }}" width="100%">
+    <header class="bg-img" style="background-image: url({{ public_path('images\pdf_assets\header-4.png') }});">
+        <div class="logo-fluxel-h"><img class="logo-fluxel"
+                src="{{ public_path('images\pdf_assets\fluxel_code_xl.png') }}" alt=""></div>
     </header>
-    <footer>
-        <img src="{{ public_path('images\pdf_assets\footer-3.png') }}" width="100%">
+    <footer class="bg-img" style="background-image: url({{ public_path('images\pdf_assets\footer-4.png') }});">
 
+        <div class="logo-fluxel-f"><img class="logo-fluxel"
+                src="{{ public_path('images\pdf_assets\fluxel_code_xl.png') }}" alt=""></div>
     </footer>
 
 
@@ -206,11 +236,10 @@
                 </table>
             </div>
         </section>
-        {{-- <div class="page-break-before"></div> --}}
         <div class="page-break"></div>
 
         <section id="proyectos">
-            {{-- <br><br><br><br><br><br><br><br><br><br> --}}
+
             <div class="">
                 <h1 class="h-1">
                     Proyectos
@@ -231,7 +260,6 @@
         <div class="page-break"></div>
         <section id="actividades">
 
-            {{-- <br><br><br><br><br><br><br><br> --}}
             <h1 class="h-1">
                 Descripción de las actividades <br>
             </h1>
@@ -293,9 +321,9 @@
         <section id="contactanos">
             <div class="page-container page-break-before ">
 
-                {{-- <br><br><br> --}}
+
                 <h1 class="h-1">CONTÁCTANOS </h1>
-                {{-- <br><br><br><br><br><br><br> --}}
+
                 <div>
                     <table class="table-2">
                         <tr>
