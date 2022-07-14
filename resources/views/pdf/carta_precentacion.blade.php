@@ -22,18 +22,26 @@
     body {
         margin-top: 5cm;
         margin-bottom: 5cm;
-
         font-family: 'Poppins';
     }
 
-    .my-3 {
-        margin-top: 3rem;
-        margin-bottom: 3rem;
+    td {
+        text-align: center;
+        vertical-align: center;
     }
 
-    .mx-3 {
-        margin-left: 2.4rem;
-        margin-right: 2.4rem;
+
+    .mx-2cm {
+        margin-left: 2cm;
+        margin-right: 2cm;
+    }
+
+    .p-1 {
+        padding: 1rem;
+    }
+
+    .w-100 {
+        width: 100%;
     }
 
     .h-1 {
@@ -44,7 +52,7 @@
     }
 
     .h-1-2 {
-        font-size: large
+        font-size: medium;
     }
 
     .h-3 {
@@ -59,44 +67,25 @@
         color: #4f1593;
     }
 
-    .table {
-        padding-left: 5%;
-        padding-right: 5%;
-    }
-
-    .table-2 {
-
-        padding-left: 10%;
-        padding-right: 10%;
-    }
-
     .td-1 {
-        width: 50%;
+        width: 60%;
         text-align: justify;
-        font-size: 16px;
 
     }
 
+    .td-1-2 {
+        width: 35%;
+
+    }
 
     .td-2 {
-        width: 50%;
-        padding-left: 5%;
-
+        width: 33%
     }
 
-    .td-3 {
-        width: 50%;
-        text-align: justify;
-        font-size: 16px;
-        padding-right: 10%;
-
+    .td-20px {
+        min-width: 20px;
     }
 
-    .td-4 {
-        min-width: 33%;
-        margin-left: 5%;
-        margin-right: 5%;
-    }
 
     .page-break {
         page-break-after: always;
@@ -122,7 +111,6 @@
     .center {
 
         text-align: center;
-        vertical-align: middle;
 
     }
 
@@ -151,6 +139,11 @@
         height: 8cm;
     }
 
+    .sq-80 {
+        width: 80px;
+        height: 80px;
+    }
+
     .logo-fluxel {
         width: 150px;
     }
@@ -166,6 +159,14 @@
         margin-right: 3cm;
         padding: 2.5rem;
 
+    }
+
+    .border-red {
+        border: 2px solid red;
+    }
+
+    .bg-red {
+        background-color: red;
     }
 
 
@@ -191,8 +192,8 @@
     </footer>
 
 
-    <main>
-        <section id="intro">
+    <main class="">
+        <section class="mx-2cm" id="intro">
             {{-- <br><br><br><br><br><br><br><br><br><br> --}}
             <div class="">
                 <h1 class="h-1">
@@ -204,7 +205,7 @@
             </div>
             <br><br><br>
             <div class="">
-                <table class="table">
+                <table class="">
                     <tr>
                         <td class="td-1">
                             <p>En Fluxel-Code te ayudamos a impulsar tu comercio, nos consideramos una agencia en
@@ -229,7 +230,9 @@
                                 clientes.
                             </p>
                         </td>
-                        <td class="td-2">
+                        <td class="td-20px"></td>
+                        <td class="td-1-2" style="
+                        vertical-align: middle!important;">
                             <img src="{{ public_path('images\pdf_assets\logo_fluxel.png') }}" width="100%">
                         </td>
                     </tr>
@@ -248,7 +251,7 @@
                     Creaciones y seguimientos
                 </h3>
             </div>
-            <div class="mx-3 center">
+            <div class="mx-2cm center">
                 <p>Nosotros en Fluxel-code tenemos una amplia experiencia en la creacion de sistemas y paginas web,
                     tenemos aqui una representacion visual de lo que serian nuestros proyectos y creaciones.</p>
             </div>
@@ -258,19 +261,19 @@
         </section>
 
         <div class="page-break"></div>
-        <section id="actividades">
+        <section class="mx-2cm" id="actividades">
 
             <h1 class="h-1">
                 Descripción de las actividades <br>
             </h1>
             <h1 class="h-1 h-1-2"> realizadas por FLUXEL-CODE</h1>
 
-            <table class="table">
+            <table class="">
                 <tr>
-                    <td class="td-3">
+                    <td class="td-1">
                         <div class="">
-                            <br><br><br>
-                            <h4 class="h-5">Desarrollo de sistemas financieros informático</h4>
+
+                            <h4 class="h-5">Desarrollo de sistemas financieros</h4>
                             <p>Impulsamos la gestión de sistemas financieros que pueden ayudarte a llevar un registro de
                                 manera
                                 optimizada y eficiente. Estos sistemas financieros hacen un mejor seguimiento del manejo
@@ -279,9 +282,10 @@
                                 empleados, entre otros de acuerdo a la necesidad de tu empresa.</p>
                         </div>
                     </td>
-                    <td class="td-3">
+                    <td class="td-20px"></td>
+                    <td class="td-1">
                         <div class="">
-                            <h4 class="h-5">Creación de Logos </h4>
+                            <h4 class="h-5">Creación de Logos <br> </h4>
                             <p>Diseñamos su logo a partir de una iniciativa. Ofreciéndole una diversidad de propuestas
                                 para
                                 que
@@ -293,18 +297,19 @@
                         </div>
                     </td>
                 </tr>
+
                 <tr>
-                    <td class="td-3">
+                    <td class="td-1">
                         <div class="">
-                            <br>
+
                             <h4 class="h-5">Desarrollo Web </h4>
                             <p>Nos encargamos de maquetar su página web, así como de la implementación de cambios de una
                                 página ya
                                 existente. (sería bueno incluir con cuáles lenguajes se trabaja).</p>
                         </div>
                     </td>
-
-                    <td class="td-3">
+                    <td class="td-20px"></td>
+                    <td class="td-1">
                         <div class="">
                             <h4 class="h-5">Edición de Video </h4>
                             <p>Le damos vida a sus ideas editando videos de casi todo tipo ya sea para un canal de
@@ -318,38 +323,42 @@
             </table>
         </section>
 
-        <section id="contactanos">
+        <section class="mx-2cm" id="contactanos">
             <div class="page-container page-break-before ">
 
 
                 <h1 class="h-1">CONTÁCTANOS </h1>
+                <br><br>
 
                 <div>
-                    <table class="table-2">
-                        <tr>
+                    <table class="center  w-100">
+                        <tr class="">
 
-                            <td class="td-4 center">
+                            <td class="td-2  ">
 
-                                <img width="100px" src="{{ public_path('images\pdf_assets\ws.png') }}"
+                                <img class="sq-80" src="{{ public_path('images\pdf_assets\ws.png') }}"
                                     alt="">
-                                <h1 class="h-1 h-1-2">+58 (xxxx) xxx-xx-xx</h1>
-                                <h1 class="h-1 h-1-2">+58 (xxxx) xxx-xx-xx</h1>
+                                <br> <br>
+                                {{-- <h1 class="h-1 h-1-2">+58 (xxxx) xxx-xx-xx</h1> --}}
+                                <h1 class="h-1 h-1-2 ">+58 (xxxx) xxx-xx-xx</h1>
 
                             </td>
-                            <td style="min-width: 20px"></td>
-                            <td class="td-4 center">
 
-                                <img width="100px" src="{{ public_path('images\pdf_assets\instagram.png') }}"
+                            <td class="td-2 ">
+
+                                <img class="sq-80" src="{{ public_path('images\pdf_assets\instagram.png') }}"
                                     alt="">
-                                <h1 class="h-1 h-1-2">@Fluxel.code</h1>
+                                <br> <br>
+                                <h1 class="h-1 h-1-2 ">@Fluxel.code</h1>
 
                             </td>
-                            <td style="min-width: 20px"></td>
-                            <td class="td-4 center">
 
-                                <img width="100px" src="{{ public_path('images\pdf_assets\gmail.png') }}"
+                            <td class="td-2 ">
+
+                                <img class="sq-80" src="{{ public_path('images\pdf_assets\gmail.png') }}"
                                     alt="">
-                                <h1 class="h-1 h-1-2">Fluxel.code@gmail.com</h1>
+                                <br> <br>
+                                <h1 class="h-1 h-1-2 ">Fluxel.code@gmail.com</h1>
 
                             </td>
 
