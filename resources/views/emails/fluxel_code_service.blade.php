@@ -85,7 +85,7 @@
     }
 
     .img-100sq {
-        width: 100px;
+        width: 70px;
         margin-left: 10px;
         /* padding: 5px; */
     }
