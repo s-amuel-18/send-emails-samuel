@@ -193,12 +193,11 @@ class EmailSendController extends Controller
             ->first();
 
         $info["subject"] =  $data["subject"];
-        $info["body"] =  $data["body_email"];
-        $info["link_principal"] =  "https://negociaecuador.com/samuel-graterol-dev/";
+        $info["body"] =  BodyEmail::find($data["body_email"])->body;
 
         try {
             //code...
-            $correo = new ServicioMaillable($info, $emailsNotSend);
+            $correo = new ServicioMaillable($info);
             Mail::to($emailsNotSend->email)->send($correo);
 
             $emailsToSend = auth()->user()->correos_por_enviar_hoy();

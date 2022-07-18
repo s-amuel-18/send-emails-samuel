@@ -20,10 +20,9 @@ class ServicioMaillable extends Mailable
      *
      * @return void
      */
-    public function __construct($data, $contactData = null)
+    public function __construct($data)
     {
         $this->info = $data;
-        $this->contactEmail = $contactData;
         $this->subject = isset($data["subject"]) ? $data["subject"] : $this->subject;
     }
 
@@ -35,7 +34,7 @@ class ServicioMaillable extends Mailable
     public function build()
     {
 
-
-        return $this->view('emails.servicio');
+        $data = $this->info;
+        return $this->view('emails.fluxel_code_service', compact("data"));
     }
 }

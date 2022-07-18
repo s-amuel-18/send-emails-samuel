@@ -25,9 +25,9 @@
                             {{-- Name field --}}
                             <div class="col-md-3">
                                 <div class="input-group mb-3 ">
-                                    <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
-                                        value="{{ old('name') }}" placeholder="{{ __('adminlte::adminlte.full_name') }}"
-                                        autofocus>
+                                    <input type="text" name="name"
+                                        class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}"
+                                        placeholder="{{ __('adminlte::adminlte.full_name') }}" autofocus>
 
                                     <div class="input-group-append">
                                         <div class="input-group-text">
@@ -153,7 +153,7 @@
                             <div class="col-md-12">
                                 <div class="d-flex justify-content-end">
                                     <button type="submit"
-                                        class="btn  {{ config('adminlte.classes_auth_btn', 'btn-flat btn-primary') }}">
+                                        class="btn  {{ config('adminlte.classes_auth_btn', 'btn-flat bg-purple') }}">
                                         <span class="fas fa-user-plus"></span>
                                         Crear Nuevo Usuario
                                     </button>

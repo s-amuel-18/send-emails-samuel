@@ -20,10 +20,12 @@ use App\Http\Controllers\PdfController;
 use App\Http\Controllers\RecomendacionMejoraController;
 // use App\Http\Controllers\contact_email\Email_send;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SpentsController;
 use App\Mail\ServicioMaillable;
 use App\Models\BodyEmail;
 use App\Models\RecomendacionMejora;
+use App\Models\Service;
 use Illuminate\Support\Facades\Mail;
 
 /*
@@ -40,7 +42,7 @@ use Illuminate\Support\Facades\Mail;
 Auth::routes(["register" => false]);
 
 Route::get('/', [FrontController::class, 'index'])->name('home');
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->middleware('auth')
+Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->middleware('auth')
     ->name('home.index');
 
 // users
@@ -82,6 +84,10 @@ Route::middleware(["can:managment.index", "auth"])->group(function () {
 
 // Recomendaciones asi el sistema
 Route::resource("recomendaciones", RecomendacionMejoraController::class)->middleware("auth")->names("recomendacion");
+
+// servicios
+Route::resource("servicios", ServiceController::class)->except("show")->middleware("auth")->names("service");
+
 
 // preview email fluxel
 Route::get("email", function () {

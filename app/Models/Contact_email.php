@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Mail;
 
 class Contact_email extends Model
 {
+    public const PAGINATE = 10;
+
     use HasFactory;
 
     public const DAILY_EMAIL_LIMIT = 2;
@@ -93,5 +95,17 @@ class Contact_email extends Model
     public function scopeLimitDaily($q)
     {
         return $q->sinEnviar()->take($this::DAILY_EMAIL_LIMIT);
+    }
+
+    public function scopeSearchLike($q, $search)
+    {
+        return $q->where(function ($query) use ($search) {
+            $query->where("nombre_empresa", "like", "%$search%")
+                ->orWhere("url", "like", "%$search%")
+                ->orWhere("email", "like", "%$search%")
+                ->orWhereHas("usuario", function ($q) use ($search) {
+                    $q->where("username", "like", "%$search%");
+                });
+        });
     }
 }

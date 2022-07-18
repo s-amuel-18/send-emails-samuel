@@ -92,7 +92,6 @@
             max-width: 90%;
             margin: auto
         }
-
     </style>
 @endsection
 
@@ -100,8 +99,7 @@
     <div class="">
         <div class="banner_content">
             <a target="_black" href="{{ $info['link_principal'] }}">
-                <img src="{{ asset('images/email-assets/banner-servicio.png') }}" alt="banner Samuel"
-                    class="banner">
+                <img src="{{ asset('images/email-assets/banner-servicio.png') }}" alt="banner Samuel" class="banner">
             </a>
         </div>
 
@@ -122,7 +120,7 @@
                                     class="btn btn-outline-primary">Descargar CV</a>
                             </td>
                             <td style="padding: 6px">
-                                <a target="_black" href="{{ $info['link_principal'] }}" class="btn btn-primary">Ver
+                                <a target="_black" href="{{ $info['link_principal'] }}" class="btn bg-purple">Ver
                                     Portafolio</a>
                             </td>
                         </tr>

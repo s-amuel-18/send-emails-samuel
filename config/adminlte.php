@@ -14,9 +14,9 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 3',
-    'title_prefix' => '',
-    'title_postfix' => '',
+    'title' => 'Fluxel Code',
+    'title_prefix' => 'Fluxel Code',
+    'title_postfix' => 'Fluxel Code',
 
     /*
     |--------------------------------------------------------------------------
@@ -66,7 +66,7 @@ return [
 
     'usermenu_enabled' => true,
     'usermenu_header' => false,
-    'usermenu_header_class' => 'bg-primary',
+    'usermenu_header_class' => 'bg-purple',
     'usermenu_image' => false,
     'usermenu_desc' => false,
     'usermenu_profile_url' => false,
@@ -102,12 +102,12 @@ return [
     |
     */
 
-    'classes_auth_card' => 'card-outline card-primary',
+    'classes_auth_card' => 'card-outline card-purple',
     'classes_auth_header' => '',
     'classes_auth_body' => '',
     'classes_auth_footer' => '',
     'classes_auth_icon' => '',
-    'classes_auth_btn' => 'btn-flat btn-primary',
+    'classes_auth_btn' => 'btn-flat btn bg-purple',
 
     /*
     |--------------------------------------------------------------------------
@@ -127,7 +127,7 @@ return [
     'classes_content_wrapper' => '',
     'classes_content_header' => '',
     'classes_content' => '',
-    'classes_sidebar' => 'sidebar-dark-primary elevation-4',
+    'classes_sidebar' => 'sidebar-light-purple elevation-4',
     'classes_sidebar_nav' => '',
     'classes_topnav' => 'navbar-white navbar-light',
     'classes_topnav_nav' => 'navbar-expand',
@@ -300,7 +300,7 @@ return [
                 ],
                 [
                     'text' => 'Cuerpo De Emails',
-                    'icon_color' => 'primary',
+                    'icon_color' => 'purple',
                     'route'         => 'bodyEmail.index',
                     'can'        => 'bodyEmail.index',
                 ],
@@ -312,6 +312,12 @@ return [
             'route'         => 'managment.index',
             'icon'        => 'fa fa-coins',
             'can'        => 'managment.index',
+        ],
+        [
+            'text'        => 'Servicios',
+            'route'         => 'service.index',
+            'icon'        => 'fa fa-coins',
+            /* 'can'        => 'service.i', */
         ],
     ],
 

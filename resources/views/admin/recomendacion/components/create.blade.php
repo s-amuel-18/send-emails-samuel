@@ -14,7 +14,7 @@
     </div>
 
     <div class="d-flex justify-content-end">
-        <button class="btn btn-primary btn-sm" type="submit">
+        <button class="btn bg-purple btn-sm" type="submit">
             <i class="fa fa-tools fa-fw "></i>
             Registrar
         </button>

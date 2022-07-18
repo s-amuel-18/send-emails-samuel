@@ -11,7 +11,6 @@
     .note-editable.card-block {
         min-height: 300px
     }
-
 </style>
 
 @section('content_2')
@@ -39,8 +38,9 @@
 
                             {{-- Nombre --}}
                             <div class="input-group mb-3 ">
-                                <input type="text" name="nombre" class="form-control @error('nombre') is-invalid @enderror"
-                                    value="{{ old('nombre') }}" placeholder="Nombre" autofocus>
+                                <input type="text" name="nombre"
+                                    class="form-control @error('nombre') is-invalid @enderror" value="{{ old('nombre') }}"
+                                    placeholder="Nombre" autofocus>
 
                                 <div class="input-group-append">
                                     <div class="input-group-text">
@@ -67,7 +67,7 @@
                             </div>
 
                             <div class="d-flex justify-content-end">
-                                <button class="btn btn-primary btn-sm" type="submit">Registrar</button>
+                                <button class="btn bg-purple btn-sm" type="submit">Registrar</button>
                             </div>
                         </form>
                     </div>

@@ -17,8 +17,8 @@
                 <div class="form-group">
                     <label for="name">Nombre</label>
                     <input placeholder="Nombre" id="name"
-                        value="{{ old('name') ? old('name') : $data['update']['name'] ?? null }}" name="name" type="text"
-                        class="form-control @error('name') is-invalid @enderror">
+                        value="{{ old('name') ? old('name') : $data['update']['name'] ?? null }}" name="name"
+                        type="text" class="form-control @error('name') is-invalid @enderror">
 
                     @error('name')
                         <span class="error invalid-feedback">Please enter a email address</span>
@@ -30,7 +30,8 @@
                     <label for="price">Precio</label>
                     <input placeholder="Precio"
                         value="{{ old('price') ? old('price') : $data['update']['price'] ?? null }}" name="price"
-                        id="price" type="number" min="1" class="form-control @error('price') is-invalid @enderror">
+                        id="price" type="number" min="1"
+                        class="form-control @error('price') is-invalid @enderror">
 
                     @error('price')
                         <span class="error invalid-feedback">Please enter a email address</span>
@@ -41,8 +42,8 @@
                 <div class="form-group">
                     <label for="desc">Descripcion</label>
                     <input placeholder="Descripcion"
-                        value="{{ old('desc') ? old('desc') : $data['update']['desc'] ?? null }}" name="desc" id="desc"
-                        type="text" class="form-control @error('desc') is-invalid @enderror">
+                        value="{{ old('desc') ? old('desc') : $data['update']['desc'] ?? null }}" name="desc"
+                        id="desc" type="text" class="form-control @error('desc') is-invalid @enderror">
 
                     @error('desc')
                         <span class="error invalid-feedback">Please enter a email address</span>
@@ -69,7 +70,7 @@
             </div>
             <div class="col-md-12">
 
-                <button class="ml-auto d-block btn btn-primary btn-sm" type="submit">{{ $data['text_buttom'] }}</button>
+                <button class="ml-auto d-block btn bg-purple btn-sm" type="submit">{{ $data['text_buttom'] }}</button>
 
             </div>
         </div>

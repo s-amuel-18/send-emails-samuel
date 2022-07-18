@@ -26,7 +26,8 @@
                             {{-- Name field --}}
                             <div class="col-md-3">
                                 <div class="input-group mb-3 ">
-                                    <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
+                                    <input type="text" name="name"
+                                        class="form-control @error('name') is-invalid @enderror"
                                         value="{{ old('name') ? old('name') : $role->name }}" placeholder="Nombre Del Rol"
                                         autofocus>
 
@@ -74,7 +75,7 @@
                             <div class="col-md-12">
                                 <div class="d-flex justify-content-end">
                                     <button type="submit"
-                                        class="btn  {{ config('adminlte.classes_auth_btn', 'btn-flat btn-primary') }}">
+                                        class="btn  {{ config('adminlte.classes_auth_btn', 'btn-flat bg-purple') }}">
                                         <span class="fas fa-suitcase-rolling"></span>
                                         Crear Nuevo Rol
                                     </button>

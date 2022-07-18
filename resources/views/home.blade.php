@@ -213,7 +213,7 @@
                                                 {{-- facebook --}}
                                                 @if ($registro->facebook)
                                                     <a target="_blanck" href="{{ $registro->facebook }}"
-                                                        class="btn btn-primary btn-sm ">
+                                                        class="btn bg-purple btn-sm ">
                                                         <i class="fab fa-facebook"></i>
                                                     </a>
                                                 @endif

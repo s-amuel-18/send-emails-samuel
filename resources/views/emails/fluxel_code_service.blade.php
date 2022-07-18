@@ -5,20 +5,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Fluxel Code</title>
 </head>
 <style>
     * {
         font-family: sans-serif;
+        margin: 0;
+        box-sizing: border-box;
+        padding: 0;
     }
 
-    body {
-        background-color: rgb(200, 200, 200);
-        margin: 0;
+
+    .body {
+        background-color: rgb(250, 250, 250);
+        padding: 20px;
     }
 
     html {
         box-sizing: border-box;
+    }
+
+    p {
+        margin-bottom: 7px;
     }
 
     *,
@@ -81,7 +89,7 @@
 
     .img-40sq {
         /* width: 50px; */
-        height: 25px;
+        height: 20px;
     }
 
     .img-100sq {
@@ -97,49 +105,49 @@
 </style>
 
 <body>
-    <header>
-        <h1 class="center">Header</h1>
-    </header>
+    <div class="body">
+        {{-- <header>
+            <h1 class="center">Header</h1>
+        </header> --}}
 
-    <div class=" ">
+        <div class=" " style="margin: 50px 0">
 
-        <div class="container-mail">
+            <div class="container-mail">
 
-            <div class="logo d-flex">
-                <a href=""><img class="img-100sq"
-                        src="https://www.negociaecuador.com/brandon-prueba/fluxel_code_xl.png" alt="">
-                </a>
-            </div>
-            <div class="card">
-                <h5 class="title center">Lorem ipsum dolor sit amet.</h5>
-                <div class="  t-gray">
-                    <p>Lorem ipsum dolor sit amet.</p>
-                    <p>Lorem ipsum dolor sit amet.</p>
-                    <p>Lorem ipsum dolor sit amet.</p>
-                    <p>Lorem ipsum dolor sit amet.</p>
+                <div class="logo d-flex">
+                    <a href=""><img class="img-100sq"
+                            src="https://www.negociaecuador.com/brandon-prueba/fluxel_code_xl.png" alt="">
+                    </a>
                 </div>
-            </div>
-            <div class="logo center d-flex j-center ">
-                <a class="py-2" href="">
-                    <img class="img-40sq" src="https://www.negociaecuador.com/brandon-prueba/ws.png" alt="Whatsapp">
-                </a>
-                <a class="py-2" href=""><img class="img-40sq"
-                        src="https://www.negociaecuador.com/brandon-prueba/gmail.png" alt="gmail">
-                </a>
-                <a class="py-2" href=""><img class="img-40sq"
-                        src="https://www.negociaecuador.com/brandon-prueba/instagram.png" alt="instagram">
-                </a>
+                <div class="card" style="padding: 30px; color: rgb(142, 142, 142)">
 
+                    <div class="">
+                        {{ $data['body'] }}
+                    </div>
+                </div>
+                <div class="logo center d-flex j-center ">
+                    <a class="py-2" href="">
+                        <img class="img-40sq" src="https://www.negociaecuador.com/brandon-prueba/ws.png" alt="Whatsapp">
+                    </a>
+                    <a class="py-2" href=""><img class="img-40sq"
+                            src="https://www.negociaecuador.com/brandon-prueba/gmail.png" alt="gmail">
+                    </a>
+                    <a class="py-2" href=""><img class="img-40sq"
+                            src="https://www.negociaecuador.com/brandon-prueba/instagram.png" alt="instagram">
+                    </a>
+
+
+                </div>
 
             </div>
 
         </div>
 
-    </div>
+        <footer class="">
+            <p class="t-gray center"> @ 2022 FLUXEL-CODE Todos los derechos reservados</p>
+        </footer>
 
-    <footer class="">
-        <p class="t-gray center"> @ 2022 FLUXEL-CODE Todos los derechos reservados</p>
-    </footer>
+    </div>
 
 
 </body>

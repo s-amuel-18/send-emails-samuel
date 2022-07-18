@@ -66,7 +66,7 @@
                     </div>
 
                     <div class="d-flex justify-content-end">
-                        <button class="btn btn-primary btn-sm" type="submit">Consultar</button>
+                        <button class="btn bg-purple btn-sm" type="submit">Consultar</button>
                     </div>
 
                 </form>

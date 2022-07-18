@@ -31,14 +31,23 @@ class ContactEmailController extends Controller
     }
 
 
-    public function index()
+    public function index(Request $request)
     {
-        // $emails = Contact_email::orderBy("created_at", "DESC")->get();
-        $contact_emails = Contact_email::with(["usuario", "envios"])
-            ->orderBy("created_at", "DESC")->paginate(10);
+        $search = $request["search"] ?? null;
+
+        $contact_emails_query = Contact_email::with(["usuario"])
+            ->withCount("envios")
+            ->orderBy("created_at", "DESC");
+
+        if ($search) {
+            $contact_emails_query->searchLike($search);
+        }
+        $contact_emails_all_counts = $contact_emails_query->count();
+
+        $contact_emails = $contact_emails_query->paginate(Contact_email::PAGINATE);
 
 
-        return view("admin.contact_email.index", compact("contact_emails"));
+        return view("admin.contact_email.index", compact("contact_emails", "search", "contact_emails_all_counts"));
     }
 
     public function estadisticas()

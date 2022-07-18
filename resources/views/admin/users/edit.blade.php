@@ -26,7 +26,8 @@
                             {{-- Name field --}}
                             <div class="col-md-3">
                                 <div class="input-group mb-3 ">
-                                    <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
+                                    <input type="text" name="name"
+                                        class="form-control @error('name') is-invalid @enderror"
                                         value="{{ old('name') ? old('name') : $user->name }}"
                                         placeholder="{{ __('adminlte::adminlte.full_name') }}" autofocus>
 
@@ -50,7 +51,8 @@
                             {{-- Username --}}
                             <div class="col-md-3">
                                 <div class="input-group mb-3 ">
-                                    <input type="text" disabled class="form-control @error('username') is-invalid @enderror"
+                                    <input type="text" disabled
+                                        class="form-control @error('username') is-invalid @enderror"
                                         value="{{ old('username') ? old('username') : $user->username }}"
                                         placeholder="Username">
 
@@ -165,7 +167,7 @@
                             <div class="col-md-12">
                                 <div class="d-flex justify-content-end">
                                     <button type="submit"
-                                        class="btn  {{ config('adminlte.classes_auth_btn', 'btn-flat btn-primary') }}">
+                                        class="btn  {{ config('adminlte.classes_auth_btn', 'btn-flat bg-purple') }}">
                                         <span class="fas fa-user-plus"></span>
                                         Crear Nuevo Usuario
                                     </button>

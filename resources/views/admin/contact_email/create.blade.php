@@ -162,13 +162,12 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     {{-- <label for="descripcion">Descripcion</label> --}}
-                                    <textarea id="descripcion" class="form-control" name="descripcion"
-                                        style="height: 146.5px;">{{ old('descripcion') }}</textarea>
+                                    <textarea id="descripcion" class="form-control" name="descripcion" style="height: 146.5px;">{{ old('descripcion') }}</textarea>
                                 </div>
                             </div>
 
                             <div class="col-12 d-flex justify-content-end">
-                                <button class="btn btn-primary btn-sm" type="submit">
+                                <button class="btn bg-purple btn-sm" type="submit">
                                     <i class="fas fa-mail-bulk"></i> Crear Nuevo Registro
                                 </button>
                             </div>

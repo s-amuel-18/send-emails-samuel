@@ -16,7 +16,6 @@
         /* font-weight:  */
         min-height: 360px
     }
-
 </style>
 
 
@@ -165,7 +164,7 @@
                     </div>
 
                     <div class="col-12 d-flex justify-content-end">
-                        <button class="btn btn-primary btn-sm" type="submit">Enviar Correo</button>
+                        <button class="btn bg-purple btn-sm" type="submit">Enviar Correo</button>
                     </div>
                 </div>
             </form>
