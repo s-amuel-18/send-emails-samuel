@@ -389,7 +389,7 @@
                 </div>
                 <div class=" col-md-4 wow animate__slideInRight " data-wow-duration=" 2s">
                     <div>
-                        <a href="#" class="btn-1">Descargar</a>
+                        <a href="{{ route('pdf.cartaPresentacion') }}" class="btn-1">Descargar</a>
                     </div>
                 </div>
             </div>
