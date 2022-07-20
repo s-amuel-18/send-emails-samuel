@@ -17,7 +17,7 @@
                 </div>
 
                 <div class="card-body ">
-                    <form class="form_disabled_button_send" action="{{ route('contact_email.store') }}" method="POST">
+                    <form class="form_disabled_button_send" action="#" method="#">
 
                         @csrf
 
