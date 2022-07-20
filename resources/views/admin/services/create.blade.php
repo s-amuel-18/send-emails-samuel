@@ -43,6 +43,9 @@
                                         </span>
                                     @enderror
                                 </div>
+                                <button class="btn bg-purple btn-sm" type="submit">
+                                    <i class="fas fa-plus-square"></i> Crear Nuevo Servicio
+                                </button>
                             </div>
 
 
@@ -81,11 +84,8 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-3 ">
-                                <button class="btn bg-purple btn-sm" type="submit">
-                                    <i class="fas fa-mail-bulk"></i> Crear Nuevo Servicio
-                                </button>
-                            </div>
+
+
                         </div>
 
                 </div>
