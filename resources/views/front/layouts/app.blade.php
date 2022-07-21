@@ -27,6 +27,8 @@
     {{-- flagsicon --}}
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" rel="stylesheet"
         type="text/css" />
+    {{-- Easy Country Picker --}}
+    <link rel="stylesheet" href="{{ asset('front/css/plugins/country-picker-flags/css/countrySelect.min.css') }}">
 
     <title>Fluxel Code</title>
 </head>
@@ -64,6 +66,9 @@
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
     </script>
     <script src="{{ asset('front/js/google-translate.js') }}"></script>
+    {{-- Easy Country Picker --}}
+    <script src="{{ asset('front/js/plugins/countrySelect.min.js') }}"></script>
+
     <script>
         var wow = new WOW({
             boxClass: 'wow', // animated element css class (default is wow)

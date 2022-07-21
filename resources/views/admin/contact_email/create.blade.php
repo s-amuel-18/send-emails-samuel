@@ -165,7 +165,10 @@
                                     <textarea id="descripcion" class="form-control" name="descripcion" style="height: 146.5px;">{{ old('descripcion') }}</textarea>
                                 </div>
                             </div>
-
+                            <div class="col-md-6 ">
+                                <div class="input-group"><input class="form-control" placeholder="Selecionar país"
+                                        id="country_selector" onChange="inputChange(event)" type="text" autofocus></div>
+                            </div>
                             <div class="col-12 d-flex justify-content-end">
                                 <button class="btn bg-purple btn-sm" type="submit">
                                     <i class="fas fa-mail-bulk"></i> Crear Nuevo Registro
