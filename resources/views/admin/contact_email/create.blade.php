@@ -1,5 +1,12 @@
 @extends('layouts.app')
 {{-- @section('plugins.Datatables', true) --}}
+@push('js')
+    <script src="{{ asset('js/Plugins/countrySelect.min.js') }}"></script>
+    <script src="{{ asset('front/js/plugins/countryselect main.js') }}"></script>
+@endpush
+@push('css')
+    <link rel="stylesheet" href="{{ asset('css/plugins/country-picker-flags/css/countrySelect.min.css') }}">
+@endpush
 
 @section('title', 'Nuevo Email')
 
@@ -156,7 +163,11 @@
                                     </div>
 
                                 </div>
-
+                                <div class="col-md-6 ">
+                                    <div class="input-group ">
+                                        <input class="form-control" id="country_selector" readonly type="text">
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="col-md-6">
@@ -165,10 +176,7 @@
                                     <textarea id="descripcion" class="form-control" name="descripcion" style="height: 146.5px;">{{ old('descripcion') }}</textarea>
                                 </div>
                             </div>
-                            <div class="col-md-6 ">
-                                <div class="input-group"><input class="form-control" placeholder="Selecionar país"
-                                        id="country_selector" onChange="inputChange(event)" type="text" autofocus></div>
-                            </div>
+
                             <div class="col-12 d-flex justify-content-end">
                                 <button class="btn bg-purple btn-sm" type="submit">
                                     <i class="fas fa-mail-bulk"></i> Crear Nuevo Registro
