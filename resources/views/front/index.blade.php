@@ -130,8 +130,7 @@
             <div class="slick-slider">
                 <!-- Box-1 -->
                 <div class="box">
-                    <img src="{{ asset('front/Vectores/Slider/desarrollo.svg') }}" alt="grafico"
-                        class="m-auto icons" />
+                    <img src="{{ asset('front/Vectores/Slider/desarrollo.svg') }}" alt="grafico" class="m-auto icons" />
                     <h3>Desarrollo de sistema financieros</h3>
                     <p>
                         Te ayudamos a generar sistemas optimizados de manera eficiente
@@ -140,8 +139,7 @@
                 </div>
                 <!-- Box-2 -->
                 <div class="box">
-                    <img src="{{ asset('front/Vectores/Slider/tienda.svg') }}" alt="logo tienda"
-                        class="m-auto icons" />
+                    <img src="{{ asset('front/Vectores/Slider/tienda.svg') }}" alt="logo tienda" class="m-auto icons" />
                     <h3>Desarrollo de tienda virtual</h3>
                     <p>
                         Asesoramos a asegurar que el diseño de la tienda virtual se base
@@ -255,8 +253,8 @@
                             </div>
                             <!-- Item-2 -->
                             <div class="carousel-item text-center">
-                                <img src="{{ asset('front/Vectores/Testimonios/avimark logo.png') }}"
-                                    alt="Avimark logo" class="center-block team " width="100" height="100" />
+                                <img src="{{ asset('front/Vectores/Testimonios/avimark logo.png') }}" alt="Avimark logo"
+                                    class="center-block team " width="100" height="100" />
                                 <h3>Armando Graterol</h3>
                                 <h4>Avimark</h4>
                                 <p>
@@ -389,7 +387,7 @@
                 </div>
                 <div class=" col-md-4 wow animate__slideInRight " data-wow-duration=" 2s">
                     <div>
-                        <a href="#" class="btn-1">Descargar</a>
+                        <a href="{{ route('pdf.cartaPresentacion') }}" class="btn-1">Descargar</a>
                     </div>
                 </div>
             </div>
@@ -506,8 +504,8 @@
                         alt="laravel logo" class="img-fluid icon-tec" />
                 </div>
                 <div class="item d-flex align-items-center justify-content-center">
-                    <img style="height: 100px;" src="{{ asset('front/Vectores/Icons-tec/mysql.svg') }}"
-                        alt="mysql logo" class="img-fluid icon-tec" />
+                    <img style="height: 100px;" src="{{ asset('front/Vectores/Icons-tec/mysql.svg') }}" alt="mysql logo"
+                        class="img-fluid icon-tec" />
                 </div>
                 <div class="item d-flex align-items-center justify-content-center">
                     <img style="height: 100px;" src="{{ asset('front/Vectores/Icons-tec/php.svg') }}" alt="php logo"

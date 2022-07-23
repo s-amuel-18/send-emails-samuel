@@ -316,8 +316,8 @@ return [
         [
             'text'        => 'Servicios',
             'route'         => 'service.index',
-            'icon'        => 'fa fa-coins',
-            /* 'can'        => 'service.i', */
+            'icon'        => 'fa fa-hand-holding-usd',
+            /* 'can'        => 'service.index', */
         ],
     ],
 

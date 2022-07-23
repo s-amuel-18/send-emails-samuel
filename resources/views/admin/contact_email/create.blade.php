@@ -1,5 +1,12 @@
 @extends('layouts.app')
 {{-- @section('plugins.Datatables', true) --}}
+@push('js')
+    <script src="{{ asset('js/Plugins/countrySelect.min.js') }}"></script>
+    <script src="{{ asset('front/js/plugins/countryselect main.js') }}"></script>
+@endpush
+@push('css')
+    <link rel="stylesheet" href="{{ asset('css/plugins/country-picker-flags/css/countrySelect.min.css') }}">
+@endpush
 
 @section('title', 'Nuevo Email')
 
@@ -156,7 +163,11 @@
                                     </div>
 
                                 </div>
-
+                                <div class="col-md-6 ">
+                                    <div class="input-group ">
+                                        <input class="form-control" id="country_selector" readonly type="text">
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="col-md-6">

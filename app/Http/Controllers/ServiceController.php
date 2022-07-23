@@ -15,10 +15,10 @@ class ServiceController extends Controller
     public function index()
     {
         $data['title'] = "Servicios";
-
+        
         return view("admin.services.index", compact("data"));
     }
-
+    
     /**
      * Show the form for creating a new resource.
      *
@@ -26,8 +26,16 @@ class ServiceController extends Controller
      */
     public function create()
     {
-        //
+        $data['title'] = "Servicios";
+        return view("admin.services.create", compact("data"));
     }
+
+    // public function ct()
+    // {
+    //     $data['title'] = "Servicios";
+    //     return view("admin.services.create-ct", compact("data"));
+    // }
+
 
     /**
      * Store a newly created resource in storage.
