@@ -28,6 +28,16 @@
 
         <div class="card-body ">
 
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             <form action="{{ route('envio_email.crear_informacio') }}" method="POST" class="form_disabled_button_send">
                 @csrf
 
@@ -77,14 +87,7 @@
                         {{-- Email select --}}
                         <div class="form-group">
                             <label for="">Seleccionar email</label><br>
-                            <select class="select2_ajax" name="emails[]" multiple="multiple">
-
-                                @foreach ($emails as $email)
-                                    <option data-badge-color="{{ $email->estado == 0 ? 'danger' : 'success' }}"
-                                        data-badge-text="{{ $email->estado == 0 ? 'Sin Enviar' : 'Enviado' }}"
-                                        value="{{ $email->id }}">{{ $email->email }}</option>
-                                @endforeach
-
+                            <select class="select2_ajax form-control" name="email" multiple="multiple">
                             </select>
 
                             @error('emails')

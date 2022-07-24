@@ -122,7 +122,7 @@
                 <div class="card" style="padding: 30px; color: rgb(142, 142, 142)">
 
                     <div class="">
-                        {{ $data['body'] }}
+                        {!! $data['body'] !!}
                     </div>
                 </div>
                 <div class="logo center d-flex j-center ">
