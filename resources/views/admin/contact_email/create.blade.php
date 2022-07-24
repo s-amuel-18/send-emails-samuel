@@ -1,9 +1,6 @@
 @extends('layouts.app')
 {{-- @section('plugins.Datatables', true) --}}
-@push('js')
-    <script src="{{ asset('js/Plugins/countrySelect.min.js') }}"></script>
-    <script src="{{ asset('front/js/plugins/countryselect main.js') }}"></script>
-@endpush
+
 @push('css')
     <link rel="stylesheet" href="{{ asset('css/plugins/country-picker-flags/css/countrySelect.min.css') }}">
 @endpush
@@ -163,11 +160,12 @@
                                     </div>
 
                                 </div>
-                                <div class="col-md-6 ">
+                                {{-- <div class="col-md-6 ">
                                     <div class="input-group ">
-                                        <input class="form-control" id="country_selector" readonly type="text">
+                                        <input class="form-control" name="country_selector" id="country_selector" readonly
+                                            type="text" value="Anguilla">
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
 
                             <div class="col-md-6">
@@ -197,6 +195,7 @@
 @stop
 
 
-@section('js')
-
-@stop
+@push('js')
+    <script src="{{ asset('js/Plugins/countrySelect.min.js') }}"></script>
+    <script src="{{ asset('front/js/plugins/countryselect main.js') }}"></script>
+@endpush

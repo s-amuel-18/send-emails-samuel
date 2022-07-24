@@ -72,28 +72,12 @@
                             @enderror
                         </div>
 
-                        {{-- Check correos aleatorios --}}
-                        <div class="form-group">
-                            <div class="custom-control custom-checkbox">
-                                <input type="hidden" name="check_emails" value="">
 
-                                <input class="custom-control-input @error('check_emails') is-invalid @enderror"
-                                    type="checkbox" id="customCheckbox2" value="1" name="check_emails"
-                                    {{ old('check_emails') ? 'checked' : '' }}>
-                                <label for="customCheckbox2" class="custom-control-label">Seleccionar los ultimos 200 Emails
-                                    Sin Enviar </label>
-                            </div>
-                            @error('check_emails')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
 
                         {{-- Email select --}}
                         <div class="form-group">
                             <label for="">Seleccionar email</label><br>
-                            <select class="select2-check" name="emails[]" multiple="multiple">
+                            <select class="select2_ajax" name="emails[]" multiple="multiple">
 
                                 @foreach ($emails as $email)
                                     <option data-badge-color="{{ $email->estado == 0 ? 'danger' : 'success' }}"
@@ -111,35 +95,6 @@
                                 {{-- </span> --}}
                             @enderror
 
-
-
-                            {{-- <div style="max-height: 200px; overflow-y: scroll">
-
-
-                                <table class="table table">
-                                    <tbody>
-
-                                        @foreach ($emails as $email)
-                                            <tr>
-                                                <td style="width: 10px">
-                                                    <div class="custom-control custom-checkbox">
-                                                        <input class="custom-control-input" type="checkbox"
-                                                            id="email_{{ $email->id }}" value="{{ $email->id }}"
-                                                            name="emails[]">
-                                                        <label for="email_{{ $email->id }}"
-                                                            class="custom-control-label"></label>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <label style="font-weight: normal"
-                                                        for="email_{{ $email->id }}">{{ $email->email }}</label>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-
-                                    </tbody>
-                                </table>
-                            </div> --}}
 
 
                         </div>
@@ -174,12 +129,15 @@
 
 
 
+
 @stop
 
 
 @section('js')
 
     <script>
+        const dataServer = @json($data['js']);
+
         $(function() {
             // Summernote
             $('#summernote').summernote()
@@ -212,6 +170,46 @@
                     '</span><div class=""><span class="badge badge-' + color + '">' + originalOptionBadge +
                     '</span></div></div>');
             }
+
+            let varAuxEventfovcusOut = 0;
+
+            $('.select2_ajax').select2({
+                ajax: {
+                    url: dataServer["url_get_contact_email"],
+                    data: function(params) {
+                        var query = {
+                            search: params.term,
+                            format_select: true
+                        }
+
+                        // Query parameters will be ?search=[term]&type=public
+                        return query;
+                    },
+                    processResults: function(data, {
+                        term
+                    }) {
+                        const search = term;
+
+                        if (data.results.length < 1) {
+                            return {
+                                results: [{
+                                    "id": search,
+                                    "text": search,
+                                }]
+                            };
+
+                        } else {
+                            return {
+                                results: data.results
+                            };
+
+                        }
+
+                        // Transforms the top-level key of the response object from 'items' to 'results'
+                    }
+                }
+            });
+
         })
     </script>
 

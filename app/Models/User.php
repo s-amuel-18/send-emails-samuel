@@ -62,6 +62,16 @@ class User extends Authenticatable
         return $this->belongsToMany(Contact_email::class)->withPivot('created_at');
     }
 
+    public function services()
+    {
+        return $this->hasMany(Service::class);
+    }
+
+    public function categories()
+    {
+        return $this->hasMany(CategoryService::class);
+    }
+
     public function correos_enviados_hoy()
     {
         return DB::table("contact_email_user")->whereDate("created_at", Carbon::today())->count();

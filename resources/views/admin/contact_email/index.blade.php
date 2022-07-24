@@ -69,7 +69,7 @@
                                         <tr>
                                             <td> {{ $email->id }} </td>
                                             <td> {{ Str::limit($email->nombre_empresa, 15, '...') }} </td>
-                                            <td> {{ $email->usuario->username }} </td>
+                                            <td> {{ $email->usuario ? $email->usuario->username : 'Sin Usuario' }} </td>
                                             <td>
                                                 <span
                                                     class="badge badge-{{ $email->envios_count > 0 ? 'success' : 'danger' }}">{{ $email->envios_count > 0 ? 'Enviado' : 'Sin Enviar' }}</span>
@@ -140,7 +140,7 @@
                         </div>
                     @else
                         <div class="alert alert-light" role="alert">
-                            No hay "contactos" registrados <a class="text-primary"
+                            No se encontraron resultados <a class="text-primary"
                                 href="{{ route('contact_email.create') }} ">Crear Nuevo
                                 Contacto</a>
                         </div>

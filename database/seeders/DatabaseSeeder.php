@@ -7,8 +7,10 @@ namespace Database\Seeders;
 use App\Models\BillingTime;
 use App\Models\Body_email;
 use App\Models\BodyEmail;
+use App\Models\CategoryService;
 use App\Models\Contact_email;
 use App\Models\Income;
+use App\Models\Service;
 use App\Models\Spents;
 // use Database\Factories\BodyEmailFactory;
 use Illuminate\Database\Seeder;
@@ -31,6 +33,8 @@ class DatabaseSeeder extends Seeder
         BodyEmail::factory(10)->create();
         Contact_email::factory(1000)->create();
         $this->call(EnvioEmailSeeder::class);
+        CategoryService::factory(5)->create();
+        Service::factory(10)->create();
         // Factory::factoryForModel("App\Models\Body_email");
     }
 }

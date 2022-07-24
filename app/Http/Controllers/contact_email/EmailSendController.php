@@ -8,6 +8,7 @@ use App\Models\BodyEmail;
 use App\Models\Contact_email;
 use App\Models\EmailEnviado;
 use Carbon\Carbon;
+use Facade\FlareClient\Http\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
@@ -27,7 +28,11 @@ class EmailSendController extends Controller
 
         $emails = Contact_email::select("id", "email", "estado")->whereNotNull("email")->orderBy("estado", "ASC")->get();
 
-        return view("admin.contact_email.envio_emails.index", compact("bodysEmail", "emails"));
+        $data["js"] = [
+            "url_get_contact_email" => route('contact_email.getContactEmails'),
+        ];
+
+        return view("admin.contact_email.envio_emails.index", compact("bodysEmail", "emails", "data"));
     }
 
     public function crear_informacio(Request $request)
@@ -235,6 +240,67 @@ class EmailSendController extends Controller
                     "message" => "Ha ocurrido un error, El motivo del error puede ser que se ha llegado al limite de envio de correos diarios"
                 ]
             ];
+        }
+    }
+
+    public function client_contact_front(Request $request)
+    {
+        $data = request()->validate([
+            "nombre" => "required|string",
+            "comment" => "required",
+            "email" => "required|email",
+        ]);
+
+        $dalyEmailsValid = auth()->user()->validSendEmailDaily();
+
+
+        if (!$dalyEmailsValid) {
+
+            $response = [
+                "success_email_send" => false,
+                "message" =>  "Error de envio, intentelo mas tarde."
+            ];
+
+            return response()->json($response, 404);
+        }
+
+
+        $info["subject"] =  $data["nombre"] . " Quiere Contactarse Contigo";
+        $info["body"] =  $data["comment"];
+
+        try {
+            $existEmail = Contact_email::where("email", $data["email"])->first();
+
+            if (!$existEmail) {
+                $newEmail = Contact_email::create([
+                    "email" => $data["email"],
+                ]);
+            } else {
+                $newEmail = $existEmail;
+            }
+
+            $correo = new ServicioMaillable($info);
+            Mail::to($newEmail->email)->send($correo);
+
+            auth()->user()->emailEnviado()->attach($newEmail->id);
+
+            $newEmail->update(["estado" => 1]);
+
+            $response = [
+                "success_email_send" => true,
+                "message" => "<strong>Correo enviado correctamente!</strong> el equipo de fluxel code se pondrá en contacto contigo lo antes posible, gracias por tu mensaje."
+            ];
+
+            return response()->json($response, 200);
+        } catch (\Throwable $th) {
+
+            //throw $th;
+            $response = [
+                "success_email_send" => false,
+                "message" => "Ha ocurrido un error"
+            ];
+
+            return response()->json($response, 404);
         }
     }
 }

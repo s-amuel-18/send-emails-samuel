@@ -130,7 +130,8 @@
             <div class="slick-slider">
                 <!-- Box-1 -->
                 <div class="box">
-                    <img src="{{ asset('front/Vectores/Slider/desarrollo.svg') }}" alt="grafico" class="m-auto icons" />
+                    <img src="{{ asset('front/Vectores/Slider/desarrollo.svg') }}" alt="grafico"
+                        class="m-auto icons" />
                     <h3>Desarrollo de sistema financieros</h3>
                     <p>
                         Te ayudamos a generar sistemas optimizados de manera eficiente
@@ -139,7 +140,8 @@
                 </div>
                 <!-- Box-2 -->
                 <div class="box">
-                    <img src="{{ asset('front/Vectores/Slider/tienda.svg') }}" alt="logo tienda" class="m-auto icons" />
+                    <img src="{{ asset('front/Vectores/Slider/tienda.svg') }}" alt="logo tienda"
+                        class="m-auto icons" />
                     <h3>Desarrollo de tienda virtual</h3>
                     <p>
                         Asesoramos a asegurar que el diseño de la tienda virtual se base
@@ -253,8 +255,8 @@
                             </div>
                             <!-- Item-2 -->
                             <div class="carousel-item text-center">
-                                <img src="{{ asset('front/Vectores/Testimonios/avimark logo.png') }}" alt="Avimark logo"
-                                    class="center-block team " width="100" height="100" />
+                                <img src="{{ asset('front/Vectores/Testimonios/avimark logo.png') }}"
+                                    alt="Avimark logo" class="center-block team " width="100" height="100" />
                                 <h3>Armando Graterol</h3>
                                 <h4>Avimark</h4>
                                 <p>
@@ -504,8 +506,8 @@
                         alt="laravel logo" class="img-fluid icon-tec" />
                 </div>
                 <div class="item d-flex align-items-center justify-content-center">
-                    <img style="height: 100px;" src="{{ asset('front/Vectores/Icons-tec/mysql.svg') }}" alt="mysql logo"
-                        class="img-fluid icon-tec" />
+                    <img style="height: 100px;" src="{{ asset('front/Vectores/Icons-tec/mysql.svg') }}"
+                        alt="mysql logo" class="img-fluid icon-tec" />
                 </div>
                 <div class="item d-flex align-items-center justify-content-center">
                     <img style="height: 100px;" src="{{ asset('front/Vectores/Icons-tec/php.svg') }}" alt="php logo"
@@ -537,7 +539,14 @@
                     <div class="col-lg-8 left">
                         <h3>Enviar mensaje</h3>
 
-                        <form id="form_contact">
+                        <div id="insert_alert"></div>
+
+
+
+                        <form id="form_contact" method="POST" action="{{-- {{ route('envio_email.client_contact_front') }} --}}">
+
+                            @csrf
+
                             <div class="row">
                                 <div class="col-sm-6">
 
@@ -554,9 +563,9 @@
 
                                 <textarea class="form-control" rows="5" name="comment" id="comment" placeholder="Mensaje"></textarea>
                             </div>
-                            <div class="g-recaptcha" data-sitekey="6Ld0CuEgAAAAALsiUxgfPlwW2kFfFt4a2smgi-s5"></div>
+                            {{-- <div class="g-recaptcha" data-sitekey="6Ld0CuEgAAAAALsiUxgfPlwW2kFfFt4a2smgi-s5"></div> --}}
                             <br />
-                            <button class="btn btn-block" type="submit">Enviar</button>
+                            <button class="btn" type="submit">Enviar</button>
                         </form>
                     </div>
                     <!-- Left -->
@@ -605,4 +614,7 @@
         </div>
     </footer>
     <!-- ======== End Footer ======== -->
+    <script>
+        let dataServer = @json($data['js']);
+    </script>
 @endsection

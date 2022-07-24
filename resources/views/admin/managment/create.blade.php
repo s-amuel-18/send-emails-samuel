@@ -9,7 +9,7 @@
 
 @section('content_2')
 
-    <form action="{{ $data['route_send'] }}" method="POST">
+    <form class="form_disabled_button_send" action="{{ $data['route_send'] }}" method="POST">
         @csrf
         @method($data['method'])
         <div class="row">
@@ -28,9 +28,8 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="price">Precio</label>
-                    <input placeholder="Precio"
-                        value="{{ old('price') ? old('price') : $data['update']['price'] ?? null }}" name="price"
-                        id="price" type="number" min="1"
+                    <input placeholder="Precio" value="{{ old('price') ? old('price') : $data['update']['price'] ?? null }}"
+                        name="price" id="price" type="number" min="1"
                         class="form-control @error('price') is-invalid @enderror">
 
                     @error('price')
