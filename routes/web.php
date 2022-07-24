@@ -13,6 +13,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\contact_email\ContactEmailController;
 use App\Http\Controllers\contact_email\EmailSendController;
 use App\Http\Controllers\DebtController;
+use App\Http\Controllers\ExcelExportController;
+use App\Http\Controllers\ExcelImportController;
 use App\Http\Controllers\FrontController;
 use App\Http\Controllers\IncomeController;
 use App\Http\Controllers\ManagementController;
@@ -98,3 +100,9 @@ Route::get("email", function () {
 
 // pdf
 Route::get("pdf/presentacion", [PdfController::class, "cartaPresentacion"])->name("pdf.cartaPresentacion");
+
+// excel export
+Route::get("emails/export/excel", [ExcelExportController::class, "contactEmail"])->middleware("auth")->name("contactEmail.export_excel");
+
+// excel import
+Route::post("emails/import/excel", [ExcelImportController::class, "contactEmail"])->middleware("auth")->name("contactEmail.import_excel");

@@ -8,6 +8,24 @@
 @stop
 
 @section('content_2')
+    @error('excel_file')
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            {{ $message }}
+        </div>
+    @enderror
+
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
     <div class="row">
         <div class="col-md-12">
@@ -33,8 +51,32 @@
 
                 <div class="card card-body table-responsive">
                     <div class="d-flex justify-content-end mb-3">
+
+                        <form action="{{ route('contactEmail.import_excel') }}" enctype="multipart/form-data" method="POST"
+                            id="form_import_excel">
+
+                            <input type="file" name="excel_file" accept=".xlsx, .Xls" id="excel_file" class="d-none">
+
+                            @csrf
+
+                            <label for="excel_file" class="btn btn-secondary btn-sm mr-2">
+                                <i class="fa fa-file-import"></i>
+                                <span class="d-none d-md-inline">Importar
+                                    Excel</span>
+                            </label>
+
+                        </form>
+                        <div class="">
+
+                            <a href="{{ route('contactEmail.export_excel') }}" class="btn btn-success btn-sm mr-2"
+                                type="button">
+                                <i class="fa fa-file-excel"></i>
+                                <span class="d-none d-md-inline">Exportar
+                                    Excel</span></a>
+                        </div>
                         <form action="{{ route('contact_email.index') }}" method="GET">
-                            <div class="input-group input-group-sm" style="width: 150px;">
+                            <div class=" input-group input-group-sm" style="width: 150px;">
+
                                 <input type="text" name="search" class="form-control float-right" placeholder="Buscar"
                                     value="{{ $search }}">
                                 <div class="input-group-append">
@@ -158,41 +200,13 @@
 
 @stop
 
-
-@section('js')
+@push('js')
     <script>
-        // $(".table").DataTable({
-        //     // "ordering": false,
-        //     // "pageLength": 20,
-        //     "ajax": "{{ route('contact_email.datatable') }}",
-        //     "columns": [{
-        //             "data": "id"
-        //         },
-        //         {
-        //             "data": "word_nombre_empresa"
-        //         },
-        //         {
-        //             "data": "usuario"
-        //         },
-        //         {
-        //             "data": "estado"
-        //         },
-        //         {
-        //             "data": "valid_email"
-        //         },
-        //         {
-        //             "data": "envios"
-        //         },
-        //         {
-        //             "data": "links_buttons"
-        //         },
-        //         {
-        //             "data": "creacion"
-        //         },
-        //         {
-        //             "data": "actions"
-        //         },
-        //     ]
-        // });
+        const excel_file = document.getElementById("excel_file");
+        const form_import_excel = document.getElementById("form_import_excel");
+
+        $(excel_file).on("change", e => {
+            form_import_excel.submit();
+        })
     </script>
-@stop
+@endpush

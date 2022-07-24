@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\contact_email;
 
+use App\Exports\ContactEmailExport;
 use App\Http\Controllers\Controller;
 use App\Mail\ServicioMaillable;
 use App\Models\BodyEmail;
@@ -13,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Maatwebsite\Excel\Facades\Excel;
 
 class EmailSendController extends Controller
 {
@@ -37,6 +39,7 @@ class EmailSendController extends Controller
 
     public function crear_informacio(Request $request)
     {
+
         // dd($request->all());
         $data = request()->validate([
             "select_body" => "nullable|integer|exists:body_emails,id",
