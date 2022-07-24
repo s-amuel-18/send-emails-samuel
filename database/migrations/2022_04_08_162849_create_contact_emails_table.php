@@ -25,7 +25,7 @@ class CreateContactEmailsTable extends Migration
             $table->string("instagram")->nullable();
             $table->string("facebook")->nullable();
             $table->text("descripcion")->nullable();
-
+            $table->softDeletes();
             $table->timestamps();
         });
     }

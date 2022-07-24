@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('plugins.Datatables', true)
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('Admin/css/bootstrap-iconpicker.min.css') }} ">
@@ -15,28 +16,16 @@
         <div class="d-flex justify-content-end mb-3">
             <h3 class="card-title">Servicios: <b class="text-muted">1000</b></h3>
 
-            <button type="button" class="btn btn-sm btn-primary ml-auto mr-3" data-toggle="modal" data-target="#modelId">
+            <button type="button" class="btn btn-sm btn-primary ml-auto mr-2" data-toggle="modal" data-target="#modelId">
                 <i class="fas fa-plus"></i> <span class="d-none d-md-inline-block ">Crear categoria</span>
             </button>
 
 
-            <a href="{{ route('service.create') }}" class="btn btn-sm btn-success mr-3">
+            <a href="{{ route('service.create') }}" class="btn btn-sm btn-success">
                 <i class="fas fa-plus"></i> <span class="d-none d-md-inline-block ">Crear servicio</span>
             </a>
 
-            <form action="" method="GET">
-                <div class="input-group input-group-sm" style="width: 150px;">
-                    <input type="text" name="search" class="form-control float-right" placeholder="Buscar"
-                        value="">
-                    <div class="input-group-append">
-                        <button type="submit" class="btn btn-default">
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </div>
 
-                </div>
-
-            </form>
         </div>
 
 
@@ -55,143 +44,41 @@
                 </thead>
                 <tbody>
 
+                    @foreach ($data['services'] as $service)
+                        <tr>
+                            <td>{{ $service->id }}</td>
+                            <td>{{ $service->user ? $service->user->username : 'Sin usuario' }}</td>
+                            <td>{{ $service->name }}</td>
+                            <td>
+                                {{ number_format($service->price, 2) }} <i class="fas fa-dollar-sign text-success"></i>
+                            </td>
+                            <td>
+                                <i class="{{ $service->category ? $service->category->icon_class : '' }}"></i>
+                                {{ $service->category ? $service->category->name : 'Sin Categoría' }}
+                            </td>
 
-                    <tr>
-                        <td>
-                            1
-                        </td>
-                        <td>branmarvel</td>
-                        <td>
-                            Maquetacion de pagina
-                        </td>
-                        <td>
-                            295 <i class="fas fa-dollar-sign text-success"></i>
-                        </td>
-                        <td>
-                            <i class="fas fa-window-maximize"></i> Front-end
-                        </td>
+                            <td>{{ $service->created_at->format('Y-m-d H:i:s') }}</td>
+                            <td style="width: 110px">
+                                <a href="{{ route('service.edit', ['servicio' => $service->id]) }}"
+                                    class="btn btn-outline-success btn-sm">
+                                    <i class="fa fa-edit"></i>
+                                </a>
 
-                        <td>Hace 1 hora</td>
-                        <td style="width: 110px">
-                            <a href="" class="btn btn-outline-success btn-sm">
-                                <i class="fa fa-edit"></i>
-                            </a>
+                                <form class="d-inline" onsubmit="return confirm('Realmente Deseas Eliminar Este servicio')"
+                                    action="{{ route('service.destroy', ['servicio' => $service->id]) }}" method="POST">
 
-                            <form class="d-inline" onsubmit="return confirm('Realmente Deseas Eliminar Este servicio')"
-                                action="" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-outline-danger btn-sm">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
 
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-outline-danger btn-sm">
-                                    <i class="fa fa-trash"></i>
-                                </button>
+                                </form>
 
-                            </form>
+                            </td>
+                        </tr>
+                    @endforeach
 
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            2
-                        </td>
-                        <td>branmarvel</td>
-                        <td>
-                            Diseño de pagina
-                        </td>
-                        <td>
-                            295 <i class="fas fa-dollar-sign text-success"></i>
-                        </td>
-                        <td>
-                            <i class="fas fa-window-maximize"></i> Front-end
-                        </td>
-
-                        <td>Hace 1 hora</td>
-                        <td style="width: 110px">
-                            <a href="" class="btn btn-outline-success btn-sm">
-                                <i class="fa fa-edit"></i>
-                            </a>
-
-                            <form class="d-inline" onsubmit="return confirm('Realmente Deseas Eliminar Este servicio')"
-                                action="" method="POST">
-
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-outline-danger btn-sm">
-                                    <i class="fa fa-trash"></i>
-                                </button>
-
-                            </form>
-
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            3
-                        </td>
-                        <td>branmarvel</td>
-                        <td>
-                            Sistema
-                        </td>
-                        <td>
-                            295 <i class="fas fa-dollar-sign text-success"></i>
-                        </td>
-                        <td>
-                            <i class="fas fa-database"></i> Back-end
-                        </td>
-
-                        <td>Hace 1 hora</td>
-                        <td style="width: 110px">
-                            <a href="" class="btn btn-outline-success btn-sm">
-                                <i class="fa fa-edit"></i>
-                            </a>
-
-                            <form class="d-inline" onsubmit="return confirm('Realmente Deseas Eliminar Este servicio')"
-                                action="" method="POST">
-
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-outline-danger btn-sm">
-                                    <i class="fa fa-trash"></i>
-                                </button>
-
-                            </form>
-
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            4
-                        </td>
-                        <td>branmarvel</td>
-                        <td>
-                            Video/Animación
-                        </td>
-                        <td>
-                            295 <i class="fas fa-dollar-sign text-success"></i>
-                        </td>
-                        <td>
-                            <i class="fas fa-window-maximize"></i> Front-end
-                        </td>
-
-                        <td>Hace 1 hora</td>
-                        <td style="width: 110px">
-                            <a href="" class="btn btn-outline-success btn-sm">
-                                <i class="fa fa-edit"></i>
-                            </a>
-
-                            <form class="d-inline" onsubmit="return confirm('Realmente Deseas Eliminar Este servicio')"
-                                action="" method="POST">
-
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-outline-danger btn-sm">
-                                    <i class="fa fa-trash"></i>
-                                </button>
-
-                            </form>
-
-                        </td>
-                    </tr>
 
                 </tbody>
             </table>
@@ -214,8 +101,8 @@
                         <input type="text" class="form-control" placeholder="Nombre de la categoria">
                         <span class="input-group-append mx-3">
                             <button id="iconpicker" class="btn btn-outline-secondary" data-search="true"
-                                data-search-text="Buscar icono" data-iconset="fontawesome5" data-rows="4"
-                                data-cols="6" data-icon="fas fa-home" role="iconpicker"></button>
+                                data-search-text="Buscar icono" data-iconset="fontawesome5" data-rows="4" data-cols="6"
+                                data-icon="fas fa-home" role="iconpicker"></button>
                         </span>
 
                         <button type="submit" class="btn btn-primary">Crear</button>
@@ -232,5 +119,9 @@
     @push('js')
         <script src="{{ asset('Admin/js/bootstrap-iconpicker.bundle.min.js') }}"></script>
         <script src="{{ asset('Admin/js/iconpicker-costum.js') }}"></script>
+
+        <script>
+            $(".table").DataTable();
+        </script>
     @endpush
 @stop

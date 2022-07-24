@@ -1,0 +1,20 @@
+<table class="">
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>email</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>dsadsa@dsad.sds</td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <th>#</th>
+            <th>#</th>
+        </tr>
+    </tfoot>
+</table>

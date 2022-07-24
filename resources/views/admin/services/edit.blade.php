@@ -5,7 +5,7 @@
 @section('title', $data['title'])
 
 @section('content_header')
-    <h1>Nuevo Servicio</h1>
+    <h1>Editar Servicio "{{ $data['service']->name }}"</h1>
 @stop
 
 @section('content_2')
@@ -14,13 +14,14 @@
         <div class="col-md-12">
             <div class="card card-light">
                 <div class="card-header">
-                    <h3 class="card-title">Formulario Nuevo Servicio</h3>
+                    <h3 class="card-title">Formulario de edicion</h3>
                 </div>
 
                 <div class="card-body ">
-                    <form class="form_disabled_button_send" action="{{ route('service.store') }}" method="POST">
+                    <form class="form_disabled_button_send"
+                        action="{{ route('service.update', ['servicio' => $data['service']->id]) }}" method="POST">
 
-                        @method('POST')
+                        @method('PUT')
                         @csrf
 
                         <div class="row">
@@ -31,7 +32,8 @@
                                 <div class="input-group mb-3 ">
                                     <input type="text" name="name"
                                         class="form-control form-control-sm  @error('name') is-invalid @enderror"
-                                        value="{{ old('name') }}" placeholder="Nombre del servicio" autofocus>
+                                        value="{{ old('name') ?? $data['service']->name }}"
+                                        placeholder="Nombre del servicio" autofocus>
 
                                     <div class="input-group-append">
                                         <div class="input-group-text">
@@ -55,7 +57,7 @@
                                 <div class="input-group mb-3 ">
                                     <input type="number" name="price"
                                         class="form-control form-control-sm  @error('price') is-invalid @enderror"
-                                        value="{{ old('price') }}" placeholder="Precio" autofocus>
+                                        value="{{ old('price') ?? $data['service']->price }}" placeholder="Precio">
 
                                     <div class="input-group-append">
                                         <div class="input-group-text">
@@ -80,7 +82,9 @@
                                         id="category_id">
                                         <option>Seleccionar categoria</option>
                                         @foreach ($data['categories'] as $category)
-                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                            <option
+                                                {{ (old('category_id') ?? $data['service']->category->id) == $category->id ? 'selected' : '' }}
+                                                value="{{ $category->id }}">{{ $category->name }}</option>
                                         @endforeach
                                     </select>
 

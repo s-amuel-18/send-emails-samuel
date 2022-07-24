@@ -12,7 +12,6 @@
     @yield('styles')
 
     <style>
-
         .b-red {
             border: 2px solid red;
         }
@@ -36,7 +35,6 @@
         p {
             margin-bottom: 10px;
         }
-
     </style>
 </head>
 
@@ -47,6 +45,10 @@
         @yield('content')
 
     </div>
+
+    @push('js')
+        <script src="{{ asset('js/main.js') }}"></script>
+    @endpush
 </body>
 
 </html>

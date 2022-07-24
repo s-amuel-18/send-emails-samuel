@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBodyEmailsTable extends Migration
+class CreateCategoryServicesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateBodyEmailsTable extends Migration
      */
     public function up()
     {
-        Schema::create('body_emails', function (Blueprint $table) {
+        Schema::create('category_services', function (Blueprint $table) {
             $table->id();
-
-            $table->foreignId("user_id")->nullable()->references("id")->on("users")->nullOnDelete();
-            $table->string("nombre");
-            $table->text("body");
+            $table->bigInteger("user_id")->default(0)->index();
+            $table->string("name");
+            $table->string("icon_class");
             $table->softDeletes();
             $table->timestamps();
         });
@@ -31,6 +30,6 @@ class CreateBodyEmailsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('body_emails');
+        Schema::dropIfExists('category_services');
     }
 }

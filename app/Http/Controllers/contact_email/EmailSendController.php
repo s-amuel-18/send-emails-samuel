@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers\contact_email;
 
+use App\Exports\ContactEmailExport;
 use App\Http\Controllers\Controller;
 use App\Mail\ServicioMaillable;
 use App\Models\BodyEmail;
 use App\Models\Contact_email;
 use App\Models\EmailEnviado;
 use Carbon\Carbon;
+use Facade\FlareClient\Http\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Maatwebsite\Excel\Facades\Excel;
 
 class EmailSendController extends Controller
 {
@@ -27,114 +30,111 @@ class EmailSendController extends Controller
 
         $emails = Contact_email::select("id", "email", "estado")->whereNotNull("email")->orderBy("estado", "ASC")->get();
 
-        return view("admin.contact_email.envio_emails.index", compact("bodysEmail", "emails"));
+        $data["js"] = [
+            "url_get_contact_email" => route('contact_email.getContactEmails'),
+        ];
+
+        return view("admin.contact_email.envio_emails.index", compact("bodysEmail", "emails", "data"));
     }
 
     public function crear_informacio(Request $request)
     {
 
-        // dd($request);
+        // dd($request->all());
         $data = request()->validate([
-            // "nombre_remitente" => "string|max:40",
             "select_body" => "nullable|integer|exists:body_emails,id",
-            "check_emails" => "nullable|integer",
             "body" => "required_if:select_body,null|nullable|string",
-            "emails" => "required_if:check_emails,null|nullable|array",
+            "email" => "required",
             "asunto" => "required|string",
         ]);
 
-        // seleccionamos los ids en caso de que el usuario halla escogido algun correo en espesifico
-        $ids_emails = $request->has("emails") ? $data["emails"] : [];
 
-        // validamos que el check de los emails extra este presionado (100 emails extra)
-        if ($data["check_emails"]) {
+        $email = $data["email"];
+        $info["subject"] = $data["asunto"];
 
-            // realizamos una consulta para buscar ids de correos extra
-            $ids_emails_extra = Contact_email::select("id")
-                ->where("estado", "=", "0")
-                ->whereNotIn("id", $ids_emails)
-                ->whereNotNull("email")
-                ->limit(Contact_email::DAILY_EMAIL_LIMIT - count($ids_emails))
-                ->get();
-
-
-            // realizamos un sivlo para agregar esos ids al array de ids seleccionamos
-            foreach ($ids_emails_extra as $k => $item) {
-                array_push($ids_emails, $item->id);
-            }
+        if ($data["select_body"]) {
+            $info["body"] = BodyEmail::select("body")
+                ->find($data["select_body"])
+                ->body;
+        } else {
+            $info["body"] = $data["body"];
         }
 
-        // realizamos una consulta que nos devuelva todos los emails que coinsidan con esos ids
-        $emails = Contact_email::select("id", "email")
-            ->whereIn("id", $ids_emails)
-            ->get();
+        $dalyEmailsValid = auth()->user()->validSendEmailDaily();
+
+        $emailsToSend = auth()->user()->correos_por_enviar_hoy();
+        $emailsToSend = $emailsToSend == 0 ? null : $emailsToSend;
 
 
+        if (!$dalyEmailsValid) {
+            $send_today = auth()->user()->correos_enviados_hoy();
 
+            $lastEmailSend = auth()->user()->lastEmailSend();
 
-        // seleccionar el cuerpo del email
-        $body = $data["body"] ? $data["body"] : BodyEmail::select("body")->where("id", "=", $data["select_body"])->get()[0]->body;
+            $hora = Carbon::now()->parse($lastEmailSend->created_at)->format("H");
 
+            $dia = Carbon::now()->parse($lastEmailSend->created_at)->addDays(1)->format("d");
 
-        $info["subject"] =  $data["asunto"];
-        $info["body"] =  $body;
-        $info["link_principal"] =  "https://negociaecuador.com/samuel-graterol-dev/";
+            $minutos = Carbon::now()->parse($lastEmailSend->created_at)->format("i");
 
-        // aqui se van a agregar los emails Que no fueron enviados
-        $arr_sin_enviar = [];
-        $arr_enviados = [];
+            $segundos = Carbon::now()->parse($lastEmailSend->created_at)->format("s");
 
-        $correo = new ServicioMaillable($info);
+            $timesLastEmail = [
+                "hora" => $hora,
+                "dia" => $dia,
+                "minutos" => $minutos,
+                "segundos" => $segundos
+            ];
+            $message = [
+                "color" => "warning",
+                "message" => "Se llegó al limite de envios diarios"
+            ];
 
-        $date = Carbon::now();
-        $date = $date->format('Y-m-d');
+            return redirect()->back()->with("message", $message);
+        }
 
+        try {
+            $emailExist = Contact_email::where("email", $email)->first();
 
-        foreach ($emails as $email) {
-            // dd($email->email);
-            try {
-
-
-                $enviados_hoy = EmailEnviado::whereDate("created_at", $date)->count();
-
-                // vakidanis que la cantidad de correos diarios no sobre pase los 100
-                if ($enviados_hoy >= Contact_email::DAILY_EMAIL_LIMIT) {
-                    $message = [
-                        "message" => "La cantidad De correos diarios Ha llegado a su limite, Se enviaron Correctamente " . count($arr_enviados) . " correos y hubieron " . count($arr_sin_enviar) . " correos fallidos",
-                        "color" => "danger"
-                    ];
-
-                    return redirect()->back()->with("message", $message);
-                }
-
-                Mail::to($email->email)->send($correo);
-
-
-                auth()->user()->emailEnviado()->create([
-                    "contact_email_id" => $email->id
+            if ($emailExist) {
+                $emailSend = $emailExist;
+            } else {
+                $emailSend = auth()->user()->emails_registros()->create([
+                    "email" => $email
                 ]);
-
-                $email->estado = 1;
-                $email->save();
-
-                Contact_email::where("id", $email->id)->update(["estado" => 1]);
-
-                array_push($arr_enviados, $email->email);
-            } catch (\Throwable $th) {
-                // dd($th);
-                array_push($arr_sin_enviar, $email->email);
             }
+
+
+            $correo = new ServicioMaillable($info);
+            Mail::to($email)->send($correo);
+
+            $emailsToSend = auth()->user()->correos_por_enviar_hoy();
+            $emailsToSend = $emailsToSend == 0 ? null : $emailsToSend;
+
+
+            $enviado = auth()->user()->emailEnviado()->attach($emailSend->id);
+
+            $emailSend->update(["estado" => 1]);
+
+            $send_today = auth()->user()->correos_enviados_hoy();
+
+            $percentage = $send_today ? (($send_today * 100) / Contact_email::DAILY_EMAIL_LIMIT) : 0;
+
+            $message = [
+                "color" => "success",
+                "message" => "Email enviado correctamente"
+            ];
+
+            return redirect()->back()->with("message", $message);
+        } catch (\Throwable $th) {
+            $send_today = auth()->user()->correos_enviados_hoy();
+            $message = [
+                "color" => "danger",
+                "message" => "Ha ocurrido un error."
+            ];
+
+            return redirect()->back()->with("message", $message);
         }
-
-
-
-        $message = [
-            "message" => "Se enviaron Correctamente " . count($arr_enviados) . " correos y hubieron " . count($arr_sin_enviar) . " correos fallidos",
-            "color" => "success",
-            "icon" => "far fa-check-circle"
-        ];
-
-        return redirect()->back()->with("message", $message);
     }
 
     public function email()
@@ -184,7 +184,7 @@ class EmailSendController extends Controller
                 "emails_sent_today" => $send_today,
                 "message" => [
                     "type" => "danger",
-                    "message" => "Se llego al limite de envios diarios",
+                    "message" => "Se llegó al limite de envios diarios",
                 ],
             ];
         }
@@ -232,9 +232,70 @@ class EmailSendController extends Controller
                 "emails_sent_today" => $send_today,
                 "message" => [
                     "type" => "danger",
-                    "message" => "Ha ocurrido un error, El motivo del error puede ser que se ha llegado al limite de envio de correos diarios"
+                    "message" => "Ha ocurrido un error. correos diarios"
                 ]
             ];
+        }
+    }
+
+    public function client_contact_front(Request $request)
+    {
+        $data = request()->validate([
+            "nombre" => "required|string",
+            "comment" => "required",
+            "email" => "required|email",
+        ]);
+
+        $dalyEmailsValid = auth()->user()->validSendEmailDaily();
+
+
+        if (!$dalyEmailsValid) {
+
+            $response = [
+                "success_email_send" => false,
+                "message" =>  "Error de envio, intentelo mas tarde."
+            ];
+
+            return response()->json($response, 404);
+        }
+
+
+        $info["subject"] =  $data["nombre"] . " Quiere Contactarse Contigo";
+        $info["body"] =  $data["comment"];
+
+        try {
+            $existEmail = Contact_email::where("email", $data["email"])->first();
+
+            if (!$existEmail) {
+                $newEmail = Contact_email::create([
+                    "email" => $data["email"],
+                ]);
+            } else {
+                $newEmail = $existEmail;
+            }
+
+            $correo = new ServicioMaillable($info);
+            Mail::to($newEmail->email)->send($correo);
+
+            auth()->user()->emailEnviado()->attach($newEmail->id);
+
+            $newEmail->update(["estado" => 1]);
+
+            $response = [
+                "success_email_send" => true,
+                "message" => "<strong>Correo enviado correctamente!</strong> el equipo de fluxel code se pondrá en contacto contigo lo antes posible, gracias por tu mensaje."
+            ];
+
+            return response()->json($response, 200);
+        } catch (\Throwable $th) {
+
+            //throw $th;
+            $response = [
+                "success_email_send" => false,
+                "message" => "Ha ocurrido un error"
+            ];
+
+            return response()->json($response, 404);
         }
     }
 }

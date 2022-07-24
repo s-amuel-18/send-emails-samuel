@@ -1,15 +1,60 @@
-$("#form_contact").on("submit", function (e) {
-    let validForm =
-        Object.keys($("#form_contact").validate().invalid).length > 0
-            ? true
-            : false;
+function alertMessage(obj) {
+    return `<div class="alert alert-${obj.color} alert-dismissible fade show" role="alert">
+            ${obj.text}
+            <button style="width: fit-content" type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+            </div>`
+}
 
-    if (validForm) return false;
+$(function () {
 
-    if (grecaptcha.getResponse() == "") {
+    $("#form_contact").on("submit", function (e) {
         e.preventDefault();
-        alert("Falta verificación recaptcha");
-    } else {
-        alert("Gracias por contactarnos");
-    }
+        console.log(Object.keys($("#form_contact").validate().invalid));
+        let validForm =
+            Object.keys($("#form_contact").validate().invalid).length > 0
+                ? true
+                : false;
+        console.log(validForm);
+        if (validForm /* || grecaptcha.getResponse() == "" */) return false;
+
+        const form = e.target;
+
+        let objParams = {
+            "nombre": form.nombre.value,
+            "comment": form.comment.value,
+            "email": form.email.value,
+
+        };
+        var button_submit = e.originalEvent.submitter;
+        button_submit.disabled = true;
+        const insert_alert = document.getElementById("insert_alert");
+
+        axios.post(dataServer["url_post_contact_message"], objParams)
+            .then(resp => {
+                let data = resp.data;
+                button_submit.disabled = false;
+
+                console.log(data);
+
+                let alertMessageVar = alertMessage({
+                    color: "success",
+                    text: data.message
+                });
+
+                insert_alert.innerHTML = alertMessageVar;
+
+
+            })
+            .catch(err => {
+                console.log(err);
+                let alertMessageVar = alertMessage({
+                    color: "danger",
+                    text: err.response.data.message
+                });
+                insert_alert.innerHTML = alertMessageVar;
+                button_submit.disabled = false;
+            })
+    });
 });

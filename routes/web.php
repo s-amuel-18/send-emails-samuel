@@ -13,6 +13,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\contact_email\ContactEmailController;
 use App\Http\Controllers\contact_email\EmailSendController;
 use App\Http\Controllers\DebtController;
+use App\Http\Controllers\ExcelExportController;
+use App\Http\Controllers\ExcelImportController;
 use App\Http\Controllers\FrontController;
 use App\Http\Controllers\IncomeController;
 use App\Http\Controllers\ManagementController;
@@ -51,6 +53,7 @@ Route::resource("user", UserController::class)->except("show")->middleware("auth
 // emails
 Route::resource("contact-email", ContactEmailController::class)->except("show")->middleware("auth")->names("contact_email");
 Route::get('/contact-email/datatable', [ContactEmailController::class, 'datatable'])->name('contact_email.datatable');
+Route::get('/contact-email/consulta-emails', [ContactEmailController::class, 'getContactEmails'])->name('contact_email.getContactEmails');
 Route::get('/contact-email/estadisticas', [ContactEmailController::class, 'estadisticas'])->name('contact_email.estadisticas');
 
 // body
@@ -61,6 +64,7 @@ Route::get('envio-email/redaccion-detallada', [EmailSendController::class, 'inde
 Route::post('/envio-email', [EmailSendController::class, 'envioEmail'])->name('envio_email.envioEmail');
 Route::get('/envio-email/servicio', [EmailSendController::class, 'email'])->name('envio_email.email');
 Route::post('/envio-email/crear-informacio', [EmailSendController::class, 'crear_informacio'])->name('envio_email.crear_informacio');
+Route::post('/envio-email/contacto', [EmailSendController::class, 'client_contact_front'])->name('envio_email.client_contact_front');
 
 // roles
 Route::resource("role", RoleController::class)->except("show")->middleware("auth")->names("role");
@@ -96,3 +100,9 @@ Route::get("email", function () {
 
 // pdf
 Route::get("pdf/presentacion", [PdfController::class, "cartaPresentacion"])->name("pdf.cartaPresentacion");
+
+// excel export
+Route::get("emails/export/excel", [ExcelExportController::class, "contactEmail"])->middleware("auth")->name("contactEmail.export_excel");
+
+// excel import
+Route::post("emails/import/excel", [ExcelImportController::class, "contactEmail"])->middleware("auth")->name("contactEmail.import_excel");

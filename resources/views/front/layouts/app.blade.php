@@ -60,7 +60,7 @@
     <script src="{{ asset('vendor/jquery-validation/localization/messages_es.min.js') }}"></script>
     <script src="{{ asset('front/js/validation.js') }}"></script>
     {{-- recaptcha --}}
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    {{-- <script src="https://www.google.com/recaptcha/api.js" async defer></script> --}}
     <script src="{{ asset('front/js/recaptcha.js') }}"></script>
     <!-- Google Translate -->
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
@@ -68,6 +68,8 @@
     <script src="{{ asset('front/js/google-translate.js') }}"></script>
     {{-- Easy Country Picker --}}
     <script src="{{ asset('front/js/plugins/countrySelect.min.js') }}"></script>
+    {{-- axios --}}
+    <script src="{{ asset('js/Plugins/axios.min.js') }}"></script>
 
     <script>
         var wow = new WOW({
@@ -85,6 +87,8 @@
         });
         wow.init();
     </script>
+
+    @yield('js')
 </body>
 
 </html>

@@ -77,7 +77,14 @@ class ContactEmailController extends Controller
             ->withCount("emails_registros")
             ->get();
 
-        $registros_promedio = $total_registros == 0 ? 0 : $total_registros / $users->count();
+        // dd("x");
+
+        if ($total_registros == 0 || $users->count() == 0) {
+            $registros_promedio = 0;
+        } else {
+
+            $registros_promedio = $total_registros / $users->count();
+        }
 
         $emials_sin_enviar = Contact_email::sinEnviar()->count();
 
@@ -105,6 +112,7 @@ class ContactEmailController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request->all());
         $data = request()->validate([
             'nombre_empresa' => "nullable|string|max:255",
             'email' => "required_if:whatsapp,null|nullable|string|max:255|email|unique:contact_emails",
@@ -258,5 +266,38 @@ class ContactEmailController extends Controller
             // ->rawColumns(["links_buttons"])
 
             ->toJson();
+    }
+
+    public function getContactEmails(Request $request)
+    {
+        $search = $request["search"] ?? null;
+
+        $contactEmails = Contact_email::select("email")->whereNotNull("email");
+
+        if ($search) {
+            $contactEmails = $contactEmails->where("email", "like", "%$search%");
+            if (strlen($search) > 5) {
+                $contactEmails = $contactEmails->get();
+            } else {
+                $contactEmails = $contactEmails->take(10)->get();
+            }
+        } else {
+
+            $contactEmails = $contactEmails->take(10)->get();
+        }
+
+        if ($request["format_select"]) {
+            $contactEmails = $contactEmails->map(function ($email) {
+                return [
+                    "id" => $email->email,
+                    "text" => $email->email,
+                ];
+            });
+        }
+
+
+        return response()->json([
+            "results" => $contactEmails
+        ], 200);
     }
 }

@@ -18,7 +18,7 @@ class CreateContactEmailUserTable extends Migration
 
             $table->foreignId("user_id")->references("id")->on("users")->onDelete("cascade");
             $table->foreignId("contact_email_id")->references("id")->on("contact_emails")->onDelete("cascade");
-
+            $table->softDeletes();
             $table->timestamps();
         });
     }
