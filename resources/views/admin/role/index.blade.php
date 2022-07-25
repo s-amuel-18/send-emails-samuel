@@ -19,7 +19,7 @@
 
                         @can('role.create')
                             <a href="{{ route('role.create') }}" class="btn btn-outline-light not-hover btn-tool">
-                                <i class="fas fa-plus"></i>
+                                <i class="fas fa-plus"></i><span class="d-none d-md-inline-block ml-1">Crear rol</span>
                             </a>
                         @endcan
 
