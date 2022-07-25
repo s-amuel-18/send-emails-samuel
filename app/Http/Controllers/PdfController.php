@@ -14,6 +14,13 @@ class PdfController extends Controller
         // dd(storage_path("asset.png"));
         $pdf = App::make('dompdf.wrapper');
         $pdf->loadView('pdf.carta_precentacion');
-        return $pdf->stream('invoice.pdf');
+        return $pdf->stream('carta presentacion.pdf');
+    }
+    public function Services()
+    {
+        // dd(storage_path("asset.png"));
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadView('pdf.Services');
+        return $pdf->stream('lista de servicios.pdf');
     }
 }

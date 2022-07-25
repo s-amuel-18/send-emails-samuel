@@ -16,7 +16,11 @@
         <div class="d-flex justify-content-end mb-3">
             <h3 class="card-title">Servicios: <b class="text-muted">1000</b></h3>
 
-            <button type="button" class="btn btn-sm btn-primary ml-auto mr-2" data-toggle="modal" data-target="#modelId">
+            <a href="{{ route('pdf.Services') }}" target="_blank" class="btn btn-sm btn-danger ml-auto ">
+                <i class="fas fa-file-pdf"></i> <span class="d-none d-md-inline-block ">Lista de Servicio</span>
+            </a>
+
+            <button type="button" class="btn btn-sm btn-primary  mx-2" data-toggle="modal" data-target="#modelId">
                 <i class="fas fa-plus"></i> <span class="d-none d-md-inline-block ">Crear categoria</span>
             </button>
 

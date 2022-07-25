@@ -18,7 +18,7 @@ class ExcelImportController extends Controller
         $erros = [];
 
         try {
-            Excel::import(new ContactEmailImport, $file);
+            $imp = Excel::import(new ContactEmailImport, $file);
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
 
@@ -39,6 +39,8 @@ class ExcelImportController extends Controller
             return redirect()->back()->with("message", $message);
         }
 
+        // dd($imp);
+        
         $message = [
             "message" => "Documento importado correctamente.",
             "color" => "success"

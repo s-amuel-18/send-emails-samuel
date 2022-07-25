@@ -18,7 +18,7 @@
 
                         @can('bodyEmail.create')
                             <a href="{{ route('bodyEmail.create') }}" class="btn btn-outline-light btn-tool">
-                                <i class="fas fa-plus"></i>
+                                <i class="fas fa-plus"></i> <span class="d-none d-md-inline-block ml-1">Crear cuerpo Email </span>
                             </a>
                         @endcan
 

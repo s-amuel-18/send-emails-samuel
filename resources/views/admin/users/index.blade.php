@@ -18,7 +18,7 @@
 
                         @can('user.create')
                             <a href="{{ route('user.create') }}" class="btn btn-outline-light not-hover btn-tool">
-                                <i class="fas fa-user-plus"></i>
+                                <i class="fas fa-user-plus"></i> <span class="d-none d-md-inline-block ml-1"> Crear usuario</span>
                             </a>
                         @endcan
                     </div>
@@ -84,8 +84,7 @@
                                             @else
                                                 <form class="d-inline"
                                                     onsubmit="return confirm('Realmente Deseas Eliminar Este Usuario')"
-                                                    action="{{ route('user.destroy', ['user' => $user->id]) }}"
-                                                    method="POST">
+                                                    action="{{ route('user.destroy', ['user' => $user->id]) }}" method="POST">
 
                                                     @csrf
                                                     @method('DELETE')

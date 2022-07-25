@@ -21,13 +21,14 @@
 
                         @can('contact_email.index')
                             <a href="{{ route('contact_email.index') }}" class="btn btn-outline-light btn-tool">
-                                <i class="fas fa-mail-bulk"></i>
+                                <i class="fas fa-mail-bulk"></i><span class="d-none d-md-inline-block ml-1">Registros de Emails
+                                </span>
                             </a>
                         @endcan
 
                         @can('contact_email.create')
                             <a href="{{ route('contact_email.create') }}" class="btn btn-outline-light btn-tool">
-                                <i class="fas fa-plus"></i>
+                                <i class="fas fa-plus"></i><span class="d-none d-md-inline-block ml-1">Nuevo Email </span>
                             </a>
                         @endcan
 
@@ -62,8 +63,7 @@
                                             <h3 class="card-title">Registros De Hoy</h3>
 
                                             <div class="card-tools">
-                                                <span
-                                                    class="badge badge-pill badge-primary">{{ $registros_de_hoy }}</span>
+                                                <span class="badge badge-pill badge-primary">{{ $registros_de_hoy }}</span>
                                             </div>
                                             <!-- /.card-tools -->
                                         </div>

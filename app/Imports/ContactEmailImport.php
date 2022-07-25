@@ -6,8 +6,9 @@ use App\Models\Contact_email;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
+use Maatwebsite\Excel\Concerns\SkipsOnError;
 
-class ContactEmailImport implements ToModel, WithHeadingRow, WithValidation
+class ContactEmailImport implements ToModel, WithHeadingRow, WithValidation,SkipsOnError
 {
     /**
      * @param array $row
@@ -27,8 +28,12 @@ class ContactEmailImport implements ToModel, WithHeadingRow, WithValidation
             "*.email" => [
                 "required",
                 "email",
-                "unique:contact_emails,email"
             ]
         ];
+    }
+
+    public function onError(\Throwable $e)
+    {
+        // Handle the exception how you'd like.
     }
 }

@@ -36,13 +36,14 @@
 
                         @can('contact_email.estadisticas')
                             <a href="{{ route('contact_email.estadisticas') }}" class="btn btn-outline-light btn-tool">
-                                <i class="fas fa-chart-pie"></i>
+                                <i class="fas fa-chart-pie"></i><span class="d-none d-md-inline-block ml-1">Estadisticas de
+                                    Emails </span>
                             </a>
                         @endcan
 
                         @can('contact_email.create')
                             <a href="{{ route('contact_email.create') }}" class="btn btn-outline-light btn-tool">
-                                <i class="fas fa-plus"></i>
+                                <i class="fas fa-plus"></i><span class="d-none d-md-inline-block ml-1">Nuevo email </span>
                             </a>
                         @endcan
 
