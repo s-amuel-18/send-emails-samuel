@@ -31,15 +31,14 @@ class ExcelImportController extends Controller
 
                 $erros[] = $err;
             }
+            $errorMessage = $err["errors"][0] ?? "";
             $message = [
-                "message" => "El documento contiene el email ya existente '{$erros[0]["values"]["email"]}'",
-                "color" => "warning"
+                "message" => "Ha ocurrido un error, verifica la fila numero " . $err["row"] . " de tu documento, error obtenido ({$errorMessage})",
+                "color" => "danger"
             ];
 
             return redirect()->back()->with("message", $message);
         }
-
-        // dd($imp);
         
         $message = [
             "message" => "Documento importado correctamente.",

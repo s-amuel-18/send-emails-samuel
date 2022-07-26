@@ -20,7 +20,7 @@
 
 
     body {
-        margin-top: 5cm;
+        margin-top: 4cm;
         margin-bottom: 5cm;
         font-family: 'Poppins';
     }
@@ -43,12 +43,12 @@
 
 
     th {
-        padding: 0.5cm;
+        padding: 0.4cm;
         background-color: rgb(240, 240, 240)
     }
 
     td {
-        padding: 0.5cm;
+        padding: 0.4cm;
     }
 
 
@@ -72,7 +72,7 @@
         font-weight: 900;
         color: #4f1593;
         text-align: center;
-        line-height: 0.5;
+        line-height: 1;
     }
 
     .h-1-2 {
@@ -83,7 +83,8 @@
         font-weight: 200;
         color: #4f1593;
         text-align: center;
-        line-height: 0.5;
+        line-height: 1;
+        margin-bottom: 1cm;
     }
 
     .h-5 {
@@ -227,48 +228,30 @@
                     Lista de precios de servicios FLUXEL-CODE
                 </h3>
             </div>
-            <br><br><br>
             <div class="">
                 <table class="mx-5cm">
 
+                    <thead>
+                        <tr>
+                            <th>Nombre </th>
+                            <th>Precio</th>
+                        </tr>
+                    </thead>
 
-                    <tr>
-                        <th>Nombre </th>
-                        <th>Precio</th>
+                    <tbody>
+                        @foreach ($data['services'] as $service)
+                            <tr>
+                                <td>
+                                    {{ $service->name }}
+                                </td>
 
-                    </tr>
-                    <tr>
-                        <td>
-                            Maquetar pagina web
-                        </td>
+                                <td>
+                                    {{ $service->price }}$
+                                </td>
 
-                        <td> 300$</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Creación de sistema
-                        </td>
-
-
-                        <td> 500$</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Diseño de pagina web
-                        </td>
-                        <td>
-                            150$
-
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Video publicitario
-                        </td>
-                        <td>
-                            450$
-                        </td>
-                    </tr>
+                            <tr>
+                        @endforeach
+                    </tbody>
                 </table>
             </div>
         </section>

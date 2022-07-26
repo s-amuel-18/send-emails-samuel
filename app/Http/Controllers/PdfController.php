@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Service;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 use Dompdf\Adapter\PDFLib;
 use Illuminate\Http\Request;
@@ -18,9 +19,11 @@ class PdfController extends Controller
     }
     public function Services()
     {
-        // dd(storage_path("asset.png"));
+        $services = Service::get();
+        $data["services"] =$services;
+        
         $pdf = App::make('dompdf.wrapper');
-        $pdf->loadView('pdf.Services');
+        $pdf->loadView('pdf.Services', compact("data"));
         return $pdf->stream('lista de servicios.pdf');
     }
 }
