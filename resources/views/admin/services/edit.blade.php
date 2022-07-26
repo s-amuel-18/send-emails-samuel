@@ -83,7 +83,7 @@
                                         <option>Seleccionar categoria</option>
                                         @foreach ($data['categories'] as $category)
                                             <option
-                                                {{ (old('category_id') ?? $data['service']->category->id) == $category->id ? 'selected' : '' }}
+                                                {{ (old('category_id') ?? ($data['service']->category->id ?? false)) == $category->id ? 'selected' : '' }}
                                                 value="{{ $category->id }}">{{ $category->name }}</option>
                                         @endforeach
                                     </select>

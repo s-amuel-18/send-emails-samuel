@@ -241,12 +241,7 @@ return [
             'text'        => 'Pagina Web',
             'topnav_right' => true,
         ],
-        [
-            'route'         => 'recomendacion.index',
-            'icon'        => 'fa fa-tools fa-fw',
-            'text'        => 'Mejoras',
-            'topnav_right' => true,
-        ],
+
         [
             'text'        => 'Inicio',
             'route'         => 'home.index',
