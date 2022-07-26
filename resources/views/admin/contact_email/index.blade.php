@@ -26,7 +26,25 @@
             </ul>
         </div>
     @endif
+    {{-- <style>
+        @media screen and (max-width: 400px) {
 
+            li.page-item {
+
+                display: none;
+            }
+
+            .page-item:first-child,
+            .page-item:nth-child(2),
+            .page-item:nth-last-child(2),
+            .page-item:last-child,
+            .page-item.active,
+            .page-item.disabled {
+
+                display: block;
+            }
+        }
+    </style> --}}
     <div class="row">
         <div class="col-md-12">
             <div class="card card-light">
@@ -50,7 +68,7 @@
                     </div>
                 </div>
 
-                <div class="card card-body table-responsive">
+                <div class="card card-body">
                     <div class="d-flex justify-content-end mb-3">
 
                         <form action="{{ route('contactEmail.import_excel') }}" enctype="multipart/form-data" method="POST"
@@ -91,7 +109,7 @@
                     </div>
 
                     @if ($contact_emails->count() > 0)
-                        <div class="">
+                        <div class="table-responsive">
                             <table class="table table-light table-striped table-hover text-nowrap table-valign-middle">
                                 <thead class="">
                                     <tr>
@@ -176,10 +194,15 @@
 
                                 </tbody>
                             </table>
+                            {{-- <div class="mt-3 d-flex justify-content-end">
+                                {{ $contact_emails->onEachSide(0)->links() }}
+                            </div> --}}
+                        </div>
+                        <div class="pl-3">
                             <div class="mt-3 d-flex justify-content-end">
-                                {{ $contact_emails->links() }}
-
+                                {{ $contact_emails->onEachSide(-1)->links() }}
                             </div>
+
                         </div>
                     @else
                         <div class="alert alert-light" role="alert">

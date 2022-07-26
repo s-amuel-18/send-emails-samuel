@@ -92,7 +92,7 @@
             <div class="col-md-3 col-6">
                 {{-- Correos sin enviar --}}
                 <x-adminlte-small-box title="{{ $correos_sin_enviar }}" text="Correos Sin Enviar" icon="fas fa-mail-bulk"
-                    theme="danger" url="envio-email" url-text="Enviar Correos" />
+                    theme="danger" url="envio-email/redaccion-detallada" url-text="Enviar Correos" />
             </div>
         @endcan
 
@@ -100,7 +100,7 @@
             <div class="col-md-3 col-6">
                 {{-- usuarios --}}
                 <x-adminlte-small-box id="emails_sent_today" title="{{ $enviados_hoy }}" text="Envios de Hoy"
-                    icon="fas fa-mail-bulk" theme="indigo" url="user" url-text="Enviar Correos" />
+                    icon="fas fa-mail-bulk" theme="indigo" url="envio-email/redaccion-detallada" url-text="Enviar Correos" />
             </div>
         @endcan
 
@@ -120,7 +120,9 @@
                             @can('user.create')
                                 <a href="{{ route('contact_email.estadisticas') }}"
                                     class="btn btn-outline-light not-hover btn-tool">
-                                    <i class="fas fa-user-plus"></i>
+                                    <i class="fas fa-fw fa-mail-bulk"></i><span class="d-none d-md-inline-block ml-1">Estadistica
+                                        de
+                                        registros</span>
                                 </a>
                             @endcan
                         </div>
@@ -178,7 +180,7 @@
 
                             @can('contact_email.create')
                                 <a href="{{ route('contact_email.create') }}" class="btn btn-outline-light not-hover btn-tool">
-                                    <i class="fas fa-plus"></i>
+                                    <i class="fas fa-plus"></i><span class="d-none d-md-inline-block ml-1">Nuevo email</span>
                                 </a>
                             @endcan
                         </div>

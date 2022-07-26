@@ -42,7 +42,7 @@
             </div>
         @endforeach
 
-        <div class="col-6 col-lg-3">
+        <div class="col-12 col-lg-3">
             <div class="info-box">
                 <span class="info-box-icon bg-warning"><i class="fa fa-coins"></i></span>
                 <div class="info-box-content">
@@ -52,7 +52,7 @@
 
             </div>
         </div>
-        <div class="col-6 col-lg-3">
+        <div class="col-12 col-lg-3">
             <div class="info-box">
                 <span class="info-box-icon bg-success"><i class="fa fa-arrow-up"></i></span>
                 <div class="info-box-content">
@@ -62,7 +62,7 @@
 
             </div>
         </div>
-        <div class="col-6 col-lg-3">
+        <div class="col-12 col-lg-3">
             <div class="info-box">
                 <span class="info-box-icon bg-pink"><i class="fa fa-dollar-sign"></i></span>
                 <div class="info-box-content">
@@ -72,7 +72,7 @@
 
             </div>
         </div>
-        <div class="col-6 col-lg-3">
+        <div class="col-12 col-lg-3">
             <div class="info-box">
                 <span class="info-box-icon bg-danger"><i class="fa fa-arrow-down"></i></span>
                 <div class="info-box-content">
