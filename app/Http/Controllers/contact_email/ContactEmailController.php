@@ -112,7 +112,6 @@ class ContactEmailController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
         $data = request()->validate([
             'nombre_empresa' => "nullable|string|max:255",
             'email' => "required_if:whatsapp,null|nullable|string|max:255|email|unique:contact_emails",
