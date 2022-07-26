@@ -1051,7 +1051,8 @@ body {
     width: 100%;
     height: 100%;
     z-index: 9999;
-    background: url("../img/loader/Preloader_2.gif") center no-repeat #fff;
+    background-color: #fff;
+    /* background: url("../Vectores/Logo/Artboard_36.svg") center no-repeat #fff; */
 }
 
 /*--------------------------------------------------
