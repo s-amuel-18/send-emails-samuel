@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\ServicioMaillable;
 use App\Models\BillingTime;
+use App\Models\CategoryService;
 use App\Models\Contact_email;
 use App\Models\EmailEnviado;
 use App\Models\Income;
@@ -34,6 +35,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+
         $pays_time = BillingTime::withSum("spemts", "price")->get();
 
         $total_registros = Contact_email::count();

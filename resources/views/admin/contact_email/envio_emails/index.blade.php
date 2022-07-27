@@ -177,8 +177,10 @@
             let varAuxEventfovcusOut = 0;
 
             $('.select2_ajax').select2({
+                maximumSelectionLength: 1,
                 ajax: {
                     url: dataServer["url_get_contact_email"],
+
                     data: function(params) {
                         var query = {
                             search: params.term,
