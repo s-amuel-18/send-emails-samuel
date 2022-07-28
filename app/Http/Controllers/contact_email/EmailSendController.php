@@ -260,7 +260,7 @@ class EmailSendController extends Controller
         }
 
 
-        $info["subject"] =  $data["nombre"] . " Quiere Contactarse Contigo";
+        $info["subject"] =  $data["nombre"] . " Quiere Contactarse Contigo '{$data["email"]}'";
         $info["body"] =  $data["comment"];
 
         try {
@@ -275,7 +275,7 @@ class EmailSendController extends Controller
             }
 
             $correo = new ServicioMaillable($info);
-            Mail::to($newEmail->email)->send($correo);
+            Mail::to(env("MAIL_FROM_ADDRESS"))->send($correo);
 
             auth()->user()->emailEnviado()->attach($newEmail->id);
 
