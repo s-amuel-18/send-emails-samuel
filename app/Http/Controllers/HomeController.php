@@ -35,6 +35,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $data = [];
 
         $pays_time = BillingTime::withSum("spemts", "price")->get();
 
@@ -47,7 +48,7 @@ class HomeController extends Controller
 
             $registros_de_hoy_take = Contact_email::today()->take(5)->get();
         } else {
-            $registros_de_hoy_take = auth()->user()->emails_registros->today()->take(5)->get();
+            $registros_de_hoy_take = auth()->user()->emails_registros()->today()->take(5)->get();
         }
         $registros_de_hoy = Contact_email::today()->count();
 

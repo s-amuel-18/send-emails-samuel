@@ -67,7 +67,7 @@ class UserController extends Controller
 
         $user = User::create($data);
 
-        if( $data["roles"] ) {
+        if ($data["roles"] ?? false) {
             $user->roles()->sync($data["roles"]);
         }
 
@@ -124,7 +124,7 @@ class UserController extends Controller
             $user->password = Hash::make($data["password"]);
         }
 
-        if( $request->roles ) {
+        if ($request->roles) {
             $user->roles()->sync($request->roles);
         }
 
