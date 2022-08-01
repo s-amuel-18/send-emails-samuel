@@ -16,7 +16,7 @@
         <div class="container ">
             <a class="navbar-brand" href="#"><img class="icon-tec"
                     src="{{ asset('front/Vectores/Logo/Artboard 35.svg') }}" alt="Logo Fluxel-code" /></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+            <button class="navbar-toggler w-auto" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
                 aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
