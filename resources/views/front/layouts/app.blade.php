@@ -5,6 +5,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="description"
+        content="
+    Somos una agencia de profesionales experimentados en el diseño y desarrollo de interfaces web, donde nuestra principal objetivo impulsar las ventas de tu negocio, dando una presencia con alta visibilidad en la web en el campo de marketing digital de manera efectiva." />
+    <meta name="keywords"
+        content="Diseño web, Desarrollo de sistemas, Creacion de paginas web, Landing page, Maquetación" />
+    <meta name="copyright" content="Fluxel-code" />
+    <META NAME="Revisit-after" CONTENT="10 days">
+    <META NAME="robots" content="ALL">
+    <link rel="icon" href="{{ asset('images/logo/fluxel_code.png') }}" type="image/x-icon">
     <!-- Bootstrap 4.1.3 -->
     <link rel="stylesheet" href="{{ asset('front/css/bootstrap.min.css') }}" />
     <!-- Animate Css -->
@@ -30,7 +39,7 @@
     {{-- Easy Country Picker --}}
     <link rel="stylesheet" href="{{ asset('front/css/plugins/country-picker-flags/css/countrySelect.min.css') }}">
 
-    <title>Fluxel Code</title>
+    <title>Fluxel Code - Agencia de Programacion y Diseño web</title>
 </head>
 
 <body>

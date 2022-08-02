@@ -51,6 +51,9 @@ body {
     margin: 0;
 }
 
+.text-link:hover {
+    text-decoration: none;
+}
 .navbar .nav-item .nav-link {
     padding: 0;
     margin: 0 0 0 45px;

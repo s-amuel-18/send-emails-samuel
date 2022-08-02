@@ -577,26 +577,27 @@
                         <div class="right">
                             <h4> <span class="text-capitalize">Mantente</span> en contacto</h4>
                             <div class="info d-flex align-items-center">
-                                <i class="fa fa-map-marker" aria-hidden="true"></i>
-                                <span></span>
+                                <a class="text-white text-link" href="https://goo.gl/maps/PhwS8HjEyUBSCf8V7">
+                                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                    <span>Esq. Gradillas a San Jacinto, Av Este 2, Caracas 1012, Distrito Capital</span>
+                                </a>
                             </div>
                             <div class="info d-flex align-items-center">
-                                <i class="fa fa-chrome" aria-hidden="true"></i>
-                                <span></span>
+                                <a class="text-white text-link" href="https://walink.co/c9af79">
+                                    <i class="fa fa-whatsapp " aria-hidden="true"></i>
+                                    <span>+58 0414-233-2912</span>
+                                </a>
                             </div>
                             <div class="info d-flex align-items-center">
-                                <i class="fa fa-phone" aria-hidden="true"></i>
-                                <span></span>
+                                <a class="text-white text-link" href="https://www.instagram.com/fluxel_code">
+                                    <i class="fa fa-instagram" aria-hidden="true"></i>
+                                    <span>@fluxel_code</span>
+                                </a>
                             </div>
-                            <div class="social">
-                                <a href="#0">
-                                    <i class="fa fa-dribbble" aria-hidden="true"></i>
-                                </a>
-                                <a href="#0">
-                                    <i class="fa fa-twitter" aria-hidden="true"></i>
-                                </a>
-                                <a href="#0">
-                                    <i class="fa fa-github" aria-hidden="true"></i>
+                            <div class="info d-flex align-items-center">
+                                <a class="text-white text-link" href="https://www.linkedin.com/in/fluxel-code-a42569247/">
+                                    <i class="fa fa-linkedin-square" aria-hidden="true"></i>
+                                    <span>Contactanos en linkedin!</span>
                                 </a>
                             </div>
                         </div>
