@@ -1517,7 +1517,23 @@ button {
     border-radius: 50%;
     height: 50px;
     width: 50px;
-    background-color: rgba(0, 169, 157, 0.5);
+    background-color: rgba(36, 182, 108, 0.7);
+    transition: ease;
+}
+.btn-ws:hover {
+    animation: expand 2s infinite;
+}
+
+@keyframes expand {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.5);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
 .btn-ws-2 {
     width: 30px;

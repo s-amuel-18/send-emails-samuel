@@ -5,7 +5,8 @@
     <div id="google_translate_element" style="display:none"></div>
 
     {{-- Boton Whatsapp --}}
-    <div class="btn-ws d-flex justify-content-center align-items-center ">
+    <div
+        class="btn-ws d-flex justify-content-center align-items-center animate__animated animate__pulse animate__infinite infinite ">
         <div class="btn-ws-2 text-center ">
             <a href="ttps://walink.co/c9af79"><i class="fa fa-2x fa-whatsapp text-white " aria-hidden="true"></i></a>
         </div>
