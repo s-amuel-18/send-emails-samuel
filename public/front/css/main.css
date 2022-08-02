@@ -52,7 +52,7 @@ body {
 }
 
 .text-link:hover {
-    text-decoration: none;
+    text-decoration: none !important;
 }
 .navbar .nav-item .nav-link {
     padding: 0;
@@ -1505,4 +1505,23 @@ button {
     margin-bottom: 3px;
     display: block;
     width: 100%;
+}
+
+/*Boton Whatsapp */
+.btn-ws {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    background-color: rgba(0, 169, 157, 0.5);
+}
+.btn-ws-2 {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #67d690;
 }

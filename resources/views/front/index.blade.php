@@ -3,6 +3,13 @@
 @section('content')
     <!-- contenedor oculto de google translate -->
     <div id="google_translate_element" style="display:none"></div>
+
+    {{-- Boton Whatsapp --}}
+    <div class="btn-ws d-flex justify-content-center align-items-center ">
+        <div class="btn-ws-2 text-center ">
+            <a href="ttps://walink.co/c9af79"><i class="fa fa-2x fa-whatsapp text-white " aria-hidden="true"></i></a>
+        </div>
+    </div>
     <!-- Page Loading -->
     <div class="se-pre-con  animate__animated animate__pulse animate__infinite infinite ">
         <div
@@ -540,7 +547,7 @@
         <div class="container">
             <div class="main">
                 <div class="row">
-                    <div class="col-lg-8 left">
+                    <div class="col-lg-8 left p-3 p-md-5">
                         <h3>Enviar mensaje</h3>
 
                         <div id="insert_alert"></div>
@@ -569,7 +576,7 @@
                             </div>
                             {{-- <div class="g-recaptcha" data-sitekey="6Ld0CuEgAAAAALsiUxgfPlwW2kFfFt4a2smgi-s5"></div> --}}
                             <br />
-                            <button class="btn" type="submit">Enviar</button>
+                            <button class="btn btn-block btn-lg-inline-block" type="submit">Enviar</button>
                         </form>
                     </div>
                     <!-- Left -->
@@ -598,6 +605,12 @@
                                 <a class="text-white text-link" href="https://www.linkedin.com/in/fluxel-code-a42569247/">
                                     <i class="fa fa-linkedin-square" aria-hidden="true"></i>
                                     <span>Contactanos en linkedin!</span>
+                                </a>
+                            </div>
+                            <div class="info d-flex align-items-center">
+                                <a class="text-white text-link" href="mailto:fluxel.code@gmail.com">
+                                    <i class="fa fa-envelope" aria-hidden="true"></i>
+                                    <span>fluxel.code@gmail.com</span>
                                 </a>
                             </div>
                         </div>
