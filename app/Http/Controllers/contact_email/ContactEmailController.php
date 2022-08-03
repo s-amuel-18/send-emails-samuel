@@ -45,9 +45,9 @@ class ContactEmailController extends Controller
         $contact_emails_all_counts = $contact_emails_query->count();
 
         $contact_emails = $contact_emails_query->paginate(Contact_email::PAGINATE);
+        $contact_emails_today_count = Contact_email::today()->count();
 
-
-        return view("admin.contact_email.index", compact("contact_emails", "search", "contact_emails_all_counts"));
+        return view("admin.contact_email.index", compact("contact_emails", "search", "contact_emails_all_counts", "contact_emails_today_count"));
     }
 
     public function estadisticas()
@@ -101,7 +101,9 @@ class ContactEmailController extends Controller
      */
     public function create()
     {
-        return view("admin.contact_email.create");
+        $contact_emails_today_count = Contact_email::today()->count();
+
+        return view("admin.contact_email.create", compact("contact_emails_today_count"));
     }
 
     /**

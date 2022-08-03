@@ -336,11 +336,14 @@
 
                             <td class="td-2  ">
 
-                                <img class="sq-80" src="{{ public_path('images\pdf_assets\ws.png') }}"
-                                    alt="">
+
+                                <img class="sq-80" src="{{ public_path('images\pdf_assets\ws.png') }}" alt="">
                                 <br> <br>
                                 {{-- <h1 class="h-1 h-1-2">+58 (xxxx) xxx-xx-xx</h1> --}}
-                                <h1 class="h-1 h-1-2 ">+58 (xxxx) xxx-xx-xx</h1>
+
+                                <h1 class="h-1 h-1-2 ">+58 (414) 233-2912</h1>
+
+
 
                             </td>
 
@@ -358,7 +361,7 @@
                                 <img class="sq-80" src="{{ public_path('images\pdf_assets\gmail.png') }}"
                                     alt="">
                                 <br> <br>
-                                <h1 class="h-1 h-1-2 ">Fluxel.code@gmail.com</h1>
+                                <h1 class="h-1 h-1-2 ">fluxel.code@gmail.com</h1>
 
                             </td>
 

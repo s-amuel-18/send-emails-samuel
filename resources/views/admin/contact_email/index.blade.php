@@ -69,7 +69,24 @@
                 </div>
 
                 <div class="card card-body">
-                    <div class="d-flex justify-content-end mb-3">
+                    <div class="row">
+
+                        <div class="col-12 col-md-3">
+                            <div class="card card-outline card-primary   mx-3">
+                                <div class="card-header">
+                                    <h3 class="card-title">Emails De Hoy</h3>
+                                    <div class="card-tools font-weight-bold  text-success mx-2">
+                                        <span class="">{{ $contact_emails_today_count }}</span>
+                                    </div>
+                                    <!-- /.card-tools -->
+                                </div>
+                                <!-- /.card-header -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end ">
+
 
                         <form action="{{ route('contactEmail.import_excel') }}" enctype="multipart/form-data" method="POST"
                             id="form_import_excel">
@@ -87,7 +104,7 @@
                         </form>
                         <div class="">
 
-                            <a href="{{ route('contactEmail.export_excel') }}" class="btn btn-success btn-sm mr-2"
+                            <a href="{{ route('contactEmail.export_excel') }}" class="btn btn-success  btn-sm mr-2"
                                 type="button">
                                 <i class="fa fa-file-excel"></i>
                                 <span class="d-none d-md-inline">Exportar
@@ -99,7 +116,7 @@
                                 <input type="text" name="search" class="form-control float-right" placeholder="Buscar"
                                     value="{{ $search }}">
                                 <div class="input-group-append">
-                                    <button type="submit" class="btn btn-default">
+                                    <button type="submit" class="btn btn-default ">
                                         <i class="fas fa-search"></i>
                                     </button>
                                 </div>

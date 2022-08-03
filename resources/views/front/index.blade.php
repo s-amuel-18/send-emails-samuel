@@ -581,8 +581,15 @@
                                 <span></span>
                             </div>
                             <div class="info d-flex align-items-center">
+<<<<<<< Updated upstream
                                 <i class="fa fa-chrome" aria-hidden="true"></i>
                                 <span></span>
+=======
+                                <a class="text-white text-link" href="https://walink.co/c9af79">
+                                    <i class="fa fa-whatsapp " aria-hidden="true"></i>
+                                    <span>+58 414-233-2912</span>
+                                </a>
+>>>>>>> Stashed changes
                             </div>
                             <div class="info d-flex align-items-center">
                                 <i class="fa fa-phone" aria-hidden="true"></i>
