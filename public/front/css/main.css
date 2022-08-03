@@ -51,6 +51,9 @@ body {
     margin: 0;
 }
 
+.text-link:hover {
+    text-decoration: none !important;
+}
 .navbar .nav-item .nav-link {
     padding: 0;
     margin: 0 0 0 45px;
@@ -1502,4 +1505,40 @@ button {
     margin-bottom: 3px;
     display: block;
     width: 100%;
+}
+
+/*Boton Whatsapp */
+.btn-ws {
+    position: fixed;
+    z-index: 99999;
+    bottom: 0;
+    right: 0;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    background-color: rgba(36, 182, 108, 0.7);
+    transition: ease;
+}
+.btn-ws:hover {
+    animation: expand 2s infinite;
+}
+
+@keyframes expand {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.5);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+.btn-ws-2 {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #67d690;
 }

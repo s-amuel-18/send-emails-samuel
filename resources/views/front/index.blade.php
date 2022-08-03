@@ -3,6 +3,15 @@
 @section('content')
     <!-- contenedor oculto de google translate -->
     <div id="google_translate_element" style="display:none"></div>
+
+    {{-- Boton Whatsapp --}}
+    <div
+        class="btn-ws d-flex justify-content-center align-items-center animate__animated animate__pulse animate__infinite infinite ">
+        <div class="btn-ws-2 text-center ">
+            <a target="_blank" href="https://walink.co/c9af79"><i class="fa fa-2x fa-whatsapp text-white "
+                    aria-hidden="true"></i></a>
+        </div>
+    </div>
     <!-- Page Loading -->
     <div class="se-pre-con  animate__animated animate__pulse animate__infinite infinite ">
         <div
@@ -540,7 +549,7 @@
         <div class="container">
             <div class="main">
                 <div class="row">
-                    <div class="col-lg-8 left">
+                    <div class="col-lg-8 left p-3 p-md-5">
                         <h3>Enviar mensaje</h3>
 
                         <div id="insert_alert"></div>
@@ -569,7 +578,7 @@
                             </div>
                             {{-- <div class="g-recaptcha" data-sitekey="6Ld0CuEgAAAAALsiUxgfPlwW2kFfFt4a2smgi-s5"></div> --}}
                             <br />
-                            <button class="btn" type="submit">Enviar</button>
+                            <button class="btn btn-block btn-lg-inline-block" type="submit">Enviar</button>
                         </form>
                     </div>
                     <!-- Left -->
@@ -577,33 +586,37 @@
                         <div class="right">
                             <h4> <span class="text-capitalize">Mantente</span> en contacto</h4>
                             <div class="info d-flex align-items-center">
-                                <i class="fa fa-map-marker" aria-hidden="true"></i>
-                                <span></span>
+                                <a class="text-white text-link" href="https://goo.gl/maps/PhwS8HjEyUBSCf8V7">
+                                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                    <span>Esq. Gradillas a San Jacinto, Av Este 2, Caracas 1012, Distrito Capital</span>
+                                </a>
                             </div>
                             <div class="info d-flex align-items-center">
-<<<<<<< Updated upstream
+
                                 <i class="fa fa-chrome" aria-hidden="true"></i>
                                 <span></span>
-=======
+
                                 <a class="text-white text-link" href="https://walink.co/c9af79">
                                     <i class="fa fa-whatsapp " aria-hidden="true"></i>
                                     <span>+58 414-233-2912</span>
                                 </a>
->>>>>>> Stashed changes
                             </div>
                             <div class="info d-flex align-items-center">
-                                <i class="fa fa-phone" aria-hidden="true"></i>
-                                <span></span>
+                                <a class="text-white text-link" href="https://www.instagram.com/fluxel_code">
+                                    <i class="fa fa-instagram" aria-hidden="true"></i>
+                                    <span>@fluxel_code</span>
+                                </a>
                             </div>
-                            <div class="social">
-                                <a href="#0">
-                                    <i class="fa fa-dribbble" aria-hidden="true"></i>
+                            <div class="info d-flex align-items-center">
+                                <a class="text-white text-link" href="https://www.linkedin.com/in/fluxel-code-a42569247/">
+                                    <i class="fa fa-linkedin-square" aria-hidden="true"></i>
+                                    <span>Contactanos en linkedin!</span>
                                 </a>
-                                <a href="#0">
-                                    <i class="fa fa-twitter" aria-hidden="true"></i>
-                                </a>
-                                <a href="#0">
-                                    <i class="fa fa-github" aria-hidden="true"></i>
+                            </div>
+                            <div class="info d-flex align-items-center">
+                                <a class="text-white text-link" href="mailto:fluxel.code@gmail.com">
+                                    <i class="fa fa-envelope" aria-hidden="true"></i>
+                                    <span>fluxel.code@gmail.com</span>
                                 </a>
                             </div>
                         </div>
