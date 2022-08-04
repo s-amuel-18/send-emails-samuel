@@ -342,8 +342,10 @@
                                 <br> <br>
                                 {{-- <h1 class="h-1 h-1-2">+58 (xxxx) xxx-xx-xx</h1> --}}
 
-                                <h1 class="h-1 h-1-2 ">+58 (414) 233-2912</h1>
 
+                                <a class="text-white text-link" target="_blank" href="https://walink.co/c9af79">
+                                    <h1 class="h-1 h-1-2 ">+58 (414) 233-2912</h1>
+                                </a>
 
 
                             </td>
@@ -353,8 +355,11 @@
                                 <img class="sq-80" src="https://www.fluxelcode.com/images/pdf_assets/instagram.png"
                                     alt="">
                                 <br> <br>
-                                <h1 class="h-1 h-1-2 ">@Fluxel.code</h1>
 
+                                <a class="text-white text-link" target="_blank"
+                                    href="https://www.instagram.com/fluxel_code">
+                                    <h1 class="h-1 h-1-2 ">@Fluxel.code</h1>
+                                </a>
                             </td>
 
                             <td class="td-2 ">

@@ -20,10 +20,10 @@ class PdfController extends Controller
     public function Services()
     {
         $services = Service::get();
-        $data["services"] =$services;
-        
+        $data["services"] = $services;
+
         $pdf = App::make('dompdf.wrapper');
-        $pdf->loadView('pdf.Services', compact("data"));
+        $pdf->loadView('pdf.services', compact("data"));
         return $pdf->stream('lista de servicios.pdf');
     }
 }
