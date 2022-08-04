@@ -206,14 +206,14 @@
 </style>
 
 <body>
-    <header class="bg-img" style="background-image: url({{ public_path('images\pdf_assets\header-4.png') }});">
+    <header class="bg-img" style="background-image: url(https://www.fluxelcode.com/images/pdf_assets/header-4.png);">
         <div class="logo-fluxel-h"><img class="logo-fluxel"
-                src="{{ public_path('images\pdf_assets\fluxel_code_xl.png') }}" alt=""></div>
+                src="https://www.fluxelcode.com/images/pdf_assets/fluxel_code_xl.png" alt=""></div>
     </header>
-    <footer class="bg-img" style="background-image: url({{ public_path('images\pdf_assets\footer-4.png') }});">
+    <footer class="bg-img" style="background-image: url(https://www.fluxelcode.com/images/pdf_assets/footer-4.png);">
 
         <div class="logo-fluxel-f"><img class="logo-fluxel"
-                src="{{ public_path('images\pdf_assets\fluxel_code_xl.png') }}" alt=""></div>
+                src="https://www.fluxelcode.com/images/pdf_assets/fluxel_code_xl.png" alt=""></div>
     </footer>
 
 

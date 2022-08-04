@@ -181,14 +181,14 @@
 </style>
 
 <body>
-    <header class="bg-img" style="background-image: url({{ public_path('images\pdf_assets\header-4.png') }});">
+    <header class="bg-img" style="background-image: url(https://www.fluxelcode.com/images/pdf_assets/header-4.png);">
         <div class="logo-fluxel-h"><img class="logo-fluxel"
-                src="{{ public_path('images\pdf_assets\fluxel_code_xl.png') }}" alt=""></div>
+                src="https://www.fluxelcode.com/images/pdf_assets/fluxel_code_xl.png" alt=""></div>
     </header>
-    <footer class="bg-img" style="background-image: url({{ public_path('images\pdf_assets\footer-4.png') }});">
+    <footer class="bg-img" style="background-image: url(https://www.fluxelcode.com/images/pdf_assets/footer-4.png);">
 
         <div class="logo-fluxel-f"><img class="logo-fluxel"
-                src="{{ public_path('images\pdf_assets\fluxel_code_xl.png') }}" alt=""></div>
+                src="https://www.fluxelcode.com/images/pdf_assets/fluxel_code_xl.png" alt=""></div>
     </footer>
 
 
@@ -233,7 +233,7 @@
                         <td class="td-20px"></td>
                         <td class="td-1-2" style="
                         vertical-align: middle!important;">
-                            <img src="{{ public_path('images\pdf_assets\logo_fluxel.png') }}" width="100%">
+                            <img src="https://www.fluxelcode.com/images/pdf_assets/logo_fluxel.png" width="100%">
                         </td>
                     </tr>
                 </table>
@@ -257,7 +257,7 @@
             </div>
             <br>
             <br>
-            <img src="{{ public_path('images\pdf_assets\paginas.png') }}" width="100%">
+            <img src="https://www.fluxelcode.com/images/pdf_assets/paginas.png" width="100%">
         </section>
 
         <div class="page-break"></div>
@@ -337,7 +337,8 @@
                             <td class="td-2  ">
 
 
-                                <img class="sq-80" src="{{ public_path('images\pdf_assets\ws.png') }}" alt="">
+                                <img class="sq-80" src="https://www.fluxelcode.com/images/pdf_assets/ws.png"
+                                    alt="">
                                 <br> <br>
                                 {{-- <h1 class="h-1 h-1-2">+58 (xxxx) xxx-xx-xx</h1> --}}
 
@@ -349,7 +350,7 @@
 
                             <td class="td-2 ">
 
-                                <img class="sq-80" src="{{ public_path('images\pdf_assets\instagram.png') }}"
+                                <img class="sq-80" src="https://www.fluxelcode.com/images/pdf_assets/instagram.png"
                                     alt="">
                                 <br> <br>
                                 <h1 class="h-1 h-1-2 ">@Fluxel.code</h1>
@@ -358,7 +359,7 @@
 
                             <td class="td-2 ">
 
-                                <img class="sq-80" src="{{ public_path('images\pdf_assets\gmail.png') }}"
+                                <img class="sq-80" src="https://www.fluxelcode.com/images/pdf_assets/gmail.png"
                                     alt="">
                                 <br> <br>
                                 <h1 class="h-1 h-1-2 ">fluxel.code@gmail.com</h1>
