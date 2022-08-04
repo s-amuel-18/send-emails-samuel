@@ -357,7 +357,7 @@
                                 <br> <br>
 
                                 {{-- <a class="text-white text-link" target="_blank" --}}
-                                href="https://www.instagram.com/fluxel_code">
+                                {{-- href="https://www.instagram.com/fluxel_code"> --}}
                                 <h1 class="h-1 h-1-2 ">@Fluxel.code</h1>
                                 {{-- </a> --}}
                             </td>
