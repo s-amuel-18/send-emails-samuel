@@ -16,7 +16,7 @@
         <div class="d-flex justify-content-end mb-3">
             <h3 class="card-title">Servicios: <b class="text-muted">1000</b></h3>
 
-            <a href="{{ route('pdf.Services') }}" target="_blank" class="btn btn-sm btn-danger ml-auto ">
+            <a href="{{ route('pdf.services') }}" target="_blank" class="btn btn-sm btn-danger ml-auto ">
                 <i class="fas fa-file-pdf"></i> <span class="d-none d-md-inline-block ">Lista de Servicio</span>
             </a>
 
