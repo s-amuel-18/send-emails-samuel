@@ -126,13 +126,13 @@
                     </div>
                 </div>
                 <div class="logo center d-flex j-center ">
-                    <a class="py-2" href="">
+                    <a class="py-2" target="_blank" href="https://walink.co/c9af79">
                         <img class="img-40sq" src="https://www.negociaecuador.com/brandon-prueba/ws.png" alt="Whatsapp">
                     </a>
-                    <a class="py-2" href=""><img class="img-40sq"
+                    <a class="py-2" target="_blank" href="mailto:fluxel.code@gmail.com"><img class="img-40sq"
                             src="https://www.negociaecuador.com/brandon-prueba/gmail.png" alt="gmail">
                     </a>
-                    <a class="py-2" href=""><img class="img-40sq"
+                    <a class="py-2" target="_blank" href="https://www.instagram.com/fluxel_code"><img class="img-40sq"
                             src="https://www.negociaecuador.com/brandon-prueba/instagram.png" alt="instagram">
                     </a>
 
