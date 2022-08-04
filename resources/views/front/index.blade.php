@@ -402,7 +402,7 @@
                 </div>
                 <div class=" col-md-4 wow animate__slideInRight " data-wow-duration=" 2s">
                     <div>
-                        <a href="{{ route('pdf.cartaPresentacion') }}" class="btn-1">Descargar</a>
+                        <a target="_blank" href="{{ route('pdf.cartaPresentacion') }}" class="btn-1">Descargar</a>
                     </div>
                 </div>
             </div>
@@ -586,31 +586,38 @@
                         <div class="right">
                             <h4> <span class="text-capitalize">Mantente</span> en contacto</h4>
                             <div class="info d-flex align-items-center">
-                                <a class="text-white text-link" href="https://goo.gl/maps/PhwS8HjEyUBSCf8V7">
+                                <a class="text-white text-link" target="_blank"
+                                    href="https://goo.gl/maps/PhwS8HjEyUBSCf8V7">
                                     <i class="fa fa-map-marker" aria-hidden="true"></i>
                                     <span>Esq. Gradillas a San Jacinto, Av Este 2, Caracas 1012, Distrito Capital</span>
                                 </a>
                             </div>
                             <div class="info d-flex align-items-center">
-                                <a class="text-white text-link" href="https://walink.co/c9af79">
+
+                                <i class="fa fa-chrome" aria-hidden="true"></i>
+                                <span></span>
+
+                                <a class="text-white text-link" target="_blank" href="https://walink.co/c9af79">
                                     <i class="fa fa-whatsapp " aria-hidden="true"></i>
-                                    <span>+58 0414-233-2912</span>
+                                    <span>+58 414-233-2912</span>
                                 </a>
                             </div>
                             <div class="info d-flex align-items-center">
-                                <a class="text-white text-link" href="https://www.instagram.com/fluxel_code">
+                                <a class="text-white text-link" target="_blank"
+                                    href="https://www.instagram.com/fluxel_code">
                                     <i class="fa fa-instagram" aria-hidden="true"></i>
                                     <span>@fluxel_code</span>
                                 </a>
                             </div>
                             <div class="info d-flex align-items-center">
-                                <a class="text-white text-link" href="https://www.linkedin.com/in/fluxel-code-a42569247/">
+                                <a class="text-white text-link" target="_blank"
+                                    href="https://www.linkedin.com/in/fluxel-code-a42569247/">
                                     <i class="fa fa-linkedin-square" aria-hidden="true"></i>
                                     <span>Contactanos en linkedin!</span>
                                 </a>
                             </div>
                             <div class="info d-flex align-items-center">
-                                <a class="text-white text-link" href="mailto:fluxel.code@gmail.com">
+                                <a class="text-white text-link" target="_blank" href="mailto:fluxel.code@gmail.com">
                                     <i class="fa fa-envelope" aria-hidden="true"></i>
                                     <span>fluxel.code@gmail.com</span>
                                 </a>

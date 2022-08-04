@@ -18,13 +18,28 @@
             <div class="card card-light">
                 <div class="card-header">
                     <h3 class="card-title">Formulario Nuevo Email</h3>
+
                 </div>
 
                 <div class="card-body ">
                     <form class="form_disabled_button_send" action="{{ route('contact_email.store') }}" method="POST">
 
                         @csrf
+                        <div class="row">
 
+                            <div class="col-12 col-md-3">
+                                <div class="card card-outline card-primary   mx-3">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Emails De Hoy</h3>
+                                        <div class="card-tools font-weight-bold  text-success mx-2">
+                                            <span class="">{{ $contact_emails_today_count }}</span>
+                                        </div>
+                                        <!-- /.card-tools -->
+                                    </div>
+                                    <!-- /.card-header -->
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
 
                             <div class="col-md-6">
