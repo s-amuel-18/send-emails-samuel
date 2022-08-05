@@ -14,6 +14,13 @@
     <meta name="Revisit-after" content="10 days">
     <meta name="robots" content="all">
 
+    <meta property="og:title" content="Fluxel Code">
+    <meta property="og:image" content=" {{ asset('images/logo/Fluxel_logo_meta.png') }}">
+    <meta property="og:description"
+        content="Somos una agencia de profesionales experimentados en el diseño y desarrollo de interfaces web, donde nuestra principal objetivo es impulsar las ventas de tu negocio, dando una presencia con alta visibilidad en el campo de marketing digital de manera efectiva.">
+    <meta property="og:url" content="{{ asset('images/logo/Fluxel_logo_meta.png') }}">
+    <meta name="twitter:card" content="summary_large_image">
+
     <link rel="icon" href="{{ asset('images/logo/fluxel_code.png') }}" type="image/x-icon">
     <!-- Bootstrap 4.1.3 -->
     <link rel="stylesheet" href="{{ asset('front/css/bootstrap.min.css') }}" />

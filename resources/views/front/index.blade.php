@@ -6,7 +6,7 @@
 
     {{-- Boton Whatsapp --}}
     <div
-        class="btn-ws mr-5 mb-5 d-flex justify-content-center align-items-center animate__animated animate__pulse animate__infinite infinite ">
+        class="btn-ws mr-3 mb-3 mr-md-5 mb-md-5 d-flex justify-content-center align-items-center animate__animated animate__pulse animate__infinite infinite ">
         <div class="btn-ws-2  text-center ">
             <a target="_blank" href="https://walink.co/c9af79"><i class="fa fa-2x fa-whatsapp text-white "
                     aria-hidden="true"></i></a>
@@ -593,9 +593,6 @@
                                 </a>
                             </div>
                             <div class="info d-flex align-items-center">
-
-                                <i class="fa fa-chrome" aria-hidden="true"></i>
-                                <span></span>
 
                                 <a class="text-white text-link" target="_blank" href="https://walink.co/c9af79">
                                     <i class="fa fa-whatsapp " aria-hidden="true"></i>
