@@ -14,7 +14,6 @@
     <meta name="image" content="{{ asset('images/logo/Fluxel_logo_meta.png') }}">
     <meta name="copyright" content="Fluxel-code" />
     <meta name="Revisit-after" content="10 days">
-    <meta name="robots" content="all">
     <!-- Schema.org for Google -->
     <meta itemprop="name" content="Fluxel Code">
     <meta itemprop="description"
