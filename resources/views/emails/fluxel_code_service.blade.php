@@ -28,7 +28,7 @@
                 color: white;
                 background-color: #672fa8;   ">
                     <a href=""><img
-                            style="  width: 70px;
+                            style="  width: 70px;text-decoration: none;
                         margin-left: 10px; margin-top:15px"
                             src="https://www.negociaecuador.com/brandon-prueba/fluxel_code_xl.png" alt="">
                     </a>
@@ -49,17 +49,17 @@
                     <a style="  padding-left: 5px;
                     padding-right: 5px;" target="_blank"
                         href="https://walink.co/c9af79">
-                        <img style="width: 20px ; margin-top: 15px;"
+                        <img style="width: 20px ; margin-top: 15px;text-decoration: none;"
                             src="https://www.negociaecuador.com/brandon-prueba/ws.png" alt="Whatsapp">
                     </a>
                     <a style="  padding-left: 5px;
                     padding-right: 5px;" target="_blank"
-                        href="mailto:fluxel.code@gmail.com"><img style="width: 20px ; margin-top: 15px;"
+                        href="mailto:fluxel.code@gmail.com"><img style="width: 20px ; margin-top: 15px;text-decoration: none;"
                             src="https://www.negociaecuador.com/brandon-prueba/gmail.png" alt="gmail">
                     </a>
                     <a style="  padding-left: 5px;
                     padding-right: 5px;" target="_blank"
-                        href="https://www.instagram.com/fluxel_code"><img style="width: 20px ; margin-top: 15px;"
+                        href="https://www.instagram.com/fluxel_code"><img style="width: 20px ; margin-top: 15px;text-decoration: none;"
                             src="https://www.negociaecuador.com/brandon-prueba/instagram.png" alt="instagram">
                     </a>
 
