@@ -127,7 +127,8 @@
 
                     @if ($contact_emails->count() > 0)
                         <div class="table-responsive">
-                            <table class="table table-light table-striped table-hover text-nowrap table-valign-middle">
+                            <table id="table_contact_emails"
+                                class="table table-light table-striped table-hover text-nowrap table-valign-middle">
                                 <thead class="">
                                     <tr>
                                         <th>ID</th>
@@ -136,18 +137,35 @@
                                         <th>Estado</th>
                                         <th>Email</th>
                                         <th>Envios</th>
-                                        <th>Contacts</th>
+                                        <th>Sitio Web</th>
+                                        <th>Whatsapp</th>
+                                        <th>Facebook</th>
+                                        <th>Instagram</th>
                                         <th>Creacion</th>
                                         <th>btns</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                {{-- <tbody>
 
                                     @foreach ($contact_emails as $i => $email)
                                         <tr>
                                             <td> {{ $email->id }} </td>
                                             <td> {{ Str::limit($email->nombre_empresa, 15, '...') }} </td>
-                                            <td> {{ $email->usuario ? $email->usuario->username : 'Sin Usuario' }} </td>
+                                            <td>
+                                                @if ($email->usuario)
+                                                    <div style="width: 27px; height: 27px;"
+                                                        class="bg-{{ $email->usuario->color_by_id() }} d-flex justify-content-center align-items-center rounded-circle"
+                                                        data-placement="top" data-toggle="tooltip" data-placement="top"
+                                                        title="{{ $email->usuario->username }}">
+                                                        <i class="fa fa-user" style="font-size: 12px"></i>
+                                                    </div>
+                                                @else
+                                                    <div style="width: 27px; height: 27px;"
+                                                        class="bg-danger d-flex justify-content-center align-items-center rounded-circle">
+                                                        <i class="fa fa-times" style="font-size: 12px"></i>
+                                                    </div>
+                                                @endif
+
                                             <td>
                                                 <span
                                                     class="badge badge-{{ $email->envios_count > 0 ? 'success' : 'danger' }}">{{ $email->envios_count > 0 ? 'Enviado' : 'Sin Enviar' }}</span>
@@ -160,28 +178,41 @@
                                                     <b class="text-danger">Sin Email</b>
                                                 @endif
                                             </td>
-                                            <td>{{ $email->envios_count }}</td>
                                             <td>
-                                                <a target="_blanck" href="{{ $email->whatsapp }}"
-                                                    class="btn btn-success btn-sm {{ !$email->whatsapp ? 'disabled' : '' }}">
-                                                    <i class="fab fa-whatsapp"></i>
-                                                </a>
-
-                                                <a target="_blanck" href="{{ $email->facebook }}"
-                                                    class="btn bg-purple btn-sm {{ !$email->facebook ? 'disabled' : '' }}">
-                                                    <i class="fab fa-facebook"></i>
-                                                </a>
-
-                                                <a target="_blanck" href="{{ $email->instagram }}"
-                                                    class="btn btn-secondary btn-sm {{ !$email->instagram ? 'disabled' : '' }}">
-                                                    <i class="fab fa-instagram"></i>
-                                                </a>
-
-                                                <a target="_blanck" href="{{ $email->url }}"
-                                                    class="btn btn-info btn-sm {{ !$email->url ? 'disabled' : '' }}">
-                                                    <i class="fas fa-external-link-alt"></i>
-                                                </a>
-
+                                                <span
+                                                    class="badge badge-{{ $email->envios_count > 0 ? 'success' : 'danger' }}">{{ $email->envios_count }}</span>
+                                            </td>
+                                            <td>
+                                                @if ($email->url)
+                                                    <a data-toggle="tooltip" data-placement="top"
+                                                        href="{{ $email->url }}">{{ Str::limit($email->url, 30) }}</a>
+                                                @else
+                                                    -------
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($email->whatsapp)
+                                                    <a data-toggle="tooltip" data-placement="top"
+                                                        href="{{ $email->whatsapp }}">{{ Str::limit($email->whatsapp, 30) }}</a>
+                                                @else
+                                                    -------
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($email->facebook)
+                                                    <a data-toggle="tooltip" data-placement="top"
+                                                        href="{{ $email->facebook }}">{{ Str::limit($email->facebook, 30) }}</a>
+                                                @else
+                                                    -------
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($email->instagram)
+                                                    <a data-toggle="tooltip" data-placement="top"
+                                                        href="{{ $email->instagram }}">{{ Str::limit($email->instagram, 30) }}</a>
+                                                @else
+                                                    -------
+                                                @endif
                                             </td>
                                             <td>
                                                 {{ $email->created_at->diffForHumans() }}
@@ -202,24 +233,16 @@
                                                     <button type="submit" class="btn btn-outline-danger btn-sm">
                                                         <i class="fa fa-trash"></i>
                                                     </button>
-
                                                 </form>
-
                                             </td>
                                         </tr>
                                     @endforeach
 
-                                </tbody>
+                                </tbody> --}}
                             </table>
                             {{-- <div class="mt-3 d-flex justify-content-end">
                                 {{ $contact_emails->onEachSide(0)->links() }}
                             </div> --}}
-                        </div>
-                        <div class="pl-3">
-                            <div class="mt-3 d-flex justify-content-end">
-                                {{ $contact_emails->onEachSide(-1)->links() }}
-                            </div>
-
                         </div>
                     @else
                         <div class="alert alert-light" role="alert">
@@ -245,9 +268,77 @@
     <script>
         const excel_file = document.getElementById("excel_file");
         const form_import_excel = document.getElementById("form_import_excel");
+        const table = document.getElementById("table_contact_emails");
+        const appData = @json($data['js']);
 
-        $(excel_file).on("change", e => {
-            form_import_excel.submit();
+        $(function() {
+            $(excel_file).on("change", e => {
+                form_import_excel.submit();
+            })
+
+
+
+            datatable = $(table).DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
+                },
+                "dataType": "json",
+                "order": [
+                    [2, "desc"]
+                ],
+                "pageLength": 10,
+                "lengthChange": true,
+                "processing": true,
+                "serverSide": true,
+                "searching": true,
+                "ajax": appData["url_datatable"],
+                "columns": [{
+                        data: "id"
+                    },
+                    {
+                        data: "nombre_empresa"
+                    },
+                    {
+                        data: "username"
+                    },
+                    {
+                        data: "estado"
+                    },
+                    {
+                        data: "email"
+                    },
+                    {
+                        data: "envios"
+                    },
+                    {
+                        data: "url"
+                    },
+                    {
+                        data: "whatsapp"
+                    },
+                    {
+                        data: "facebook"
+                    },
+                    {
+                        data: "instagram"
+                    },
+                    {
+                        data: "created_at"
+                    },
+                    {
+                        data: "actions"
+                    },
+                ],
+
+
+            });
+
+
         })
+        $(table).on("draw.dt", e => {
+            setTimeout(() => {
+                $('[data-toggle="tooltip"]').tooltip()
+            }, 1000);
+        });
     </script>
 @endpush

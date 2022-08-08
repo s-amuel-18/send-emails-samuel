@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 // use App\Models\Contact_email;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class ContactEmailController extends Controller
 {
@@ -37,7 +38,8 @@ class ContactEmailController extends Controller
 
         $contact_emails_query = Contact_email::with(["usuario"])
             ->withCount("envios")
-            ->orderBy("created_at", "DESC");
+            ->orderBy("envios_count", "ASC");
+        dd($contact_emails_query->get()->toArray());
 
         if ($search) {
             $contact_emails_query->searchLike($search);
@@ -46,8 +48,11 @@ class ContactEmailController extends Controller
 
         $contact_emails = $contact_emails_query->paginate(Contact_email::PAGINATE);
         $contact_emails_today_count = Contact_email::today()->count();
+        $data["js"] = [
+            "url_datatable" => route("contact_email.datatable"),
+        ];
 
-        return view("admin.contact_email.index", compact("contact_emails", "search", "contact_emails_all_counts", "contact_emails_today_count"));
+        return view("admin.contact_email.index", compact("contact_emails", "search", "contact_emails_all_counts", "contact_emails_today_count", "data"));
     }
 
     public function estadisticas()
@@ -222,52 +227,52 @@ class ContactEmailController extends Controller
         return redirect()->back()->with("message", $message);
     }
 
-    // okuneva.steve
-    public function datatable()
-    {
-        $all_permission = auth()->user()->hasAllPermissions([
-            "contact_email.index",
-            "contact_email.estadisticas",
-            "contact_email.create",
-            "contact_email.edit",
-            "contact_email.destroy"
-        ]);
+    // // okuneva.steve
+    // public function datatable()
+    // {
+    //     $all_permission = auth()->user()->hasAllPermissions([
+    //         "contact_email.index",
+    //         "contact_email.estadisticas",
+    //         "contact_email.create",
+    //         "contact_email.edit",
+    //         "contact_email.destroy"
+    //     ]);
 
 
 
 
-        if ($all_permission) {
-            $emails = Contact_email::orderBy("created_at", "DESC")->get();
-        } else {
-            $emails = auth()->user()->emails_registros;
-        }
-        // dd($emails[0]);
+    //     if ($all_permission) {
+    //         $emails = Contact_email::orderBy("created_at", "DESC")->get();
+    //     } else {
+    //         $emails = auth()->user()->emails_registros;
+    //     }
+    //     // dd($emails[0]);
 
 
 
-        return datatables()
-            ->of($emails)
-            ->addColumn("actions", "admin.components.datatable.contact_email.actions")
-            ->addColumn("creacion", function ($email) {
-                return $email->created_at->diffForHumans();
-            })
-            ->addColumn("envios", function ($email) {
-                return $email->envios()->count();
-            })
-            ->addColumn("links_buttons", "admin.components.datatable.contact_email.links_buttons")
-            ->addColumn("estado", "admin.components.datatable.contact_email.estado")
-            ->addColumn("valid_email", "admin.components.datatable.contact_email.email")
-            ->addColumn("word_nombre_empresa", "admin.components.datatable.contact_email.word_nombre_empresa")
-            ->addColumn("usuario", function ($email) {
-                $user = $email->usuario;
-                return $user ? $user->name : "Sin Usuario";
-            })
-            ->rawColumns(["actions", "creacion", "links_buttons", "estado", "valid_email", "word_nombre_empresa", "usuario", "envios"])
-            // ->rawColumns(["creacion"])
-            // ->rawColumns(["links_buttons"])
+    //     return datatables()
+    //         ->of($emails)
+    //         ->addColumn("actions", "admin.components.datatable.contact_email.actions")
+    //         ->addColumn("creacion", function ($email) {
+    //             return $email->created_at->diffForHumans();
+    //         })
+    //         ->addColumn("envios", function ($email) {
+    //             return $email->envios()->count();
+    //         })
+    //         ->addColumn("links_buttons", "admin.components.datatable.contact_email.links_buttons")
+    //         ->addColumn("estado", "admin.components.datatable.contact_email.estado")
+    //         ->addColumn("valid_email", "admin.components.datatable.contact_email.email")
+    //         ->addColumn("word_nombre_empresa", "admin.components.datatable.contact_email.word_nombre_empresa")
+    //         ->addColumn("usuario", function ($email) {
+    //             $user = $email->usuario;
+    //             return $user ? $user->name : "Sin Usuario";
+    //         })
+    //         ->rawColumns(["actions", "creacion", "links_buttons", "estado", "valid_email", "word_nombre_empresa", "usuario", "envios"])
+    //         // ->rawColumns(["creacion"])
+    //         // ->rawColumns(["links_buttons"])
 
-            ->toJson();
-    }
+    //         ->toJson();
+    // }
 
     public function getContactEmails(Request $request)
     {
@@ -300,5 +305,148 @@ class ContactEmailController extends Controller
         return response()->json([
             "results" => $contactEmails
         ], 200);
+    }
+
+    public function datatable(Request $request)
+    {
+        $query_user = DB::table("contact_emails")
+            ->select(
+                "contact_emails.id AS contact_id",
+                "contact_emails.url",
+                "contact_emails.nombre_empresa",
+                "contact_emails.estado",
+                "contact_emails.email AS contact_email",
+                "contact_emails.whatsapp",
+                "contact_emails.instagram",
+                "contact_emails.facebook",
+                "contact_emails.user_id",
+                "contact_emails.created_at AS contact_created",
+                "us.username",
+                DB::raw("count(us_env.id) AS envios_count")
+            )
+            ->leftJoin("users AS us", function ($j) {
+                $j->on("contact_emails.user_id", "=", "us.id")
+                    ->whereNotNull("us.created_at");
+            })
+            ->leftJoin("email_enviados AS us_env", function ($j) {
+                $j->on("contact_emails.id", "=", "us_env.contact_email_id")
+                    ->on("us.id", "=", "us_env.user_id")
+                    ->whereNotNull("us.created_at");
+            })
+            ->groupBy("contact_emails.id")
+            ->whereNotNull("contact_emails.created_at");
+
+
+        $totalFilteredRecord = $totalDataRecord = $draw_val = "";
+
+        $columns_list = array(
+            0 => "contact_emails.id",
+            1 => "contact_emails.nombre_empresa",
+            2 => "us.username",
+            3 => "contact_emails.estado",
+            4 => "contact_emails.email",
+            5 => "us_env.id",
+            6 => "contact_emails.url",
+            7 => "contact_emails.whatsapp",
+            8 => "contact_emails.facebook",
+            9 => "contact_emails.instagram",
+            10 => "contact_emails.created_at",
+        );
+
+        $totalDataRecord = DB::table("contact_emails")->whereNotNull("created_at")->count();
+
+
+
+        $totalFilteredRecord = $totalDataRecord;
+
+        $limit_val = $request["length"];
+        $start_val = $request["start"];
+        $order_val = $columns_list[$request["order"][0]["column"]];
+
+        $dir_val = $request["order"][0]["dir"];
+
+
+        if (empty($request["search"]["value"])) {
+            $data_return = $query_user->offset($start_val)
+                ->orderBy($order_val, $dir_val);
+
+
+            $data_return = $data_return->limit($limit_val)->get();
+        } else {
+            $search_text = $request["search"]["value"];
+
+            $data_return =  $query_user
+                ->where(function ($q) use ($search_text) {
+                    $q->where("contact_emails.id", "like", "%{$search_text}%")
+                        ->orWhere("contact_emails.nombre_empresa", "like", "%{$search_text}%")
+                        ->orWhere("us.username", "like", "%{$search_text}%")
+                        ->orWhere("contact_emails.estado", "like", "%{$search_text}%")
+                        ->orWhere("contact_emails.email", "like", "%{$search_text}%")
+                        ->orWhere("COUNT(us_env.id)", "like", "%{$search_text}%")
+                        ->orWhere("contact_emails.url", "like", "%{$search_text}%")
+                        ->orWhere("contact_emails.whatsapp", "like", "%{$search_text}%")
+                        ->orWhere("contact_emails.facebook", "like", "%{$search_text}%")
+                        ->orWhere("contact_emails.instagram", "like", "%{$search_text}%")
+                        ->orWhere("contact_emails.created_at", "like", "%{$search_text}%");
+                })
+                ->offset($start_val)
+                ->orderBy($order_val, $dir_val);
+
+            $data_return = $data_return->limit($limit_val)->get();
+
+            $totalFilteredRecord = $query_user
+                ->where(function ($q) use ($search_text) {
+                    $q->where("contact_emails.id", "like", "%{$search_text}%")
+                        ->orWhere("contact_emails.nombre_empresa", "like", "%{$search_text}%")
+                        ->orWhere("us.username", "like", "%{$search_text}%")
+                        ->orWhere("contact_emails.estado", "like", "%{$search_text}%")
+                        ->orWhere("contact_emails.email", "like", "%{$search_text}%")
+                        ->orWhere("COUNT(us_env.id)", "like", "%{$search_text}%")
+                        ->orWhere("contact_emails.url", "like", "%{$search_text}%")
+                        ->orWhere("contact_emails.whatsapp", "like", "%{$search_text}%")
+                        ->orWhere("contact_emails.facebook", "like", "%{$search_text}%")
+                        ->orWhere("contact_emails.instagram", "like", "%{$search_text}%")
+                        ->orWhere("contact_emails.created_at", "like", "%{$search_text}%");
+                })
+                ->count();
+        }
+
+        $data_val = array();
+
+        if (!empty($data_return)) {
+
+            $data_val = $data_return->map(function ($email) {
+                if ($email->username) {
+                    $email->color_by_user = User::find($email->user_id)->color_by_id();
+                } else {
+                    $email->color_by_user = null;
+                }
+
+                return [
+                    "id" => $email->contact_id,
+                    "nombre_empresa" => (string) response()->view("admin.contact_email.components.datatable.name_enterprice", compact("email"))->original,
+                    "username" => (string) response()->view("admin.contact_email.components.datatable.user", compact("email"))->original,
+                    "estado" => (string) response()->view("admin.contact_email.components.datatable.envio", compact("email"))->original,
+                    "email" => (string) response()->view("admin.contact_email.components.datatable.email", compact("email"))->original,
+                    "url" => (string) response()->view("admin.contact_email.components.datatable.web", compact("email"))->original,
+                    "envios" => (string) response()->view("admin.contact_email.components.datatable.count_ship_mails", compact("email"))->original,
+                    "whatsapp" => (string) response()->view("admin.contact_email.components.datatable.whatsapp", compact("email"))->original,
+                    "facebook" => (string) response()->view("admin.contact_email.components.datatable.facebook", compact("email"))->original,
+                    "instagram" => (string) response()->view("admin.contact_email.components.datatable.instagram", compact("email"))->original,
+                    "actions" => (string) response()->view("admin.contact_email.components.datatable.actions", compact("email"))->original,
+                    "created_at" => Carbon::parse($email->contact_created)->diffForHumans() ?? '------',
+                ];
+            });
+        }
+
+        $draw_val = $request["draw"];
+        $get_json_data = array(
+            "draw"            => intval($draw_val),
+            "recordsTotal"    => intval($totalDataRecord),
+            "recordsFiltered" => intval($totalFilteredRecord),
+            "data"            => $data_val
+        );
+
+        return $get_json_data;
     }
 }

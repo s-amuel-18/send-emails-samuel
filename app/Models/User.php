@@ -91,4 +91,22 @@ class User extends Authenticatable
     {
         return DB::table("contact_email_user")->orderBy("created_at", "DESC")->first();
     }
+
+    public function color_by_id()
+    {
+        $colors = [
+            "blue",
+            "indigo",
+            "purple",
+            "pink",
+            "red",
+            "orange",
+            "yellow",
+            "green",
+            "teal",
+            "cyan",
+        ];
+
+        return $colors[$this->id];
+    }
 }
