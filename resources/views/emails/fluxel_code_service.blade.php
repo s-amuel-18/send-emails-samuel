@@ -49,9 +49,6 @@
         margin: auto;
     }
 
-    .m-auto {
-        margin: auto;
-    }
 
     .card {
         padding-left: 30px;
@@ -76,7 +73,6 @@
 
     .d-flex {
         display: flex;
-
         align-items: center;
 
 
@@ -105,34 +101,56 @@
 </style>
 
 <body>
-    <div class="body">
+    <div style="   background-color: rgb(250, 250, 250);
+    padding: 20px;">
         {{-- <header>
             <h1 class="center">Header</h1>
         </header> --}}
 
-        <div class=" " style="margin: 50px 0">
+        <div style="margin: 50px 0">
 
-            <div class="container-mail">
+            <div style="  max-width: 540px;
+            background-color: white;
+            margin: auto;">
 
-                <div class="logo d-flex">
-                    <a href=""><img class="img-100sq"
+                <div
+                    style=" height: 60px;
+                vertical-align: middle;
+                display: block;
+                color: white;
+                background-color: #672fa8; display: flex;
+        align-items: center;">
+                    <a href=""><img style="  width: 70px;
+                        margin-left: 10px;"
                             src="https://www.negociaecuador.com/brandon-prueba/fluxel_code_xl.png" alt="">
                     </a>
                 </div>
-                <div class="card" style="padding: 30px; color: rgb(142, 142, 142)">
+                <div style="padding: 30px; color: rgb(142, 142, 142)">
 
                     <div class="">
-                        {!! $data['body'] !!}
+                        {{-- {!! $data['body'] !!} --}}
                     </div>
                 </div>
-                <div class="logo center d-flex j-center ">
-                    <a class="py-2" target="_blank" href="https://walink.co/c9af79">
+                <div
+                    style="text-align: center;height: 60px;
+                vertical-align: middle;
+                display: block;
+                color: white;
+                background-color: #672fa8;         display: flex;
+        align-items: center; justify-content: center;">
+                    <a style="  padding-left: 5px;
+                    padding-right: 5px;" target="_blank"
+                        href="https://walink.co/c9af79">
                         <img class="img-40sq" src="https://www.negociaecuador.com/brandon-prueba/ws.png" alt="Whatsapp">
                     </a>
-                    <a class="py-2" target="_blank" href="mailto:fluxel.code@gmail.com"><img class="img-40sq"
+                    <a style="  padding-left: 5px;
+                    padding-right: 5px;" target="_blank"
+                        href="mailto:fluxel.code@gmail.com"><img class="img-40sq"
                             src="https://www.negociaecuador.com/brandon-prueba/gmail.png" alt="gmail">
                     </a>
-                    <a class="py-2" target="_blank" href="https://www.instagram.com/fluxel_code"><img class="img-40sq"
+                    <a style="  padding-left: 5px;
+                    padding-right: 5px;" target="_blank"
+                        href="https://www.instagram.com/fluxel_code"><img class="img-40sq"
                             src="https://www.negociaecuador.com/brandon-prueba/instagram.png" alt="instagram">
                     </a>
 
@@ -144,7 +162,8 @@
         </div>
 
         <footer class="">
-            <p class="t-gray center"> @ 2022 FLUXEL-CODE Todos los derechos reservados</p>
+            <p style="  color: gray;text-align: center;"> @ 2022 FLUXEL-CODE Todos los derechos
+                reservados</p>
         </footer>
 
     </div>
