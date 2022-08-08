@@ -7,11 +7,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Fluxel Code</title>
 </head>
+
 <body>
-    <div style="background-color: rgb(250, 250, 250);
+    <div style="   background-color: rgb(250, 250, 250);
     padding: 20px;">
         {{-- <header>
-            <h1 >Header</h1>
+            <h1 class="center">Header</h1>
         </header> --}}
 
         <div style="margin: 50px 0">
@@ -25,16 +26,16 @@
                 vertical-align: middle;
                 display: block;
                 color: white;
-                background-color: #672fa8; display: flex;
-        align-items: center;">
-                    <a href=""><img style="  width: 70px;
-                        margin-left: 10px;"
+                background-color: #672fa8;   ">
+                    <a href=""><img
+                            style="  width: 70px;text-decoration: none;
+                        margin-left: 10px; margin-top:15px"
                             src="https://www.negociaecuador.com/brandon-prueba/fluxel_code_xl.png" alt="">
                     </a>
                 </div>
                 <div style="padding: 30px; color: rgb(142, 142, 142)">
 
-                    <div>
+                    <div class="">
                         {{-- {!! $data['body'] !!} --}}
                     </div>
                 </div>
@@ -43,22 +44,24 @@
                 vertical-align: middle;
                 display: block;
                 color: white;
-                background-color: #672fa8;         display: flex;
-        align-items: center; justify-content: center;">
+                background-color: #672fa8;">
+
                     <a style="  padding-left: 5px;
                     padding-right: 5px;" target="_blank"
                         href="https://walink.co/c9af79">
-                        <img style="   height: 20px;" src="https://www.negociaecuador.com/brandon-prueba/ws.png"
-                            alt="Whatsapp">
+                        <img style="width: 20px ; margin-top: 15px;text-decoration: none;"
+                            src="https://www.negociaecuador.com/brandon-prueba/ws.png" alt="Whatsapp">
                     </a>
                     <a style="  padding-left: 5px;
                     padding-right: 5px;" target="_blank"
-                        href="mailto:fluxel.code@gmail.com"><img style="   height: 20px;"
+                        href="mailto:fluxel.code@gmail.com"><img
+                            style="width: 20px ; margin-top: 15px;text-decoration: none;"
                             src="https://www.negociaecuador.com/brandon-prueba/gmail.png" alt="gmail">
                     </a>
                     <a style="  padding-left: 5px;
                     padding-right: 5px;" target="_blank"
-                        href="https://www.instagram.com/fluxel_code"><img style="   height: 20px;"
+                        href="https://www.instagram.com/fluxel_code"><img
+                            style="width: 20px ; margin-top: 15px;text-decoration: none;"
                             src="https://www.negociaecuador.com/brandon-prueba/instagram.png" alt="instagram">
                     </a>
 
@@ -69,7 +72,7 @@
 
         </div>
 
-        <footer>
+        <footer class="">
             <p style="  color: gray;text-align: center;"> @ 2022 FLUXEL-CODE Todos los derechos
                 reservados</p>
         </footer>
