@@ -8,6 +8,7 @@ use App\Mail\ServicioMaillable;
 use App\Models\BodyEmail;
 use App\Models\Contact_email;
 use App\Models\EmailEnviado;
+use App\Models\User;
 use Carbon\Carbon;
 use Facade\FlareClient\Http\Response;
 use Illuminate\Http\Request;
@@ -246,7 +247,7 @@ class EmailSendController extends Controller
             "email" => "required|email",
         ]);
 
-        $dalyEmailsValid = auth()->user()->validSendEmailDaily();
+        $dalyEmailsValid = (new User())->validSendEmailDaily();
 
 
         if (!$dalyEmailsValid) {
@@ -277,7 +278,9 @@ class EmailSendController extends Controller
             $correo = new ServicioMaillable($info);
             Mail::to(env("MAIL_FROM_ADDRESS"))->send($correo);
 
-            auth()->user()->emailEnviado()->attach($newEmail->id);
+            if (auth()->user()) {
+                auth()->user()->emailEnviado()->attach($newEmail->id);
+            }
 
             $newEmail->update(["estado" => 1]);
 
