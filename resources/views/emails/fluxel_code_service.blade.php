@@ -35,7 +35,7 @@
                 </div>
                 <div style="padding: 30px; color: rgb(142, 142, 142)">
 
-                    <div class="">
+                    <div class="" style="font-size: 16px">
                         {!! $data['body'] !!}
                     </div>
                 </div>
