@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Fluxel Code</title>
 </head>
-<style>
+{{-- <style>
     * {
         font-family: sans-serif;
         margin: 0;
@@ -98,13 +98,13 @@
         padding-left: 5px;
         padding-right: 5px;
     }
-</style>
+</style> --}}
 
 <body>
-    <div style="   background-color: rgb(250, 250, 250);
+    <div style="background-color: rgb(250, 250, 250);
     padding: 20px;">
         {{-- <header>
-            <h1 class="center">Header</h1>
+            <h1 >Header</h1>
         </header> --}}
 
         <div style="margin: 50px 0">
@@ -127,7 +127,7 @@
                 </div>
                 <div style="padding: 30px; color: rgb(142, 142, 142)">
 
-                    <div class="">
+                    <div>
                         {{-- {!! $data['body'] !!} --}}
                     </div>
                 </div>
@@ -141,16 +141,17 @@
                     <a style="  padding-left: 5px;
                     padding-right: 5px;" target="_blank"
                         href="https://walink.co/c9af79">
-                        <img class="img-40sq" src="https://www.negociaecuador.com/brandon-prueba/ws.png" alt="Whatsapp">
+                        <img style="   height: 20px;" src="https://www.negociaecuador.com/brandon-prueba/ws.png"
+                            alt="Whatsapp">
                     </a>
                     <a style="  padding-left: 5px;
                     padding-right: 5px;" target="_blank"
-                        href="mailto:fluxel.code@gmail.com"><img class="img-40sq"
+                        href="mailto:fluxel.code@gmail.com"><img style="   height: 20px;"
                             src="https://www.negociaecuador.com/brandon-prueba/gmail.png" alt="gmail">
                     </a>
                     <a style="  padding-left: 5px;
                     padding-right: 5px;" target="_blank"
-                        href="https://www.instagram.com/fluxel_code"><img class="img-40sq"
+                        href="https://www.instagram.com/fluxel_code"><img style="   height: 20px;"
                             src="https://www.negociaecuador.com/brandon-prueba/instagram.png" alt="instagram">
                     </a>
 
@@ -161,7 +162,7 @@
 
         </div>
 
-        <footer class="">
+        <footer>
             <p style="  color: gray;text-align: center;"> @ 2022 FLUXEL-CODE Todos los derechos
                 reservados</p>
         </footer>
