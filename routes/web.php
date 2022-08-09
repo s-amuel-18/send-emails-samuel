@@ -100,7 +100,7 @@ Route::get("email", function () {
 
 // pdf
 Route::get("pdf/presentacion", [PdfController::class, "cartaPresentacion"])->name("pdf.cartaPresentacion");
-Route::get("pdf/servicios", [PdfController::class, "Services"])->name("pdf.Services");
+Route::get("pdf/servicios", [PdfController::class, "Services"])->name("pdf.services");
 
 // excel export
 Route::get("emails/export/excel", [ExcelExportController::class, "contactEmail"])->middleware("auth")->name("contactEmail.export_excel");

@@ -14,6 +14,7 @@ use Facade\FlareClient\Http\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -165,6 +166,10 @@ class EmailSendController extends Controller
 
             $hora = Carbon::now()->parse($lastEmailSend->created_at)->format("H");
 
+            $mes = Carbon::now()->parse($lastEmailSend->created_at)->format("m");
+
+            $year = Carbon::now()->parse($lastEmailSend->created_at)->format("Y");
+
             $dia = Carbon::now()->parse($lastEmailSend->created_at)->addDays(1)->format("d");
 
             $minutos = Carbon::now()->parse($lastEmailSend->created_at)->format("i");
@@ -174,6 +179,8 @@ class EmailSendController extends Controller
             $timesLastEmail = [
                 "hora" => $hora,
                 "dia" => $dia,
+                "mes" => $mes,
+                "year" => $year,
                 "minutos" => $minutos,
                 "segundos" => $segundos
             ];
@@ -197,7 +204,6 @@ class EmailSendController extends Controller
         $info["body"] =  BodyEmail::find($data["body_email"])->body;
 
         try {
-            //code...
             $correo = new ServicioMaillable($info);
             Mail::to($emailsNotSend->email)->send($correo);
 

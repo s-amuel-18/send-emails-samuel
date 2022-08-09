@@ -13,21 +13,26 @@
 
 @section('content_2')
     <div class="card card-body table-responsive">
-        <div class="d-flex justify-content-end mb-3">
+        <div class="d-flex justify-content-between mb-3">
             <h3 class="card-title">Servicios: <b class="text-muted">1000</b></h3>
 
-            <a href="{{ route('pdf.services') }}" target="_blank" class="btn btn-sm btn-danger ml-auto ">
-                <i class="fas fa-file-pdf"></i> <span class="d-none d-md-inline-block ">Lista de Servicio</span>
-            </a>
 
-            <button type="button" class="btn btn-sm btn-primary  mx-2" data-toggle="modal" data-target="#modelId">
-                <i class="fas fa-plus"></i> <span class="d-none d-md-inline-block ">Crear categoria</span>
-            </button>
+            <div class="">
+                @if ($data['services']->count() > 0)
+                    <a href="{{ route('pdf.services') }}" target="_blank" class="btn btn-sm btn-danger">
+                        <i class="fas fa-file-pdf"></i> <span class="d-none d-md-inline-block ">Lista de Servicio</span>
+                    </a>
+                @endif
+                <button type="button" class="btn btn-sm btn-primary  mx-2" data-toggle="modal" data-target="#modelId">
+                    <i class="fas fa-plus"></i> <span class="d-none d-md-inline-block ">Crear categoria</span>
+                </button>
 
 
-            <a href="{{ route('service.create') }}" class="btn btn-sm btn-success">
-                <i class="fas fa-plus"></i> <span class="d-none d-md-inline-block ">Crear servicio</span>
-            </a>
+                <a href="{{ route('service.create') }}" class="btn btn-sm btn-success">
+                    <i class="fas fa-plus"></i> <span class="d-none d-md-inline-block ">Crear servicio</span>
+                </a>
+
+            </div>
 
 
         </div>

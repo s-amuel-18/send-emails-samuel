@@ -46,6 +46,22 @@
         }
     </style> --}}
     <div class="row">
+        {{-- <div class="row"> --}}
+
+        <div class="col-12 col-md-3">
+            <div class="card card-outline card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Emails De Hoy</h3>
+                    <div class="card-tools font-weight-bold  text-success mx-2">
+                        <span class="">{{ $contact_emails_today_count }}</span>
+                    </div>
+                    <!-- /.card-tools -->
+                </div>
+                <!-- /.card-header -->
+            </div>
+        </div>
+        {{-- </div> --}}
+
         <div class="col-md-12">
             <div class="card card-light">
                 <div class="card-header">
@@ -69,22 +85,6 @@
                 </div>
 
                 <div class="card card-body">
-                    <div class="row">
-
-                        <div class="col-12 col-md-3">
-                            <div class="card card-outline card-primary   mx-3">
-                                <div class="card-header">
-                                    <h3 class="card-title">Emails De Hoy</h3>
-                                    <div class="card-tools font-weight-bold  text-success mx-2">
-                                        <span class="">{{ $contact_emails_today_count }}</span>
-                                    </div>
-                                    <!-- /.card-tools -->
-                                </div>
-                                <!-- /.card-header -->
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="d-flex justify-content-end ">
 
 
@@ -110,31 +110,17 @@
                                 <span class="d-none d-md-inline">Exportar
                                     Excel</span></a>
                         </div>
-                        <form action="{{ route('contact_email.index') }}" method="GET">
-                            <div class=" input-group input-group-sm" style="width: 150px;">
-
-                                <input type="text" name="search" class="form-control float-right" placeholder="Buscar"
-                                    value="{{ $search }}">
-                                <div class="input-group-append">
-                                    <button type="submit" class="btn btn-default ">
-                                        <i class="fas fa-search"></i>
-                                    </button>
-                                </div>
-                            </div>
-
-                        </form>
                     </div>
 
                     @if ($contact_emails->count() > 0)
-                        <div class="table-responsive">
+                        <div class="">
                             <table id="table_contact_emails"
-                                class="table table-light table-striped table-hover text-nowrap table-valign-middle">
+                                class="w-100 table table-light table-striped table-hover text-nowrap table-valign-middle">
                                 <thead class="">
                                     <tr>
                                         <th>ID</th>
-                                        <th>Nombre Empresa</th>
                                         <th>Usuario</th>
-                                        <th>Estado</th>
+                                        <th>Empresa</th>
                                         <th>Email</th>
                                         <th>Envios</th>
                                         <th>Sitio Web</th>
@@ -142,6 +128,7 @@
                                         <th>Facebook</th>
                                         <th>Instagram</th>
                                         <th>Creacion</th>
+                                        <th>Actualizacion</th>
                                         <th>btns</th>
                                     </tr>
                                 </thead>
@@ -278,14 +265,17 @@
 
 
 
-            datatable = $(table).DataTable({
+            const datatable = $(table).DataTable({
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
                 },
                 "dataType": "json",
                 "order": [
-                    [2, "desc"]
+                    [9, "DESC"]
                 ],
+                "responsive": true,
+                "scrollX": true,
+                "pagingType": "full",
                 "pageLength": 10,
                 "lengthChange": true,
                 "processing": true,
@@ -296,13 +286,10 @@
                         data: "id"
                     },
                     {
-                        data: "nombre_empresa"
-                    },
-                    {
                         data: "username"
                     },
                     {
-                        data: "estado"
+                        data: "nombre_empresa"
                     },
                     {
                         data: "email"
@@ -326,6 +313,9 @@
                         data: "created_at"
                     },
                     {
+                        data: "updated_at"
+                    },
+                    {
                         data: "actions"
                     },
                 ],
@@ -333,6 +323,15 @@
 
             });
 
+
+
+            // On document ready
+            const filterSearch = document.querySelector('[data-kt-user-table-filter="search"]');
+            console.log(filterSearch);
+            filterSearch.addEventListener('keyup', function(e) {
+                console.log(e.target.value);
+                datatable.search(e.target.value).draw();
+            });
 
         })
         $(table).on("draw.dt", e => {

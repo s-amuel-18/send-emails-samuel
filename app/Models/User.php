@@ -11,6 +11,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -107,6 +108,11 @@ class User extends Authenticatable
             "cyan",
         ];
 
-        return $colors[$this->id];
+        return $colors[substr($this->id, -1)];
+    }
+
+    public function getColorAttribute()
+    {
+        return $this->color_by_id();
     }
 }

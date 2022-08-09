@@ -1,5 +1,5 @@
 @if ($email->facebook)
-    <a data-toggle="tooltip" data-placement="top" href="{{ $email->facebook }}">{{ Str::limit($email->facebook, 30) }}</a>
+    <a class="btn btn-primary btn-sm" href="{{ $email->facebook }}"><i class="fab fa-facebook"></i></a>
 @else
-    -------
+    ----
 @endif

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\contact_email;
 // namespace App\Http\Controllers;
 
@@ -25,7 +26,7 @@ class BodyEmailController extends Controller
 
     public function index()
     {
-        $bodys = BodyEmail::get();
+        $bodys = BodyEmail::paginate(10);
         // dd($bodys);
         // dd($bodys);
         return view("admin.contact_email.body_email.index", compact("bodys"));
@@ -66,7 +67,7 @@ class BodyEmailController extends Controller
             "icon" => "far fa-check-circle"
         ];
 
-        return redirect()->route("bodyEmail.index")->with("message", $message );
+        return redirect()->route("bodyEmail.index")->with("message", $message);
     }
 
 
@@ -106,7 +107,7 @@ class BodyEmailController extends Controller
             "icon" => "far fa-check-circle"
         ];
 
-        return redirect()->route("bodyEmail.index")->with("message", $message );
+        return redirect()->route("bodyEmail.index")->with("message", $message);
     }
 
     /**
@@ -126,7 +127,6 @@ class BodyEmailController extends Controller
             "icon" => "far fa-check-circle"
         ];
 
-        return redirect()->back()->with("message", $message );
-
+        return redirect()->back()->with("message", $message);
     }
 }

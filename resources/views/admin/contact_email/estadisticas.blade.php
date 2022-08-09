@@ -87,7 +87,7 @@
                                             {{-- <th>id</th> --}}
                                             <th>usuario</th>
                                             <th>Cant. Registros</th>
-                                            <th>Porcentaje</th>
+                                            <th>Cant. Envios</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -102,11 +102,23 @@
                                                     @endif
                                                 </td>
                                                 {{-- <td>{{ $user->id }}</td> --}}
-                                                <td>{{ $user->username }}</td>
-                                                <td>{{ $user->emails_registros_count }}</td>
                                                 <td>
-                                                    <span
-                                                        class="badge bg-{{ $user->emails_registros_count > $registros_promedio ? 'success' : ($user->emails_registros_count <= $registros_promedio ? 'warning' : 'danger') }}">{{ number_format(($user->emails_registros_count * 100) / $total_registros, 2) }}%</span>
+                                                    <div class="d-flex align-items-center">
+                                                        <div style="width: 27px; height: 27px;"
+                                                            class="mr-2 bg-{{ $user->color }} d-flex justify-content-center align-items-center rounded-circle">
+                                                            <i class="fa fa-user" style="font-size: 12px"></i>
+                                                        </div>
+                                                        {{ $user->username }}
+
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <span style="font-size: 16px"
+                                                        class="badge badge-{{ $user->emails_registros_count > 0 ? 'success' : 'danger' }}">{{ $user->emails_registros_count }}</span>
+                                                </td>
+                                                <td>
+                                                    <span style="font-size: 16px"
+                                                        class="badge bg-{{ $user->email_enviado_count > 0 ? 'purple' : 'light' }}">{{ $user->email_enviado_count }}</span>
                                                 </td>
                                             </tr>
                                         @endforeach

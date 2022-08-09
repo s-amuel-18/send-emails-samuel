@@ -34,12 +34,25 @@ class ContactEmailController extends Controller
 
     public function index(Request $request)
     {
+        $colors = [
+            "blue",
+            "indigo",
+            "purple",
+            "pink",
+            "red",
+            "orange",
+            "yellow",
+            "green",
+            "teal",
+            "cyan",
+        ];
+
         $search = $request["search"] ?? null;
 
         $contact_emails_query = Contact_email::with(["usuario"])
             ->withCount("envios")
             ->orderBy("envios_count", "ASC");
-        dd($contact_emails_query->get()->toArray());
+
 
         if ($search) {
             $contact_emails_query->searchLike($search);
@@ -79,10 +92,11 @@ class ContactEmailController extends Controller
         // dd($registros_de_hoy);
 
         $users = User::whereHas("emails_registros", null, ">", 0)
+            ->withCount("emailEnviado")
             ->withCount("emails_registros")
+            ->orderBy("emails_registros_count", "DESC")
             ->get();
 
-        // dd("x");
 
         if ($total_registros == 0 || $users->count() == 0) {
             $registros_promedio = 0;
@@ -119,6 +133,7 @@ class ContactEmailController extends Controller
      */
     public function store(Request $request)
     {
+
         $data = request()->validate([
             'nombre_empresa' => "nullable|string|max:255",
             'email' => "required_if:whatsapp,null|nullable|string|max:255|email|unique:contact_emails",
@@ -309,48 +324,60 @@ class ContactEmailController extends Controller
 
     public function datatable(Request $request)
     {
-        $query_user = DB::table("contact_emails")
-            ->select(
-                "contact_emails.id AS contact_id",
-                "contact_emails.url",
-                "contact_emails.nombre_empresa",
-                "contact_emails.estado",
-                "contact_emails.email AS contact_email",
-                "contact_emails.whatsapp",
-                "contact_emails.instagram",
-                "contact_emails.facebook",
-                "contact_emails.user_id",
-                "contact_emails.created_at AS contact_created",
-                "us.username",
-                DB::raw("count(us_env.id) AS envios_count")
-            )
+        // $query_user = DB::table("contact_emails")
+        //     ->select(
+        //         "contact_emails.id AS contact_id",
+        //         "contact_emails.url",
+        //         "contact_emails.nombre_empresa",
+        //         "contact_emails.estado",
+        //         "contact_emails.email AS contact_email",
+        //         "contact_emails.whatsapp",
+        //         "contact_emails.instagram",
+        //         "contact_emails.facebook",
+        //         "contact_emails.user_id",
+        //         "contact_emails.created_at AS contact_created",
+        //         "us.username"
+        //     )
+        //     ->leftJoin("users AS us", function ($j) {
+        //         $j->on("contact_emails.user_id", "=", "us.id")
+        //             ->whereNotNull("us.created_at");
+        //     })
+        //     ->whereNotNull("contact_emails.created_at");
+
+        $query_user = Contact_email::select(
+            "contact_emails.id AS contact_id",
+            "contact_emails.url",
+            "contact_emails.nombre_empresa",
+            "contact_emails.estado",
+            "contact_emails.email AS contact_email",
+            "contact_emails.whatsapp",
+            "contact_emails.instagram",
+            "contact_emails.facebook",
+            "contact_emails.user_id",
+            "contact_emails.created_at AS contact_created",
+            "contact_emails.updated_at AS contact_updated",
+            "us.username"
+        )
+            ->withCount("envios")
             ->leftJoin("users AS us", function ($j) {
                 $j->on("contact_emails.user_id", "=", "us.id")
                     ->whereNotNull("us.created_at");
-            })
-            ->leftJoin("email_enviados AS us_env", function ($j) {
-                $j->on("contact_emails.id", "=", "us_env.contact_email_id")
-                    ->on("us.id", "=", "us_env.user_id")
-                    ->whereNotNull("us.created_at");
-            })
-            ->groupBy("contact_emails.id")
-            ->whereNotNull("contact_emails.created_at");
-
+            });
 
         $totalFilteredRecord = $totalDataRecord = $draw_val = "";
 
         $columns_list = array(
             0 => "contact_emails.id",
-            1 => "contact_emails.nombre_empresa",
-            2 => "us.username",
-            3 => "contact_emails.estado",
-            4 => "contact_emails.email",
-            5 => "us_env.id",
-            6 => "contact_emails.url",
-            7 => "contact_emails.whatsapp",
-            8 => "contact_emails.facebook",
-            9 => "contact_emails.instagram",
-            10 => "contact_emails.created_at",
+            1 => "us.username",
+            2 => "contact_emails.nombre_empresa",
+            3 => "contact_emails.email",
+            4 => "envios_count",
+            5 => "contact_emails.url",
+            6 => "contact_emails.whatsapp",
+            7 => "contact_emails.facebook",
+            8 => "contact_emails.instagram",
+            9 => "contact_emails.created_at",
+            10 => "contact_emails.updated_at",
         );
 
         $totalDataRecord = DB::table("contact_emails")->whereNotNull("created_at")->count();
@@ -382,12 +409,13 @@ class ContactEmailController extends Controller
                         ->orWhere("us.username", "like", "%{$search_text}%")
                         ->orWhere("contact_emails.estado", "like", "%{$search_text}%")
                         ->orWhere("contact_emails.email", "like", "%{$search_text}%")
-                        ->orWhere("COUNT(us_env.id)", "like", "%{$search_text}%")
+                        ->orWhereHas("envios", null, "like", "%{$search_text}%")
                         ->orWhere("contact_emails.url", "like", "%{$search_text}%")
                         ->orWhere("contact_emails.whatsapp", "like", "%{$search_text}%")
                         ->orWhere("contact_emails.facebook", "like", "%{$search_text}%")
                         ->orWhere("contact_emails.instagram", "like", "%{$search_text}%")
-                        ->orWhere("contact_emails.created_at", "like", "%{$search_text}%");
+                        ->orWhere("contact_emails.created_at", "like", "%{$search_text}%")
+                        ->orWhere("contact_emails.updated_at", "like", "%{$search_text}%");
                 })
                 ->offset($start_val)
                 ->orderBy($order_val, $dir_val);
@@ -401,12 +429,13 @@ class ContactEmailController extends Controller
                         ->orWhere("us.username", "like", "%{$search_text}%")
                         ->orWhere("contact_emails.estado", "like", "%{$search_text}%")
                         ->orWhere("contact_emails.email", "like", "%{$search_text}%")
-                        ->orWhere("COUNT(us_env.id)", "like", "%{$search_text}%")
+                        ->orWhereHas("envios", null, "like", "%{$search_text}%")
                         ->orWhere("contact_emails.url", "like", "%{$search_text}%")
                         ->orWhere("contact_emails.whatsapp", "like", "%{$search_text}%")
                         ->orWhere("contact_emails.facebook", "like", "%{$search_text}%")
                         ->orWhere("contact_emails.instagram", "like", "%{$search_text}%")
-                        ->orWhere("contact_emails.created_at", "like", "%{$search_text}%");
+                        ->orWhere("contact_emails.created_at", "like", "%{$search_text}%")
+                        ->orWhere("contact_emails.updated_at", "like", "%{$search_text}%");
                 })
                 ->count();
         }
@@ -414,7 +443,6 @@ class ContactEmailController extends Controller
         $data_val = array();
 
         if (!empty($data_return)) {
-
             $data_val = $data_return->map(function ($email) {
                 if ($email->username) {
                     $email->color_by_user = User::find($email->user_id)->color_by_id();
@@ -422,11 +450,14 @@ class ContactEmailController extends Controller
                     $email->color_by_user = null;
                 }
 
+                $created_parser = Carbon::parse($email->contact_created);
+                $updated_parser = Carbon::parse($email->contact_updated);
+
                 return [
                     "id" => $email->contact_id,
                     "nombre_empresa" => (string) response()->view("admin.contact_email.components.datatable.name_enterprice", compact("email"))->original,
                     "username" => (string) response()->view("admin.contact_email.components.datatable.user", compact("email"))->original,
-                    "estado" => (string) response()->view("admin.contact_email.components.datatable.envio", compact("email"))->original,
+
                     "email" => (string) response()->view("admin.contact_email.components.datatable.email", compact("email"))->original,
                     "url" => (string) response()->view("admin.contact_email.components.datatable.web", compact("email"))->original,
                     "envios" => (string) response()->view("admin.contact_email.components.datatable.count_ship_mails", compact("email"))->original,
@@ -434,7 +465,8 @@ class ContactEmailController extends Controller
                     "facebook" => (string) response()->view("admin.contact_email.components.datatable.facebook", compact("email"))->original,
                     "instagram" => (string) response()->view("admin.contact_email.components.datatable.instagram", compact("email"))->original,
                     "actions" => (string) response()->view("admin.contact_email.components.datatable.actions", compact("email"))->original,
-                    "created_at" => Carbon::parse($email->contact_created)->diffForHumans() ?? '------',
+                    "created_at" => (string) response()->view("admin.contact_email.components.datatable.created_at", compact("created_parser"))->original,
+                    "updated_at" => (string) response()->view("admin.contact_email.components.datatable.updated_at", compact("updated_parser"))->original,
                 ];
             });
         }

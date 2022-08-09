@@ -1,10 +1,4 @@
-$(function () {
-
-
-
-
-})
-
+$(function () {});
 
 function counter(date) {
     if (!date) return false;
@@ -13,16 +7,18 @@ function counter(date) {
     let dia = date["dia"];
     let minutos = date["minutos"];
     let segundos = date["segundos"];
-    let contador = document.getElementById('cuenta');
-    let content_counter = document.getElementById('content_counter');
+    let mes = date["mes"];
+    let year = date["year"];
+    let contador = document.getElementById("cuenta");
+    let content_counter = document.getElementById("content_counter");
 
     if (content_counter.classList.contains("d-none")) {
-        content_counter.classList.remove("d-none")
+        content_counter.classList.remove("d-none");
     }
 
     simplyCountdown("#cuenta", {
-        year: 2022, // Requerido
-        month: 7, // Requerido
+        year: year, // Requerido
+        month: mes, // Requerido
         day: dia, // Requerido
         hours: hora, // El Default es 0 [0-23] integer
         minutes: minutos, // Default is 0 [0-59] integer
@@ -41,10 +37,11 @@ function counter(date) {
         enableUtc: false, //Utilizar UTC como default
 
         onEnd: function () {
-
-            document.getElementById('select_alert_new_email').classList.remove('d-none');
-            contador.classList.add('d-none');
-            contador.classList.remove('d-flex');
+            document
+                .getElementById("select_alert_new_email")
+                .classList.remove("d-none");
+            contador.classList.add("d-none");
+            contador.classList.remove("d-flex");
 
             return false;
             //Poner aqui la funcion que se ejecute al terminar el contador
@@ -58,14 +55,14 @@ function counter(date) {
         countUp: false, //contar hacia arriba
     });
 
-    // Puedes hacer init con un objeto Javascript.
-    let myElement = document.querySelector(".my-countdown");
-    simplyCountdown(myElement, {
-        /* options */
-    });
+    // // Puedes hacer init con un objeto Javascript.
+    // let myElement = document.querySelector(".my-countdown");
+    // simplyCountdown(myElement, {
+    //     /* options */
+    // });
 
-    let multipleElements = document.querySelectorAll(".my-countdown");
-    simplyCountdown(multipleElements, {
-        /* options */
-    });
+    // let multipleElements = document.querySelectorAll(".my-countdown");
+    // simplyCountdown(multipleElements, {
+    //     /* options */
+    // });
 }

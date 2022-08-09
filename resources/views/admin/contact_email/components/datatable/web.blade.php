@@ -1,5 +1,7 @@
 @if ($email->url)
-    <a data-toggle="tooltip" data-placement="top" href="{{ $email->url }}">{{ Str::limit($email->url, 30) }}</a>
+    <a class="btn bg-info btn-sm" data-toggle="tooltip" data-placement="top" href="{{ $email->url }}">
+        <i class="fas fa-external-link-alt"></i>
+    </a>
 @else
     -------
 @endif

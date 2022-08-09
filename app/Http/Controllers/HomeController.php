@@ -57,17 +57,15 @@ class HomeController extends Controller
         $enviados_hoy = auth()->user()->correos_enviados_hoy();
 
         // usuarios que han registrado emails hoy
-        $usr_registros_hoy = User::whereHas("emails_registros", function ($q) {
+        $usr_registros_hoy = User::withCount(["emails_registros" => function ($q) {
             return $q->whereDate("created_at", Carbon::today());
-        })
-            ->withCount(["emails_registros" => function ($q) {
-                return $q->whereDate("created_at", Carbon::today());
-            }])
+        }])
             ->withCount(["emailEnviado" => function ($q) {
                 // dd($q->whereDate("created_at", Carbon::today()));
                 return $q->whereDate("contact_email_user.created_at", Carbon::today());
             }])
             ->get();
+
 
 
         if (auth()->user()->can("managment.index")) {
