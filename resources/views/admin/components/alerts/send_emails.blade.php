@@ -79,10 +79,11 @@
                 </div>
 
             </form>
+        @elseif($puedo_enviar_emails['count_emails_register'] > 0)
         @else
             <div class="text-danger">
-                <h5 class="h6">No tienes cuerpos de emails registrados <a href="{{ route('bodyEmail.create') }}">Crea
-                        un cuerpo de email</a>
+                <h5 class="h6">No tienes emails registrados <a href="{{ route('contact_email.store') }}">Crea
+                        nuevo email</a>
                 </h5>
             </div>
         @endif

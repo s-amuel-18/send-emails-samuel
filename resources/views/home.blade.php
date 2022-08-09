@@ -13,7 +13,7 @@
 
     <div class="row">
 
-        @can('managment.index')
+        {{-- @can('managment.index')
 
             @foreach ($pays_time as $pay)
                 <div class="col-md-3 col-6">
@@ -70,7 +70,7 @@
 
                 </div>
             </div>
-        @endcan
+        @endcan --}}
 
         @can('contact_email.index')
             <div class="col-md-3 col-6">
@@ -118,8 +118,7 @@
                         <div class="card-tools">
 
                             @can('user.create')
-                                <a href="{{ route('contact_email.estadisticas') }}"
-                                    class="btn btn-outline-light not-hover btn-tool">
+                                <a href="{{ route('contact_email.estadisticas') }}" class="btn btn-info btn-sm text-white ">
                                     <i class="fas fa-fw fa-mail-bulk"></i><span class="d-none d-md-inline-block ml-1">Estadistica
                                         de
                                         registros</span>
@@ -129,7 +128,7 @@
                     </div>
 
                     <div class="card-body table-responsive">
-                        <table class="table table-light table-striped table-hover text-nowrap table-valign-middle">
+                        <table class="datatable table table-light table-striped table-hover text-nowrap table-valign-middle">
                             <thead class="">
                                 <tr>
                                     <th>ID</th>
@@ -145,15 +144,15 @@
                                         <td>{{ $usr->id }}</td>
                                         <td>{{ $usr->username }}</td>
                                         <td>
-                                            <span
+                                            <span style="font-size: 16px"
                                                 class="badge  badge-{{ $usr->emails_registros_count > 0 ? 'success' : 'danger' }}">{{ $usr->emails_registros_count }}</span>
 
 
                                         </td>
                                         <td>
 
-                                            <span class="badge badge-primary"
-                                                style="background: #6610f2">{{ $usr->email_enviado_count }}</span>
+                                            <span class="badge bg-purple"
+                                                style="font-size: 16px">{{ $usr->email_enviado_count }}</span>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -179,7 +178,7 @@
                         <div class="card-tools">
 
                             @can('contact_email.create')
-                                <a href="{{ route('contact_email.create') }}" class="btn btn-outline-light not-hover btn-tool">
+                                <a href="{{ route('contact_email.create') }}" class="btn btn-info btn-sm text-white">
                                     <i class="fas fa-plus"></i><span class="d-none d-md-inline-block ml-1">Nuevo email</span>
                                 </a>
                             @endcan
@@ -263,7 +262,9 @@
 @section('js')
 
     <script>
-        $(".datatable").DataTable();
+        $(".datatable").DataTable({
+            pageLength: 5
+        });
     </script>
 
 @stop

@@ -11,6 +11,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -90,5 +91,28 @@ class User extends Authenticatable
     public function lastEmailSend()
     {
         return DB::table("contact_email_user")->orderBy("created_at", "DESC")->first();
+    }
+
+    public function color_by_id()
+    {
+        $colors = [
+            "blue",
+            "indigo",
+            "purple",
+            "pink",
+            "red",
+            "orange",
+            "yellow",
+            "green",
+            "teal",
+            "cyan",
+        ];
+
+        return $colors[substr($this->id, -1)];
+    }
+
+    public function getColorAttribute()
+    {
+        return $this->color_by_id();
     }
 }

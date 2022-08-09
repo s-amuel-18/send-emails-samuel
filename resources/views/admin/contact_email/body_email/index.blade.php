@@ -47,7 +47,7 @@
                                         <td>{{ $body->usuario ? $body->usuario->name : 'Sin Usuario' }}</td>
                                         <td>{{ $body->nombre }}</td>
                                         <td>
-                                            <fecha-custom fecha="{{ $body->updated_at }}"></fecha-custom>
+                                            {{ $body->created_at->diffForHumans() }}
                                         </td>
                                         <td style="width: 110px">
                                             @can('bodyEmail.edit')
@@ -93,6 +93,10 @@
 
 
 
+                </div>
+
+                <div class="d-flex justify-content-end">
+                    {{ $bodys->links() }}
                 </div>
             </div>
         </div>

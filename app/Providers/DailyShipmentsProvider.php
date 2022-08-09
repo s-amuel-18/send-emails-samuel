@@ -49,6 +49,9 @@ class DailyShipmentsProvider extends ServiceProvider
             if (!$puedo_enviar) {
 
                 $hora = Carbon::now()->parse($lastEmailSend->created_at)->format("H");
+                $mes = Carbon::now()->parse($lastEmailSend->created_at)->format("m");
+                $year = Carbon::now()->parse($lastEmailSend->created_at)->format("Y");
+
 
                 $dia = Carbon::now()->parse($lastEmailSend->created_at)->addDays(1)->format("d");
                 $minutos = Carbon::now()->parse($lastEmailSend->created_at)->format("i");
@@ -57,11 +60,11 @@ class DailyShipmentsProvider extends ServiceProvider
                     "hora" => $hora,
                     "dia" => $dia,
                     "minutos" => $minutos,
-                    "segundos" => $segundos
+                    "segundos" => $segundos,
+                    "mes" => $mes,
+                    "year" => $year,
                 ];
             }
-
-
 
 
 
@@ -70,7 +73,8 @@ class DailyShipmentsProvider extends ServiceProvider
             $view->with("puedo_enviar_emails", [
                 "puedo_enviar_emails" => $puedo_enviar,
                 "timesLastEmail" => $timesLastEmail ?? null,
-                "bodyEmails" => $bodyEmails
+                "bodyEmails" => $bodyEmails,
+                "count_emails_register" => Contact_email::count(),
             ]);
         });
     }
