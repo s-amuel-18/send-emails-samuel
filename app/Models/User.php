@@ -78,6 +78,15 @@ class User extends Authenticatable
         return DB::table("contact_email_user")->whereDate("created_at", Carbon::today())->count();
     }
 
+    public function emailsSent24HoursAgo()
+    {
+        $dataDo24Hours = Carbon::now()->subHours(24);
+        $dateNow = Carbon::now();
+
+        $emailsDo24Hours = DB::table("contact_email_user")->whereBetween("created_at", [$dataDo24Hours, $dateNow])->count();
+        return $emailsDo24Hours;
+    }
+
     public function correos_por_enviar_hoy()
     {
         return Contact_email::DAILY_EMAIL_LIMIT - $this->correos_enviados_hoy();
@@ -85,7 +94,7 @@ class User extends Authenticatable
 
     public function validSendEmailDaily()
     {
-        return $this->correos_enviados_hoy() < Contact_email::DAILY_EMAIL_LIMIT;
+        return $this->emailsSent24HoursAgo() < Contact_email::DAILY_EMAIL_LIMIT;
     }
 
     public function lastEmailSend()

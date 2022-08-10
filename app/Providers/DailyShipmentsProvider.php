@@ -36,9 +36,7 @@ class DailyShipmentsProvider extends ServiceProvider
                 return null;
             }
 
-            $emailsToday = $user->correos_enviados_hoy();
-
-            // $lastEmailSend = Contact_email::enviadosHoy();
+            $emailsToday = $user->emailsSent24HoursAgo();
 
             $lastEmailSend = DB::table("contact_email_user")->orderBy("created_at", "DESC")->first();
 
@@ -75,6 +73,7 @@ class DailyShipmentsProvider extends ServiceProvider
                 "timesLastEmail" => $timesLastEmail ?? null,
                 "bodyEmails" => $bodyEmails,
                 "count_emails_register" => Contact_email::count(),
+                "lastEmailSend" => Carbon::parse($lastEmailSend->created_at)->diffForHumans(),
             ]);
         });
     }
