@@ -94,7 +94,7 @@ class User extends Authenticatable
 
     public function validSendEmailDaily()
     {
-        return $this->correos_enviados_hoy() < Contact_email::DAILY_EMAIL_LIMIT;
+        return $this->emailsSent24HoursAgo() < Contact_email::DAILY_EMAIL_LIMIT;
     }
 
     public function lastEmailSend()
