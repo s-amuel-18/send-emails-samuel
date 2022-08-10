@@ -69,7 +69,7 @@ class EmailSendController extends Controller
 
 
         if (!$dalyEmailsValid) {
-            $send_today = auth()->user()->correos_enviados_hoy();
+            $send_today = auth()->user()->emailsSent24HoursAgo();
 
             $lastEmailSend = auth()->user()->lastEmailSend();
 
@@ -118,7 +118,7 @@ class EmailSendController extends Controller
 
             $emailSend->update(["estado" => 1]);
 
-            $send_today = auth()->user()->correos_enviados_hoy();
+            $send_today = auth()->user()->emailsSent24HoursAgo();
 
             $percentage = $send_today ? (($send_today * 100) / Contact_email::DAILY_EMAIL_LIMIT) : 0;
 
@@ -129,7 +129,7 @@ class EmailSendController extends Controller
 
             return redirect()->back()->with("message", $message);
         } catch (\Throwable $th) {
-            $send_today = auth()->user()->correos_enviados_hoy();
+            $send_today = auth()->user()->emailsSent24HoursAgo();
             $message = [
                 "color" => "danger",
                 "message" => "Ha ocurrido un error."
@@ -160,7 +160,7 @@ class EmailSendController extends Controller
 
 
         if (!$dalyEmailsValid) {
-            $send_today = auth()->user()->correos_enviados_hoy();
+            $send_today = auth()->user()->emailsSent24HoursAgo();
 
             $lastEmailSend = auth()->user()->lastEmailSend();
 
@@ -215,7 +215,7 @@ class EmailSendController extends Controller
 
             $emailsNotSend->update(["estado" => 1]);
 
-            $send_today = auth()->user()->correos_enviados_hoy();
+            $send_today = auth()->user()->emailsSent24HoursAgo();
 
             $percentage = $send_today ? (($send_today * 100) / Contact_email::DAILY_EMAIL_LIMIT) : 0;
 
@@ -230,7 +230,7 @@ class EmailSendController extends Controller
                 ]
             ];
         } catch (\Throwable $th) {
-            $send_today = auth()->user()->correos_enviados_hoy();
+            $send_today = auth()->user()->emailsSent24HoursAgo();
 
             //throw $th;
             return [

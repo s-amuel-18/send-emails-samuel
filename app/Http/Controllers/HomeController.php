@@ -54,7 +54,7 @@ class HomeController extends Controller
 
         $correos_sin_enviar = Contact_email::sinEnviar()->count();
 
-        $enviados_hoy = auth()->user()->correos_enviados_hoy();
+        $enviados_hoy = auth()->user()->emailsSent24HoursAgo();
 
         // usuarios que han registrado emails hoy
         $usr_registros_hoy = User::withCount(["emails_registros" => function ($q) {
