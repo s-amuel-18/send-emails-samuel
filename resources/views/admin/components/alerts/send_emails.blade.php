@@ -36,7 +36,11 @@
         <h5 class="text-capitalize">¡Ya puedes enviar nuevos emails!</h5>
         <p>Ya transcurrió el tiempo necesario para que puedas enviar nuevos emails, el limite de envios diarios es de
             100
-            emails.</p>
+            emails,
+            @if ($puedo_enviar_emails['lastEmailSend'])
+                <b>Ultimo Correo Enviado {{ $puedo_enviar_emails['lastEmailSend'] }}</b>
+            @endif
+        </p>
 
         @if ($puedo_enviar_emails['bodyEmails']->count() > 0)
             <form action="" id="form_send_emails">
