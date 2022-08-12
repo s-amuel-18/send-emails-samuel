@@ -83,7 +83,7 @@
         @can('contact_email.estadisticas')
             <div class="col-md-3 col-6">
                 {{-- Registros Totales --}}
-                <x-adminlte-small-box title="{{ $total_registros }}" text="Registros Totales" icon="fas fa-mail-bulk"
+                <x-adminlte-small-box title="{{ $total_registros }}" text="Total Contactos con emails" icon="fas fa-mail-bulk"
                     theme="primary" url="contact-email/estadisticas" url-text="Ver Registros" />
             </div>
         @endcan
@@ -91,8 +91,8 @@
         @can('envio_email.index')
             <div class="col-md-3 col-6">
                 {{-- Correos sin enviar --}}
-                <x-adminlte-small-box title="{{ $correos_sin_enviar }}" text="Correos Sin Enviar" icon="fas fa-mail-bulk"
-                    theme="danger" url="envio-email/redaccion-detallada" url-text="Enviar Correos" />
+                <x-adminlte-small-box title="{{ $correos_sin_enviar }}" text="Contactos con email Sin Enviar"
+                    icon="fas fa-mail-bulk" theme="danger" url="envio-email/redaccion-detallada" url-text="Enviar Correos" />
             </div>
         @endcan
 
@@ -142,7 +142,18 @@
                                 @foreach ($usr_registros_hoy as $i => $usr)
                                     <tr>
                                         <td>{{ $usr->id }}</td>
-                                        <td>{{ $usr->username }}</td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div style="width: 27px; height: 27px;"
+                                                    class="mr-2 bg-{{ $usr->color }} d-flex justify-content-center align-items-center rounded-circle">
+                                                    <i class="fa fa-user" style="font-size: 12px"></i>
+                                                </div>
+                                                <div class="">
+                                                    {{ $usr->username }}
+                                                </div>
+
+                                            </div>
+                                        </td>
                                         <td>
                                             <span style="font-size: 16px"
                                                 class="badge  badge-{{ $usr->emails_registros_count > 0 ? 'success' : 'danger' }}">{{ $usr->emails_registros_count }}</span>
@@ -262,9 +273,10 @@
 @section('js')
 
     <script>
-        $(".datatable").DataTable({
-            pageLength: 5
-        });
+        // $(".datatable").DataTable({
+        //     pageLength: 5,
+        //     order: false,
+        // });
     </script>
 
 @stop

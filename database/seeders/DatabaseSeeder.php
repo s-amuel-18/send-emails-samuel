@@ -33,16 +33,16 @@ class DatabaseSeeder extends Seeder
         // Income::factory(7)->create();
         // Spents::factory(4)->create();
         BodyEmail::factory(10)->create();
-        Contact_email::factory(500)->create();
+        Contact_email::factory(1000)->create();
         // $this->call(EnvioEmailSeeder::class);
         // CategoryService::factory(5)->create();
         // Service::factory(10)->create();
         // Factory::factoryForModel("App\Models\Body_email");
 
-        for ($i = 0; $i < 1000; $i++) {
-            $user = User::all()->random();
-            $contact = Contact_email::all()->random();
-            $user->emailEnviado()->attach($contact->id);
-        }
+        // for ($i = 0; $i < 1000; $i++) {
+        //     $user = User::all()->random();
+        //     $contact = Contact_email::all()->random();
+        //     $user->emailEnviado()->attach($contact->id);
+        // }
     }
 }

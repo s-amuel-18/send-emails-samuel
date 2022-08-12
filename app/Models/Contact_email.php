@@ -74,14 +74,12 @@ class Contact_email extends Model
     public function scopeSinEnviar($q)
     {
         return $q->whereHas("envios", null, "=", 0)
-            ->where("estado", "=", 0)
             ->whereNotNull("email");
     }
 
     public function scopeEnviados($q)
     {
         return $q->whereHas("envios", null, ">", 0)
-            ->where("estado", "=", 1)
             ->whereNotNull("email");
     }
 
@@ -107,5 +105,55 @@ class Contact_email extends Model
                     $q->where("username", "like", "%$search%");
                 });
         });
+    }
+
+    public function scopeEmailValid($q)
+    {
+        return $q->whereNotNull("email");
+    }
+
+    public function groupBySendEmail($user, $id_email)
+    {
+        $contact = Contact_email::find($id_email);
+
+        if (!$contact or (!isset($contact->email) or !$contact->email)) {
+            return null;
+        }
+
+        $query = DB::table("contact_email_user")
+            ->where("user_id", $user)
+            ->where("contact_email_id", $id_email)
+            ->take(1);
+
+        $contact_email_user_last = $query->first();
+
+        // dump($contact_email_user_last);
+
+        if (!$contact_email_user_last) {
+            return null;
+        }
+        $max_group_send_register = DB::table("contact_email_user")->max("group_send");
+
+        $group_send_last_contact = $max_group_send_register ?? 1;
+
+
+        $count_contacts_for_group = DB::table("contact_email_user")->where("group_send", $group_send_last_contact)->count();
+
+        $hours_last_email = Carbon::parse($contact_email_user_last->created_at);
+
+        $now = Carbon::now();
+
+        $diffHours = $hours_last_email->diffInHours($now);
+        // dump("count_contacts_for_group: " . $count_contacts_for_group . " diffHours: " . $diffHours);
+        $group_send = ($count_contacts_for_group >= Contact_email::DAILY_EMAIL_LIMIT && $diffHours >= 24)
+            ? intval($group_send_last_contact) + 1
+            : $group_send_last_contact;
+
+        $query->update([
+            "group_send" => $group_send
+        ]);
+
+
+        return $group_send;
     }
 }

@@ -1,9 +1,12 @@
 $(function () {
     const form_send_emails = document.getElementById("form_send_emails");
 
-    form_send_emails.addEventListener("submit", async e => {
+    form_send_emails.addEventListener("submit", async (e) => {
         e.preventDefault();
-        let validForm = Object.keys($(form_send_emails).validate().invalid).length > 0 ? true : false;
+        let validForm =
+            Object.keys($(form_send_emails).validate().invalid).length > 0
+                ? true
+                : false;
 
         if (validForm) return false;
 
@@ -17,6 +20,6 @@ $(function () {
         };
 
         const resp = await send_emails(urlHttpSendEmail, params, submiter);
-
-    })
+        submiter.disabled = false;
+    });
 });

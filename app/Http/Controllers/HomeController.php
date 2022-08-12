@@ -35,11 +35,35 @@ class HomeController extends Controller
      */
     public function index()
     {
+        // $contact_send = auth()->user()->emailEnviado()->take(1)->first();
+        // $group = (new Contact_email())->groupBySendEmail(auth()->user()->id, $contact_send->id);
+
+        $emails = Contact_email::emailValid()->take(98)->get();
+
+        $emails->each(function ($cont) {
+            $dalyEmailsValid = auth()->user()->validSendEmailDaily();
+
+            if ($dalyEmailsValid) {
+
+                DB::table("contact_email_user")->insert([
+                    "user_id" => auth()->user()->id,
+                    "contact_email_id" => $cont->id,
+                    "created_at" => Carbon::now()->subHours(23)->subMinutes(rand(50, 59))
+                    // "created_at" => Carbon::now()
+                ]);
+
+                $group = (new Contact_email())->groupBySendEmail(auth()->user()->id, $cont->id);
+                // dump($group);
+            }
+        });
+
+        // )======================
+
         $data = [];
 
         $pays_time = BillingTime::withSum("spemts", "price")->get();
 
-        $total_registros = Contact_email::count();
+        $total_registros = Contact_email::emailValid()->count();
 
         $date = Carbon::now();
         $date = $date->format('Y-m-d');
@@ -64,9 +88,11 @@ class HomeController extends Controller
                 // dd($q->whereDate("created_at", Carbon::today()));
                 return $q->whereDate("contact_email_user.created_at", Carbon::today());
             }])
+            ->orderBy("emails_registros_count", "DESC")
+            ->orderBy("email_enviado_count", "DESC")
             ->get();
 
-
+        // dd($usr_registros_hoy->toArray());
 
         if (auth()->user()->can("managment.index")) {
             $data["netIncome"] = Income::netIncome();

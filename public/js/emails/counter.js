@@ -3,6 +3,10 @@ $(function () {});
 function counter(date) {
     if (!date) return false;
 
+    const emails_sent_today = document.querySelector(
+        "#emails_sent_today .inner h3"
+    );
+
     let hora = date["hora"];
     let dia = date["dia"];
     let minutos = date["minutos"];
@@ -42,6 +46,7 @@ function counter(date) {
                 .classList.remove("d-none");
             contador.classList.add("d-none");
             contador.classList.remove("d-flex");
+            emails_sent_today.textContent = 0;
 
             return false;
             //Poner aqui la funcion que se ejecute al terminar el contador

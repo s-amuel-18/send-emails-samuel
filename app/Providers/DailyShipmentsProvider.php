@@ -73,7 +73,7 @@ class DailyShipmentsProvider extends ServiceProvider
                 "timesLastEmail" => $timesLastEmail ?? null,
                 "bodyEmails" => $bodyEmails,
                 "count_emails_register" => Contact_email::count(),
-                "lastEmailSend" => Carbon::parse($lastEmailSend->created_at)->diffForHumans(),
+                "lastEmailSend" => isset($lastEmailSend->created_at) ? Carbon::parse($lastEmailSend->created_at)->diffForHumans() : "SIN ENVIAR",
             ]);
         });
     }

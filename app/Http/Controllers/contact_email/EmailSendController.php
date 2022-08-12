@@ -41,8 +41,6 @@ class EmailSendController extends Controller
 
     public function crear_informacio(Request $request)
     {
-
-        // dd($request->all());
         $data = request()->validate([
             "select_body" => "nullable|integer|exists:body_emails,id",
             "body" => "required_if:select_body,null|nullable|string",
@@ -115,6 +113,8 @@ class EmailSendController extends Controller
 
 
             $enviado = auth()->user()->emailEnviado()->attach($emailSend->id);
+
+            (new Contact_email())->groupBySendEmail(auth()->user()->id, $emailSend->id);
 
             $emailSend->update(["estado" => 1]);
 
@@ -212,6 +212,7 @@ class EmailSendController extends Controller
 
 
             $enviado = auth()->user()->emailEnviado()->attach($emailsNotSend->id);
+            (new Contact_email())->groupBySendEmail(auth()->user()->id, $emailsNotSend->id);
 
             $emailsNotSend->update(["estado" => 1]);
 
@@ -284,9 +285,6 @@ class EmailSendController extends Controller
             $correo = new ServicioMaillable($info);
             Mail::to(env("MAIL_FROM_ADDRESS"))->send($correo);
 
-            if (auth()->user()) {
-                auth()->user()->emailEnviado()->attach($newEmail->id);
-            }
 
             $newEmail->update(["estado" => 1]);
 

@@ -75,15 +75,39 @@ class User extends Authenticatable
 
     public function correos_enviados_hoy()
     {
-        return DB::table("contact_email_user")->whereDate("created_at", Carbon::today())->count();
+        return $this->emailsSent24HoursAgo();
     }
 
     public function emailsSent24HoursAgo()
     {
+        $max_group_send_register = DB::table("contact_email_user")->max("group_send");
+
         $dataDo24Hours = Carbon::now()->subHours(24);
         $dateNow = Carbon::now();
 
-        $emailsDo24Hours = DB::table("contact_email_user")->whereBetween("created_at", [$dataDo24Hours, $dateNow])->count();
+        $last_mail = DB::table("contact_email_user")
+            // ->whereBetween("created_at", [$dataDo24Hours, $dateNow])
+            ->where("group_send", $max_group_send_register)
+            ->orderBy("created_at", "DESC")
+            ->take(1)
+            ->first();
+
+        if ($last_mail) {
+            $diifHours = Carbon::parse($last_mail->created_at)->diffInHours($dateNow);
+
+            if ($diifHours >= 24) {
+                $emailsDo24Hours = 0;
+            } else {
+                $emailsDo24Hours = DB::table("contact_email_user")
+                    ->where("group_send", $max_group_send_register)
+                    ->count();
+            }
+        } else {
+            $emailsDo24Hours = DB::table("contact_email_user")
+                ->whereBetween("created_at", [$dataDo24Hours, $dateNow])
+                ->count();
+        }
+
         return $emailsDo24Hours;
     }
 

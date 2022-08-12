@@ -60,14 +60,17 @@
                         <div class="form-group mb-md-0">
                             <label for="body_email">Cuerpo de mensaje *</label>
 
-                            <select name="body_email" class="select2 form-control form-control-sm" id="body_email"
-                                name="body_email">
-                                <option value="">-- Seleccionar Cuerpo De Email</option>
+                            <div class="">
 
-                                @foreach ($puedo_enviar_emails['bodyEmails'] as $body)
-                                    <option value="{{ $body->id }}">{{ $body->nombre }}</option>
-                                @endforeach
-                            </select>
+                                <select name="body_email" class="select2 form-control form-control-sm" id="body_email"
+                                    name="body_email">
+                                    <option value="">-- Seleccionar Cuerpo De Email</option>
+
+                                    @foreach ($puedo_enviar_emails['bodyEmails'] as $body)
+                                        <option value="{{ $body->id }}">{{ $body->nombre }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
 
                     </div>
@@ -75,7 +78,7 @@
                         <div class="">
                             <button class="btn btn-info btn-sm" type="submit">Enviar Emails</button>
                             <a href="{{ route('envio_email.index') }}">
-                                <button class="btn btn-light btn-sm" type="button">Enviar Emails</button>
+                                <button class="btn btn-light btn-sm" type="button">Redactar Email detallado</button>
                             </a>
 
                         </div>

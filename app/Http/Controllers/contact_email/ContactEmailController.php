@@ -242,52 +242,7 @@ class ContactEmailController extends Controller
         return redirect()->back()->with("message", $message);
     }
 
-    // // okuneva.steve
-    // public function datatable()
-    // {
-    //     $all_permission = auth()->user()->hasAllPermissions([
-    //         "contact_email.index",
-    //         "contact_email.estadisticas",
-    //         "contact_email.create",
-    //         "contact_email.edit",
-    //         "contact_email.destroy"
-    //     ]);
 
-
-
-
-    //     if ($all_permission) {
-    //         $emails = Contact_email::orderBy("created_at", "DESC")->get();
-    //     } else {
-    //         $emails = auth()->user()->emails_registros;
-    //     }
-    //     // dd($emails[0]);
-
-
-
-    //     return datatables()
-    //         ->of($emails)
-    //         ->addColumn("actions", "admin.components.datatable.contact_email.actions")
-    //         ->addColumn("creacion", function ($email) {
-    //             return $email->created_at->diffForHumans();
-    //         })
-    //         ->addColumn("envios", function ($email) {
-    //             return $email->envios()->count();
-    //         })
-    //         ->addColumn("links_buttons", "admin.components.datatable.contact_email.links_buttons")
-    //         ->addColumn("estado", "admin.components.datatable.contact_email.estado")
-    //         ->addColumn("valid_email", "admin.components.datatable.contact_email.email")
-    //         ->addColumn("word_nombre_empresa", "admin.components.datatable.contact_email.word_nombre_empresa")
-    //         ->addColumn("usuario", function ($email) {
-    //             $user = $email->usuario;
-    //             return $user ? $user->name : "Sin Usuario";
-    //         })
-    //         ->rawColumns(["actions", "creacion", "links_buttons", "estado", "valid_email", "word_nombre_empresa", "usuario", "envios"])
-    //         // ->rawColumns(["creacion"])
-    //         // ->rawColumns(["links_buttons"])
-
-    //         ->toJson();
-    // }
 
     public function getContactEmails(Request $request)
     {
@@ -324,25 +279,6 @@ class ContactEmailController extends Controller
 
     public function datatable(Request $request)
     {
-        // $query_user = DB::table("contact_emails")
-        //     ->select(
-        //         "contact_emails.id AS contact_id",
-        //         "contact_emails.url",
-        //         "contact_emails.nombre_empresa",
-        //         "contact_emails.estado",
-        //         "contact_emails.email AS contact_email",
-        //         "contact_emails.whatsapp",
-        //         "contact_emails.instagram",
-        //         "contact_emails.facebook",
-        //         "contact_emails.user_id",
-        //         "contact_emails.created_at AS contact_created",
-        //         "us.username"
-        //     )
-        //     ->leftJoin("users AS us", function ($j) {
-        //         $j->on("contact_emails.user_id", "=", "us.id")
-        //             ->whereNotNull("us.created_at");
-        //     })
-        //     ->whereNotNull("contact_emails.created_at");
 
         $query_user = Contact_email::select(
             "contact_emails.id AS contact_id",
@@ -407,7 +343,6 @@ class ContactEmailController extends Controller
                     $q->where("contact_emails.id", "like", "%{$search_text}%")
                         ->orWhere("contact_emails.nombre_empresa", "like", "%{$search_text}%")
                         ->orWhere("us.username", "like", "%{$search_text}%")
-                        ->orWhere("contact_emails.estado", "like", "%{$search_text}%")
                         ->orWhere("contact_emails.email", "like", "%{$search_text}%")
                         ->orWhereHas("envios", null, "like", "%{$search_text}%")
                         ->orWhere("contact_emails.url", "like", "%{$search_text}%")
@@ -427,7 +362,6 @@ class ContactEmailController extends Controller
                     $q->where("contact_emails.id", "like", "%{$search_text}%")
                         ->orWhere("contact_emails.nombre_empresa", "like", "%{$search_text}%")
                         ->orWhere("us.username", "like", "%{$search_text}%")
-                        ->orWhere("contact_emails.estado", "like", "%{$search_text}%")
                         ->orWhere("contact_emails.email", "like", "%{$search_text}%")
                         ->orWhereHas("envios", null, "like", "%{$search_text}%")
                         ->orWhere("contact_emails.url", "like", "%{$search_text}%")
