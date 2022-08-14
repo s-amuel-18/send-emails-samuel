@@ -35,30 +35,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // $contact_send = auth()->user()->emailEnviado()->take(1)->first();
-        // $group = (new Contact_email())->groupBySendEmail(auth()->user()->id, $contact_send->id);
-
-        $emails = Contact_email::emailValid()->take(98)->get();
-
-        $emails->each(function ($cont) {
-            $dalyEmailsValid = auth()->user()->validSendEmailDaily();
-
-            if ($dalyEmailsValid) {
-
-                DB::table("contact_email_user")->insert([
-                    "user_id" => auth()->user()->id,
-                    "contact_email_id" => $cont->id,
-                    "created_at" => Carbon::now()->subHours(23)->subMinutes(rand(50, 59))
-                    // "created_at" => Carbon::now()
-                ]);
-
-                $group = (new Contact_email())->groupBySendEmail(auth()->user()->id, $cont->id);
-                // dump($group);
-            }
-        });
-
-        // )======================
-
         $data = [];
 
         $pays_time = BillingTime::withSum("spemts", "price")->get();

@@ -75,7 +75,7 @@
         @can('contact_email.index')
             <div class="col-md-3 col-6">
                 {{-- Registros de hoy --}}
-                <x-adminlte-small-box title="{{ $registros_de_hoy }}" text="Registros De Hoy" icon="fas fa-mail-bulk"
+                <x-adminlte-small-box title="{{ $registros_de_hoy }}" text="Emails Registrados hoy" icon="fas fa-mail-bulk"
                     theme="success" url="contact-email/" url-text="Ver Registros" />
             </div>
         @endcan
@@ -83,7 +83,7 @@
         @can('contact_email.estadisticas')
             <div class="col-md-3 col-6">
                 {{-- Registros Totales --}}
-                <x-adminlte-small-box title="{{ $total_registros }}" text="Total Contactos con emails" icon="fas fa-mail-bulk"
+                <x-adminlte-small-box title="{{ $total_registros }}" text="total de emails registrados" icon="fas fa-mail-bulk"
                     theme="primary" url="contact-email/estadisticas" url-text="Ver Registros" />
             </div>
         @endcan
@@ -91,15 +91,15 @@
         @can('envio_email.index')
             <div class="col-md-3 col-6">
                 {{-- Correos sin enviar --}}
-                <x-adminlte-small-box title="{{ $correos_sin_enviar }}" text="Contactos con email Sin Enviar"
-                    icon="fas fa-mail-bulk" theme="danger" url="envio-email/redaccion-detallada" url-text="Enviar Correos" />
+                <x-adminlte-small-box title="{{ $correos_sin_enviar }}" text="Emails Sin Enviar" icon="fas fa-mail-bulk"
+                    theme="danger" url="envio-email/redaccion-detallada" url-text="Enviar Correos" />
             </div>
         @endcan
 
         @can('envio_email.index')
             <div class="col-md-3 col-6">
                 {{-- usuarios --}}
-                <x-adminlte-small-box id="emails_sent_today" title="{{ $enviados_hoy }}" text="Envios en las ultimas 24 horas"
+                <x-adminlte-small-box id="emails_sent_today" title="{{ $enviados_hoy }}" text="Ultimos emails enviados"
                     icon="fas fa-mail-bulk" theme="indigo" url="envio-email/redaccion-detallada" url-text="Enviar Correos" />
             </div>
         @endcan
