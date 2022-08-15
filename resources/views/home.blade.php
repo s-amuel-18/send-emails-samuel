@@ -155,15 +155,20 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <span style="font-size: 16px"
-                                                class="badge  badge-{{ $usr->emails_registros_count > 0 ? 'success' : 'danger' }}">{{ $usr->emails_registros_count }}</span>
+                                            <a href="{{ route('contact_email.index', ['search' => $usr->username]) }}">
+                                                <span style="font-size: 16px"
+                                                    class="badge  badge-{{ $usr->emails_registros_count > 0 ? 'success' : 'danger' }}">{{ $usr->emails_registros_count }}</span>
+                                            </a>
 
 
                                         </td>
                                         <td>
 
-                                            <span class="badge bg-purple"
-                                                style="font-size: 16px">{{ $usr->email_enviado_count }}</span>
+                                            <a
+                                                href="{{ route('contact_email.shipping_history', ['search' => $usr->username]) }}">
+                                                <span class="badge bg-purple"
+                                                    style="font-size: 16px">{{ $usr->email_enviado_count }}</span>
+                                            </a>
                                         </td>
                                     </tr>
                                 @endforeach

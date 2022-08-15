@@ -114,7 +114,7 @@ class EmailSendController extends Controller
 
             $enviado = auth()->user()->emailEnviado()->attach($emailSend->id);
 
-            (new Contact_email())->groupBySendEmail(auth()->user()->id, $emailSend->id);
+            (new Contact_email())->groupBySendEmail(auth()->user()->id, $emailSend->id, $info);
 
             $emailSend->update(["estado" => 1]);
 
@@ -198,6 +198,7 @@ class EmailSendController extends Controller
         }
 
         $emailsNotSend = Contact_email::sinEnviar()
+            ->orderBy("created_at", "DESC")
             ->first();
 
         $info["subject"] =  $data["subject"];
@@ -212,7 +213,7 @@ class EmailSendController extends Controller
 
 
             $enviado = auth()->user()->emailEnviado()->attach($emailsNotSend->id);
-            (new Contact_email())->groupBySendEmail(auth()->user()->id, $emailsNotSend->id);
+            (new Contact_email())->groupBySendEmail(auth()->user()->id, $emailsNotSend->id, $info);
 
             $emailsNotSend->update(["estado" => 1]);
 

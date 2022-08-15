@@ -52,9 +52,12 @@ Route::resource("user", UserController::class)->except("show")->middleware("auth
 
 // emails
 Route::resource("contact-email", ContactEmailController::class)->except("show")->middleware("auth")->names("contact_email");
-Route::get('/contact-email/datatable', [ContactEmailController::class, 'datatable'])->name('contact_email.datatable');
-Route::get('/contact-email/consulta-emails', [ContactEmailController::class, 'getContactEmails'])->name('contact_email.getContactEmails');
-Route::get('/contact-email/estadisticas', [ContactEmailController::class, 'estadisticas'])->name('contact_email.estadisticas');
+Route::get('/contact-email/datatable', [ContactEmailController::class, 'datatable'])->middleware("auth")->name('contact_email.datatable');
+Route::get('/contact-email/consulta-emails', [ContactEmailController::class, 'getContactEmails'])->middleware("auth")->name('contact_email.getContactEmails');
+Route::get('/contact-email/estadisticas', [ContactEmailController::class, 'estadisticas'])->middleware("auth")->name('contact_email.estadisticas');
+Route::get('/contact-email/historial-envios', [ContactEmailController::class, 'shipping_history'])->middleware("auth")->name('contact_email.shipping_history');
+Route::get('/contact-email/historial-envios/datatable', [ContactEmailController::class, 'shipping_history_datatable'])->middleware("auth")->name('contact_email.shipping_history_datatable');
+Route::get('/contact-email/historial-envios/{id}', [ContactEmailController::class, 'get_details_shippung'])->middleware("auth")->name('contact_email.shipping_details');
 
 // body
 Route::resource("body-email", BodyEmailController::class)->except("show")->middleware("auth")->names("bodyEmail");

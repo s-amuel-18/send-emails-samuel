@@ -112,7 +112,7 @@ class Contact_email extends Model
         return $q->whereNotNull("email");
     }
 
-    public function groupBySendEmail($user, $id_email)
+    public function groupBySendEmail($user, $id_email, $desc = null)
     {
         $contact = Contact_email::find($id_email);
 
@@ -149,9 +149,16 @@ class Contact_email extends Model
             ? intval($group_send_last_contact) + 1
             : $group_send_last_contact;
 
-        $query->update([
+        $data_insert = [
             "group_send" => $group_send
-        ]);
+        ];
+
+        if ($desc) {
+            $data_insert["subject"] = $desc["subject"];
+            $data_insert["body"] = $desc["body"];
+        }
+
+        $query->update($data_insert);
 
 
         return $group_send;

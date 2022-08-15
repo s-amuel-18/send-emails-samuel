@@ -61,7 +61,6 @@ class HomeController extends Controller
             return $q->whereDate("created_at", Carbon::today());
         }])
             ->withCount(["emailEnviado" => function ($q) {
-                // dd($q->whereDate("created_at", Carbon::today()));
                 return $q->whereDate("contact_email_user.created_at", Carbon::today());
             }])
             ->orderBy("emails_registros_count", "DESC")

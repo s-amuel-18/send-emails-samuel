@@ -295,8 +295,14 @@ return [
                 ],
                 [
                     'text' => 'Cuerpo De Emails',
-                    'icon_color' => 'purple',
+                    'icon_color' => 'orange',
                     'route'         => 'bodyEmail.index',
+                    'can'        => 'bodyEmail.index',
+                ],
+                [
+                    'text' => 'Historial De Envios',
+                    'icon_color' => 'red',
+                    'route'         => 'contact_email.shipping_history',
                     'can'        => 'bodyEmail.index',
                 ],
             ],

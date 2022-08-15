@@ -112,7 +112,7 @@
                         </div>
                     </div>
 
-                    @if ($contact_emails->count() > 0)
+                    @if ($contact_emails_all_counts > 0)
                         <div class="">
                             <table id="table_contact_emails"
                                 class="w-100 table table-light table-striped table-hover text-nowrap table-valign-middle">
@@ -257,15 +257,14 @@
         const form_import_excel = document.getElementById("form_import_excel");
         const table = document.getElementById("table_contact_emails");
         const appData = @json($data['js']);
+        const requestData = @json($data['request']);
 
         $(function() {
             $(excel_file).on("change", e => {
                 form_import_excel.submit();
             })
 
-
-
-            const datatable = $(table).DataTable({
+            let datatableConfig = {
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
                 },
@@ -275,10 +274,13 @@
                 ],
                 "responsive": true,
                 "scrollX": true,
-                "pagingType": "full",
+                // "pagingType": "full",
+                "bPaginate": true,
+                "sPaginationType": "numbers",
                 "pageLength": 10,
                 "lengthChange": true,
                 "processing": true,
+                "fixedHeader": true,
                 "serverSide": true,
                 "searching": true,
                 "ajax": appData["url_datatable"],
@@ -319,21 +321,17 @@
                         data: "actions"
                     },
                 ],
+            };
 
+            if (requestData["search"]) {
+                datatableConfig.search = {
+                    "search": requestData["search"],
+                };
+            }
 
-            });
-
-
-
-            // On document ready
-            const filterSearch = document.querySelector('[data-kt-user-table-filter="search"]');
-            console.log(filterSearch);
-            filterSearch.addEventListener('keyup', function(e) {
-                console.log(e.target.value);
-                datatable.search(e.target.value).draw();
-            });
-
+            const datatable = $(table).DataTable(datatableConfig);
         })
+
         $(table).on("draw.dt", e => {
             setTimeout(() => {
                 $('[data-toggle="tooltip"]').tooltip()
