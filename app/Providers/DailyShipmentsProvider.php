@@ -28,7 +28,7 @@ class DailyShipmentsProvider extends ServiceProvider
      */
     public function boot()
     {
-        View::composer('home', function ($view) {
+        View::composer('admin.dashboard.dashboard', function ($view) {
 
             $user = auth()->user();
 

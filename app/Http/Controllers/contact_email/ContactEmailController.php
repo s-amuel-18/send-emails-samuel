@@ -310,7 +310,7 @@ class ContactEmailController extends Controller
             10 => "contact_emails.updated_at",
         );
 
-        $totalDataRecord = DB::table("contact_emails")->whereNull("deleted_at")->count();
+        $totalDataRecord = Contact_email::whereNull("deleted_at")->count();
 
 
 
@@ -452,8 +452,8 @@ class ContactEmailController extends Controller
         $columns_list = array(
             0 => "contact_email_user.created_at",
             1 => "us.username",
-            2 => "contact_email_user.subject",
-            3 => "cm.email",
+            2 => "cm.email",
+            3 => "contact_email_user.subject",
             4 => "contact_email_user.group_send",
         );
 

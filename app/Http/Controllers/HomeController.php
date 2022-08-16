@@ -8,6 +8,7 @@ use App\Models\CategoryService;
 use App\Models\Contact_email;
 use App\Models\EmailEnviado;
 use App\Models\Income;
+use App\Models\Requirements;
 use App\Models\Spents;
 use App\Models\User;
 use Carbon\Carbon;
@@ -18,6 +19,7 @@ use Illuminate\Support\Facades\Mail;
 use Spatie\Permission\Models\Role;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\App;
+use PharIo\Manifest\Requirement;
 
 class HomeController extends Controller
 {
@@ -92,6 +94,8 @@ class HomeController extends Controller
             $data["dailyEarnings"] = Income::dailyEarnings();
         }
 
-        return view('home', compact("data", "total_registros", "registros_de_hoy", "correos_sin_enviar", "enviados_hoy", "usr_registros_hoy", "date", "registros_de_hoy_take", "pays_time"));
+        $data['requirements_count'] = 1;
+
+        return view('admin.dashboard.dashboard', compact("data", "total_registros", "registros_de_hoy", "correos_sin_enviar", "enviados_hoy", "usr_registros_hoy", "date", "registros_de_hoy_take", "pays_time"));
     }
 }

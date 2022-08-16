@@ -20,6 +20,7 @@ use App\Http\Controllers\IncomeController;
 use App\Http\Controllers\ManagementController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\RecomendacionMejoraController;
+use App\Http\Controllers\RequirementsController;
 // use App\Http\Controllers\contact_email\Email_send;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ServiceController;
@@ -110,3 +111,10 @@ Route::get("emails/export/excel", [ExcelExportController::class, "contactEmail"]
 
 // excel import
 Route::post("emails/import/excel", [ExcelImportController::class, "contactEmail"])->middleware("auth")->name("contactEmail.import_excel");
+
+// requerimientos
+Route::prefix('requerimientos')->middleware(["auth"])->group(function () {
+    Route::get("", [RequirementsController::class, "store"])->name("requirements.store");
+    Route::get("/crear", [RequirementsController::class, "update"])->name("requirements.update");
+    Route::get("/crear", [RequirementsController::class, "destroy"])->name("requirements.destroy");
+});
