@@ -16,7 +16,7 @@ class Contact_email extends Model
 
     use HasFactory;
 
-    public const DAILY_EMAIL_LIMIT = 5;
+    public const DAILY_EMAIL_LIMIT = 100;
 
     protected $fillable = [
         'user_id',
