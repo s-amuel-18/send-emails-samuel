@@ -1,5 +1,5 @@
 @extends('layouts.app')
-{{-- @section('plugins.Datatables', true) --}}
+@section('plugins.Datatables', true)
 
 @section('title', 'Administrador de usuarios')
 
@@ -24,19 +24,20 @@
                     </div>
                 </div>
 
-                <div class="card-body table-responsive">
-                    <table class="table table-light table-striped table-hover text-nowrap table-valign-middle">
+                <div class="card-body">
+                    <table
+                        class="datatable table table-light table-striped table-hover text-nowrap table-valign-middle w-100">
                         <thead class="">
                             <tr>
                                 <th>#</th>
-                                <th>id</th>
+                                <th>ID</th>
+                                <th>Nombre De Usuario</th>
                                 <th>Nombre</th>
-                                <th>UserName</th>
                                 <th>Email</th>
                                 <th>Rol</th>
                                 <th>Actualizacion</th>
                                 <th>Creacion</th>
-                                <th>btns</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -45,8 +46,16 @@
                                 <tr>
                                     <td> {{ $i + 1 }} </td>
                                     <td> {{ $user->id }} </td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div style="width: 27px; height: 27px;"
+                                                class="mr-2 bg-{{ $user->color }} d-flex justify-content-center align-items-center rounded-circle">
+                                                <i class="fa fa-user" style="font-size: 12px"></i>
+                                            </div>
+                                            {{ $user->username }}
+                                        </div>
+                                    </td>
                                     <td> {{ $user->name }} </td>
-                                    <td> {{ $user->username }} </td>
                                     <td> {{ $user->email }} </td>
                                     <td>
                                         @if ($user->roles->count() > 0)
@@ -116,9 +125,27 @@
 
 
 @section('js')
+
     <script>
         $(function() {
             $('[data-toggle="tooltip"]').tooltip()
+            let datatableOptions = {
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
+                },
+                "order": [
+                    [8, "DESC"]
+                ],
+                "responsive": true,
+                "fixedHeader": true,
+                "scrollX": true,
+                "bPaginate": true,
+                "sPaginationType": "numbers",
+                "pageLength": 10,
+                "lengthChange": true,
+            };
+
+            $(".datatable").DataTable(datatableOptions);
         })
     </script>
 @stop

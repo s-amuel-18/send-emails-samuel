@@ -47,25 +47,19 @@ class ContactEmailController extends Controller
             "cyan",
         ];
 
-        $search = $request["search"] ?? null;
+        $contact_emails_query = Contact_email::orderBy("envios_count", "ASC");
 
-        $contact_emails_query = Contact_email::with(["usuario"])
-            ->withCount("envios")
-            ->orderBy("envios_count", "ASC");
-
-
-        if ($search) {
-            $contact_emails_query->searchLike($search);
-        }
         $contact_emails_all_counts = $contact_emails_query->count();
 
-        $contact_emails = $contact_emails_query->paginate(Contact_email::PAGINATE);
         $contact_emails_today_count = Contact_email::today()->count();
+
+        $data["request"] = $request->all();
+
         $data["js"] = [
             "url_datatable" => route("contact_email.datatable"),
         ];
 
-        return view("admin.contact_email.index", compact("contact_emails", "search", "contact_emails_all_counts", "contact_emails_today_count", "data"));
+        return view("admin.contact_email.index", compact("contact_emails_all_counts", "contact_emails_today_count", "data"));
     }
 
     public function estadisticas()
@@ -316,7 +310,7 @@ class ContactEmailController extends Controller
             10 => "contact_emails.updated_at",
         );
 
-        $totalDataRecord = DB::table("contact_emails")->whereNotNull("created_at")->count();
+        $totalDataRecord = DB::table("contact_emails")->whereNull("deleted_at")->count();
 
 
 
@@ -414,5 +408,170 @@ class ContactEmailController extends Controller
         );
 
         return $get_json_data;
+    }
+
+    public function shipping_history(Request $request)
+    {
+        $data["title"] = 'Historial De Envios';
+        $data["shipping_history_count"] = 10;
+        $data["request"] = $request->all();
+
+        $data["js"] = [
+            "url_datatable" => route("contact_email.shipping_history_datatable"),
+        ];
+
+        return view("admin.contact_email.shipping_history", compact("data"));
+    }
+
+    public function shipping_history_datatable(Request $request)
+    {
+        $query_user = DB::table('contact_email_user')
+            ->select(
+                "contact_email_user.id AS send_id",
+                "contact_email_user.user_id",
+                "contact_email_user.created_at AS shipping_created",
+                "contact_email_user.subject",
+                "contact_email_user.body",
+                "contact_email_user.group_send",
+                "us.username",
+                "cm.email AS contact_email",
+            )
+            ->leftJoin("users AS us", function ($j) {
+                $j->on("us.id", "=", "contact_email_user.user_id")
+                    ->whereNull("us.deleted_at");
+            })
+            ->leftJoin("contact_emails AS cm", function ($j) {
+                $j->on("cm.id", "=", "contact_email_user.contact_email_id")
+                    ->whereNull("cm.deleted_at");
+            })
+            ->whereNull("contact_email_user.deleted_at");
+
+
+        $totalFilteredRecord = $totalDataRecord = $draw_val = "";
+
+        $columns_list = array(
+            0 => "contact_email_user.created_at",
+            1 => "us.username",
+            2 => "contact_email_user.subject",
+            3 => "cm.email",
+            4 => "contact_email_user.group_send",
+        );
+
+        $totalDataRecord = DB::table("contact_email_user")->whereNull("contact_email_user.deleted_at")->count();
+
+
+
+        $totalFilteredRecord = $totalDataRecord;
+
+        $limit_val = $request["length"];
+        $start_val = $request["start"];
+        $order_val = $columns_list[$request["order"][0]["column"]];
+
+        $dir_val = $request["order"][0]["dir"];
+
+
+        if (empty($request["search"]["value"])) {
+            $data_return = $query_user->offset($start_val)
+                ->orderBy($order_val, $dir_val);
+
+
+            $data_return = $data_return->limit($limit_val)->get();
+        } else {
+            $search_text = $request["search"]["value"];
+
+            $data_return =  $query_user
+                ->where(function ($q) use ($search_text) {
+                    $q->where("contact_email_user.created_at", "like", "%{$search_text}%")
+                        ->orWhere("us.username", "like", "%{$search_text}%")
+                        ->orWhere("contact_email_user.subject", "like", "%{$search_text}%")
+                        ->orWhere("contact_email_user.group_send", "like", "%{$search_text}%")
+                        ->orWhere("cm.email", "like", "%{$search_text}%");
+                })
+                ->offset($start_val)
+                ->orderBy($order_val, $dir_val);
+
+            $data_return = $data_return->limit($limit_val)->get();
+
+            $totalFilteredRecord = $query_user
+                ->where(function ($q) use ($search_text) {
+                    $q->where("contact_email_user.created_at", "like", "%{$search_text}%")
+                        ->orWhere("us.username", "like", "%{$search_text}%")
+                        ->orWhere("contact_email_user.subject", "like", "%{$search_text}%")
+                        ->orWhere("contact_email_user.group_send", "like", "%{$search_text}%")
+                        ->orWhere("cm.email", "like", "%{$search_text}%");
+                })
+                ->count();
+        }
+
+        $data_val = array();
+
+        if (!empty($data_return)) {
+            $data_val = $data_return->map(function ($email) {
+                if ($email->username) {
+                    $email->color_by_user = User::find($email->user_id)->color_by_id();
+                } else {
+                    $email->color_by_user = null;
+                }
+
+                $created_parser = Carbon::parse($email->shipping_created);
+
+                return [
+                    "id" => $email->send_id,
+                    "username" => (string) response()->view("admin.contact_email.components.datatable.user", compact("email"))->original,
+                    "email" => (string) response()->view("admin.contact_email.components.datatable.email", compact("email"))->original,
+                    "created_at" => (string) response()->view("admin.contact_email.components.datatable.created_at", compact("created_parser"))->original,
+                    "subject" => !$email->subject ? "Sin asunto" : $email->subject,
+                    "group_send" => $email->group_send ? $email->group_send : "Sin Grupo",
+                    "details" => (string) response()->view("admin.contact_email.components.datatable.details", compact("email"))->original
+                ];
+            });
+        }
+
+        $draw_val = $request["draw"];
+        $get_json_data = array(
+            "draw"            => intval($draw_val),
+            "recordsTotal"    => intval($totalDataRecord),
+            "recordsFiltered" => intval($totalFilteredRecord),
+            "data"            => $data_val
+        );
+
+        return $get_json_data;
+    }
+
+    public function get_details_shippung($id_shipping)
+    {
+        $shipping_details = DB::table("contact_email_user")
+            ->select(
+                "contact_email_user.id AS ship_id",
+                "contact_email_user.user_id",
+                "contact_email_user.contact_email_id",
+                "contact_email_user.created_at AS ship_created_at",
+                "contact_email_user.updated_at AS ship_updated_at",
+                "contact_email_user.group_send",
+                "contact_email_user.subject",
+                "contact_email_user.body",
+                "us.username",
+                "cm.email"
+            )
+            ->leftJoin("users AS us", function ($j) {
+                $j->on("us.id", "=", "contact_email_user.user_id")
+                    ->whereNull("us.deleted_at");
+            })
+            ->leftJoin("contact_emails AS cm", function ($j) {
+                $j->on("cm.id", "=", "contact_email_user.contact_email_id")
+                    ->whereNull("us.deleted_at");
+            })
+            ->where("contact_email_user.id", $id_shipping)
+            ->whereNull("contact_email_user.deleted_at")
+            ->first();
+
+        if (!$shipping_details) {
+            return response()->json([
+                "message" => "El valor no fue encontrado"
+            ], 404);
+        }
+        $shipping_details->created_format = Carbon::parse($shipping_details->ship_created_at)->format("d/m/Y H:s:i");
+
+        return response()->json($shipping_details, 200);
     }
 }

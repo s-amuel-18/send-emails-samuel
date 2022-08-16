@@ -99,7 +99,7 @@
         @can('envio_email.index')
             <div class="col-md-3 col-6">
                 {{-- usuarios --}}
-                <x-adminlte-small-box id="emails_sent_today" title="{{ $enviados_hoy }}" text="Ultimos emails enviados"
+                <x-adminlte-small-box id="emails_sent_today" title="{{ $enviados_hoy }}" text="Emails enviados hoy"
                     icon="fas fa-mail-bulk" theme="indigo" url="envio-email/redaccion-detallada" url-text="Enviar Correos" />
             </div>
         @endcan
@@ -155,15 +155,20 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <span style="font-size: 16px"
-                                                class="badge  badge-{{ $usr->emails_registros_count > 0 ? 'success' : 'danger' }}">{{ $usr->emails_registros_count }}</span>
+                                            <a href="{{ route('contact_email.index', ['search' => $usr->username]) }}">
+                                                <span style="font-size: 16px"
+                                                    class="badge  badge-{{ $usr->emails_registros_count > 0 ? 'success' : 'danger' }}">{{ $usr->emails_registros_count }}</span>
+                                            </a>
 
 
                                         </td>
                                         <td>
 
-                                            <span class="badge bg-purple"
-                                                style="font-size: 16px">{{ $usr->email_enviado_count }}</span>
+                                            <a
+                                                href="{{ route('contact_email.shipping_history', ['search' => $usr->username]) }}">
+                                                <span class="badge bg-purple"
+                                                    style="font-size: 16px">{{ $usr->email_enviado_count }}</span>
+                                            </a>
                                         </td>
                                     </tr>
                                 @endforeach

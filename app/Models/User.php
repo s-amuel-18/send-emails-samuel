@@ -86,7 +86,6 @@ class User extends Authenticatable
         $dateNow = Carbon::now();
 
         $last_mail = DB::table("contact_email_user")
-            // ->whereBetween("created_at", [$dataDo24Hours, $dateNow])
             ->where("group_send", $max_group_send_register)
             ->orderBy("created_at", "DESC")
             ->take(1)

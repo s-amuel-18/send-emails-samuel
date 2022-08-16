@@ -113,12 +113,18 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <span style="font-size: 16px"
-                                                        class="badge badge-{{ $user->emails_registros_count > 0 ? 'success' : 'danger' }}">{{ $user->emails_registros_count }}</span>
+                                                    <a
+                                                        href="{{ route('contact_email.index', ['search' => $user->username]) }}">
+                                                        <span style="font-size: 16px"
+                                                            class="badge badge-{{ $user->emails_registros_count > 0 ? 'success' : 'danger' }}">{{ $user->emails_registros_count }}</span>
+                                                    </a>
                                                 </td>
                                                 <td>
-                                                    <span style="font-size: 16px"
-                                                        class="badge bg-{{ $user->email_enviado_count > 0 ? 'purple' : 'light' }}">{{ $user->email_enviado_count }}</span>
+                                                    <a
+                                                        href="{{ route('contact_email.shipping_history', ['search' => $user->username]) }}">
+                                                        <span style="font-size: 16px"
+                                                            class="badge bg-{{ $user->email_enviado_count > 0 ? 'purple' : 'light' }}">{{ $user->email_enviado_count }}</span>
+                                                    </a>
                                                 </td>
                                             </tr>
                                         @endforeach
