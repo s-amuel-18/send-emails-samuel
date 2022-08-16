@@ -99,7 +99,7 @@
         @can('envio_email.index')
             <div class="col-md-3 col-6">
                 {{-- usuarios --}}
-                <x-adminlte-small-box id="emails_sent_today" title="{{ $enviados_hoy }}" text="Ultimos emails enviados"
+                <x-adminlte-small-box id="emails_sent_today" title="{{ $enviados_hoy }}" text="Emails enviados hoy"
                     icon="fas fa-mail-bulk" theme="indigo" url="envio-email/redaccion-detallada" url-text="Enviar Correos" />
             </div>
         @endcan

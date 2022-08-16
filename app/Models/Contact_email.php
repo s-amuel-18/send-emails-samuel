@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class Contact_email extends Model
@@ -15,7 +16,7 @@ class Contact_email extends Model
 
     use HasFactory;
 
-    public const DAILY_EMAIL_LIMIT = 100;
+    public const DAILY_EMAIL_LIMIT = 5;
 
     protected $fillable = [
         'user_id',
@@ -114,52 +115,65 @@ class Contact_email extends Model
 
     public function groupBySendEmail($user, $id_email, $desc = null)
     {
+        // verificamos que el registro existe en "Contact_email"
         $contact = Contact_email::find($id_email);
-
+        // validamos que el registro no sea nulo
         if (!$contact or (!isset($contact->email) or !$contact->email)) {
             return null;
         }
 
+        // seleccionamos el ultimo registro de envio de email, esto lo hacemos para tomar el ultimo envio que se hizo y posteriormente actualizarlo con los datos correspondientes
         $query = DB::table("contact_email_user")
             ->where("user_id", $user)
             ->where("contact_email_id", $id_email)
+            ->orderBy("created_at", "DESC")
             ->take(1);
 
-        $contact_email_user_last = $query->first();
+        // seleccionamos el registro
+        $contact_email_user_last = DB::table("contact_email_user")
+            ->whereNotNull("group_send")
+            ->orderBy("created_at", "DESC")
+            ->first();
 
-        // dump($contact_email_user_last);
-
-        if (!$contact_email_user_last) {
-            return null;
-        }
+        // seleccionamos el group send mas alto
         $max_group_send_register = DB::table("contact_email_user")->max("group_send");
 
+        // validamos que en caso de que el group send sea nulo, lo convertimos en 1
         $group_send_last_contact = $max_group_send_register ?? 1;
 
-
+        // contamos la cantidad de emails que se han enviado con ese numero de group send
         $count_contacts_for_group = DB::table("contact_email_user")->where("group_send", $group_send_last_contact)->count();
-
-        $hours_last_email = Carbon::parse($contact_email_user_last->created_at);
-
-        $now = Carbon::now();
-
-        $diffHours = $hours_last_email->diffInHours($now);
-        // dump("count_contacts_for_group: " . $count_contacts_for_group . " diffHours: " . $diffHours);
-        $group_send = ($count_contacts_for_group >= Contact_email::DAILY_EMAIL_LIMIT && $diffHours >= 24)
-            ? intval($group_send_last_contact) + 1
-            : $group_send_last_contact;
-
-        $data_insert = [
-            "group_send" => $group_send
-        ];
-
+        // validamos que venga una descripcion
         if ($desc) {
             $data_insert["subject"] = $desc["subject"];
             $data_insert["body"] = $desc["body"];
         }
 
-        $query->update($data_insert);
+        // validamos que el registro exista
+        if (!$contact_email_user_last) {
+            $data_insert["group_send"] = 1;
+            $query->update($data_insert);
 
+            return null;
+        }
+
+
+        //  tomamos la hora del ultimo emails enviado
+        $hours_last_email = Carbon::parse($contact_email_user_last->created_at);
+
+
+        $now = Carbon::now();
+        // diferencia entre la hora actual y el ultimo email enviado
+        $diffHours = $hours_last_email->diffInHours($now);
+
+        // creamos el group send "grupo de envio"
+        $group_send = ($count_contacts_for_group >= Contact_email::DAILY_EMAIL_LIMIT && $diffHours >= 24)
+            ? intval($group_send_last_contact) + 1
+            : $group_send_last_contact;
+
+        $data_insert["group_send"] = $group_send;
+
+        $query->update($data_insert);
 
         return $group_send;
     }

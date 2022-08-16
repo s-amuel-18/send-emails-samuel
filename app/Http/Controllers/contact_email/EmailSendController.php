@@ -157,8 +157,6 @@ class EmailSendController extends Controller
         $emailsToSend = auth()->user()->correos_por_enviar_hoy();
         $emailsToSend = $emailsToSend == 0 ? null : $emailsToSend;
 
-
-
         if (!$dalyEmailsValid) {
             $send_today = auth()->user()->emailsSent24HoursAgo();
 

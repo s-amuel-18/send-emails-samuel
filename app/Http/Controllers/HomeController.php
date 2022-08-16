@@ -35,6 +35,23 @@ class HomeController extends Controller
      */
     public function index()
     {
+        // $emails = Contact_email::sinEnviar()->emailValid()->take(Contact_email::DAILY_EMAIL_LIMIT)->get();
+        // // $emails = Contact_email::sinEnviar()->emailValid()->take(1)->get();
+
+        // $emails->each(function ($emailsNotSend) {
+        //     $info["subject"] =  "dsadsa";
+        //     $info["body"] =  "dsadsadas";
+
+        //     $insert = DB::table("contact_email_user")->insert([
+        //         "user_id" => auth()->user()->id,
+        //         "contact_email_id" => $emailsNotSend->id,
+        //         // "created_at" => Carbon::now()
+        //         "created_at" => Carbon::now()->subHours(23)->subMinutes(59)->subSeconds(55)
+        //     ]);
+
+        //     (new Contact_email())->groupBySendEmail(auth()->user()->id, $emailsNotSend->id, $info);
+        // });
+
         $data = [];
 
         $pays_time = BillingTime::withSum("spemts", "price")->get();
@@ -67,7 +84,6 @@ class HomeController extends Controller
             ->orderBy("email_enviado_count", "DESC")
             ->get();
 
-        // dd($usr_registros_hoy->toArray());
 
         if (auth()->user()->can("managment.index")) {
             $data["netIncome"] = Income::netIncome();
