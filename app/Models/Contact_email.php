@@ -177,4 +177,51 @@ class Contact_email extends Model
 
         return $group_send;
     }
+
+    public function datatableContactEmailQuery()
+    {
+        return Contact_email::select(
+            "contact_emails.id AS contact_id",
+            "contact_emails.url",
+            "contact_emails.nombre_empresa",
+            "contact_emails.estado",
+            "contact_emails.email AS contact_email",
+            "contact_emails.whatsapp",
+            "contact_emails.instagram",
+            "contact_emails.facebook",
+            "contact_emails.user_id",
+            "contact_emails.created_at AS contact_created",
+            "contact_emails.updated_at AS contact_updated",
+            "us.username"
+        )
+            ->withCount("envios")
+            ->leftJoin("users AS us", function ($j) {
+                $j->on("contact_emails.user_id", "=", "us.id")
+                    ->whereNotNull("us.created_at");
+            });
+    }
+
+    public function datatableEmailsSendQuery()
+    {
+        return DB::table('contact_email_user')
+            ->select(
+                "contact_email_user.id AS send_id",
+                "contact_email_user.user_id",
+                "contact_email_user.created_at AS shipping_created",
+                "contact_email_user.subject",
+                "contact_email_user.body",
+                "contact_email_user.group_send",
+                "us.username",
+                "cm.email AS contact_email",
+            )
+            ->leftJoin("users AS us", function ($j) {
+                $j->on("us.id", "=", "contact_email_user.user_id")
+                    ->whereNull("us.deleted_at");
+            })
+            ->leftJoin("contact_emails AS cm", function ($j) {
+                $j->on("cm.id", "=", "contact_email_user.contact_email_id")
+                    ->whereNull("cm.deleted_at");
+            })
+            ->whereNull("contact_email_user.deleted_at");
+    }
 }

@@ -15,7 +15,8 @@ class CreateRequirementsTable extends Migration
     {
         Schema::create('requirements', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger("category_id");
+            $table->bigInteger("user_id")->default(0)->index();
+            $table->bigInteger("category_id")->default(0)->index();
             $table->string("name");
             $table->text("description")->nullable();
             $table->text("url")->nullable();

@@ -47,11 +47,13 @@
     </div>
 
     <div class="row">
+        <div class="col-md-4 table-responsive">
+            @include('admin.dashboard.components.users')
+        </div>
 
-        @include('admin.dashboard.components.users')
-
-
-        @include('admin.dashboard.components.requirements')
+        <div class="col-md-8 table-responsive">
+            @include('admin.dashboard.components.requirements')
+        </div>
 
 
     </div>
@@ -62,10 +64,9 @@
 @section('js')
 
     <script>
-        // $(".datatable").DataTable({
-        //     pageLength: 5,
-        //     order: false,
-        // });
+        $(function() {
+            $('[data-toggle="tooltip"]').tooltip()
+        });
     </script>
 
 @stop

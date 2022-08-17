@@ -274,25 +274,9 @@ class ContactEmailController extends Controller
     public function datatable(Request $request)
     {
 
-        $query_user = Contact_email::select(
-            "contact_emails.id AS contact_id",
-            "contact_emails.url",
-            "contact_emails.nombre_empresa",
-            "contact_emails.estado",
-            "contact_emails.email AS contact_email",
-            "contact_emails.whatsapp",
-            "contact_emails.instagram",
-            "contact_emails.facebook",
-            "contact_emails.user_id",
-            "contact_emails.created_at AS contact_created",
-            "contact_emails.updated_at AS contact_updated",
-            "us.username"
-        )
-            ->withCount("envios")
-            ->leftJoin("users AS us", function ($j) {
-                $j->on("contact_emails.user_id", "=", "us.id")
-                    ->whereNotNull("us.created_at");
-            });
+        $query_user = (new Contact_email())->datatableContactEmailQuery();
+
+        $query_user_count = $query_user;
 
         $totalFilteredRecord = $totalDataRecord = $draw_val = "";
 
@@ -351,7 +335,8 @@ class ContactEmailController extends Controller
 
             $data_return = $data_return->limit($limit_val)->get();
 
-            $totalFilteredRecord = $query_user
+
+            $totalFilteredRecord = (new Contact_email())->datatableContactEmailQuery()
                 ->where(function ($q) use ($search_text) {
                     $q->where("contact_emails.id", "like", "%{$search_text}%")
                         ->orWhere("contact_emails.nombre_empresa", "like", "%{$search_text}%")
@@ -383,7 +368,7 @@ class ContactEmailController extends Controller
 
                 return [
                     "id" => $email->contact_id,
-                    "nombre_empresa" => (string) response()->view("admin.contact_email.components.datatable.name_enterprice", compact("email"))->original,
+                    "nombre_empresa" => (string) response()->view("admin.contact_email.components.datatable.name_enterprice", ["name" => $email->nombre_empresa, "limit_name" => 15])->original,
                     "username" => (string) response()->view("admin.contact_email.components.datatable.user", compact("email"))->original,
 
                     "email" => (string) response()->view("admin.contact_email.components.datatable.email", compact("email"))->original,
@@ -425,27 +410,7 @@ class ContactEmailController extends Controller
 
     public function shipping_history_datatable(Request $request)
     {
-        $query_user = DB::table('contact_email_user')
-            ->select(
-                "contact_email_user.id AS send_id",
-                "contact_email_user.user_id",
-                "contact_email_user.created_at AS shipping_created",
-                "contact_email_user.subject",
-                "contact_email_user.body",
-                "contact_email_user.group_send",
-                "us.username",
-                "cm.email AS contact_email",
-            )
-            ->leftJoin("users AS us", function ($j) {
-                $j->on("us.id", "=", "contact_email_user.user_id")
-                    ->whereNull("us.deleted_at");
-            })
-            ->leftJoin("contact_emails AS cm", function ($j) {
-                $j->on("cm.id", "=", "contact_email_user.contact_email_id")
-                    ->whereNull("cm.deleted_at");
-            })
-            ->whereNull("contact_email_user.deleted_at");
-
+        $query_user = (new Contact_email())->datatableEmailsSendQuery();
 
         $totalFilteredRecord = $totalDataRecord = $draw_val = "";
 
@@ -492,7 +457,7 @@ class ContactEmailController extends Controller
 
             $data_return = $data_return->limit($limit_val)->get();
 
-            $totalFilteredRecord = $query_user
+            $totalFilteredRecord = (new Contact_email())->datatableEmailsSendQuery()
                 ->where(function ($q) use ($search_text) {
                     $q->where("contact_email_user.created_at", "like", "%{$search_text}%")
                         ->orWhere("us.username", "like", "%{$search_text}%")
@@ -515,6 +480,12 @@ class ContactEmailController extends Controller
 
                 $created_parser = Carbon::parse($email->shipping_created);
 
+                $details_params = [
+                    "class" => "more_details",
+                    "id" => $email->send_id,
+                    "route" => route('contact_email.shipping_details', ['id' => $email->send_id])
+                ];
+
                 return [
                     "id" => $email->send_id,
                     "username" => (string) response()->view("admin.contact_email.components.datatable.user", compact("email"))->original,
@@ -522,7 +493,7 @@ class ContactEmailController extends Controller
                     "created_at" => (string) response()->view("admin.contact_email.components.datatable.created_at", compact("created_parser"))->original,
                     "subject" => !$email->subject ? "Sin asunto" : $email->subject,
                     "group_send" => $email->group_send ? $email->group_send : "Sin Grupo",
-                    "details" => (string) response()->view("admin.contact_email.components.datatable.details", compact("email"))->original
+                    "details" => (string) response()->view("admin.contact_email.components.datatable.details", $details_params)->original
                 ];
             });
         }

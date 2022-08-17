@@ -333,9 +333,9 @@
         })
 
         $(table).on("draw.dt", e => {
-            setTimeout(() => {
-                $('[data-toggle="tooltip"]').tooltip()
-            }, 1000);
+            // setTimeout(() => {
+            $('[data-toggle="tooltip"]').tooltip()
+            // }, 1000);
         });
     </script>
 @endpush

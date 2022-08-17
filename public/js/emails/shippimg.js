@@ -25,34 +25,13 @@ function template(data) {
     `;
 }
 
-function load_btn(e, load = false) {
-    const more_details = e.delegateTarget;
-    const load_item = more_details.querySelector(".load_item");
-    const details_mormal = more_details.querySelector(".details_mormal");
-
-    if (!load_item || !details_mormal) return false;
-
-    if (load) {
-        details_mormal.classList.add("d-none");
-        load_item.classList.remove("d-none");
-    } else {
-        details_mormal.classList.remove("d-none");
-        load_item.classList.add("d-none");
-    }
-
-    more_details.disabled = load;
-    return load;
-}
-
-function event_detils() {
-    const more_details = document.querySelectorAll(".more_details");
-
+function event_detils(select_btn, obj_params_template) {
+    const more_details = document.querySelectorAll(select_btn);
     if (!more_details) return null;
 
     $(more_details).on("click", (e) => {
         const id_shipping = e.delegateTarget.dataset.id;
         const url = e.delegateTarget.dataset.url;
-
         load_btn(e, true);
 
         axios
@@ -62,7 +41,14 @@ function event_detils() {
 
                 load_btn(e, false);
 
-                insert_data_details.innerHTML = template(data);
+                const data_insert = obj_params_template.map((item) => {
+                    return {
+                        label: item.label,
+                        value: data[item.value],
+                        element_custom: item.element_custom,
+                    };
+                });
+                insert_data_details.innerHTML = template_info(data_insert);
 
                 $(details_modal).modal("show");
             })

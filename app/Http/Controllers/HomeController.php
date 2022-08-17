@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\ServicioMaillable;
 use App\Models\BillingTime;
+use App\Models\Category;
 use App\Models\CategoryService;
 use App\Models\Contact_email;
 use App\Models\EmailEnviado;
@@ -35,7 +36,7 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
         // $emails = Contact_email::sinEnviar()->emailValid()->take(Contact_email::DAILY_EMAIL_LIMIT)->get();
         // // $emails = Contact_email::sinEnviar()->emailValid()->take(1)->get();
@@ -95,6 +96,14 @@ class HomeController extends Controller
         }
 
         $data['requirements_count'] = 1;
+        $data["requirements"] = Requirements::get();
+        $data["requirements_categories"] = Category::requirements()->get();
+
+        $data["request"] = $request->all();
+        $data["js"] = [
+            "url_datatable_requirements" => route("requirements.datatable"),
+        ];
+        // dd($data["requirements"]);
 
         return view('admin.dashboard.dashboard', compact("data", "total_registros", "registros_de_hoy", "correos_sin_enviar", "enviados_hoy", "usr_registros_hoy", "date", "registros_de_hoy_take", "pays_time"));
     }

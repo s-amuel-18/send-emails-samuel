@@ -63,7 +63,7 @@
         </div>
     </div>
 
-    <div id="details_modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="detalles" aria-hidden="true">
+    <div id="details_modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="detalles" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -81,11 +81,12 @@
 @stop
 
 @push('js')
+    <script src="{{ asset('js/functions/templates.js') }}"></script>
+    <script src="{{ asset('js/functions/helpers.js') }}"></script>
     <script>
         const requestData = @json($data['request']);
         const appData = @json($data['js']);
         const insert_data_details = document.getElementById("insert_data_details");
-        console.log(insert_data_details);
         const details_modal = document.getElementById("details_modal");
     </script>
     <script src="{{ asset('js/Plugins/axios.min.js') }}"></script>
@@ -149,7 +150,33 @@
         $(table).on("draw.dt", e => {
             $('[data-toggle="tooltip"]').tooltip();
 
-            event_detils();
+            const obj_values_desc = [{
+                    label: "Email",
+                    value: "email",
+                },
+                {
+                    label: "Usuario Redactor",
+                    value: "username",
+                },
+                {
+                    label: "Asunto",
+                    value: "subject",
+                },
+                {
+                    label: "Descripcion",
+                    value: "body",
+                },
+                {
+                    label: "Fecha de envio",
+                    value: "created_format",
+                },
+            ];
+
+
+            event_detils(
+                ".more_details",
+                obj_values_desc
+            );
         });
     </script>
 @endpush
