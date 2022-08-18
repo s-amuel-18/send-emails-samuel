@@ -113,10 +113,10 @@ Route::get("emails/export/excel", [ExcelExportController::class, "contactEmail"]
 Route::post("emails/import/excel", [ExcelImportController::class, "contactEmail"])->middleware("auth")->name("contactEmail.import_excel");
 
 // requerimientos
+Route::post("requerimientos/crear", [RequirementsController::class, "store"])->name("requirements.store");
 Route::prefix('requerimientos')->middleware(["auth"])->group(function () {
     Route::get("/datatable", [RequirementsController::class, "datatable"])->name("requirements.datatable");
     Route::get("/{id}", [RequirementsController::class, "get_requirement"])->name("requirements.get_requirement");
-    Route::get("/crear", [RequirementsController::class, "store"])->name("requirements.store");
-    Route::get("/actualizar", [RequirementsController::class, "update"])->name("requirements.update");
-    Route::get("/eliminar", [RequirementsController::class, "destroy"])->name("requirements.destroy");
+    Route::post("/actualizar/{id}", [RequirementsController::class, "update"])->name("requirements.update");
+    Route::delete("/eliminar", [RequirementsController::class, "destroy"])->name("requirements.destroy");
 });

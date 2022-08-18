@@ -73,6 +73,12 @@ class User extends Authenticatable
         return $this->hasMany(CategoryService::class);
     }
 
+    public function requirements()
+    {
+        return $this->hasMany(Requirements::class);
+    }
+
+
     public function correos_enviados_hoy()
     {
         return $this->emailsSent24HoursAgo();

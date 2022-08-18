@@ -102,6 +102,8 @@ class HomeController extends Controller
         $data["request"] = $request->all();
         $data["js"] = [
             "url_datatable_requirements" => route("requirements.datatable"),
+            "url_store_requirement" => route("requirements.store"),
+            "url_destroy_requirement" => route("requirements.destroy"),
         ];
         // dd($data["requirements"]);
 

@@ -32,14 +32,15 @@ function event_detils(select_btn, obj_params_template) {
     $(more_details).on("click", (e) => {
         const id_shipping = e.delegateTarget.dataset.id;
         const url = e.delegateTarget.dataset.url;
-        load_btn(e, true);
+        const btn = e.delegateTarget;
+        load_btn(btn, true);
 
         axios
             .get(url)
             .then((resp) => {
                 const { data } = resp;
 
-                load_btn(e, false);
+                load_btn(btn, false);
 
                 const data_insert = obj_params_template.map((item) => {
                     return {
@@ -54,7 +55,7 @@ function event_detils(select_btn, obj_params_template) {
             })
             .catch((err) => {
                 console.log(err);
-                load_btn(e, false);
+                load_btn(e.delegateTarget, false);
             });
     });
 }

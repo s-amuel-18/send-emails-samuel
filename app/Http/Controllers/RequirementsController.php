@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RequirementsRequest;
 use App\Models\Category;
 use App\Models\Requirements;
 use App\Models\User;
@@ -113,6 +114,15 @@ class RequirementsController extends Controller
                     "route" => route('requirements.get_requirement', ['id' => $requirement->req_id])
                 ];
 
+                $details_btn = (string) response()->view("admin.contact_email.components.datatable.details", $details_params)->original;
+                $edit_btn = (string) response()->view("admin.requirements.components.btn_edit", [
+                    "id" => $requirement->req_id,
+                ])->original;
+                $delete_btn = (string) response()->view("admin.requirements.components.btn_delete", [
+                    "id" => $requirement->req_id,
+                ])->original;
+                $sum_btns = $details_btn . $edit_btn . $delete_btn;
+                // dd($sum_btns);
                 return [
                     "id" => $requirement->req_id,
                     "username" => (string) response()->view("admin.contact_email.components.datatable.user", [
@@ -128,7 +138,10 @@ class RequirementsController extends Controller
                         "text" => $requirement->cat_name,
                     ])->original,
                     "url" => (string) response()->view("admin.contact_email.components.datatable.web", ["url" => $requirement->req_url])->original,
-                    "details" => (string) response()->view("admin.contact_email.components.datatable.details", $details_params)->original,
+                    "details" => $sum_btns,
+                    // "edit_btn" => (string) response()->view("admin.requirements.components.btn_edit")->original,
+                    // "delete_btn" => (string) response()->view("admin.requirements.components.btn_delete", $details_params)->original,
+                    // "details" => (string) response()->view("admin.contact_email.components.datatable.details", $details_params)->original,
                     "created_at" => (string) response()->view("admin.contact_email.components.datatable.created_at", compact("created_parser"))->original,
                 ];
             });
@@ -153,9 +166,23 @@ class RequirementsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RequirementsRequest $request)
     {
-        //
+        $data_insert = [
+            "name" => $request["name"],
+            "url" => $request["url"],
+            "category_id" => $request["category_id"],
+            "description" => $request["description"],
+        ];
+
+        auth()->user()->requirements()->create($data_insert);
+
+        $data_response = [
+            "message" => "El Registro se ha realizado correctamente",
+            "data_insert" => $data_insert
+        ];
+
+        return response()->json($data_response, 200);
     }
 
     /**
@@ -165,9 +192,25 @@ class RequirementsController extends Controller
      * @param  \App\Models\Requirements  $requirements
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Requirements $requirements)
+    public function update(RequirementsRequest $request, $id)
     {
-        //
+        $requirement = Requirements::findOrFail($id);
+
+        $data_insert = [
+            "name" => $request["name"],
+            "url" => $request["url"],
+            "category_id" => $request["category_id"],
+            "description" => $request["description"],
+        ];
+
+        $requirement->update($data_insert);
+
+        $data_response = [
+            "message" => "El Registro se ha actualizado correctamente",
+            "data_insert" => $data_insert
+        ];
+
+        return response()->json($data_response, 200);
     }
 
     /**
@@ -176,8 +219,17 @@ class RequirementsController extends Controller
      * @param  \App\Models\Requirements  $requirements
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Requirements $requirements)
+    public function destroy(Request $request)
     {
-        //
+        request()->validate([
+            "id" => "required"
+        ]);
+
+        $requirement = Requirements::findOrFail($request["id"])->delete();
+
+        $data_response = [
+            "message" => "El requerimiento se ha eliminado correctamente",
+        ];
+        return response()->json($request, 200);
     }
 }

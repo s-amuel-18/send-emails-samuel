@@ -1,4 +1,5 @@
 @section('plugins.Summernote', true)
+@section('plugins.Sweetalert2', true)
 @push('css')
     <style>
         .note-editable.card-block {
@@ -34,7 +35,7 @@
             <div class="d-flex justify-content-end mb-3">
                 <div class="col-md-3 offset-md-9" id="content_select_category">
                     <select data-placeholder="Filtro por categorias" class="w-100 select2 form-control" name="state"
-                        id="filter_for_category">
+                        id="filter_for_category" style="width: 100%">
                         <option value="">Filtro por categorias</option>
                         @foreach ($data['requirements_categories'] as $cat)
                             <option value="{{ $cat->name }}">{{ $cat->name }}</option>
@@ -54,46 +55,12 @@
                         <th>Nombre</th>
                         <th>Categoría</th>
                         <th>Url Referencia</th>
-                        <th>Detalles</th>
+                        <th></th>
+                        {{-- <th></th>
+                        <th></th> --}}
                     </tr>
                 </thead>
-                {{-- <tbody>
 
-                        @foreach ($data['requirements'] as $requirement)
-                            <tr>
-                                <td>{{ $requirement->id }}</td>
-                                <td>
-                                    @include('admin.contact_email.components.datatable.user', [
-                                        'user' => $requirement->user,
-                                        'name' => true,
-                                    ])
-                                </td>
-                                <td>@include('admin.contact_email.components.datatable.name_enterprice', [
-                                    'name' => $requirement->name,
-                                    'limit_name' => 20,
-                                ])</td>
-                                <td>
-                                    <span style="font-size: 14px" class="badge bg-{{ $requirement->category->color }}">
-                                        {{ $requirement->category->name }}
-                                    </span>
-                                </td>
-                                <td>
-                                    @include('admin.contact_email.components.datatable.web', [
-                                        'url' => $requirement->url,
-                                    ])
-                                </td>
-                                <td>
-                                    @include('admin.contact_email.components.datatable.details', [
-                                        'id' => $requirement->id,
-                                        'class' => 'requirements_details',
-                                        'route' => route('requirements.get_requirement', [
-                                            'id' => $requirement->id,
-                                        ]),
-                                    ])
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody> --}}
             </table>
         @else
             Sin Registros De Hoy
@@ -102,67 +69,10 @@
     </div>
 </div>
 
-
-<div id="requirements_modal" class="modal " tabindex="-1" role="dialog" aria-labelledby="requerimientos"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="requerimientos">Crear Nuevo Requerimiento</h5>
-                <button class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form action="" id="form_requirements">
-                    <div class="row">
-                        {{-- nombre --}}
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label for="name">Nombre</label>
-                                <input id="name" placeholder="Nombre" class="form-control" type="text"
-                                    name="name">
-                            </div>
-                        </div>
-
-                        {{-- Categoria --}}
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label for="category_id">Categoría</label>
-                                <input id="category_id" placeholder="Categoría" class="form-control" type="text"
-                                    name="category_id">
-                            </div>
-                        </div>
-
-                        {{-- url --}}
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <label for="url">Url De Referencia</label>
-                                <input id="url" placeholder="Url De Referencia" class="form-control"
-                                    type="text" name="url">
-                            </div>
-                        </div>
-
-                        {{-- Descripción --}}
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <label for="description">Descripción</label>
-                                <textarea id="summernote" class="form-control" type="text" name="description" rows="5"></textarea>
-                            </div>
-                        </div>
-                    </div>
+@include('admin.requirements.components.modal_created')
+@include('admin.requirements.components.modal_edit')
 
 
-
-
-                    <div class="d-flex justify-content-end">
-                        <button class="btn btn-primary btn-sm" type="submit">Registrar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div id="details_modal" class="modal " tabindex="-1" role="dialog" aria-labelledby="detalles" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -181,20 +91,17 @@
 </div>
 
 @push('js')
-    <script src="{{ asset('js/Plugins/axios.min.js') }}"></script>
-    <script src="{{ asset('js/functions/templates.js') }}"></script>
-    <script src="{{ asset('js/functions/helpers.js') }}"></script>
-    <script src="{{ asset('js/emails/shippimg.js') }}"></script>
     <script>
         const insert_data_details = document.getElementById("insert_data_details");
         const filter_for_category = document.getElementById("filter_for_category");
         const appData = @json($data['js']);
         const requestData = @json($data['request']);
-    </script>
-
-    <script>
+        const summernote = document.getElementById('summernote');
+        const summernote_edit_requirements = document.getElementById('summernote_edit_requirements');
         const table = document.getElementById("table_requirements");
-
+        const requirements_modal_edit = document.getElementById("requirements_modal_edit");
+        const form_edit_requirement = document.getElementById("form_edit_requirement");
+        const edit_select_category_id = document.getElementById("edit_select_category_id");
         let datatableOptions = {
             "language": {
                 "url": "//cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
@@ -235,24 +142,46 @@
                 {
                     data: "details"
                 },
-
+                // {
+                //     data: "edit_btn"
+                // },
+                // {
+                //     data: "delete_btn"
+                // },
             ],
         };
-
         if (requestData["search"]) {
             datatableOptions.search = {
                 "search": requestData["search"],
             };
         }
 
-        const datatable = $(table).DataTable(datatableOptions);
-        // datatable.row.add([1, 2, 3, 5])
-        $(filter_for_category).on("change", e => {
-            const value = e.target.value;
-            datatable.search(value).draw();
+        let datatable = null;
+    </script>
+    <script src="{{ asset('js/requirements/validation.js') }}"></script>
+    <script src="{{ asset('js/Plugins/axios.min.js') }}"></script>
+    <script src="{{ asset('js/functions/templates.js') }}"></script>
+    <script src="{{ asset('js/functions/helpers.js') }}"></script>
+    <script src="{{ asset('js/emails/shippimg.js') }}"></script>
+    <script src="{{ asset('js/requirements/functions/forms.js') }}"></script>
+    <script src="{{ asset('js/requirements/functions/btns_actions.js') }}"></script>
+    <script src="{{ asset('js/requirements/main.js') }}"></script>
 
-        })
-        $(function() {});
+    <script>
+        $(function() {
+            // textarea custom initialization
+            $(summernote).summernote()
+            $(summernote_edit_requirements).summernote()
+
+            // datatabke init
+            datatable = $(table).DataTable(datatableOptions);
+
+            // filter for categorr
+            $(filter_for_category).on("change", e => {
+                const value = e.target.value;
+                datatable.search(value).draw();
+            })
+        });
 
         $(table).on("draw.dt", e => {
             $('[data-toggle="tooltip"]').tooltip();
@@ -289,13 +218,15 @@
                 ".requirements_details",
                 obj_values_desc
             );
+
+
         });
     </script>
 
     <script>
         $(function() {
             // Summernote
-            $('#summernote').summernote()
+
 
         })
     </script>
