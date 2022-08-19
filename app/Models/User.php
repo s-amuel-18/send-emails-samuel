@@ -70,7 +70,7 @@ class User extends Authenticatable
 
     public function categories()
     {
-        return $this->hasMany(CategoryService::class);
+        return $this->hasMany(Category::class);
     }
 
     public function requirements()

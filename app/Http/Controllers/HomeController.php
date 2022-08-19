@@ -97,7 +97,7 @@ class HomeController extends Controller
 
         $data['requirements_count'] = 1;
         $data["requirements"] = Requirements::get();
-        $data["requirements_categories"] = Category::requirements()->get();
+        $data["requirements_categories"] = Category::requirements()->orderBy("name")->get();
 
         $data["request"] = $request->all();
         $data["js"] = [

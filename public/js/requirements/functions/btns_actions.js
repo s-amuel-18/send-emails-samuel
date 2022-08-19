@@ -138,6 +138,3 @@ async function edit_requirement(btn) {
     $(requirements_modal_edit).modal("show");
 }
 // end functions edit
-
-// if ($('#mySelect2').find("option[value='" + data.id + "']").length) {
-//     $('#mySelect2').val(data.id).trigger('change');

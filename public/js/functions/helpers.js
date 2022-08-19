@@ -46,3 +46,8 @@ function alert_message(message = null, color = "light", list_arr = null) {
 
     return template;
 }
+
+function delete_child(child) {
+    const parent = child.parentElement;
+    parent.removeChild(child);
+}

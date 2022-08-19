@@ -9,6 +9,10 @@ class Category extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        "name", "user_id", "catgoriable_type"
+    ];
+
     public function scopeRequirements($q)
     {
         return $q->where("catgoriable_type", Requirements::class);

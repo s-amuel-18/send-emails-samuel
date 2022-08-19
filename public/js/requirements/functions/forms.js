@@ -43,6 +43,7 @@ function submit_form_requirements(form, alert_element = null) {
 
                 load_btn(submiter, false);
 
+                $("#edit_select_category_id").empty().trigger("change");
                 form.reset();
                 $(summernote).summernote("reset");
             })

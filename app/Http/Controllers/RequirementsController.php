@@ -18,7 +18,7 @@ class RequirementsController extends Controller
     {
         $requirement = Requirements::with(["user", "category"])->findOrFail($id);
         $requirement->user_created = $requirement->user->username;
-        $requirement->assigned_category = $requirement->category->name;
+        $requirement->assigned_category = $requirement->category->name ?? "";
         $requirement->created_format = $requirement->created_at->format("d/m/Y H:i:s");
 
         return response()->json($requirement, 200);
@@ -88,7 +88,6 @@ class RequirementsController extends Controller
         }
 
         $data_val = array();
-
         if (!empty($data_return)) {
             $data_val = $data_return->map(function ($requirement) {
 
@@ -99,11 +98,18 @@ class RequirementsController extends Controller
                     $requirement->color_by_user = null;
                 }
 
-                if ($requirement->category_id) {
-                    $category = Category::find($requirement->category_id);
-                    $requirement->color_by_category = $category->color;
+                $category = Category::find($requirement->category_id);
+
+                if ($category) {
+                    $badgr_category = (string) response()->view("admin.contact_email.components.datatable.badge", [
+                        "color" => $category->color,
+                        "text" => $requirement->cat_name,
+                    ])->original;
                 } else {
-                    $requirement->color_by_category = null;
+                    $badgr_category = (string) response()->view("admin.contact_email.components.datatable.badge", [
+                        "color" => "light",
+                        "text" => "Sin Categoría",
+                    ])->original;
                 }
 
                 $created_parser = Carbon::parse($requirement->req_created_at);
@@ -133,10 +139,7 @@ class RequirementsController extends Controller
                         "name" => $requirement->req_name,
                         "limit_name" => 20,
                     ])->original,
-                    "category" => (string) response()->view("admin.contact_email.components.datatable.badge", [
-                        "color" => $requirement->color_by_category,
-                        "text" => $requirement->cat_name,
-                    ])->original,
+                    "category" => $badgr_category,
                     "url" => (string) response()->view("admin.contact_email.components.datatable.web", ["url" => $requirement->req_url])->original,
                     "details" => $sum_btns,
                     // "edit_btn" => (string) response()->view("admin.requirements.components.btn_edit")->original,
@@ -231,5 +234,59 @@ class RequirementsController extends Controller
             "message" => "El requerimiento se ha eliminado correctamente",
         ];
         return response()->json($request, 200);
+    }
+
+    public function category_store(Request $request)
+    {
+        $data = request()->validate([
+            "name" => "required|unique:categories,name|max:100|string",
+        ]);
+
+        $name = $data["name"];
+
+        $category = auth()->user()->categories()->create(["name" => $name, "catgoriable_type" => Requirements::class]);
+
+        $response_data = [
+            "message" => "La categoría se ha registrado correctamente.",
+            "data_insert" => $category
+        ];
+
+
+        return response()->json($response_data, 200);
+    }
+
+    public function category_update(Request $request, $id)
+    {
+        $category = Category::findOrFail($id);
+
+        $data = request()->validate([
+            "name" => "required|unique:categories,name," . $id . ",id|max:100|string",
+        ]);
+
+        $name = $data["name"];
+
+
+        $category->update(["name" => $name]);
+
+        $response_data = [
+            "message" => "La categoría se ha actualizado correctamente.",
+            "data_insert" => $category
+        ];
+
+        return response()->json($response_data, 200);
+    }
+
+    public function category_delete($id)
+    {
+        $category = Category::findOrFail($id);
+
+        $category->delete();
+
+        $response_data = [
+            "message" => "La categoría se ha eliminado correctamente",
+            "data" => $category
+        ];
+
+        return response()->json($response_data, 200);
     }
 }

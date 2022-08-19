@@ -14,7 +14,7 @@
     <div class="card-header">
         <h3 class="card-title">Requerimientos</h3>
         <div class="card-tools">
-            <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#requirements_modal" type="button">
+            <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#categories_modal" type="button">
                 <i class="fa fa-plus"></i>
                 <span class="d-none d-md-inline-block ml-1">
                     Nueva Categoría
@@ -71,27 +71,16 @@
 
 @include('admin.requirements.components.modal_created')
 @include('admin.requirements.components.modal_edit')
+@include('admin.requirements.components.modal_details')
+@include('admin.requirements.components.modal_categories')
 
 
 
-<div id="details_modal" class="modal " tabindex="-1" role="dialog" aria-labelledby="detalles" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="detalles">Mas Detalles</h5>
-                <button class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" id="insert_data_details">
 
-            </div>
-        </div>
-    </div>
-</div>
 
 @push('js')
     <script>
+        $("#categories_modal").modal("show");
         const insert_data_details = document.getElementById("insert_data_details");
         const filter_for_category = document.getElementById("filter_for_category");
         const appData = @json($data['js']);
@@ -142,12 +131,6 @@
                 {
                     data: "details"
                 },
-                // {
-                //     data: "edit_btn"
-                // },
-                // {
-                //     data: "delete_btn"
-                // },
             ],
         };
         if (requestData["search"]) {
@@ -166,7 +149,8 @@
     <script src="{{ asset('js/requirements/functions/forms.js') }}"></script>
     <script src="{{ asset('js/requirements/functions/btns_actions.js') }}"></script>
     <script src="{{ asset('js/requirements/main.js') }}"></script>
-
+    <script src="{{ asset('js/requirements/functions/categories.js') }}"></script>
+    <script src="{{ asset('js/requirements/categories/main.js') }}"></script>
     <script>
         $(function() {
             // textarea custom initialization
@@ -218,16 +202,6 @@
                 ".requirements_details",
                 obj_values_desc
             );
-
-
         });
-    </script>
-
-    <script>
-        $(function() {
-            // Summernote
-
-
-        })
     </script>
 @endpush

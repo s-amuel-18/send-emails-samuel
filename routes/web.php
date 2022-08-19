@@ -113,10 +113,16 @@ Route::get("emails/export/excel", [ExcelExportController::class, "contactEmail"]
 Route::post("emails/import/excel", [ExcelImportController::class, "contactEmail"])->middleware("auth")->name("contactEmail.import_excel");
 
 // requerimientos
-Route::post("requerimientos/crear", [RequirementsController::class, "store"])->name("requirements.store");
 Route::prefix('requerimientos')->middleware(["auth"])->group(function () {
+    // requirements
     Route::get("/datatable", [RequirementsController::class, "datatable"])->name("requirements.datatable");
     Route::get("/{id}", [RequirementsController::class, "get_requirement"])->name("requirements.get_requirement");
+    Route::post("/crear", [RequirementsController::class, "store"])->name("requirements.store");
     Route::post("/actualizar/{id}", [RequirementsController::class, "update"])->name("requirements.update");
     Route::delete("/eliminar", [RequirementsController::class, "destroy"])->name("requirements.destroy");
+
+    // categories
+    Route::post("/categoria/crear", [RequirementsController::class, "category_store"])->name("requirements.category_store");
+    Route::post("/categoria/actualizar/{id}", [RequirementsController::class, "category_update"])->name("requirements.category_update");
+    Route::delete("/categoria/{id}/eliminar", [RequirementsController::class, "category_delete"])->name("requirements.category_delete");
 });
