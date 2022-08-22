@@ -17,6 +17,10 @@ class Contact_email extends Model
     use HasFactory;
 
     public const DAILY_EMAIL_LIMIT = 100;
+    // types contact
+    public const WHATSAPP = 1;
+    public const FACEBOOK = 2;
+    public const INSTAGRAM = 3;
 
     protected $fillable = [
         'user_id',

@@ -28,6 +28,7 @@
                             <div class="form-group">
                                 <label for="category_id">Categoría</label>
                                 <div class=" w-100 bg-danger">
+                                    {{-- @dump($data['requirements_categories']) --}}
                                     <select id="edit_select_category_id" data-placeholder="Seleccionar Categoría"
                                         class="select2 form-control" name="category_id" style="width: 100%">
                                         <option value="">Seleccionar Categoría</option>

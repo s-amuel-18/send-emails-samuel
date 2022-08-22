@@ -10,9 +10,9 @@ $(function () {
     );
 
     $("#requirements_modal").on("hidden.bs.modal", (e) => {
-        $("#select_category_id_create").empty().trigger("change");
+        $("#select_category_id_create").val("").trigger("change");
     });
     $("#requirements_modal_edit").on("hidden.bs.modal", (e) => {
-        $("#edit_select_category_id").empty().trigger("change");
+        $("#edit_select_category_id").val("").trigger("change");
     });
 });

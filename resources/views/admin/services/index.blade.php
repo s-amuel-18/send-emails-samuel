@@ -14,7 +14,7 @@
 @section('content_2')
     <div class="card card-body table-responsive">
         <div class="d-flex justify-content-between mb-3">
-            <h3 class="card-title">Servicios: <b class="text-muted">1000</b></h3>
+            <h3 class="card-title">Servicios: <b class="text-muted">{{ $data['services']->count() }}</b></h3>
 
 
             <div class="">

@@ -35,6 +35,19 @@
         p {
             margin-bottom: 10px;
         }
+
+        .btn-notification {
+            position: relative;
+        }
+
+        .btn-notification>.badge {
+            background: #000 !important;
+            font-size: 10px;
+            font-weight: 400;
+            position: absolute;
+            right: -10px;
+            top: -3px;
+        }
     </style>
 </head>
 
@@ -43,7 +56,6 @@
     <div class="" style="background: #000"></div>
     <div class="container_email">
         @yield('content')
-
     </div>
 
     @push('js')

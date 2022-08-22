@@ -14,7 +14,13 @@
     <div class="card-header">
         <h3 class="card-title">Requerimientos</h3>
         <div class="card-tools">
-            <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#categories_modal" type="button">
+            <button class="btn mr-3 btn-notification btn-warning btn-sm" data-toggle="modal"
+                data-target="#categories_modal" type="button">
+                <span class="badge badge-pill bg-danger" style="font-size: 13px">5</span>
+                <i class="fa fa-plus"></i>
+            </button>
+            <button class="btn btn-notification btn-warning btn-sm" data-toggle="modal" data-target="#categories_modal"
+                type="button">
                 <i class="fa fa-plus"></i>
                 <span class="d-none d-md-inline-block ml-1">
                     Nueva Categoría
@@ -80,7 +86,6 @@
 
 @push('js')
     <script>
-        $("#categories_modal").modal("show");
         const insert_data_details = document.getElementById("insert_data_details");
         const filter_for_category = document.getElementById("filter_for_category");
         const appData = @json($data['js']);

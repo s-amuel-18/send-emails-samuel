@@ -1,5 +1,21 @@
 @extends('adminlte::page', ['use_ico_only' => true, 'use_full_favicon' => false])
 
+@push('css')
+    <style>
+        .btn-notification {
+            position: relative;
+        }
+
+        .btn-notification>.badge {
+            font-size: 10px;
+            font-weight: 400;
+            position: absolute;
+            right: -10px;
+            top: -10px;
+        }
+    </style>
+@endpush
+
 @section('content')
 
     @include('admin.components.loading')
