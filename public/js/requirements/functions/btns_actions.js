@@ -75,8 +75,10 @@ function delete_requirement(btn) {
         text: "Al eliminar este elemento no podrás recuperarlo, ¿realmente deseas eliminar este elemento?",
         icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
+        customClass: {
+            confirmButton: "bg-primary",
+            cancelButton: "bg-light text-dark",
+        },
         confirmButtonText: "Si, eliminar",
         cancelButtonText: "Canceclar",
     }).then(async (result) => {

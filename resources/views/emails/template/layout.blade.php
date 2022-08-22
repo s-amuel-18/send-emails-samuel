@@ -39,15 +39,6 @@
         .btn-notification {
             position: relative;
         }
-
-        .btn-notification>.badge {
-            background: #000 !important;
-            font-size: 10px;
-            font-weight: 400;
-            position: absolute;
-            right: -10px;
-            top: -3px;
-        }
     </style>
 </head>
 

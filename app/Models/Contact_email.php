@@ -18,6 +18,7 @@ class Contact_email extends Model
 
     public const DAILY_EMAIL_LIMIT = 100;
     // types contact
+    public const MAIL = 0;
     public const WHATSAPP = 1;
     public const FACEBOOK = 2;
     public const INSTAGRAM = 3;
@@ -42,7 +43,34 @@ class Contact_email extends Model
 
     public function envios()
     {
-        return $this->belongsToMany(User::class)->withPivot('created_at');
+        return $this->belongsToMany(User::class)->where("type", $this::MAIL)->withPivot('created_at');
+    }
+
+    public function envios_whatsapp()
+    {
+
+        return $this->belongsToMany(User::class)->where("type", $this::WHATSAPP)->withPivot('created_at');
+    }
+
+    public function envios_facebook()
+    {
+        return $this->belongsToMany(User::class)->where("type", $this::FACEBOOK)->withPivot('created_at');
+    }
+
+    public function envios_instagram()
+    {
+        return $this->belongsToMany(User::class)->where("type", $this::INSTAGRAM)->withPivot('created_at');
+    }
+
+    public function type_alternative($type = 0)
+    {
+        $arr_relations = [
+            $this::MAIL => $this->envios(),
+            $this::WHATSAPP => $this->envios_whatsapp(),
+            $this::FACEBOOK => $this->envios_facebook(),
+            $this::INSTAGRAM => $this->envios_instagram(),
+        ];
+        return $arr_relations[$type];
     }
 
     // public function envios()
@@ -115,6 +143,11 @@ class Contact_email extends Model
     public function scopeEmailValid($q)
     {
         return $q->whereNotNull("email");
+    }
+
+    public function scopeTypeMail($q)
+    {
+        return $q->where("type", $this::MAIL);
     }
 
     public function groupBySendEmail($user, $id_email, $desc = null)
@@ -199,6 +232,9 @@ class Contact_email extends Model
             "us.username"
         )
             ->withCount("envios")
+            ->withCount("envios_whatsapp")
+            ->withCount("envios_facebook")
+            ->withCount("envios_instagram")
             ->leftJoin("users AS us", function ($j) {
                 $j->on("contact_emails.user_id", "=", "us.id")
                     ->whereNotNull("us.created_at");
@@ -226,6 +262,7 @@ class Contact_email extends Model
                 $j->on("cm.id", "=", "contact_email_user.contact_email_id")
                     ->whereNull("cm.deleted_at");
             })
+            ->where("type", $this::MAIL)
             ->whereNull("contact_email_user.deleted_at");
     }
 }

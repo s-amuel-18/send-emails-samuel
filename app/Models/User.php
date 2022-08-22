@@ -60,7 +60,7 @@ class User extends Authenticatable
 
     public function emailEnviado()
     {
-        return $this->belongsToMany(Contact_email::class)->withPivot('created_at');
+        return $this->belongsToMany(Contact_email::class)->where("type", Contact_email::MAIL)->withPivot('created_at');
     }
 
     public function services()

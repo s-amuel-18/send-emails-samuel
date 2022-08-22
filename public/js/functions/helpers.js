@@ -51,3 +51,23 @@ function delete_child(child) {
     const parent = child.parentElement;
     parent.removeChild(child);
 }
+
+function newTap(url = null) {
+    if (!url) return null;
+    // Abrir nuevo tab
+    var win = window.open(url, "_blank");
+    // Cambiar el foco al nuevo tab (punto opcional)
+    win.focus();
+}
+
+function disabled_element(element, disabled = false) {
+    if (!element) return false;
+
+    if (disabled) {
+        element.classList.add("disabled");
+    } else {
+        element.classList.remove("disabled");
+    }
+
+    element.disabled = disabled;
+}

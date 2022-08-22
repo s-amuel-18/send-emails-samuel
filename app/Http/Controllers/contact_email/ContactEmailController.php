@@ -364,19 +364,47 @@ class ContactEmailController extends Controller
                 }
 
                 $created_parser = Carbon::parse($email->contact_created);
+
                 $updated_parser = Carbon::parse($email->contact_updated);
+
+                // contacto alternativo
+                $whatsapp = (string) response()->view("admin.contact_email.components.datatable.whatsapp", [
+                    "email" => $email,
+                    "class" => "contact_alternative_btn",
+                    "id" => $email->contact_id,
+                    "url" => route("contact_email.alternative_contact", ["contact_email" => $email->contact_id]),
+                    "type_contact" => Contact_email::WHATSAPP,
+                    "count_shipping" => $email->envios_whatsapp_count,
+                ])->original;
+
+                $facebook = (string) response()->view("admin.contact_email.components.datatable.facebook", [
+                    "email" => $email,
+                    "class" => "contact_alternative_btn",
+                    "id" => $email->contact_id,
+                    "url" => route("contact_email.alternative_contact", ["contact_email" => $email->contact_id]),
+                    "type_contact" => Contact_email::FACEBOOK,
+                    "count_shipping" => $email->envios_facebook_count,
+                ])->original;
+
+                $instagram = (string) response()->view("admin.contact_email.components.datatable.instagram", [
+                    "email" => $email,
+                    "class" => "contact_alternative_btn",
+                    "id" => $email->contact_id,
+                    "url" => route("contact_email.alternative_contact", ["contact_email" => $email->contact_id]),
+                    "type_contact" => Contact_email::INSTAGRAM,
+                    "count_shipping" => $email->envios_instagram_count,
+                ])->original;
 
                 return [
                     "id" => $email->contact_id,
                     "nombre_empresa" => (string) response()->view("admin.contact_email.components.datatable.name_enterprice", ["name" => $email->nombre_empresa, "limit_name" => 15])->original,
                     "username" => (string) response()->view("admin.contact_email.components.datatable.user", compact("email"))->original,
-
                     "email" => (string) response()->view("admin.contact_email.components.datatable.email", compact("email"))->original,
                     "url" => (string) response()->view("admin.contact_email.components.datatable.web", compact("email"))->original,
                     "envios" => (string) response()->view("admin.contact_email.components.datatable.count_ship_mails", compact("email"))->original,
-                    "whatsapp" => (string) response()->view("admin.contact_email.components.datatable.whatsapp", compact("email"))->original,
-                    "facebook" => (string) response()->view("admin.contact_email.components.datatable.facebook", compact("email"))->original,
-                    "instagram" => (string) response()->view("admin.contact_email.components.datatable.instagram", compact("email"))->original,
+                    "whatsapp" => $whatsapp,
+                    "facebook" => $facebook,
+                    "instagram" => $instagram,
                     "actions" => (string) response()->view("admin.contact_email.components.datatable.actions", compact("email"))->original,
                     "created_at" => (string) response()->view("admin.contact_email.components.datatable.created_at", compact("created_parser"))->original,
                     "updated_at" => (string) response()->view("admin.contact_email.components.datatable.updated_at", compact("updated_parser"))->original,
@@ -544,5 +572,21 @@ class ContactEmailController extends Controller
         $shipping_details->created_format = Carbon::parse($shipping_details->ship_created_at)->format("d/m/Y H:s:i");
 
         return response()->json($shipping_details, 200);
+    }
+
+    public function alternative_contact(Contact_email $contact_email,  Request $request)
+    {
+        $data = request()->validate([
+            "type" => "required|integer"
+        ]);
+
+
+        auth()->user()->emailEnviado()->attach([$contact_email->id => ["type" => $data["type"]]]);
+
+        return response()->json(
+            [
+                "count_shipping" => $contact_email->type_alternative($data["type"])->count()
+            ]
+        );
     }
 }

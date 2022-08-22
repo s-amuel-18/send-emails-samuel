@@ -59,6 +59,7 @@ Route::get('/contact-email/estadisticas', [ContactEmailController::class, 'estad
 Route::get('/contact-email/historial-envios', [ContactEmailController::class, 'shipping_history'])->middleware("auth")->name('contact_email.shipping_history');
 Route::get('/contact-email/historial-envios/datatable', [ContactEmailController::class, 'shipping_history_datatable'])->middleware("auth")->name('contact_email.shipping_history_datatable');
 Route::get('/contact-email/historial-envios/{id}', [ContactEmailController::class, 'get_details_shippung'])->middleware("auth")->name('contact_email.shipping_details');
+Route::post('/contact-email/contacto-alternativo/{contact_email}', [ContactEmailController::class, 'alternative_contact'])->middleware("auth")->name('contact_email.alternative_contact');
 
 // body
 Route::resource("body-email", BodyEmailController::class)->except("show")->middleware("auth")->names("bodyEmail");

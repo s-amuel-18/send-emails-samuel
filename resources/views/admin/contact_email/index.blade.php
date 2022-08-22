@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('plugins.Datatables', true)
+@section('plugins.Sweetalert2', true)
 
 @section('title', 'Administrador de Emails')
 
@@ -252,6 +253,9 @@
 @stop
 
 @push('js')
+    <script src="{{ asset('js/Plugins/axios.min.js') }}"></script>
+    <script src="{{ asset('js/functions/helpers.js') }}"></script>
+    <script src="{{ asset('js/emails/contact_email/records.js') }}"></script>
     <script>
         const excel_file = document.getElementById("excel_file");
         const form_import_excel = document.getElementById("form_import_excel");
@@ -333,9 +337,8 @@
         })
 
         $(table).on("draw.dt", e => {
-            // setTimeout(() => {
+            event_type_alternative("a.contact_alternative_btn");
             $('[data-toggle="tooltip"]').tooltip()
-            // }, 1000);
         });
     </script>
 @endpush
