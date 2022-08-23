@@ -9,6 +9,27 @@ $(function () {
         "#insert_alert_requirements_edit"
     );
 
+    // show modals
+    $("#requirements_modal").on("show.bs.modal", (e) => {
+        const btn = e.relatedTarget;
+        const modal = e.delegateTarget;
+
+        if (requirements_categories.length < 1) {
+            e.preventDefault();
+            there_are_no_categories();
+        }
+    });
+    $("#requirements_modal_edit").on("show.bs.modal", (e) => {
+        const btn = e.relatedTarget;
+        const modal = e.delegateTarget;
+
+        if (requirements_categories.length < 1) {
+            e.preventDefault();
+            there_are_no_categories();
+        }
+    });
+
+    // hidden modals
     $("#requirements_modal").on("hidden.bs.modal", (e) => {
         $("#select_category_id_create").val("").trigger("change");
     });

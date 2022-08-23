@@ -268,9 +268,11 @@ class RequirementsController extends Controller
 
         $category->update(["name" => $name]);
 
+        $category_updated = Category::findOrFail($id);
+
         $response_data = [
             "message" => "La categoría se ha actualizado correctamente.",
-            "data_insert" => $category
+            "data_insert" => $category_updated
         ];
 
         return response()->json($response_data, 200);

@@ -72,13 +72,13 @@
         $(function() {
             const table = document.getElementById("table_users")
             const datatable = $(table).DataTable({
-                "pageLength": 10,
+                "pageLength": 5,
                 "responsive": true,
                 "scrollX": true,
                 "bPaginate": true,
                 "sPaginationType": "numbers",
                 "order": [
-                    [2, "DESC"]
+                    [1, "DESC"]
                 ],
             });
         });

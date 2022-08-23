@@ -102,6 +102,11 @@ async function get_data_requirement(url) {
 
 // functions edit
 async function edit_requirement(btn) {
+    if (requirements_categories.length < 1) {
+        there_are_no_categories();
+        return false;
+    }
+
     const id = btn.dataset.id;
     const url_get_requirements = btn.dataset.url;
     const url_update_requirements = btn.dataset.url_edit;
@@ -130,7 +135,7 @@ async function edit_requirement(btn) {
     const option_exist = $(edit_select_category_id).find(
         "option[value='" + category_id + "']"
     );
-    console.log(option_exist.length);
+
     if (option_exist.length > 0) {
         $(edit_select_category_id).val(category_id).trigger("change");
     }

@@ -55,6 +55,22 @@
                                     </div>
 
                                 </div>
+                                <div class="col-md-3">
+
+                                    <div class="card card-outline card-info">
+                                        <div class="card-header">
+                                            <h3 class="card-title">Registros Totales con email</h3>
+
+                                            <div class="card-tools">
+                                                <span
+                                                    class="badge badge-pill badge-info">{{ $total_records_with_email }}</span>
+                                            </div>
+                                            <!-- /.card-tools -->
+                                        </div>
+                                        <!-- /.card-header -->
+                                    </div>
+
+                                </div>
 
                                 <div class="col-md-3">
 

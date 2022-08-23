@@ -65,6 +65,7 @@ class ContactEmailController extends Controller
     public function estadisticas()
     {
         $total_registros = Contact_email::count();
+        $total_records_with_email = Contact_email::emailValid()->count();
 
         if ($total_registros == 0) {
             $message = [
@@ -104,7 +105,7 @@ class ContactEmailController extends Controller
         $emials_enviados = Contact_email::enviados()->count();
 
 
-        return view("admin.contact_email.estadisticas", compact("users", "total_registros", "registros_promedio", "emials_sin_enviar", "emials_enviados", "registros_de_hoy"));
+        return view("admin.contact_email.estadisticas", compact("users", "total_registros", "registros_promedio", "emials_sin_enviar", "emials_enviados", "registros_de_hoy", "total_records_with_email"));
     }
 
     /**

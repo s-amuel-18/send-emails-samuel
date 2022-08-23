@@ -14,11 +14,6 @@
     <div class="card-header">
         <h3 class="card-title">Requerimientos</h3>
         <div class="card-tools">
-            <button class="btn mr-3 btn-notification btn-warning btn-sm" data-toggle="modal"
-                data-target="#categories_modal" type="button">
-                <span class="badge badge-pill bg-danger" style="font-size: 13px">5</span>
-                <i class="fa fa-plus"></i>
-            </button>
             <button class="btn btn-notification btn-warning btn-sm" data-toggle="modal" data-target="#categories_modal"
                 type="button">
                 <i class="fa fa-plus"></i>
@@ -40,8 +35,9 @@
         @if ($data['requirements_count'] > 0)
             <div class="d-flex justify-content-end mb-3">
                 <div class="col-md-3 offset-md-9" id="content_select_category">
-                    <select data-placeholder="Filtro por categorias" class="w-100 select2 form-control" name="state"
-                        id="filter_for_category" style="width: 100%">
+                    <select data-placeholder="Filtro por categorias"
+                        class="w-100 select2 form-control select2_categories" name="state" id="filter_for_category"
+                        style="width: 100%">
                         <option value="">Filtro por categorias</option>
                         @foreach ($data['requirements_categories'] as $cat)
                             <option value="{{ $cat->name }}">{{ $cat->name }}</option>
@@ -96,6 +92,10 @@
         const requirements_modal_edit = document.getElementById("requirements_modal_edit");
         const form_edit_requirement = document.getElementById("form_edit_requirement");
         const edit_select_category_id = document.getElementById("edit_select_category_id");
+
+
+        let requirements_categories = @json($data['requirements_categories']);
+
         let datatableOptions = {
             "language": {
                 "url": "//cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
@@ -109,7 +109,7 @@
             "scrollX": true,
             "bPaginate": true,
             "sPaginationType": "numbers",
-            "pageLength": 10,
+            "pageLength": 5,
             "lengthChange": true,
             "processing": true,
             "serverSide": true,
@@ -152,6 +152,7 @@
     <script src="{{ asset('js/functions/helpers.js') }}"></script>
     <script src="{{ asset('js/emails/shippimg.js') }}"></script>
     <script src="{{ asset('js/requirements/functions/forms.js') }}"></script>
+    <script src="{{ asset('js/requirements/categories/funtions.js') }}"></script>
     <script src="{{ asset('js/requirements/functions/btns_actions.js') }}"></script>
     <script src="{{ asset('js/requirements/main.js') }}"></script>
     <script src="{{ asset('js/requirements/functions/categories.js') }}"></script>

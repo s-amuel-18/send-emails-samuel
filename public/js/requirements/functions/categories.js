@@ -6,7 +6,7 @@ function reset_confirm_delete() {
         ".element_category_delete"
     );
 
-    if (normal_element.length != 2 && delete_element.length != 2) return false;
+    if (normal_element.length < 2 && delete_element.length < 2) return false;
 
     $(delete_element).css("display", "none");
     $(normal_element).css("display", "block");
@@ -59,6 +59,8 @@ function delete_category() {
                 if (!item_category) return false;
 
                 delete_child(item_category);
+
+                remove_cateogire_arr(data.data.id);
             })
             .catch((err) => {
                 console.log(err);
@@ -159,7 +161,7 @@ async function post_category(url = null, data, type = "create") {
         .post(url, data)
         .then((resp) => {
             const { data } = resp;
-            console.log(data);
+
             if (type == "create") {
                 table_insert_categories.innerHTML += template_category_item(
                     data.data_insert
@@ -169,6 +171,10 @@ async function post_category(url = null, data, type = "create") {
                 cancel_delete_category_func();
                 delete_category();
                 update_category();
+
+                add_categorie_arr(data.data_insert);
+            } else if (type == "update") {
+                update_categorie_arr(data.data_insert.id, data.data_insert);
             }
         })
         .catch((err) => {
@@ -207,7 +213,7 @@ function update_category() {
         const id = input.dataset.id;
         const url = input.dataset.url;
         const name = input.value;
-        console.log({ name });
+        // console.log({ name });
         await post_category(url, { name, id }, "update");
     });
 }

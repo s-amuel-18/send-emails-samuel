@@ -35,5 +35,6 @@ $(function () {
 
         await post_category(url, data_insert);
         load_btn(btn, false);
+        form.reset();
     });
 });

@@ -30,7 +30,8 @@
                                 <div class=" w-100 bg-danger">
                                     {{-- @dump($data['requirements_categories']) --}}
                                     <select id="edit_select_category_id" data-placeholder="Seleccionar Categoría"
-                                        class="select2 form-control" name="category_id" style="width: 100%">
+                                        class="select2 form-control select2_categories" name="category_id"
+                                        style="width: 100%">
                                         <option value="">Seleccionar Categoría</option>
                                         @foreach ($data['requirements_categories'] as $cat)
                                             <option value="{{ $cat->id }}">{{ $cat->name }}</option>

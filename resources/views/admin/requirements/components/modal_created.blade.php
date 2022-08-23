@@ -27,8 +27,9 @@
                             <div class="form-group">
                                 <label for="category_id">Categoría</label>
                                 <div class=" w-100 bg-danger">
-                                    <select data-placeholder="Seleccionar Categoría" class="select2 form-control"
-                                        name="category_id" style="width: 100%" id="select_category_id_create">
+                                    <select data-placeholder="Seleccionar Categoría"
+                                        class="select2 form-control select2_categories" name="category_id"
+                                        style="width: 100%" id="select_category_id_create">
                                         <option value="">Seleccionar Categoría</option>
                                         @foreach ($data['requirements_categories'] as $cat)
                                             <option value="{{ $cat->id }}">{{ $cat->name }}</option>
