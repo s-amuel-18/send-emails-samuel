@@ -71,3 +71,17 @@ function disabled_element(element, disabled = false) {
 
     element.disabled = disabled;
 }
+
+function edit_inline_input() {
+    const edit_inline_input = document.querySelectorAll(".edit_inline_input");
+
+    $(edit_inline_input).on("change", (e) => {
+        const input = e.target;
+        const url = input.dataset.url || null;
+        const element_obj = input.dataset.element_obj || null;
+
+        if (!url || !element_obj) return null;
+
+        console.log(url, element_obj);
+    });
+}

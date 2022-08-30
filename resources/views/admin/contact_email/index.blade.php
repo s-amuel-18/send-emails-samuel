@@ -92,7 +92,8 @@
                         <form action="{{ route('contactEmail.import_excel') }}" enctype="multipart/form-data" method="POST"
                             id="form_import_excel">
 
-                            <input type="file" name="excel_file" accept=".xlsx, .Xls" id="excel_file" class="d-none">
+                            <input type="file" name="excel_file" accept=".xlsx, .Xls, .csv" id="excel_file"
+                                class="d-none">
 
                             @csrf
 
@@ -337,6 +338,7 @@
         })
 
         $(table).on("draw.dt", e => {
+            edit_inline_input();
             event_type_alternative("a.contact_alternative_btn");
             $('[data-toggle="tooltip"]').tooltip()
         });

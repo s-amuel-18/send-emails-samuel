@@ -218,6 +218,26 @@ class ContactEmailController extends Controller
         return redirect()->route("contact_email.index")->with("message", $message);
     }
 
+    public function update_email_async(Contact_email $contact_email, Request $request)
+    {
+        $data = request()->validate([
+            "email" => "required|email",
+        ]);
+
+        $email = $data["email"];
+
+        $contact_email->update([
+            "email" => $email,
+        ]);
+
+        $data_response = [
+            "message" => "El email se ha actualizado correctamente",
+            "data_update" => $contact_email
+        ];
+
+        return response()->json($data_response, 200);
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -396,11 +416,22 @@ class ContactEmailController extends Controller
                     "count_shipping" => $email->envios_instagram_count,
                 ])->original;
 
+                $html_email = (string) response()->view("admin.components.inputs.edit-inline", [
+                    "value" => $email->contact_email,
+                    "type" => "email",
+                    "classes" => "form-control-sm",
+                    "placeholder" => "Correo electronico",
+                    "url_async_edit" => route("contact_email.update_email_async", ["contact_email" => $email->contact_email]),
+                    "id_item_element" => $email->contact_id,
+                    "element_obj_async" => "email",
+                    "method" => "POST"
+                ])->original;
+
                 return [
                     "id" => $email->contact_id,
                     "nombre_empresa" => (string) response()->view("admin.contact_email.components.datatable.name_enterprice", ["name" => $email->nombre_empresa, "limit_name" => 15])->original,
                     "username" => (string) response()->view("admin.contact_email.components.datatable.user", compact("email"))->original,
-                    "email" => (string) response()->view("admin.contact_email.components.datatable.email", compact("email"))->original,
+                    "email" => $html_email,
                     "url" => (string) response()->view("admin.contact_email.components.datatable.web", compact("email"))->original,
                     "envios" => (string) response()->view("admin.contact_email.components.datatable.count_ship_mails", compact("email"))->original,
                     "whatsapp" => $whatsapp,

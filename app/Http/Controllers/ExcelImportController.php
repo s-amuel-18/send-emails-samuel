@@ -11,7 +11,7 @@ class ExcelImportController extends Controller
     public function contactEmail(Request $request)
     {
         $data = request()->validate([
-            "excel_file" => "required|mimes:xlsx,Xls"
+            "excel_file" => "required|mimes:xlsx,Xls,csv"
         ]);
         $file = $data["excel_file"];
 
@@ -39,7 +39,7 @@ class ExcelImportController extends Controller
 
             return redirect()->back()->with("message", $message);
         }
-        
+
         $message = [
             "message" => "Documento importado correctamente.",
             "color" => "success"
