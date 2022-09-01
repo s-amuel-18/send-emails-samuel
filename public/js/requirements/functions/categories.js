@@ -103,7 +103,7 @@ function template_category_item(data) {
         <td class="p-2">
             <div class="element_category_normal element_show_normal_${id}">
 
-                <input data-id="${id}" data-url="http://127.0.0.1:8000/requerimientos/categoria/actualizar/${id}" type="text"
+                <input data-value_init="${name}" data-id="${id}" data-url="http://127.0.0.1:8000/requerimientos/categoria/actualizar/${id}" type="text"
                     class="input_name_category form-control-category form-control form-control-sm" value="${name}">
             </div>
 
@@ -162,6 +162,8 @@ async function post_category(url = null, data, type = "create") {
         .then((resp) => {
             const { data } = resp;
 
+            toastr.success(data.message || "La accion fue exitosa");
+
             if (type == "create") {
                 table_insert_categories.innerHTML += template_category_item(
                     data.data_insert
@@ -208,12 +210,26 @@ function update_category() {
         ".input_name_category"
     );
 
-    $(inputs_name_category).on("blur", async (e) => {
+    $(inputs_name_category).on("keyup", async (e) => {
+        // *  detectamos si la tecla ENTER fue precionada
+        // * - Esto se realiza para que el evento de actualizacion solo se realice cuando se preciona la TECLA ENTER
+        if (e.which != 13) return null; //! salimos de la funcion
+
         const input = e.delegateTarget;
         const id = input.dataset.id;
         const url = input.dataset.url;
         const name = input.value;
         // console.log({ name });
         await post_category(url, { name, id }, "update");
+    });
+
+    $(inputs_name_category).on("blur", (e) => {
+        const input = e.target;
+        const value_init = input.dataset.value_init || null;
+
+        // * validamos que el elemento tenga un valor inicial por defecto
+        if (!value_init) return null; // ! no tiene valor iniciañ
+
+        input.value = value_init; // * asignamos ese valor incial al input en caso de que no se halla actualizado.
     });
 }

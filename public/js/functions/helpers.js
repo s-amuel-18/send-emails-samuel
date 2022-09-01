@@ -75,13 +75,55 @@ function disabled_element(element, disabled = false) {
 function edit_inline_input() {
     const edit_inline_input = document.querySelectorAll(".edit_inline_input");
 
-    $(edit_inline_input).on("change", (e) => {
+    $(edit_inline_input).on("keyup", (e) => {
         const input = e.target;
         const url = input.dataset.url || null;
         const element_obj = input.dataset.element_obj || null;
 
-        if (!url || !element_obj) return null;
+        if (!url || !element_obj) {
+            console.log("faltan argumentos");
+            return null;
+        }
 
-        console.log(url, element_obj);
+        // *  detectamos si la tecla ENTER fue precionada
+        // * - Esto se realiza para que el evento de actualizacion solo se realice cuando se preciona la TECLA ENTER
+        if (e.which != 13) return null; //! salimos de la funcion
+
+        // ? enviamos los datos que se desan actualizar
+        let params = {
+            [element_obj]: input.value,
+        };
+        console.log(params);
+        // return null;
+        axios
+            .patch(url, params)
+            .then((resp) => {
+                const { data } = resp;
+
+                toastr.success(
+                    data.message || "La actualización se realizó con exito"
+                );
+
+                console.log(data);
+            })
+            .catch((err) => {
+                console.log(err);
+                let message = err.response.data.message;
+                Swal.fire(
+                    "Error",
+                    message || "Ha ocurrido un error, intentalo mas tarde",
+                    "error"
+                );
+            });
+    });
+
+    $(edit_inline_input).on("blur", (e) => {
+        const input = e.target;
+        const value_init = input.dataset.value_init || null;
+
+        // * validamos que el elemento tenga un valor inicial por defecto
+        if (!value_init) return null; // ! no tiene valor iniciañ
+
+        input.value = value_init; // * asignamos ese valor incial al input en caso de que no se halla actualizado.
     });
 }

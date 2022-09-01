@@ -65,22 +65,23 @@
         </div>
     </div>
 
-@endcan
 
-@push('js')
-    <script>
-        $(function() {
-            const table = document.getElementById("table_users")
-            const datatable = $(table).DataTable({
-                "pageLength": 5,
-                "responsive": true,
-                "scrollX": true,
-                "bPaginate": true,
-                "sPaginationType": "numbers",
-                "order": [
-                    [1, "DESC"]
-                ],
+
+    @push('js')
+        <script>
+            $(function() {
+                const table = document.getElementById("table_users")
+                const datatable = $(table).DataTable({
+                    "pageLength": 5,
+                    "responsive": true,
+                    "scrollX": true,
+                    "bPaginate": true,
+                    "sPaginationType": "numbers",
+                    "order": [
+                        [1, "DESC"]
+                    ],
+                });
             });
-        });
-    </script>
-@endpush
+        </script>
+    @endpush
+@endcan

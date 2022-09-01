@@ -1,6 +1,8 @@
 $(function () {
     const form_send_emails = document.getElementById("form_send_emails");
 
+    if (!form_send_emails) return null;
+
     form_send_emails.addEventListener("submit", async (e) => {
         e.preventDefault();
         let validForm =

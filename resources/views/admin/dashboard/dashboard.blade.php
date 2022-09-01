@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('plugins.Datatables', true)
+@section('plugins.Toastr', true)
 
 @section('title', 'Inicio')
 
@@ -47,9 +48,11 @@
     </div>
 
     <div class="row">
-        <div class="col-md-4 table-responsive">
-            @include('admin.dashboard.components.users')
-        </div>
+        @can('user.index')
+            <div class="col-md-4 table-responsive">
+                @include('admin.dashboard.components.users')
+            </div>
+        @endcan
 
         <div class="col-md-8 table-responsive">
             @include('admin.dashboard.components.requirements')

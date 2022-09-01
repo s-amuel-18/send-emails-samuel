@@ -63,17 +63,18 @@
                         @foreach ($data['requirements_categories'] as $category)
                             <tr id="item_category_{{ $category->id }}">
                                 <td class="p-2">
-                                    <div class="element_category_normal element_show_normal_{{ $category->id }}">
+                                    <div
+                                        class="element_category_normal element_show_normal_{{ $category->id ?? false }}">
 
                                         <input data-id="{{ $category->id }}"
-                                            data-url="{{ route('requirements.category_update', ['id' => $category->id]) }}"
-                                            type="text"
+                                            data-url="{{ route('requirements.category_update', ['id' => $category->id ?? 0]) }}"
+                                            data-value_init="{{ $category->name ?? false }}" type="text"
                                             class="input_name_category form-control-category form-control form-control-sm"
-                                            value="{{ $category->name }}">
+                                            value="{{ $category->name ?? false }}">
                                     </div>
 
                                     <div style="display: none"
-                                        class="element_category_delete element_show_delete_{{ $category->id }}">
+                                        class="element_category_delete element_show_delete_{{ $category->id ?? 0 }}">
                                         <b class="text-muted">¿Deseas eliminar esta categoría?</b>
                                     </div>
                                 </td>

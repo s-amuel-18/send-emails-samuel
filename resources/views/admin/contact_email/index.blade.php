@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('plugins.Datatables', true)
 @section('plugins.Sweetalert2', true)
+@section('plugins.Toastr', true)
 
 @section('title', 'Administrador de Emails')
 

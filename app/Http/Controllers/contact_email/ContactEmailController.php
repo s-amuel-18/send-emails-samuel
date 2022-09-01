@@ -24,10 +24,18 @@ class ContactEmailController extends Controller
     public function __construct()
     {
         // $this->middleware("can:user.index");
-        $this->middleware("can:contact_email.index")->only("index");
+        $this->middleware("can:contact_email.index")->only(
+            "index",
+            "getContactEmails",
+            "datatable",
+            "shipping_history",
+            "shipping_history_datatable",
+            "get_details_shippung",
+            "alternative_contact"
+        );
         $this->middleware("can:contact_email.estadisticas")->only("estadisticas");
         $this->middleware("can:contact_email.create")->only("create", "store");
-        $this->middleware("can:contact_email.edit")->only("edit", "update");
+        $this->middleware("can:contact_email.edit")->only("edit", "update", "update_email_async");
         $this->middleware("can:contact_email.destroy")->only("destroy");
     }
 
@@ -176,7 +184,7 @@ class ContactEmailController extends Controller
     {
         $data = request()->validate([
             'nombre_empresa' => "nullable|string|max:255",
-            'email' => "required_if:whatsapp,null|nullable|string|max:255|email",
+            'email' => "required_if:whatsapp,null|nullable|string|max:255|email|unique:contact_emails,email,{$contact_email->id},id",
             'url' => "nullable|string|max:255|active_url",
             'whatsapp' => "required_if:email,null|nullable|string|max:255|active_url",
             'instagram' => "nullable|string|max:255|active_url",
@@ -221,8 +229,9 @@ class ContactEmailController extends Controller
     public function update_email_async(Contact_email $contact_email, Request $request)
     {
         $data = request()->validate([
-            "email" => "required|email",
+            "email" => "required|email|unique:contact_emails,email,{$contact_email->id},id",
         ]);
+
 
         $email = $data["email"];
 
@@ -421,9 +430,10 @@ class ContactEmailController extends Controller
                     "type" => "email",
                     "classes" => "form-control-sm",
                     "placeholder" => "Correo electronico",
-                    "url_async_edit" => route("contact_email.update_email_async", ["contact_email" => $email->contact_email]),
+                    "url_async_edit" => route("contact_email.update_email_async", ["contact_email" => $email->contact_id]),
                     "id_item_element" => $email->contact_id,
                     "element_obj_async" => "email",
+                    "style" => "min-width: 200px;",
                     "method" => "POST"
                 ])->original;
 
