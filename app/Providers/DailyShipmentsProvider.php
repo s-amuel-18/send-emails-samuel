@@ -36,13 +36,14 @@ class DailyShipmentsProvider extends ServiceProvider
                 return null;
             }
 
-            $emailsToday = $user->emailsSent24HoursAgo();
+            // $emailsToday = $user->emailsSent24HoursAgo();
 
             $lastEmailSend = DB::table("contact_email_user")->orderBy("created_at", "DESC")->first();
 
             $bodyEmails = BodyEmail::select("nombre", "id")->get();
 
-            $puedo_enviar = ($emailsToday < Contact_email::DAILY_EMAIL_LIMIT);
+            // $puedo_enviar = ($emailsToday < Contact_email::DAILY_EMAIL_LIMIT);
+            $puedo_enviar = auth()->user()->validSendEmailDaily();
 
             if (!$puedo_enviar) {
 

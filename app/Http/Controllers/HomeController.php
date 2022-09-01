@@ -88,12 +88,12 @@ class HomeController extends Controller
             ->get();
 
 
-        if (auth()->user()->can("managment.index")) {
-            $data["netIncome"] = Income::netIncome();
-            $data["grossIncome"] = Income::grossIncome();
-            $data["totalSpents"] = Spents::totalSpents();
-            $data["dailyEarnings"] = Income::dailyEarnings();
-        }
+        // if (auth()->user()->can("managment.index")) {
+        //     $data["netIncome"] = Income::netIncome();
+        //     $data["grossIncome"] = Income::grossIncome();
+        //     $data["totalSpents"] = Spents::totalSpents();
+        //     $data["dailyEarnings"] = Income::dailyEarnings();
+        // }
 
         $data['requirements_count'] = 1;
         $data["requirements"] = Requirements::get();
