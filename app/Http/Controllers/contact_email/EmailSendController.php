@@ -237,6 +237,7 @@ class EmailSendController extends Controller
                 "success_email_send" => false,
                 "emails_to_send" => $emailsToSend,
                 "emails_sent_today" => $send_today,
+                "email_err" => $emailsNotSend,
                 "message" => [
                     "type" => "danger",
                     "message" => "Ha ocurrido un error. correos diarios"
