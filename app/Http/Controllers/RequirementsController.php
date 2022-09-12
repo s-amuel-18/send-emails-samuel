@@ -17,6 +17,8 @@ class RequirementsController extends Controller
     public function get_requirement($id)
     {
         $requirement = Requirements::with(["user", "category"])->findOrFail($id);
+        // $this->authorize("view", $requirement);
+
         $requirement->user_created = $requirement->user->username;
         $requirement->assigned_category = $requirement->category->name ?? "";
         $requirement->created_format = $requirement->created_at->format("d/m/Y H:i:s");
@@ -176,6 +178,7 @@ class RequirementsController extends Controller
             "url" => $request["url"],
             "category_id" => $request["category_id"],
             "description" => $request["description"],
+            "private" => $request["private"] ?? 0,
         ];
 
         auth()->user()->requirements()->create($data_insert);
@@ -198,12 +201,14 @@ class RequirementsController extends Controller
     public function update(RequirementsRequest $request, $id)
     {
         $requirement = Requirements::findOrFail($id);
+        $this->authorize("view", $requirement);
 
         $data_insert = [
             "name" => $request["name"],
             "url" => $request["url"],
             "category_id" => $request["category_id"],
             "description" => $request["description"],
+            "private" => $request["private"] ?? 0,
         ];
 
         $requirement->update($data_insert);
@@ -229,6 +234,7 @@ class RequirementsController extends Controller
         ]);
 
         $requirement = Requirements::findOrFail($request["id"])->delete();
+        $this->authorize("view", $requirement);
 
         $data_response = [
             "message" => "El requerimiento se ha eliminado correctamente",

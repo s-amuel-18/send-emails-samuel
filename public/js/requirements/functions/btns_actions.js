@@ -96,7 +96,9 @@ async function get_data_requirement(url) {
         const { data } = await axios.get(url);
         return data;
     } catch (error) {
-        console.log(error);
+        const message = error.response.data.message;
+        toastr.error(message || "Ha ocurrido un error");
+        return null;
     }
 }
 
@@ -121,16 +123,25 @@ async function edit_requirement(btn) {
 
     load_btn(btn, false);
 
+    if (!data_requirements) return false;
+
     const name = data_requirements.name;
     const category_id = data_requirements.category_id;
     const url = data_requirements.url;
     const description = data_requirements.description || "";
+    const private = data_requirements.private || 0;
 
     form_edit_requirement.name.value = name;
     form_edit_requirement.category_id.value = category_id;
     form_edit_requirement.url.value = url;
     form_edit_requirement.action = url_update_requirements;
-    // form_edit_requirement.description.value = description;
+    form_edit_requirement.private.checked = private == 1;
+
+    const input_edit_private = form_edit_requirement.private;
+
+    if (user_logged.id != data_requirements.user_id) {
+        input_edit_private.disabled = true;
+    }
 
     const option_exist = $(edit_select_category_id).find(
         "option[value='" + category_id + "']"

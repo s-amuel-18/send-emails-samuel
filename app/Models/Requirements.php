@@ -11,7 +11,7 @@ class Requirements extends Model
     use HasFactory;
 
     protected $fillable = [
-        "name", "url", "category_id", "description", "user_id"
+        "name", "url", "category_id", "description", "user_id", "private"
     ];
 
     public function user()
@@ -47,6 +47,11 @@ class Requirements extends Model
                 $j->on("cat.id", "=", "req.category_id")
                     ->whereNull("us.deleted_at");
             })
+            // ->where(function ($q) {
+            //     return $q->where(function ($qSub) {
+            //         return $qSub->where("req.private", 1)->where("req.user_id", auth()->user()->id);
+            //     })->orWhere("req.private", 0);
+            // })
             ->whereNull("req.deleted_at");
     }
 }

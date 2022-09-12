@@ -33,7 +33,14 @@ $(function () {
     $("#requirements_modal").on("hidden.bs.modal", (e) => {
         $("#select_category_id_create").val("").trigger("change");
     });
+
     $("#requirements_modal_edit").on("hidden.bs.modal", (e) => {
+        const input_edit_private = form_edit_requirement.private;
+
         $("#edit_select_category_id").val("").trigger("change");
+
+        if (input_edit_private) {
+            input_edit_private.disabled = false;
+        }
     });
 });

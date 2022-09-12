@@ -9,7 +9,7 @@ use Maatwebsite\Excel\Concerns\WithValidation;
 use Maatwebsite\Excel\Concerns\SkipsOnError;
 use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
 
-class ContactEmailImport implements ToModel, WithHeadingRow, WithValidation,SkipsOnError,SkipsEmptyRows
+class ContactEmailImport implements ToModel, WithHeadingRow, WithValidation, SkipsOnError, SkipsEmptyRows
 {
     /**
      * @param array $row
@@ -26,9 +26,9 @@ class ContactEmailImport implements ToModel, WithHeadingRow, WithValidation,Skip
     public function rules(): array
     {
         return [
-            "*.email" => [
+            "email" => [
                 "required",
-                "email",
+                "email"
                 // "unique:contact_emails,email",
             ]
         ];

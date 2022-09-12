@@ -54,8 +54,12 @@ function event_detils(select_btn, obj_params_template) {
                 $(details_modal).modal("show");
             })
             .catch((err) => {
-                console.log(err);
                 load_btn(e.delegateTarget, false);
+
+                const message = err.response.data.message;
+                toastr.error(message || "Ha ocurrido un error");
+
+                console.log(err);
             });
     });
 }

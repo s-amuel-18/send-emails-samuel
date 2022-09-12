@@ -55,7 +55,15 @@
                                 <label for="description">Descripción</label>
                                 <textarea id="summernote" class="form-control" type="text" name="description" rows="5"></textarea>
                             </div>
+
+                            <div class="custom-control custom-checkbox">
+                                <input class="custom-control-input" type="checkbox" id="customCheckbox2" name="private"
+                                    value="1">
+                                <label for="customCheckbox2" class="custom-control-label">Registro privado (solo lo
+                                    puedes ver tú)</label>
+                            </div>
                         </div>
+
                     </div>
 
 

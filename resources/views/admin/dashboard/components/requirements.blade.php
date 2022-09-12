@@ -76,10 +76,6 @@
 @include('admin.requirements.components.modal_details')
 @include('admin.requirements.components.modal_categories')
 
-
-
-
-
 @push('js')
     <script>
         const insert_data_details = document.getElementById("insert_data_details");
@@ -92,7 +88,7 @@
         const requirements_modal_edit = document.getElementById("requirements_modal_edit");
         const form_edit_requirement = document.getElementById("form_edit_requirement");
         const edit_select_category_id = document.getElementById("edit_select_category_id");
-
+        const user_logged = @json(auth()->user());
 
         let requirements_categories = @json($data['requirements_categories']);
 
@@ -138,6 +134,7 @@
                 },
             ],
         };
+
         if (requestData["search"]) {
             datatableOptions.search = {
                 "search": requestData["search"],

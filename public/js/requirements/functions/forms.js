@@ -18,6 +18,7 @@ function submit_form_requirements(form, alert_element = null) {
         const url = form.url.value;
         const description = form.description.value;
         const url_store = form_create_requirement.action;
+        const private = form_create_requirement.private;
 
         let obj_params = {
             name,
@@ -26,13 +27,17 @@ function submit_form_requirements(form, alert_element = null) {
             description: description.length > 0 ? description : null,
         };
 
+        if (private) {
+            obj_params["private"] = private.checked ? 1 : 0;
+        }
+
         load_btn(submiter, true);
 
         axios
             .post(url_store, obj_params)
             .then((resp) => {
                 const { data } = resp;
-
+                console.log(data);
                 if (insert_alert_requirements) {
                     const message = data.message;
                     let template_alert = alert_message(message, "success");

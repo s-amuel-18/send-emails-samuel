@@ -16,6 +16,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 
 class EmailSendController extends Controller
@@ -106,7 +107,7 @@ class EmailSendController extends Controller
 
 
             $correo = new ServicioMaillable($info);
-            Mail::to($email)->send($correo);
+            Mail::to(trim($email))->send($correo);
 
             $emailsToSend = auth()->user()->correos_por_enviar_hoy();
             $emailsToSend = $emailsToSend == 0 ? null : $emailsToSend;
@@ -202,13 +203,16 @@ class EmailSendController extends Controller
         $info["subject"] =  $data["subject"];
         $info["body"] =  BodyEmail::find($data["body_email"])->body;
 
+        $email_validate = Validator::make(['email' => $emailsNotSend->email], [
+            'email' => 'required|email'
+        ]);
+
         try {
             $correo = new ServicioMaillable($info);
-            Mail::to($emailsNotSend->email)->send($correo);
+            Mail::to(trim($emailsNotSend->email))->send($correo);
 
             $emailsToSend = auth()->user()->correos_por_enviar_hoy();
             $emailsToSend = $emailsToSend == 0 ? null : $emailsToSend;
-
 
             $enviado = auth()->user()->emailEnviado()->attach($emailsNotSend->id);
             (new Contact_email())->groupBySendEmail(auth()->user()->id, $emailsNotSend->id, $info);

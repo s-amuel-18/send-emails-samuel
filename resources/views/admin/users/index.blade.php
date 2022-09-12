@@ -68,10 +68,10 @@
 
                                     </td>
                                     <td>
-                                        <fecha-custom fecha="{{ $user->updated_at }}"></fecha-custom>
+                                        {{ $user->updated_at->diffForHumans() }}
                                     </td>
                                     <td>
-                                        <fecha-custom fecha="{{ $user->created_at }}"></fecha-custom>
+                                        {{ $user->created_at->diffForHumans() }}
                                     </td>
                                     <td style="width: 110px">
 

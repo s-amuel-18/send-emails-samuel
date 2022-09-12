@@ -27,6 +27,8 @@ class RequirementsRequest extends FormRequest
             "name" => "required|max:255|string",
             "category_id" => "required|exists:categories,id",
             "url" => "required|active_url",
+            "description" => "nullable|string",
+            "private" => "nullable|numeric|min:0|max:1",
         ];
     }
 }
