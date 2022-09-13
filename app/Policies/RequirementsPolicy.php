@@ -13,6 +13,10 @@ class RequirementsPolicy
 
     public function view(User $user, Requirements $requirements)
     {
+        if ($requirements->private == 0) {
+            return true;
+        }
+
         return $user->id === $requirements->user_id
             ? Response::allow()
             : Response::deny('No tienes acceso a este requerimiento');
