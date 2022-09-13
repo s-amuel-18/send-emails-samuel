@@ -22,7 +22,7 @@ class Category extends Model
     {
         $colors = [
             "blue",
-            "indigo",
+            "info",
             "purple",
             "pink",
             "red",

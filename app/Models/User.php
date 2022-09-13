@@ -135,7 +135,7 @@ class User extends Authenticatable
     {
         $colors = [
             "blue",
-            "indigo",
+            "info",
             "purple",
             "pink",
             "red",

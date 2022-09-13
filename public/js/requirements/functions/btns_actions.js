@@ -151,7 +151,10 @@ async function edit_requirement(btn) {
         $(edit_select_category_id).val(category_id).trigger("change");
     }
 
-    $(summernote_edit_requirements).summernote("editor.pasteHTML", description);
+    $(summernote_edit_requirements).summernote(
+        "editor.pasteHTML",
+        description || "<p></p>"
+    );
 
     $(requirements_modal_edit).modal("show");
 }

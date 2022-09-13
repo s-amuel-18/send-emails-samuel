@@ -17,7 +17,7 @@ class RequirementsController extends Controller
     public function get_requirement($id)
     {
         $requirement = Requirements::with(["user", "category"])->findOrFail($id);
-        // $this->authorize("view", $requirement);
+        $this->authorize("view", $requirement);
 
         $requirement->user_created = $requirement->user->username;
         $requirement->assigned_category = $requirement->category->name ?? "";
@@ -232,9 +232,11 @@ class RequirementsController extends Controller
         request()->validate([
             "id" => "required"
         ]);
+        $requirement = Requirements::findOrFail($request["id"]);
 
-        $requirement = Requirements::findOrFail($request["id"])->delete();
         $this->authorize("view", $requirement);
+
+        $requirement->delete();
 
         $data_response = [
             "message" => "El requerimiento se ha eliminado correctamente",

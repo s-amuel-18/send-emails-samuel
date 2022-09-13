@@ -30,13 +30,11 @@
                             <div class="col-12 col-md-3">
                                 <div class="card card-outline card-primary   mx-3">
                                     <div class="card-header">
-                                        <h3 class="card-title">Emails De Hoy</h3>
+                                        <h3 class="card-title">Tus registros de hoy</h3>
                                         <div class="card-tools font-weight-bold  text-success mx-2">
                                             <span class="">{{ $contact_emails_today_count }}</span>
                                         </div>
-                                        <!-- /.card-tools -->
                                     </div>
-                                    <!-- /.card-header -->
                                 </div>
                             </div>
                         </div>

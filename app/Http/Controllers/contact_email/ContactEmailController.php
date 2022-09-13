@@ -123,7 +123,7 @@ class ContactEmailController extends Controller
      */
     public function create()
     {
-        $contact_emails_today_count = Contact_email::today()->count();
+        $contact_emails_today_count = auth()->user()->emails_registros()->whereDate("created_at", Carbon::today())->count();
 
         return view("admin.contact_email.create", compact("contact_emails_today_count"));
     }
