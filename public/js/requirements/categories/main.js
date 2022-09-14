@@ -29,11 +29,13 @@ $(function () {
 
         const data_insert = {
             name: form.name.value,
+            type: category_type,
         };
 
         load_btn(btn, true);
 
         await post_category(url, data_insert);
+
         load_btn(btn, false);
         form.reset();
     });

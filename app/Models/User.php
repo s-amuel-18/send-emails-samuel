@@ -48,15 +48,17 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /* 
+    88""Yb 888888 88        db     dP""b8 88  dP"Yb  88b 88 888888 .dP"Y8
+    88__dP 88__   88       dPYb   dP   `" 88 dP   Yb 88Yb88 88__   `Ybo."
+    88"Yb  88""   88  .o  dP__Yb  Yb      88 Yb   dP 88 Y88 88""   o.`Y8b
+    88  Yb 888888 88ood8 dP""""Yb  YboodP 88  YbodP  88  Y8 888888 8bodP'    
+     */
+
     public function emails_registros()
     {
         return $this->hasMany(Contact_email::class, "user_id");
     }
-
-    // public function emailEnviado()
-    // {
-    //     return $this->hasMany(EmailEnviado::class, "user_id");
-    // }
 
     public function emailEnviado()
     {
@@ -78,6 +80,17 @@ class User extends Authenticatable
         return $this->hasMany(Requirements::class);
     }
 
+    public function projects()
+    {
+        return $this->hasMany(Project::class);
+    }
+
+    /*     
+        88""Yb 888888 88        db     dP""b8 88  dP"Yb  88b 88 888888 .dP"Y8     888888 88 88b 88
+        88__dP 88__   88       dPYb   dP   `" 88 dP   Yb 88Yb88 88__   `Ybo."     88__   88 88Yb88
+        88"Yb  88""   88  .o  dP__Yb  Yb      88 Yb   dP 88 Y88 88""   o.`Y8b     88""   88 88 Y88
+        88  Yb 888888 88ood8 dP""""Yb  YboodP 88  YbodP  88  Y8 888888 8bodP'     88     88 88  Y8
+     */
 
     public function correos_enviados_hoy()
     {

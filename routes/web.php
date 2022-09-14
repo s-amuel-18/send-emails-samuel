@@ -19,6 +19,7 @@ use App\Http\Controllers\FrontController;
 use App\Http\Controllers\IncomeController;
 use App\Http\Controllers\ManagementController;
 use App\Http\Controllers\PdfController;
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\RecomendacionMejoraController;
 use App\Http\Controllers\RequirementsController;
 // use App\Http\Controllers\contact_email\Email_send;
@@ -127,4 +128,10 @@ Route::prefix('requerimientos')->middleware(["auth"])->group(function () {
     Route::post("/categoria/crear", [RequirementsController::class, "category_store"])->name("requirements.category_store");
     Route::post("/categoria/actualizar/{id}", [RequirementsController::class, "category_update"])->name("requirements.category_update");
     Route::delete("/categoria/{id}/eliminar", [RequirementsController::class, "category_delete"])->name("requirements.category_delete");
+});
+
+// * Proyectos
+Route::prefix('proyectos')->middleware(["auth"])->group(function () {
+    // index proyecto
+    Route::get("/", [ProjectController::class, "index"])->name("project.index");
 });

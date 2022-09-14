@@ -130,7 +130,7 @@ class RequirementsController extends Controller
                     "id" => $requirement->req_id,
                 ])->original;
                 $sum_btns = $details_btn . $edit_btn . $delete_btn;
-                // dd($sum_btns);
+
                 return [
                     "id" => $requirement->req_id,
                     "username" => (string) response()->view("admin.contact_email.components.datatable.user", [
@@ -252,7 +252,10 @@ class RequirementsController extends Controller
 
         $name = $data["name"];
 
-        $category = auth()->user()->categories()->create(["name" => $name, "catgoriable_type" => Requirements::class]);
+        $category = auth()->user()->categories()->create([
+            "name" => $name, "catgoriable_type" => Requirements::class,
+            "catgoriable_type" => $request["type"] ?? Requirements::class,
+        ]);
 
         $response_data = [
             "message" => "La categoría se ha registrado correctamente.",

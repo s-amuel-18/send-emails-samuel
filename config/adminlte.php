@@ -320,6 +320,12 @@ return [
             'icon'        => 'fa fa-hand-holding-usd',
             /* 'can'        => 'service.index', */
         ],
+        [
+            'text'        => 'Proyectos (portafolio)',
+            'route'         => 'project.index',
+            'icon'        => 'fa fa-folder',
+            /* 'can'        => 'service.index', */
+        ],
     ],
 
     /*

@@ -74,7 +74,9 @@
 @include('admin.requirements.components.modal_created')
 @include('admin.requirements.components.modal_edit')
 @include('admin.requirements.components.modal_details')
-@include('admin.requirements.components.modal_categories')
+@include('admin.requirements.components.modal_categories', [
+    'category' => $data['requirements_categories'],
+])
 
 @push('js')
     <script>

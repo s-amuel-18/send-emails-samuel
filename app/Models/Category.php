@@ -40,4 +40,9 @@ class Category extends Model
     {
         return $this->color_by_id();
     }
+
+    public function scopeProject($q)
+    {
+        return $q->where("catgoriable_type", Project::class);
+    }
 }

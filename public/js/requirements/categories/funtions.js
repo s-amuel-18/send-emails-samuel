@@ -37,13 +37,16 @@ function select2_categories_update() {
 }
 
 function add_categorie_arr(categorie) {
+    if (!requirements_categories) return null;
     const categirie = categorie;
+
     requirements_categories = [...requirements_categories, categirie];
     select2_categories_update();
     return requirements_categories;
 }
 
 function remove_cateogire_arr(categorie_id) {
+    if (!requirements_categories) return null;
     const cat_find = requirements_categories.filter((cate) => {
         return cate.id != categorie_id;
     });
@@ -54,9 +57,7 @@ function remove_cateogire_arr(categorie_id) {
 }
 
 function update_categorie_arr(categorie_id, new_categore) {
-    // console.log(categorie_id);
-    // console.log(new_categore);
-    // return false;
+    if (!requirements_categories) return null;
 
     remove_cateogire_arr(categorie_id);
     add_categorie_arr(new_categore);

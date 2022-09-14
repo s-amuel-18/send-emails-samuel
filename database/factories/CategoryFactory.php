@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Project;
 use App\Models\Requirements;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -15,7 +16,7 @@ class CategoryFactory extends Factory
     public function definition()
     {
         $catgoriables_type = collect([
-            Requirements::class
+            Requirements::class, Project::class
         ]);
 
         $random_categoriables = rand(0, ($catgoriables_type->count() - 1));

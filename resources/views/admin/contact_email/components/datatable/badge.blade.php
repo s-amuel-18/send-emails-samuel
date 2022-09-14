@@ -1,3 +1,4 @@
-<span style="font-size: {{ $size_text ?? null ? $size_text : '14px' }}" class="badge bg-{{ $color ? $color : 'light' }}">
+<span style="font-size: {{ $size_text ?? null ? $size_text : '14px' }}"
+    class="badge bg-{{ $color ? $color : 'light' }} d-inline-block">
     {{ $text }}
 </span>

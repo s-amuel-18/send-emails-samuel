@@ -52,15 +52,7 @@
                 </div>
                 <table class="w-100 table table-light text-nowrap table-valign-middle no-footer">
                     <tbody id="table_insert_categories">
-                        {{-- <tr>
-                            <td class="p-2">
-
-                            </td>
-                            <td style="width: 50px" class="p-2">
-
-                            </td>
-                        </tr> --}}
-                        @foreach ($data['requirements_categories'] as $category)
+                        @foreach ($data['requirements_categories'] ?? $categories as $category)
                             <tr id="item_category_{{ $category->id }}">
                                 <td class="p-2">
                                     <div
@@ -125,6 +117,7 @@
 @push('js')
     <script>
         const table_insert_categories = document.getElementById("table_insert_categories");
+        const category_type = @json($category_type ?? null);
     </script>
     <script src="{{ asset('js/requirements/categories/validation.js') }}"></script>
 @endpush

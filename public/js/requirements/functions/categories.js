@@ -173,7 +173,6 @@ async function post_category(url = null, data, type = "create") {
                 cancel_delete_category_func();
                 delete_category();
                 update_category();
-
                 add_categorie_arr(data.data_insert);
             } else if (type == "update") {
                 update_categorie_arr(data.data_insert.id, data.data_insert);

@@ -17,6 +17,7 @@ use App\Models\Spents;
 use App\Models\User;
 // use Database\Factories\BodyEmailFactory;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Storage;
 
 class DatabaseSeeder extends Seeder
 {
@@ -27,10 +28,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        // Storage::deleteDirectory("images");
+        // Storage::makeDirectory("images");
+
+
         $this->call(RoleSeeder::class);
         \App\Models\User::factory(9)->create();
         $this->call(UserSeeder::class);
         $this->call(BillingTimeSeeder::class);
+        \App\Models\Project::factory(20)->create();
+        \App\Models\Category::factory(10)->create();
+        $this->call(ProjectSeeder::class);
         // $this->call(CategoryServiceSeeder::class);
         // Income::factory(7)->create();
         // Spents::factory(4)->create();
@@ -43,10 +51,5 @@ class DatabaseSeeder extends Seeder
         // Service::factory(10)->create();
         // Factory::factoryForModel("App\Models\Body_email");
 
-        // for ($i = 0; $i < 1000; $i++) {
-        //     $user = User::all()->random();
-        //     $contact = Contact_email::all()->random();
-        //     $user->emailEnviado()->attach($contact->id);
-        // }
     }
 }
