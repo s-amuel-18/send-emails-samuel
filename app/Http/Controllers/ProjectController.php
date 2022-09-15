@@ -19,10 +19,10 @@ class ProjectController extends Controller
         $data["title"] = "Proyectos";
 
         // ? cantidad de proyectos
-        $data['projects_count'] = Project::count();
+        $data['projects_count'] = Project::complete()->count();
 
         // ? proyectos
-        $data["projects"] = Project::get();
+        $data["projects"] = Project::complete()->get();
 
         // ? categoria de proyectos
         $data["categories"] = Category::project()->get();
@@ -42,7 +42,9 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        //
+        $data['title'] = "Nuevo Proyecto";
+
+        return view("admin.projects.create", compact("data"));
     }
 
     /**
@@ -88,6 +90,29 @@ class ProjectController extends Controller
     public function update(Request $request, Project $project)
     {
         //
+    }
+
+    public function published(Project $project, Request $riquest)
+    {
+        $data = request()->validate([
+            "published" => "required|numeric|min:0|max:1"
+        ]);
+
+        $published = $data["published"];
+
+        $project->update([
+            "published" => $published
+        ]);
+
+        $data_response = [
+            "message" => [
+                "type" => "success",
+                "message" => "El proyecto se actualizó correctamente"
+            ],
+            "record" => $project,
+        ];
+
+        return response()->json($data_response, 200);
     }
 
     /**

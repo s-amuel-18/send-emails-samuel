@@ -134,4 +134,6 @@ Route::prefix('requerimientos')->middleware(["auth"])->group(function () {
 Route::prefix('proyectos')->middleware(["auth"])->group(function () {
     // index proyecto
     Route::get("/", [ProjectController::class, "index"])->name("project.index");
+    Route::get("/crear", [ProjectController::class, "create"])->name("project.create");
+    Route::put("/published/{project}", [ProjectController::class, "published"])->name("project.published");
 });

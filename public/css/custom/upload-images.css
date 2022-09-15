@@ -1,0 +1,27 @@
+/* * upload images styles */
+/**
+ * FilePond Custom Styles
+ */
+/* .filepond--root {
+    width: 500px;
+}
+
+.filepond--drop-label {
+    color: #4c4e53;
+}
+
+.filepond--label-action {
+    text-decoration-color: #babdc0;
+}
+
+.filepond--panel-root {
+    border-radius: 2em;
+    background-color: #edf0f4;
+    height: 1em;
+} */
+
+.filepond--item {
+    width: calc(20% - 0.5em);
+}
+
+/* * upload images styles end */

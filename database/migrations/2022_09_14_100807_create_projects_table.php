@@ -19,19 +19,22 @@ class CreateProjectsTable extends Migration
             $table->bigInteger("user_id")->default(0)->index();
 
             // * nombre del proyecto.
-            $table->string("name");
+            $table->string("name")->nullable();
 
             // * slug del proyecto (este es un nombre formateado teniendo en cuenta el name "nombre del proyecto") ejecm "mi-proyecto".
-            $table->string("slug");
+            $table->string("slug")->nullable();
 
             // * nos permite hacer publico un proyecto, esto solo muestra al publico o no los proyectos.
-            $table->boolean("published");
+            $table->boolean("published")->default(0);
 
             // * esta imagen es una miniatura del proyecti
             $table->text("image_front_page")->nullable();
 
             // * descripcion del proeycto.
-            $table->text("description");
+            $table->text("description")->nullable();
+
+            // * campo de borrador que nos permite alojar registros que no se culminaron
+            $table->boolean("eraser")->default(0);
 
             // * se debe crear una tabla pivote para alojar las categorias del proyecto
 

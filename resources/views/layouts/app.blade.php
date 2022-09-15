@@ -1,6 +1,8 @@
 @extends('adminlte::page', ['use_ico_only' => true, 'use_full_favicon' => false])
 
 @push('css')
+    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+
     <style>
         .btn-notification {
             position: relative;

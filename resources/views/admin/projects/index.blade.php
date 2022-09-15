@@ -46,7 +46,7 @@
                     </div>
                 </div>
 
-                <div class="card card-body table-responsive">
+                <div class="card card-body">
 
                     @if (($data['projects_count'] ?? 0) > 0)
                         <div class="">
@@ -68,39 +68,62 @@
                                 <tbody>
                                     @foreach ($data['projects'] as $project)
                                         <tr>
+                                            {{-- * id del proyecto --}}
                                             <td>{{ $project->id }}</td>
+
+                                            {{-- * usuario creador --}}
                                             <td style="width: 200px">
                                                 @include('admin.contact_email.components.datatable.user', [
                                                     'user' => $project->user,
                                                     'name' => true,
                                                 ])
                                             </td>
+
+                                            {{-- * img miniatura del proyecto --}}
                                             <td>
                                                 <a href="">
-
                                                     <img src="{{ $project->image_front_page }}" alt=""
                                                         style="width: 100px">
                                                 </a>
                                             </td>
+
+                                            {{-- * Nombre del proyecto --}}
                                             <td style="width: 250px">
                                                 <div class="" data-toggle="tooltip" data-placement="top"
                                                     title="{{ $project->slug }}">
                                                     <b>{{ Str::limit($project->name, 25) }}</b>
                                                 </div>
                                             </td>
+
+                                            {{-- * boton de publicacion --}}
                                             <td style="width: 110px">
                                                 <button
-                                                    class="btn {{ $project->published ? 'btn-primary' : 'btn-outline-primary' }} btn-sm btn-rounded font-weight-bold"
-                                                    type="button" data-toggle="tooltip" data-placement="top"
-                                                    title="publicar proyecto">
-                                                    @if ($project->published)
-                                                        <i class="fa fa-check"></i>
-                                                        Publico
-                                                    @else
-                                                        Privado
-                                                    @endif
+                                                    class="published_project btn-published btn {{ $project->published ? 'public' : '' }} btn-sm btn-rounded font-weight-bold"
+                                                    type="button"
+                                                    data-url="{{ route('project.published', ['project' => $project->id]) }}"
+                                                    data-published="{{ $project->published }}">
+
+                                                    <span class="normal_item">
+                                                        <span class="text-public">
+                                                            <i class="fa fa-check"></i>
+                                                            Publico
+                                                        </span>
+
+                                                        <span class="text-private">
+                                                            Privado
+                                                        </span>
+                                                    </span>
+                                                    <span class="load_item d-none">
+                                                        Cargando
+                                                        <span style="width: .9rem; height: .9rem;"
+                                                            class=" spinner-border spinner-border-sm" role="status">
+                                                        </span>
+                                                    </span>
+
                                                 </button>
                                             </td>
+
+                                            {{-- * categorias --}}
                                             <td style=" white-space: normal;">
                                                 @if ($project->categories()->count())
                                                     @foreach ($project->categories as $category)
@@ -118,14 +141,20 @@
                                                         ])
                                                 @endif
                                             </td>
+
+                                            {{-- * Fecha de creacion --}}
                                             <td>
                                                 @include('admin.contact_email.components.datatable.created_at',
                                                     ['created_parser' => $project->created_at])
                                             </td>
+
+                                            {{-- * fecha de actualizacion --}}
                                             <td>
                                                 @include('admin.contact_email.components.datatable.created_at',
                                                     ['created_parser' => $project->updated_at])
                                             </td>
+
+                                            {{-- * botones para ver y eliminar proyecto --}}
                                             <td>
                                                 <a href="" class="btn btn-outline-success btn-sm">
                                                     <i class="fa fa-edit"></i>
@@ -143,7 +172,7 @@
                     @else
                         <div class="alert alert-light" role="alert">
                             No se encontraron resultados <a class="text-primary"
-                                href="{{ route('contact_email.create') }} ">Crear Nuevo
+                                href="{{ route('project.create') }} ">Crear Nuevo
                                 proyecto</a>
                         </div>
                     @endif
@@ -152,28 +181,45 @@
         </div>
     </div>
 
+    @include('admin.requirements.components.modal_categories', [
+        'categories' => $data['categories'],
+        'category_type' => $data['js']['category_type'],
+    ])
 @stop
 
-@include('admin.requirements.components.modal_categories', [
-    'categories' => $data['categories'],
-    'category_type' => $data['js']['category_type'],
-])
-
 @push('js')
+    {{-- * variables globales --}}
     <script>
         const appData = @json($data['js'] ?? []);
         const requestData = @json($data['request'] ?? []);
         let requirements_categories = null;
+
+        let config_datatable = {
+            "responsive": true,
+            "scrollX": true,
+            "bPaginate": true,
+            "sPaginationType": "numbers",
+        };
     </script>
+
+    {{-- * axios --}}
     <script src="{{ asset('js/Plugins/axios.min.js') }}"></script>
+
+    {{-- * funciones de ayuda "helpers" --}}
     <script src="{{ asset('js/functions/helpers.js') }}"></script>
+
+    {{-- * archivos para la funcion de las categorias --}}
     <script src="{{ asset('js/requirements/categories/funtions.js') }}"></script>
     <script src="{{ asset('js/requirements/functions/categories.js') }}"></script>
     <script src="{{ asset('js/requirements/categories/main.js') }}"></script>
+
+    {{-- * funciones para los proyectos --}}
+    <script src="{{ asset('js/projects/functions/btn_actions.js') }}"></script>
+    <script src="{{ asset('js/projects/main.js') }}"></script>
     <script>
         $(function() {
+            $(".datatable").DataTable(config_datatable);
             $('[data-toggle="tooltip"]').tooltip()
-            $(".datatable").DataTable();
         });
     </script>
 @endpush

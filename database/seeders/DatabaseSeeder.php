@@ -39,7 +39,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\Project::factory(20)->create();
         \App\Models\Category::factory(10)->create();
         $this->call(ProjectSeeder::class);
-        // $this->call(CategoryServiceSeeder::class);
+        $this->call(CategoryServiceSeeder::class);
         // Income::factory(7)->create();
         // Spents::factory(4)->create();
         // BodyEmail::factory(10)->create();
