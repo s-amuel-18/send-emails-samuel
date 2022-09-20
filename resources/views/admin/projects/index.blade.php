@@ -39,7 +39,7 @@
                             <i class="fas fa-plus"></i>
                             <span class="d-none d-md-inline-block ml-1">Categorías</span>
                         </button>
-                        <a href="{{ route('contact_email.create') }}" class="btn btn-outline-light btn-tool">
+                        <a href="{{ route('project.create') }}" class="btn btn-outline-light btn-tool">
                             <i class="fas fa-plus"></i><span class="d-none d-md-inline-block ml-1">Nuevo Proyecto </span>
                         </a>
 

@@ -42,7 +42,14 @@ class ProjectController extends Controller
      */
     public function create()
     {
+        // ? titulo de la seccion
         $data['title'] = "Nuevo Proyecto";
+
+        // ? Categorias
+        $data["categories"] = Category::project()->get();
+
+        // ? variables js
+        $data['js'] = [];
 
         return view("admin.projects.create", compact("data"));
     }
@@ -55,7 +62,7 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request->all());
     }
 
     /**

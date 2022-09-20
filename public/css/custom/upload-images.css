@@ -2,9 +2,7 @@
 /**
  * FilePond Custom Styles
  */
-/* .filepond--root {
-    width: 500px;
-}
+/*
 
 .filepond--drop-label {
     color: #4c4e53;
@@ -21,7 +19,15 @@
 } */
 
 .filepond--item {
-    width: calc(20% - 0.5em);
+    width: calc(50% - 0.5em);
+}
+
+
+.filepond--root,
+.filepond--drop-label,
+.filepond--panel,
+.filepond--panel-center {
+    cursor: pointer;
 }
 
 /* * upload images styles end */
