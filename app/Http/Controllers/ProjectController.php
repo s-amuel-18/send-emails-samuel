@@ -62,6 +62,15 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
+        // ! falta validar imagenes
+        $data = request()->validate([
+            "name" => "required|string|max:191",
+            "categories" => "required|array",
+            "categories.*" => "exists:categories,id",
+            "description" => "required",
+            "image_front_page" => "required",
+        ]);
+
         dd($request->all());
     }
 

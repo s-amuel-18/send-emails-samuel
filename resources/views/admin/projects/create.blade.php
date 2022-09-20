@@ -51,7 +51,7 @@
 
                                 <div class="row">
 
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
                                         {{-- * nombre del proyecto --}}
                                         <div class="form-group">
                                             <label for="name_project">Nombre del proyecto</label>
@@ -61,15 +61,6 @@
                                         {{-- * nombre del proyecto end --}}
                                     </div>
 
-                                    <div class="col-md-6">
-                                        {{-- * slug name (este campo se llenará dinamicamente con un slug del nombre ingresado en el campo "name") --}}
-                                        <div class="form-group">
-                                            <label for="slug_project">Slug name</label>
-                                            <input id="slug_project" class="form-control" type="text" name="slug"
-                                                readonly value="Slug" placeholder="Slug name">
-                                        </div>
-                                        {{-- * slug name end --}}
-                                    </div>
 
                                     <div class="col-12">
                                         <div class="form-group">
@@ -87,34 +78,56 @@
 
                                 <div class="form-group">
                                     <label for="description_project">Description</label>
-                                    <textarea class="form-control" name="description" id="description_project" rows="10"></textarea>
+                                    <textarea required class="form-control" name="description" id="description_project" rows="10"></textarea>
                                 </div>
                             </div>
 
                             <div class="col-md-6">
-                                <div class="row mb-3">
-                                    <div class="col-md-6 py-3 py-md-0">
-                                        <div class="square d-flex justify-content-center align-items-center bg-gray-light">
-                                            <i class="fa fa-image" style="font-size: 50px; color: rgb(161, 161, 161)"></i>
+
+                                <div class="form-group">
+
+                                    <div class="row ">
+                                        <div class="col-md-6 py-3 py-md-0">
+                                            <div
+                                                class="square position-relative d-flex justify-content-center align-items-center bg-gray-light">
+                                                <i class="fa fa-image"
+                                                    style="font-size: 50px; color: rgb(161, 161, 161)"></i>
+
+                                                <div class="preview-image">
+                                                    <img data-load_img="{{ asset('images/helpers/img_gris.png') }}"
+                                                        src="{{ asset('images/helpers/img_gris.png') }}"
+                                                        id="preview_image_front_project" alt="subir imagen">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 py-3 py-md-0 ">
+                                            <h2 class="h5">Foto miniatura</h2>
+                                            <p>Aparecerá como portada del proyecto y se reducirña su peso de forma que no
+                                                tarde
+                                                en cargar la imagen.</p>
+                                            <div class="">
+                                                <input required accept="image/png, image/jpg, image/jpeg" type="file"
+                                                    name="image_front_page" class="d-none" id="image_front_page">
+                                                {{-- <div class="bg-danger" style="height: 0; overflow: hidden;">
+                                                </div> --}}
+                                                <label for="image_front_page" class="btn bg-purple">
+                                                    <i class="fa fa-file-image"></i> Subir imagen
+                                                </label>
+
+                                            </div>
+
                                         </div>
                                     </div>
-                                    <div class="col-md-6 py-3 py-md-0">
-                                        <h2 class="h5">Foto miniatura</h2>
-                                        <p>Aparecerá como portada del proyecto y se reducirña su peso de forma que no tarde
-                                            en cargar la imagen.</p>
-                                        <input type="file" name="image_front_page" class="d-none" id="image_front_page">
-                                        <label for="image_front_page" class="btn bg-purple">
-                                            <i class="fa fa-file-image"></i> Subir imagen
-                                        </label>
-                                    </div>
+
                                 </div>
 
                                 <div class="form-group">
                                     <label for="filepond">Imagenes del proyecto</label>
 
                                     {{-- * input file images --}}
-                                    <input type="file" placeholder="dsadsa" class="filepond" id="filepond"
-                                        name="images[]" multiple data-max-file-size="3MB" data-max-files="4" />
+                                    <input type="file" class="filepond" id="filepond"
+                                        accept="image/png, image/jpg, image/jpeg" name="images[]" multiple
+                                        data-max-file-size="3MB" data-max-files="4" />
 
                                     {{-- * zona donde se arrastran los archivos --}}
                                     <div id="dropzone"
@@ -128,39 +141,44 @@
                                 <div class="form-group">
                                     <label for="">Articulos de ayuda</label>
                                     <div id="insert_items_help_project">
-                                        <div class="row mb-2 item_help_project">
-                                            <div class="col-4">
-                                                <input type="text" class="form-control form-control-sm"
-                                                    name="item_help[name][]" placeholder="Nombre artículo" value="sdsadas">
-                                            </div>
-                                            <div class="col-4">
-                                                <input type="text" class="form-control form-control-sm"
-                                                    placeholder="Descripción artículo" name="item_help[description][]"
-                                                    value="sdsadas">
-                                            </div>
-                                            <div class="col-2">
-                                                <select class="form-control form-control-sm" name="item_help[template][]"
-                                                    id="">
-                                                    <option selected value="<a href='%item%'>%item%</a>">Link</option>
-                                                    <option value="<p class='mb-0'>%item%</p>">Parrafo</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-2">
-                                                <button class="w-100 btn btn-outline-danger btn-sm" type="button">
-                                                    <i class="fa fa-times"></i>
-                                                </button>
+                                        <div class="item_help_project" data-number_item="1">
+                                            <div class="row ">
+                                                <div class="col-4 form-group">
+                                                    <input required type="text" class="form-control form-control-sm"
+                                                        name="item_help[name][1]" placeholder="Nombre artículo">
+                                                </div>
+                                                <div class="col-4 form-group">
+                                                    <input required type="text" class="form-control form-control-sm"
+                                                        placeholder="Descripción artículo" name="item_help[description][1]">
+                                                </div>
+                                                <div class="col-3 form-group">
+                                                    <select required class="form-control form-control-sm"
+                                                        name="item_help[template][1]" id="">
+                                                        <option value="">Plantilla</option>
+                                                        <option value="<a href='%item%'>%item%</a>">Link</option>
+                                                        <option value="<p class='mb-0'>%item%</p>">Parrafo</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-1">
+                                                    <button
+                                                        class="delete_item_helper_project w-100 btn btn-outline-danger btn-sm"
+                                                        type="button">
+                                                        <i class="fa fa-times"></i>
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <button class="w-100 btn btn-outline-primary btn-sm" type="button">
+                                    <button class="w-100 btn btn-outline-primary btn-sm" type="button"
+                                        id="item_helper_project">
                                         <i class="fa fa-plus"></i>
                                     </button>
                                 </div>
                             </div>
 
                             <div class="col-12 d-flex justify-content-end">
-                                <button class="btn btn-primary" type="submit">Registrar</button>
+                                <button class="btn bg-purple" type="submit">Registrar</button>
                             </div>
                         </div>
                     </form>
@@ -196,10 +214,12 @@
 
     <script src="{{ asset('js/projects/functions/upload_images.js') }}"></script>
 
-    <script>
-        $(function() {
-            $(description_project).summernote();
+    {{-- * funcion que nos permite previsualizar una imagen como front del proyecto --}}
+    <script src="{{ asset('js/projects/upload_image_preview_project.js') }}"></script>
 
-        })
-    </script>
+    {{-- * funcion que nos permite crear y eliminar items helpers --}}
+    <script src="{{ asset('js/projects/item_helper_actions.js') }}"></script>
+
+    {{-- * funcion de validacion de formulario --}}
+    <script src="{{ asset('js/projects/validation.js') }}"></script>
 @endpush
