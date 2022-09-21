@@ -22,7 +22,7 @@ class CreateProjectCategoryTable extends Migration
 
             // * categoria del proyecto
             $table->bigInteger("category_id")->default(0)->index();
-
+            $table->softDeletes();
             $table->timestamps();
         });
     }

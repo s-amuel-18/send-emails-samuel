@@ -43,9 +43,10 @@
                 </div>
 
                 <div class="card card-body">
-                    <form action="{{ route('project.store') }}" method="POST" id="form_new_project">
-                        @csrf
+                    <form action="{{ route('project.store') }}" method="POST" id="form_new_project"
+                        enctype="multipart/form-data">
 
+                        @csrf
                         <div class="row">
                             <div class="col-md-6">
 
@@ -89,7 +90,7 @@
                                     <div class="row ">
                                         <div class="col-md-6 py-3 py-md-0">
                                             <div
-                                                class="square position-relative d-flex justify-content-center align-items-center bg-gray-light">
+                                                class="content_img_100x60 position-relative d-flex justify-content-center align-items-center bg-gray-light">
                                                 <i class="fa fa-image"
                                                     style="font-size: 50px; color: rgb(161, 161, 161)"></i>
 
@@ -142,10 +143,11 @@
                                     <label for="">Articulos de ayuda</label>
                                     <div id="insert_items_help_project">
                                         <div class="item_help_project" data-number_item="1">
-                                            <div class="row ">
+                                            <div class="row">
                                                 <div class="col-4 form-group">
-                                                    <input required type="text" class="form-control form-control-sm"
-                                                        name="item_help[name][1]" placeholder="Nombre artículo">
+                                                    <input value="123" required type="text"
+                                                        class="form-control form-control-sm" name="item_help[name][1]"
+                                                        placeholder="Nombre artículo">
                                                 </div>
                                                 <div class="col-4 form-group">
                                                     <input required type="text" class="form-control form-control-sm"
@@ -153,7 +155,7 @@
                                                 </div>
                                                 <div class="col-3 form-group">
                                                     <select required class="form-control form-control-sm"
-                                                        name="item_help[template][1]" id="">
+                                                        name="item_help[template][1]">
                                                         <option value="">Plantilla</option>
                                                         <option value="<a href='%item%'>%item%</a>">Link</option>
                                                         <option value="<p class='mb-0'>%item%</p>">Parrafo</option>

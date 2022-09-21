@@ -18,17 +18,18 @@ class CreateItemHelpsTable extends Migration
             $table->id();
 
             // * nombre del item  
-            $table->string("name");
+            $table->string("name")->nullable();
 
             // * descripcion del item 
-            $table->text("description");
+            $table->text("description")->nullable();
+            $table->text("template")->nullable();
 
             // * id del elemento al que pertenece el item
-            $table->unsignedBigInteger("helpeable_id");
+            $table->unsignedBigInteger("helpeable_id")->index()->default(0);
 
             // * class php
             $table->string("helpeable_type");
-
+            $table->softDeletes();
             $table->timestamps();
         });
     }

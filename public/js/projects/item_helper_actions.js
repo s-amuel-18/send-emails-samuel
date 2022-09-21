@@ -33,33 +33,36 @@ function template_item_helper(number) {
 }
 
 function event_delete_item_helper() {
-    const delete_item_helper_project = document.querySelectorAll(".delete_item_helper_project");
+    const delete_item_helper_project = document.querySelectorAll(
+        ".delete_item_helper_project"
+    );
 
-    $(delete_item_helper_project).on("click", e => {
+    $(delete_item_helper_project).on("click", (e) => {
         const btn = e.delegateTarget;
         const item = btn.parentElement.parentElement.parentElement;
         const parent = item.parentElement;
         parent.removeChild(item);
-
     });
 }
 
 $(function () {
     const item_helper_project = document.getElementById("item_helper_project");
-    const insert_items_help_project = document.getElementById("insert_items_help_project");
+    const insert_items_help_project = document.getElementById(
+        "insert_items_help_project"
+    );
 
-
-
-    $(item_helper_project).on("click", e => {
+    $(item_helper_project).on("click", (e) => {
         // * determinamos cuantos itmes tenemos
-        const item_help_project = document.querySelectorAll(".item_help_project");
+        const item_help_project =
+            document.querySelectorAll(".item_help_project");
+
         const count_items = item_help_project.length;
 
         const template = template_item_helper(count_items + 1);
         insert_items_help_project.innerHTML += template;
 
         event_delete_item_helper();
-    })
+    });
 
     event_delete_item_helper();
 });

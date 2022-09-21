@@ -43,7 +43,7 @@ class CreateProjectsTable extends Migration
             // * se debe crear una table para alojar items de ayuda del proyecto 
             // ? estos items de ayuda nos serviran para adjuntar elementos necesarios para el proyecto
 
-
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -2,7 +2,7 @@ $(function () {
     // * de esta forma se tomaran todos los input asta los que sean display none
     // ! en caso de no usarlo pueden ocurrir errores con los inputs que sean display none
     $.validator.setDefaults({
-        ignore: []
+        ignore: [],
     });
     const obj_config = {
         rules: {
@@ -42,13 +42,12 @@ $(function () {
     $(description_project).summernote({
         callbacks: {
             onChange: function (contents, $editable) {
-
-                $(description_project).val($(description_project).summernote('isEmpty') ? "" : contents);
+                $(description_project).val(
+                    $(description_project).summernote("isEmpty") ? "" : contents
+                );
 
                 form_valid.element($(description_project));
-            }
-        }
+            },
+        },
     });
 });
-
-

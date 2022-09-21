@@ -37,12 +37,12 @@
     border-radius: 15px;
 }
 
-.square {
+.content_img_100x60 {
     width: 100%;
 }
 
-.square:after {
-    content: '';
+.content_img_100x60:after {
+    content: "";
     display: block;
     padding-bottom: 60%;
 }

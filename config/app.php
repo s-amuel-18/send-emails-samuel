@@ -166,6 +166,7 @@ return [
         Barryvdh\DomPDF\ServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Laraveles\Spanish\SpanishServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
 
 
         /*
@@ -238,6 +239,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'PDF' => \Barryvdh\DomPDF\Facades::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'Image' => Intervention\Image\Facades\Image::class
+
     ],
 
 ];

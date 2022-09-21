@@ -1,6 +1,7 @@
 // * Traducciones
 const labels_es_ES = {
-    labelIdle: 'Arrastra y suelta tus archivos o <span class = "filepond--label-action"> Examinar <span>',
+    labelIdle:
+        'Arrastra y suelta tus archivos o <span class = "filepond--label-action"> Examinar <span>',
     labelInvalidField: "El campo contiene archivos inválidos",
     labelFileWaitingForSize: "Esperando tamaño",
     labelFileSizeNotAvailable: "Tamaño no disponible",
@@ -31,12 +32,18 @@ const labels_es_ES = {
     imageValidateSizeLabelFormatError: "Tipo de imagen no compatible",
     imageValidateSizeLabelImageSizeTooSmall: "La imagen es demasiado pequeña",
     imageValidateSizeLabelImageSizeTooBig: "La imagen es demasiado grande",
-    imageValidateSizeLabelExpectedMinSize: "El tamaño mínimo es {minWidth} × {minHeight}",
-    imageValidateSizeLabelExpectedMaxSize: "El tamaño máximo es {maxWidth} × {maxHeight}",
-    imageValidateSizeLabelImageResolutionTooLow: "La resolución es demasiado baja",
-    imageValidateSizeLabelImageResolutionTooHigh: "La resolución es demasiado alta",
-    imageValidateSizeLabelExpectedMinResolution: "La resolución mínima es {minResolution}",
-    imageValidateSizeLabelExpectedMaxResolution: "La resolución máxima es {maxResolution}",
+    imageValidateSizeLabelExpectedMinSize:
+        "El tamaño mínimo es {minWidth} × {minHeight}",
+    imageValidateSizeLabelExpectedMaxSize:
+        "El tamaño máximo es {maxWidth} × {maxHeight}",
+    imageValidateSizeLabelImageResolutionTooLow:
+        "La resolución es demasiado baja",
+    imageValidateSizeLabelImageResolutionTooHigh:
+        "La resolución es demasiado alta",
+    imageValidateSizeLabelExpectedMinResolution:
+        "La resolución mínima es {minResolution}",
+    imageValidateSizeLabelExpectedMaxResolution:
+        "La resolución máxima es {maxResolution}",
 };
 
 // *pasamos las traducciones
@@ -46,9 +53,6 @@ FilePond.setOptions(labels_es_ES);
 We want to preview images, so we need to register the Image Preview plugin
 */
 FilePond.registerPlugin(
-    // encodes the file as base64 data
-    FilePondPluginFileEncode,
-
     // validates the size of the file
     FilePondPluginFileValidateSize,
 
@@ -62,8 +66,8 @@ FilePond.registerPlugin(
 // Select the file input and use create() to turn it into a pond
 const d = FilePond.create(document.querySelector("#filepond"), {
     acceptedFileTypes: ["image/jpg", "image/png", "image/jpeg"],
+    storeAsFile: true,
 });
-
 
 var dragTimer;
 $(document).on("dragover", function (e) {

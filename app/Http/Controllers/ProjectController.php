@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Image as ModelsImage;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
 
 class ProjectController extends Controller
 {
@@ -62,16 +64,47 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        // ! falta validar imagenes
+        // * validaciones
         $data = request()->validate([
             "name" => "required|string|max:191",
             "categories" => "required|array",
             "categories.*" => "exists:categories,id",
             "description" => "required",
-            "image_front_page" => "required",
+            "image_front_page" => "required|image|mimes:jpeg,png,jpg|max:2048",
+            "item_help" => "nullable|array",
+            "item_help.*" => "required",
+            "images" => "sometimes|required|array",
+            "images.*" => [
+                "image",
+                "mimes:jpeg,png",
+            ]
         ]);
 
-        dd($request->all());
+
+        // * CREACION DEL PROYECTO
+        $project = auth()->user()->projects()->create([
+            "name" => $data["name"],
+            "description" => $data["description"],
+        ]);
+
+        // * FUNCION QUE PERMITE REDIMENCIONAR LAS IMAGENES ENVIADAS Y AGREGARLAS AL PROYECTO
+        // $project->create_and_resize_images($request);
+
+        // * AGREGAMOS LAS CATEGORIAS AL PROYECTO
+        // $project->categories()->attach($data["categories"]);
+
+        // * VALIDAMOS QUE HALLAN ITEMS HELPERS
+        if (count($data["item_help"] ?? []) > 0) {
+            // * NOS PERMITE CREAR LOS ITEMS HELPER Y AÑADIRLOS AL PROYECTO
+            $project->create_items_helper($data["item_help"]);
+        }
+
+        dd("fin");
+
+        // ! con este codigo redimencionamos imagenes
+        // $img = Image::make($request->file("image_front_page"));
+        // $img->fit(200, 100);
+        // return $img->save("storage/epa." . uniqid() . ".jpg");
     }
 
     /**
@@ -82,7 +115,7 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        //
+        return $project;
     }
 
     /**
