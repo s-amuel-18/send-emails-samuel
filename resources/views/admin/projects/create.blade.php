@@ -145,9 +145,8 @@
                                         <div class="item_help_project" data-number_item="1">
                                             <div class="row">
                                                 <div class="col-4 form-group">
-                                                    <input value="123" required type="text"
-                                                        class="form-control form-control-sm" name="item_help[name][1]"
-                                                        placeholder="Nombre artículo">
+                                                    <input required type="text" class="form-control form-control-sm"
+                                                        name="item_help[name][1]" placeholder="Nombre artículo">
                                                 </div>
                                                 <div class="col-4 form-group">
                                                     <input required type="text" class="form-control form-control-sm"

@@ -36,6 +36,9 @@ class CreateProjectsTable extends Migration
             // * campo de borrador que nos permite alojar registros que no se culminaron
             $table->boolean("eraser")->default(0);
 
+            // * basurero
+            $table->boolean("trash")->default(0);
+
             // * se debe crear una tabla pivote para alojar las categorias del proyecto
 
             // * se debe crear una tabla pivot para alojar las imagenes relacionadas en el proyecto

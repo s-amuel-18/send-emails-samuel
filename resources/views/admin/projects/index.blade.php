@@ -2,10 +2,10 @@
 @section('plugins.Datatables', true)
 @section('plugins.Sweetalert2', true)
 
-@section('title', $data['title'])
+@section('title', $data['title'] ?? 'Proyectos')
 
 @section('content_header')
-    <h1>{{ $data['title'] }}</h1>
+    <h1>{{ $data['title'] ?? 'Proyectos' }}</h1>
 @stop
 
 @push('css')
@@ -31,14 +31,28 @@
         <div class="col-md-12">
             <div class="card card-light">
                 <div class="card-header">
-                    <h3 class="card-title">{{ $data['title'] }}</h3>
+                    <h3 class="card-title">{{ $data['title'] ?? 'Proyectos' }}</h3>
                     <div class="card-tools">
 
+                        @if ($data['page'] != 'index')
+                            <a href="{{ route('project.index') }}" class="btn btn-outline-light text-primary btn-tool">
+                                <i class="fas fa-home"></i><span class="d-none d-md-inline-block ml-1">Inicio</span>
+                            </a>
+                        @endif
 
-                        <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#categories_modal">
-                            <i class="fas fa-plus"></i>
-                            <span class="d-none d-md-inline-block ml-1">Categorías</span>
-                        </button>
+                        @if ($data['page'] != 'trash')
+                            <a href="{{ route('project.trash_projects') }}"
+                                class="btn btn-outline-light text-danger btn-tool">
+                                <i class="fas fa-trash"></i><span class="d-none d-md-inline-block ml-1">Basurero</span>
+                            </a>
+                        @endif
+
+                        @if ($data['categories'] ?? null)
+                            <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#categories_modal">
+                                <i class="fas fa-plus"></i>
+                                <span class="d-none d-md-inline-block ml-1">Categorías</span>
+                            </button>
+                        @endif
                         <a href="{{ route('project.create') }}" class="btn btn-outline-light btn-tool">
                             <i class="fas fa-plus"></i><span class="d-none d-md-inline-block ml-1">Nuevo Proyecto </span>
                         </a>
@@ -82,7 +96,7 @@
                                             {{-- * img miniatura del proyecto --}}
                                             <td>
                                                 <a href="">
-                                                    <img src="{{ $project->image_front_page }}" alt=""
+                                                    <img src="{{ asset($project->image_front_page) }}" alt=""
                                                         style="width: 100px">
                                                 </a>
                                             </td>
@@ -97,7 +111,7 @@
 
                                             {{-- * boton de publicacion --}}
                                             <td style="width: 110px">
-                                                <button
+                                                <button {{ $project->trash ? 'disabled' : '' }}
                                                     class="published_project btn-published btn {{ $project->published ? 'public' : '' }} btn-sm btn-rounded font-weight-bold"
                                                     type="button"
                                                     data-url="{{ route('project.published', ['project' => $project->id]) }}"
@@ -156,12 +170,45 @@
 
                                             {{-- * botones para ver y eliminar proyecto --}}
                                             <td>
+                                                @if ($data['page'] == 'trash')
+                                                    <button
+                                                        data-url="{{ route('project.out_trash', ['project' => $project->id]) }}"
+                                                        class="out_trash_project btn btn-outline-info btn-sm">
+                                                        <span class="normal_item">
+                                                            <i class="fas fa-trash-restore"></i>
+
+                                                        </span>
+                                                        <span class="load_item d-none">
+                                                            <span style="width: .9rem; height: .9rem;"
+                                                                class="text-info spinner-border spinner-border-sm"
+                                                                role="status">
+                                                            </span>
+                                                        </span>
+                                                    </button>
+                                                @endif
+                                                @if ($project->slug ?? null)
+                                                    <a href="{{ route('project.show', ['slug_name' => $project->slug]) }}"
+                                                        class="btn btn-outline-primary btn-sm">
+                                                        <i class="fa fa-eye"></i>
+                                                    </a>
+                                                @endif
                                                 <a href="" class="btn btn-outline-success btn-sm">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
 
-                                                <button class="btn btn-outline-danger btn-sm" type="button">
-                                                    <i class="fa fa-trash"></i>
+                                                <button data-id="{{ $project->id }}"
+                                                    data-url="{{ $data['type_destroy'] == 'delete' ? $project->routeDelete : $project->routeTrash }}"
+                                                    class="btn_delete_project btn btn-outline-danger btn-sm" type="button">
+
+                                                    <span class="normal_item">
+                                                        <i class="fa fa-trash"></i>
+                                                    </span>
+                                                    <span class="load_item d-none">
+                                                        <span style="width: .9rem; height: .9rem;"
+                                                            class="text-danger spinner-border spinner-border-sm"
+                                                            role="status">
+                                                        </span>
+                                                    </span>
                                                 </button>
                                             </td>
                                         </tr>
@@ -181,16 +228,23 @@
         </div>
     </div>
 
-    @include('admin.requirements.components.modal_categories', [
-        'categories' => $data['categories'],
-        'category_type' => $data['js']['category_type'],
-    ])
+    @if ($data['categories'] ?? null)
+        @include('admin.requirements.components.modal_categories', [
+            'categories' => $data['categories'],
+            'category_type' => $data['js']['category_type'],
+        ])
+    @endif
 @stop
 
 @push('js')
     {{-- * variables globales --}}
     <script>
+        // * selectores
+        const btns_delete_project = document.querySelectorAll(".btn_delete_project");
+        const out_trash_project = document.querySelectorAll(".out_trash_project");
+
         const appData = @json($data['js'] ?? []);
+        const type_destroy = @json($data['type_destroy'] ?? 'trash');
         const requestData = @json($data['request'] ?? []);
         let requirements_categories = null;
 
@@ -218,8 +272,11 @@
     <script src="{{ asset('js/projects/main.js') }}"></script>
     <script>
         $(function() {
-            $(".datatable").DataTable(config_datatable);
+            const project_datatable = $(".datatable").DataTable(config_datatable);
             $('[data-toggle="tooltip"]').tooltip()
+            event_delete_project(project_datatable);
+            event_out_trash_project(project_datatable);
+
         });
     </script>
 @endpush

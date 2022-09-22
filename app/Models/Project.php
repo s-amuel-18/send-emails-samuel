@@ -12,7 +12,7 @@ class Project extends Model
     use HasFactory;
 
     protected $fillable = [
-        "user_id", "name", "slug", "published", "image_front_page", "description"
+        "user_id", "name", "slug", "published", "image_front_page", "description", "trash"
     ];
 
     /* 
@@ -61,11 +61,17 @@ class Project extends Model
 
     public function scopeComplete($q)
     {
-        return $q->where("eraser", 0);
+        return $q->where("eraser", 0)->where("trash", 0);
+    }
+
+    public function scopeTrash($q)
+    {
+        return $q->where("eraser", 0)->where("trash", 1);
     }
 
     public function scopeWhereSlug($q, $slug)
     {
+
         if (!$slug) return null;
 
         return $q->where("slug", $slug);
@@ -117,7 +123,7 @@ class Project extends Model
         if ($images and count($images ?? []) > 0) {
             foreach ($images as $img) {
                 // * REDIMENCIONAMOS LA IMG DE PORTADA
-                $img_project = Image::make($img)->fit(1000, 600);
+                $img_project = Image::make($img)->fit(600, 360);
 
                 // * CREAMOS EL NOMBRE DE LA IMAGEN
                 $name_img_project = $slug_name . "-img-project-" . now()->timestamp . "-" . uniqid() . $this->id . ".jpg";
@@ -129,7 +135,7 @@ class Project extends Model
                 $img_project->save($route_img_project);
 
                 $img_insert = $this->images()->create([
-                    "url" => $name_img_project
+                    "url" => $route_img_project
                 ]);
             }
         }
@@ -143,15 +149,20 @@ class Project extends Model
 
         $items_helper = collect($items);
 
-        $new_arr_items = collect($items_helper["name"])->mapWithKeys(function ($item, $i) use ($items_helper) {
-            return [$i => [
+        // * ESTE MAPEO NOS PERMITE HACER UN ARRAY DE INFORMACION MAS CUSTOMIZADO, ESTO NOS PERMITE UNA MEJOR MANIPULACION DE LA INFORMACION
+        $new_arr_items = collect($items_helper["name"])->map(function ($item, $i) use ($items_helper) {
+            $new_arr = [
                 "name" => $items_helper["name"][$i],
                 "description" => $items_helper["description"][$i],
                 "template" => $items_helper["template"][$i],
-            ]];
+            ];
+
+            $this->itemHelp()->create($new_arr);
+
+            return $new_arr;
         });
 
-        dd($new_arr_items);
+        return $new_arr_items;
     }
 
     /* 
@@ -160,4 +171,28 @@ class Project extends Model
         88""   Y8   8P 88 Y88 Yb      88 Yb   dP 88 Y88 88""   o.`Y8b     88""   88 88 Y88
         88     `YbodP' 88  Y8  YboodP 88  YbodP  88  Y8 888888 8bodP'     88     88 88  Y8      
        */
+
+    /* 
+           db    888888 888888 88""Yb 88 88""Yb 88   88 888888 888888
+          dPYb     88     88   88__dP 88 88__dP 88   88   88   88__
+         dP__Yb    88     88   88"Yb  88 88""Yb Y8   8P   88   88""
+        dP""""Yb   88     88   88  Yb 88 88oodP `YbodP'   88   888888
+     */
+
+    public function getRouteTrashAttribute()
+    {
+        return route('project.trash', ['project' => $this->id]);
+    }
+
+    public function getRouteDeleteAttribute()
+    {
+        return route('project.destroy', ['project' => $this->id]);
+    }
+
+    /* 
+           db    888888 888888 88""Yb 88 88""Yb 88   88 888888 888888     888888 88 88b 88
+          dPYb     88     88   88__dP 88 88__dP 88   88   88   88__       88__   88 88Yb88
+         dP__Yb    88     88   88"Yb  88 88""Yb Y8   8P   88   88""       88""   88 88 Y88
+        dP""""Yb   88     88   88  Yb 88 88oodP `YbodP'   88   888888     88     88 88  Y8
+      */
 }

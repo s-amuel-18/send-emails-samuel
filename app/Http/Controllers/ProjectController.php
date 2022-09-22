@@ -17,19 +17,53 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        // ? titulo de la pagina
+        // * titulo de la pagina
         $data["title"] = "Proyectos";
 
-        // ? cantidad de proyectos
+        // * cantidad de proyectos
         $data['projects_count'] = Project::complete()->count();
 
-        // ? proyectos
+        // * tipo de eliminacion
+        $data["type_destroy"] = "trash";
+
+        // * pagina actual
+        $data["page"] = "index";
+
+        // * proyectos
         $data["projects"] = Project::complete()->get();
 
-        // ? categoria de proyectos
+        // * categoria de proyectos
         $data["categories"] = Category::project()->get();
 
-        // ? variables para javascrip
+        // * variables para javascrip
+        $data["js"] = [
+            "category_type" => Project::class
+        ];
+
+        return view("admin.projects.index", compact("data"));
+    }
+
+    public function trash_projects()
+    {
+        // * titulo de la pagina
+        $data["title"] = "Proyectos (basurero)";
+
+        // * cantidad de proyectos
+        $data['projects_count'] = Project::trash()->count();
+
+        // * tipo de eliminacion
+        $data["type_destroy"] = "delete";
+
+        // * pagina actual
+        $data["page"] = "trash";
+
+        // * proyectos
+        $data["projects"] = Project::trash()->get();
+
+        // * categoria de proyectos
+        $data["categories"] = Category::project()->get();
+
+        // * variables para javascrip
         $data["js"] = [
             "category_type" => Project::class
         ];
@@ -88,10 +122,10 @@ class ProjectController extends Controller
         ]);
 
         // * FUNCION QUE PERMITE REDIMENCIONAR LAS IMAGENES ENVIADAS Y AGREGARLAS AL PROYECTO
-        // $project->create_and_resize_images($request);
+        $project->create_and_resize_images($request);
 
         // * AGREGAMOS LAS CATEGORIAS AL PROYECTO
-        // $project->categories()->attach($data["categories"]);
+        $project->categories()->attach($data["categories"]);
 
         // * VALIDAMOS QUE HALLAN ITEMS HELPERS
         if (count($data["item_help"] ?? []) > 0) {
@@ -99,12 +133,12 @@ class ProjectController extends Controller
             $project->create_items_helper($data["item_help"]);
         }
 
-        dd("fin");
 
-        // ! con este codigo redimencionamos imagenes
-        // $img = Image::make($request->file("image_front_page"));
-        // $img->fit(200, 100);
-        // return $img->save("storage/epa." . uniqid() . ".jpg");
+        if ($project->slug ?? null) {
+            return redirect()->route("project.show", ["slug_name" => $project->slug]);
+        } else {
+            return redirect()->route("project.index");
+        }
     }
 
     /**
@@ -113,9 +147,19 @@ class ProjectController extends Controller
      * @param  \App\Models\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function show(Project $project)
+    public function show($slug_name)
     {
-        return $project;
+        $project = Project::whereSlug($slug_name)
+            ->with("images")
+            ->with("categories")
+            ->with("itemHelp")
+            ->firstOrFail();
+
+        $data["title"] = $project->name;
+        $data["project"] = $project;
+
+
+        return view("admin.projects.show", compact("data"));
     }
 
     /**
@@ -164,14 +208,52 @@ class ProjectController extends Controller
         return response()->json($data_response, 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Project  $project
-     * @return \Illuminate\Http\Response
-     */
+
+    public function out_trash(Project $project)
+    {
+        $project->update([
+            "trash" => 0
+        ]);
+
+        $response = [
+            "message" => [
+                "message" => "El proyecto se ha restaurado correctamente.",
+                "type" => "success"
+            ],
+            "element" => $project
+        ];
+
+        return response()->json($response, 200);
+    }
+
+    public function trash(Project $project)
+    {
+        $project->update([
+            "trash" => 1,
+            "published" => 0
+        ]);
+
+        $response = [
+            "message" => [
+                "message" => "El proyecto se ha enviado al basurero",
+                "type" => "success"
+            ],
+            "element" => $project
+        ];
+
+        return response()->json($response, 200);
+    }
+
     public function destroy(Project $project)
     {
-        //
+        $response = [
+            "message" => [
+                "message" => "El proyecto se ha eliminado correctamente",
+                "type" => "success"
+            ],
+            "element" => $project
+        ];
+
+        return response()->json($response, 200);
     }
 }

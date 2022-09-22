@@ -55,3 +55,126 @@ function published() {
         load_btn(btn, false);
     });
 }
+
+// * evento que agrega el evento CLICK al boton "delete project"
+function event_delete_project(project_datatable) {
+    $(btns_delete_project).on("click", async function (e) {
+        const btn = e.delegateTarget;
+        const id = btn.dataset.id;
+        const url = btn.dataset.url;
+
+        if (!btn || !url) return null;
+
+        load_btn(btn, true);
+
+        if (type_destroy == "delete") {
+            // * ALERTA DE CONFIRMACION
+            const confirm = await Swal.fire({
+                title: "¿Realmente deseas eliminar este proyecto?",
+                text: "Al eliminar este proyecto no podrás recuperarlo, ¿realmente deseas eliminar este elemento?",
+                icon: "warning",
+                showCancelButton: true,
+                customClass: {
+                    confirmButton: "bg-primary",
+                    cancelButton: "bg-light text-dark",
+                },
+                confirmButtonText: "Si, eliminar",
+                cancelButtonText: "Canceclar",
+            });
+
+            // * VALIDACION EN CASO DE QUE SE CONFIRME
+            if (!confirm.isConfirmed) return null;
+        }
+
+        // * ELIMINAMOS PROYECTO (PETICION HTTP)
+        const delete_data = await delete_project(url);
+
+        // * SI SE ELIMINA CORRECTAMENTE
+        if (delete_data.delete) {
+            const row = btn.parentElement.parentElement;
+            // * FUNCION PARA ELIMINAR FILA DE LA TABLA DATATABLE
+            project_datatable.row(row).remove().draw();
+
+            // * ALERTA DE PROYECTO ELIMINADO CORRECTAMENE
+            toastr[delete_data.type_message || "success"](delete_data.message);
+        } else {
+            toastr[delete_data.type_message || "error"](delete_data.message);
+        }
+
+        load_btn(btn, false);
+    });
+}
+
+async function delete_project(url) {
+    if (!url) return null;
+
+    try {
+        const { data } = await axios.delete(url);
+        return {
+            delete: true,
+            data: data,
+            error: false,
+            message: data.message.message || "Eliminado correctamente.",
+            type_message: data.message.type || "success",
+        };
+    } catch (err) {
+        return {
+            delete: false,
+            error: err,
+            message: err.response.data.message.message,
+            type_message: err.response.data.message.type,
+        };
+    }
+}
+
+// * evento que Restaura un proyecto (lo saca del basurero)
+function event_out_trash_project(project_datatable) {
+    $(out_trash_project).on("click", async function (e) {
+        const btn = e.delegateTarget;
+        const id = btn.dataset.id;
+        const url = btn.dataset.url;
+
+        if (!btn || !url) return null;
+
+        load_btn(btn, true);
+
+        // * ELIMINAMOS PROYECTO (PETICION HTTP)
+        const delete_data = await out_trash_project_async(url);
+
+        // * SI SE ELIMINA CORRECTAMENTE
+        if (delete_data.delete) {
+            const row = btn.parentElement.parentElement;
+            // * FUNCION PARA ELIMINAR FILA DE LA TABLA DATATABLE
+            project_datatable.row(row).remove().draw();
+
+            // * ALERTA DE PROYECTO ELIMINADO CORRECTAMENE
+            toastr[delete_data.type_message || "success"](delete_data.message);
+        } else {
+            toastr[delete_data.type_message || "error"](delete_data.message);
+        }
+
+        load_btn(btn, false);
+    });
+}
+
+async function out_trash_project_async(url) {
+    if (!url) return null;
+
+    try {
+        const { data } = await axios.put(url);
+        return {
+            delete: true,
+            data: data,
+            error: false,
+            message: data.message.message || "Eliminado correctamente.",
+            type_message: data.message.type || "success",
+        };
+    } catch (err) {
+        return {
+            delete: false,
+            error: err,
+            message: err.response.data.message.message,
+            type_message: err.response.data.message.type,
+        };
+    }
+}
