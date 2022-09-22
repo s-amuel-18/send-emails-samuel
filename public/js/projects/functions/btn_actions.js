@@ -127,7 +127,7 @@ async function delete_project(url) {
     }
 }
 
-// * evento que Restaura un proyecto (lo saca del basurero)
+// * evento que Restaura un proyecto (lo saca de papelera)
 function event_out_trash_project(project_datatable) {
     $(out_trash_project).on("click", async function (e) {
         const btn = e.delegateTarget;

@@ -43,7 +43,7 @@
                         @if ($data['page'] != 'trash')
                             <a href="{{ route('project.trash_projects') }}"
                                 class="btn btn-outline-light text-danger btn-tool">
-                                <i class="fas fa-trash"></i><span class="d-none d-md-inline-block ml-1">Basurero</span>
+                                <i class="fas fa-trash"></i><span class="d-none d-md-inline-block ml-1">Papelera</span>
                             </a>
                         @endif
 

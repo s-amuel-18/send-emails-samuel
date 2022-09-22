@@ -46,7 +46,7 @@ class ProjectController extends Controller
     public function trash_projects()
     {
         // * titulo de la pagina
-        $data["title"] = "Proyectos (basurero)";
+        $data["title"] = "Proyectos (papelera)";
 
         // * cantidad de proyectos
         $data['projects_count'] = Project::trash()->count();
@@ -235,7 +235,7 @@ class ProjectController extends Controller
 
         $response = [
             "message" => [
-                "message" => "El proyecto se ha enviado al basurero",
+                "message" => "El proyecto se ha enviado a la papelera",
                 "type" => "success"
             ],
             "element" => $project
