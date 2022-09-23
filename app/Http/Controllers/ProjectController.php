@@ -261,4 +261,39 @@ class ProjectController extends Controller
 
         return response()->json($response, 200);
     }
+
+    // ! ESTO SE DEBE ELIMINAR LUEGO DE LAS PRUEBAS
+    public function test_upload()
+    {
+        // * titulo de la seccion
+        $data['title'] = "test";
+
+        // * Categorias
+        $data["categories"] = Category::project()->get();
+
+        // * variables js
+        $data['js'] = [];
+
+        return view("admin.projects.test_upload", compact("data"));
+    }
+
+    public function upload_image(Request $request)
+    {
+        $images = collect($request->file("images"));
+
+        $arr_images = $images->map(function ($img) {
+            $name_image = $img->getClientOriginalName();
+
+            $img->storeAs("projects/", uniqid() . now()->timestamp . "-" . $name_image);
+            return $name_image;
+        });
+
+        return $arr_images;
+    }
+
+    public function upload_image_delete(Request $request)
+    {
+
+        return $request;
+    }
 }

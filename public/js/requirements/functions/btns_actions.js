@@ -1,4 +1,4 @@
-// functions delete
+// * functions delete
 async function confirm_delete(id, btn) {
     Swal.fire({
         allowOutsideClick: false,
@@ -19,7 +19,6 @@ async function confirm_delete(id, btn) {
                 .delete(appData["url_destroy_requirement"], obj_params)
                 .then((resp) => {
                     Swal.close();
-                    // datatable.ajax.reload();
 
                     const { data } = resp;
 
@@ -30,9 +29,7 @@ async function confirm_delete(id, btn) {
                     );
 
                     let hijo = btn.parentElement.parentElement;
-                    btn.parentElement.parentElement.parentElement.removeChild(
-                        hijo
-                    );
+                    datatable.row(hijo).remove().draw();
                 })
                 .catch((err) => {
                     const message = err.response.data.message;

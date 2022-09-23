@@ -135,6 +135,8 @@ Route::prefix('proyectos')->middleware(["auth"])->group(function () {
     // * index proyecto
     Route::get("/", [ProjectController::class, "index"])->name("project.index");
     Route::get("/crear", [ProjectController::class, "create"])->name("project.create");
+    // ! ESTO SE DEBE ELIMINAR LUEGO DE LAS PRUEBAS
+    Route::get("/test_upload", [ProjectController::class, "test_upload"])->name("project.test_upload");
     Route::put("/published/{project}", [ProjectController::class, "published"])->name("project.published");
     Route::post("/store", [ProjectController::class, "store"])->name("project.store");
     Route::get("/show/{slug_name}", [ProjectController::class, "show"])->name("project.show");
@@ -142,4 +144,6 @@ Route::prefix('proyectos')->middleware(["auth"])->group(function () {
     Route::delete("/trash/{project}", [ProjectController::class, "trash"])->name("project.trash");
     Route::get("/trash", [ProjectController::class, "trash_projects"])->name("project.trash_projects");
     Route::put("/out_trash/{project}", [ProjectController::class, "out_trash"])->name("project.out_trash");
+    Route::post("/upload_image", [ProjectController::class, "upload_image"])->name("project.upload_image");
+    Route::delete("/upload_image/dsadsa", [ProjectController::class, "upload_image_delete"])->name("project.upload_image_delete");
 });

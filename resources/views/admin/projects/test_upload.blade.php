@@ -126,7 +126,7 @@
                                     <label for="filepond">Imagenes del proyecto</label>
 
                                     {{-- * input file images --}}
-                                    <input type="file" class="filepond" id="filepond"
+                                    <input type="file" class="filepond" id="filepond_test"
                                         accept="image/png, image/jpg, image/jpeg" name="images[]" multiple
                                         data-max-file-size="3MB" data-max-files="4" />
 
@@ -223,4 +223,25 @@
 
     {{-- * funcion de validacion de formulario --}}
     <script src="{{ asset('js/projects/validation.js') }}"></script>
+
+    <script>
+        const fildpondElement = document.getElementById("filepond_test");
+        const pond = FilePond.create(fildpondElement)
+        const options_fildpond = {
+            server: {
+                url: @json(route('project.upload_image')),
+                headers: {
+                    "X-CSRF-TOKEN": @json(csrf_token()),
+                },
+                process: {
+                    onload: (response) => {
+                        console.log(response);
+                    },
+                },
+                remove: @json(route('project.upload_image_delete'))
+            },
+        };
+
+        FilePond.setOptions(options_fildpond);
+    </script>
 @endpush

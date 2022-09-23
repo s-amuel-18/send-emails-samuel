@@ -2,10 +2,12 @@ $(function () {
     // inicializar select2
     $(".select2").select2();
 
-    // funcion para envio de formulario
+    // * funcion para envio de formulario
     $(function () {
         $(".form_disabled_button_send").on("submit", function (e) {
-            // e.preventDefault();
+            // * VALIDAR FORM
+            if (!$(e.target).valid()) return null;
+
             var button_submit = e.originalEvent.submitter;
             button_submit.disabled = true;
         });
