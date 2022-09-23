@@ -68,7 +68,8 @@ class ProjectObserver
      */
     public function deleted(Project $project)
     {
-        //
+        $project->images()->delete();
+        $project->itemHelp()->delete();
     }
 
     /**

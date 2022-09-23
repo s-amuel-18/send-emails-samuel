@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Image as ModelsImage;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
 class ProjectController extends Controller
@@ -15,6 +16,7 @@ class ProjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    // dsadsadsa-front-image-project-1663876542-632cbdbeabc06.jpg>
     public function index()
     {
         // * titulo de la pagina
@@ -22,7 +24,6 @@ class ProjectController extends Controller
 
         // * cantidad de proyectos
         $data['projects_count'] = Project::complete()->count();
-
         // * tipo de eliminacion
         $data["type_destroy"] = "trash";
 
@@ -246,6 +247,10 @@ class ProjectController extends Controller
 
     public function destroy(Project $project)
     {
+        // * ELIMINACION DE IMAGENES ASOCIADAS AL PROYECTO
+        $project->deleteAllImages();
+        $project->delete();
+
         $response = [
             "message" => [
                 "message" => "El proyecto se ha eliminado correctamente",

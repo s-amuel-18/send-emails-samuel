@@ -118,11 +118,15 @@ async function delete_project(url) {
             type_message: data.message.type || "success",
         };
     } catch (err) {
+        console.log(err);
         return {
             delete: false,
             error: err,
-            message: err.response.data.message.message,
-            type_message: err.response.data.message.type,
+            message:
+                err.response.data.message?.message ||
+                err.response.data.message ||
+                "Error",
+            type_message: err.response.data.message?.type,
         };
     }
 }

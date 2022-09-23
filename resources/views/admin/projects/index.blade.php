@@ -96,8 +96,16 @@
                                             {{-- * img miniatura del proyecto --}}
                                             <td>
                                                 <a href="">
-                                                    <img src="{{ asset($project->image_front_page) }}" alt=""
-                                                        style="width: 100px">
+                                                    <div class="content_img_100x60 bg-gray-light">
+                                                        <div class="content">
+                                                            @if (!$project->image_front_page)
+                                                                <i class="fas fa-image text-muted "></i>
+                                                            @else
+                                                                <img src="{{ asset($project->image_front_page) }}"
+                                                                    class="w-100 h-100" alt="">
+                                                            @endif
+                                                        </div>
+                                                    </div>
                                                 </a>
                                             </td>
 

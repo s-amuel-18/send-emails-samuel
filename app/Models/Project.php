@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Image as ModelsImage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
 class Project extends Model
@@ -31,7 +32,7 @@ class Project extends Model
     // ? imagenes del proyecto
     public function images()
     {
-        return $this->morphMany(ModelsImage::class, "imageable");
+        return $this->morphMany(ModelsImage::class, "imageable")->whereNotNull("url");
     }
 
     public function itemHelp()
@@ -165,6 +166,43 @@ class Project extends Model
         return $new_arr_items;
     }
 
+    public function deleteAllImages()
+    {
+        $name_front_image = $this->originalNameFrontImage;
+
+        // * SI HAY UNA IMAGEN COMO BANNER DEL PROYECTO
+        if ($name_front_image) {
+
+            // * SI EXISTE UNA IMAGEN EN EL STORAGE
+            if (Storage::exists("public/" . $name_front_image)) {
+
+                // * ELIMINAMOS IMAGEN
+                Storage::delete("public/" . $name_front_image);
+
+                // * NULL FRONT IMAGE
+                $this->update([
+                    "image_front_page" => null
+                ]);
+            }
+        }
+
+        // * IMAGENES ASOCIADAS AL PROYECTO 
+        $images_project = $this->images; // ? array
+
+        $images_project->each(function ($image) {
+            $name_image = $image->originalNameFrontImage;
+            // * SI HAY UNA IMAGEN COMO BANNER DEL PROYECTO
+            if ($name_image) {
+                // * SI EXISTE UNA IMAGEN EN EL STORAGE
+                if (Storage::exists("public/" . $name_image)) {
+
+                    // * ELIMINAMOS IMAGEN
+                    Storage::delete("public/" . $name_image);
+                }
+            }
+        });
+    }
+
     /* 
         888888 88   88 88b 88  dP""b8 88  dP"Yb  88b 88 888888 .dP"Y8     888888 88 88b 88
         88__   88   88 88Yb88 dP   `" 88 dP   Yb 88Yb88 88__   `Ybo."     88__   88 88Yb88
@@ -187,6 +225,11 @@ class Project extends Model
     public function getRouteDeleteAttribute()
     {
         return route('project.destroy', ['project' => $this->id]);
+    }
+
+    public function getOriginalNameFrontImageAttribute()
+    {
+        return $this->image_front_page ? str_replace("storage/", "", $this->image_front_page) : null;
     }
 
     /* 
