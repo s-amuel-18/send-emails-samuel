@@ -229,16 +229,64 @@
         const pond = FilePond.create(fildpondElement)
         const options_fildpond = {
             server: {
-                url: @json(route('project.upload_image')),
-                headers: {
-                    "X-CSRF-TOKEN": @json(csrf_token()),
+                process: (
+                    fieldName,
+                    file,
+                    metadata,
+                    load,
+                    error,
+                    progress,
+                    abort,
+                    transfer,
+                    options
+                ) => {
+
+                    // * creamos un form data para el envio de imagenes
+                    const formData = new FormData();
+
+                    formData.append("image", file, file.name);
+
+                    axios.post(@json(route('project.upload_image')), formData).then(({
+                        data
+                    }) => {
+                        const {
+                            route_file
+                        } = data;
+
+                        load(route_file);
+                    }).catch(err => {
+                        error("Ha ocurrido un error");
+                    });
+
+
+                    return {
+                        abort: () => {
+                            abort();
+                        }
+                    };
                 },
-                process: {
-                    onload: (response) => {
-                        console.log(response);
-                    },
+
+                revert: (
+                    route_file, /* identificador de la base de datos */
+                    load,
+                    error
+                ) => {
+
+                    axios.delete(@json(route('project.upload_image_delete')), {
+                        params: {
+                            route_file: route_file
+                        }
+                    }).then(({
+                        data
+                    }) => {
+                        console.log(data);
+                        load();
+                    }).catch(err => {
+                        console.log(err);
+                        error("Ha ocurrido un error");
+                    });
                 },
-                remove: @json(route('project.upload_image_delete'))
+
             },
         };
 

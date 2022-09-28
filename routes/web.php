@@ -145,5 +145,5 @@ Route::prefix('proyectos')->middleware(["auth"])->group(function () {
     Route::get("/trash", [ProjectController::class, "trash_projects"])->name("project.trash_projects");
     Route::put("/out_trash/{project}", [ProjectController::class, "out_trash"])->name("project.out_trash");
     Route::post("/upload_image", [ProjectController::class, "upload_image"])->name("project.upload_image");
-    Route::delete("/upload_image/dsadsa", [ProjectController::class, "upload_image_delete"])->name("project.upload_image_delete");
+    Route::delete("/upload_image", [ProjectController::class, "upload_image_delete"])->name("project.upload_image_delete");
 });

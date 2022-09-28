@@ -279,21 +279,36 @@ class ProjectController extends Controller
 
     public function upload_image(Request $request)
     {
-        $images = collect($request->file("images"));
+        $img = $request->file("image");
 
-        $arr_images = $images->map(function ($img) {
+        if ($img) {
             $name_image = $img->getClientOriginalName();
 
-            $img->storeAs("projects/", uniqid() . now()->timestamp . "-" . $name_image);
-            return $name_image;
-        });
+            $new_name_image = uniqid() . now()->timestamp . "-" . $name_image;
+            $route_file = $img->storeAs("public/projects", $new_name_image);
+        }
 
-        return $arr_images;
+        return response()->json([
+            "route_file" => "projects/" . $new_name_image ?? null
+        ]);
     }
 
     public function upload_image_delete(Request $request)
     {
+        $route_file = $request->route_file;
 
-        return $request;
+        if (Storage::exists("public/" . $route_file)) {
+
+            // * ELIMINAMOS IMAGEN
+            Storage::delete("public/" . $route_file);
+
+            return response()->json([
+                "message" =>    "Imagen eliminada"
+            ]);
+        }
+
+        return response()->json([
+            "message" => "No existe el archivo"
+        ], 404);
     }
 }
