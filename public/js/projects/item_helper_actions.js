@@ -50,7 +50,7 @@ $(function () {
     const insert_items_help_project = document.getElementById(
         "insert_items_help_project"
     );
-    console.log(insert_items_help_project);
+
     $(item_helper_project).on("click", (e) => {
         // * determinamos cuantos itmes tenemos
         const item_help_project =

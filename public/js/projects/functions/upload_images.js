@@ -1,89 +1,193 @@
-// * Traducciones
-const labels_es_ES = {
-    labelIdle:
-        'Arrastra y suelta tus archivos o <span class = "filepond--label-action"> Examinar <span>',
-    labelInvalidField: "El campo contiene archivos inválidos",
-    labelFileWaitingForSize: "Esperando tamaño",
-    labelFileSizeNotAvailable: "Tamaño no disponible",
-    labelFileLoading: "Cargando",
-    labelFileLoadError: "Error durante la carga",
-    labelFileProcessing: "Cargando",
-    labelFileProcessingComplete: "Carga completa",
-    labelFileProcessingAborted: "Carga cancelada",
-    labelFileProcessingError: "Error durante la carga",
-    labelFileProcessingRevertError: "Error durante la reversión",
-    labelFileRemoveError: "Error durante la eliminación",
-    labelTapToCancel: "toca para cancelar",
-    labelTapToRetry: "tocar para volver a intentar",
-    labelTapToUndo: "tocar para deshacer",
-    labelButtonRemoveItem: "Eliminar",
-    labelButtonAbortItemLoad: "Abortar",
-    labelButtonRetryItemLoad: "Reintentar",
-    labelButtonAbortItemProcessing: "Cancelar",
-    labelButtonUndoItemProcessing: "Deshacer",
-    labelButtonRetryItemProcessing: "Reintentar",
-    labelButtonProcessItem: "Cargar",
-    labelMaxFileSizeExceeded: "El archivo es demasiado grande",
-    labelMaxFileSize: "El tamaño máximo del archivo es {filesize}",
-    labelMaxTotalFileSizeExceeded: "Tamaño total máximo excedido",
-    labelMaxTotalFileSize: "El tamaño total máximo del archivo es {filesize}",
-    labelFileTypeNotAllowed: "Archivo de tipo no válido",
-    fileValidateTypeLabelExpectedTypes: "Espera {allButLastType} o {lastType}",
-    imageValidateSizeLabelFormatError: "Tipo de imagen no compatible",
-    imageValidateSizeLabelImageSizeTooSmall: "La imagen es demasiado pequeña",
-    imageValidateSizeLabelImageSizeTooBig: "La imagen es demasiado grande",
-    imageValidateSizeLabelExpectedMinSize:
-        "El tamaño mínimo es {minWidth} × {minHeight}",
-    imageValidateSizeLabelExpectedMaxSize:
-        "El tamaño máximo es {maxWidth} × {maxHeight}",
-    imageValidateSizeLabelImageResolutionTooLow:
-        "La resolución es demasiado baja",
-    imageValidateSizeLabelImageResolutionTooHigh:
-        "La resolución es demasiado alta",
-    imageValidateSizeLabelExpectedMinResolution:
-        "La resolución mínima es {minResolution}",
-    imageValidateSizeLabelExpectedMaxResolution:
-        "La resolución máxima es {maxResolution}",
-};
+// * funcion
+$(function () {
+    // * Traducciones
+    const labels_es_ES = {
+        labelIdle:
+            'Arrastra y suelta tus archivos o <span class = "filepond--label-action"> Examinar <span>',
+        labelInvalidField: "El campo contiene archivos inválidos",
+        labelFileWaitingForSize: "Esperando tamaño",
+        labelFileSizeNotAvailable: "Tamaño no disponible",
+        labelFileLoading: "Cargando",
+        labelFileLoadError: "Error durante la carga",
+        labelFileProcessing: "Cargando",
+        labelFileProcessingComplete: "Carga completa",
+        labelFileProcessingAborted: "Carga cancelada",
+        labelFileProcessingError: "Error durante la carga",
+        labelFileProcessingRevertError: "Error durante la reversión",
+        labelFileRemoveError: "Error durante la eliminación",
+        labelTapToCancel: "toca para cancelar",
+        labelTapToRetry: "tocar para volver a intentar",
+        labelTapToUndo: "tocar para deshacer",
+        labelButtonRemoveItem: "Eliminar",
+        labelButtonAbortItemLoad: "Abortar",
+        labelButtonRetryItemLoad: "Reintentar",
+        labelButtonAbortItemProcessing: "Cancelar",
+        labelButtonUndoItemProcessing: "Deshacer",
+        labelButtonRetryItemProcessing: "Reintentar",
+        labelButtonProcessItem: "Cargar",
+        labelMaxFileSizeExceeded: "El archivo es demasiado grande",
+        labelMaxFileSize: "El tamaño máximo del archivo es {filesize}",
+        labelMaxTotalFileSizeExceeded: "Tamaño total máximo excedido",
+        labelMaxTotalFileSize:
+            "El tamaño total máximo del archivo es {filesize}",
+        labelFileTypeNotAllowed: "Archivo de tipo no válido",
+        fileValidateTypeLabelExpectedTypes:
+            "Espera {allButLastType} o {lastType}",
+        imageValidateSizeLabelFormatError: "Tipo de imagen no compatible",
+        imageValidateSizeLabelImageSizeTooSmall:
+            "La imagen es demasiado pequeña",
+        imageValidateSizeLabelImageSizeTooBig: "La imagen es demasiado grande",
+        imageValidateSizeLabelExpectedMinSize:
+            "El tamaño mínimo es {minWidth} × {minHeight}",
+        imageValidateSizeLabelExpectedMaxSize:
+            "El tamaño máximo es {maxWidth} × {maxHeight}",
+        imageValidateSizeLabelImageResolutionTooLow:
+            "La resolución es demasiado baja",
+        imageValidateSizeLabelImageResolutionTooHigh:
+            "La resolución es demasiado alta",
+        imageValidateSizeLabelExpectedMinResolution:
+            "La resolución mínima es {minResolution}",
+        imageValidateSizeLabelExpectedMaxResolution:
+            "La resolución máxima es {maxResolution}",
+    };
 
-// *pasamos las traducciones
-FilePond.setOptions(labels_es_ES);
+    // *pasamos las traducciones
+    FilePond.setOptions(labels_es_ES);
 
-/*
-We want to preview images, so we need to register the Image Preview plugin
-*/
-FilePond.registerPlugin(
-    // validates the size of the file
-    FilePondPluginFileValidateSize,
+    /*
+    We want to preview images, so we need to register the Image Preview plugin
+    */
+    FilePond.registerPlugin(
+        // validates the size of the file
+        FilePondPluginFileValidateSize,
 
-    // corrects mobile image orientation
-    FilePondPluginImageExifOrientation,
+        // corrects mobile image orientation
+        FilePondPluginImageExifOrientation,
 
-    // previews dropped images
-    FilePondPluginImagePreview
-);
+        // previews dropped images
+        FilePondPluginImagePreview
+    );
 
-// Select the file input and use create() to turn it into a pond
-const d = FilePond.create(document.querySelector("#filepond"), {
-    acceptedFileTypes: ["image/jpg", "image/png", "image/jpeg"],
-    storeAsFile: true,
-});
+    var dragTimer;
+    $(document).on("dragover", function (e) {
+        var dt = e.originalEvent.dataTransfer;
+        if (
+            dt.types &&
+            (dt.types.indexOf
+                ? dt.types.indexOf("Files") != -1
+                : dt.types.contains("Files"))
+        ) {
+            $("#dropzone").show();
+            window.clearTimeout(dragTimer);
+        }
+    });
+    $(document).on("dragleave", function (e) {
+        dragTimer = window.setTimeout(function () {
+            $("#dropzone").hide();
+        }, 25);
+    });
 
-var dragTimer;
-$(document).on("dragover", function (e) {
-    var dt = e.originalEvent.dataTransfer;
-    if (
-        dt.types &&
-        (dt.types.indexOf
-            ? dt.types.indexOf("Files") != -1
-            : dt.types.contains("Files"))
-    ) {
-        $("#dropzone").show();
-        window.clearTimeout(dragTimer);
-    }
-});
-$(document).on("dragleave", function (e) {
-    dragTimer = window.setTimeout(function () {
-        $("#dropzone").hide();
-    }, 25);
+    // * CREAMOS UN NUEVO ARRAY QUE CONTENGA EL FORMATO DEL OBJETO DE CONFIGURACION DESEADO PARA MOSTRAR LAS IMAGENES QUE ESTAN EN EL SERVIDOR
+    // ? "images_project" CONTIENE RUTA DE LAS IMAGENES
+    const images_project_options = images_project.map((img_data) => {
+        return {
+            // * VALIDAMOS QUE TENGA UNA RUTA
+            source: img_data.url || null,
+
+            options: {
+                metadata: {
+                    id_server_image: img_data.id || null, // * CREAMOS UN METADATA PARA IDENTIFICAR LAS IMAGENES QUE YA ESTAN SUBIDAS AL SERVER
+                },
+            },
+        };
+    });
+
+    // * INPUT SUBIDA DE IMAGEN
+    const fildpondElement = document.getElementById("filepond_test");
+
+    // * OMSTAMCIA DE CREACOPM E INICIO DE LIBRERÍA
+    const pond = FilePond.create(fildpondElement, {
+        acceptedFileTypes: ["image/jpg", "image/png", "image/jpeg"], // * EXTENCIONES QUE PODEMOS ACEPTAR
+        files: images_project_options, // * ARRAY CON DATOS FORMATEADOS PARA MOSTRAR IMAGENES QUE ESTAN SUBIDAS EN EL SERVER
+    });
+
+    // * OBJETO DE OPCIONES ADICIONALES
+    const options_fildpond = {
+        server: {
+            // * FUNCION QUE SE EJECUTA CUANDO SE SUBE UNA IMAGEN
+            process: (
+                fieldName, // * NAME DEL INPUT
+                file, // * ARCHIVO QUE SE QUIERE SUBIR
+                metadata, // * METADATOS ASOCIADOS A LA IMAGEN (DE AQUÍ SABREMOS SI LA IMAGEN YA ESTÁ SUBIDA EN EL SERVIDOR)
+                load, // * FUNCION DE IMAGEN CARGADA
+                error, // * FUNCION PARA ERROR AL SUBIR LA IMAGEN
+                progress, // * FUNCION DE EN PROCESO (SE DEBE INVESTIGAR MAS DE ESTO)
+                abort, // * FUNCION QUE ABORTA LA SUBIDA DE LA IMAGEN
+                transfer, // ! NO SE SABE PARA QUE SIRVE
+                options // ! NO SE SABE PARA QUE SIRVE
+            ) => {
+                // * VALIDAMOS QUE LA IMAGEN TENGA UN METADATA
+                // ? DE ESTA FORMA NOS ASEGURAMOS DE QUE LA IMAGEN YA SE HALLA SUBIDO AL SERVIDOR
+                if (metadata.id_server_image || false) {
+                    // * CARGAMOS LA IMAGEN
+                    load(metadata.id_server_image);
+                    return {
+                        abort: () => {
+                            abort();
+                        },
+                    };
+                }
+
+                // * creamos un form data para el envio de imagenes
+                const formData = new FormData();
+                // * AGREGAMOS LA IMAGEN LA FORM DATA
+                formData.append("image", file, file.name);
+
+                axios
+                    .post(route_upload_img, formData)
+                    .then(({ data }) => {
+                        // * RUTA DE LA IMAGEN
+                        const { route_file } = data;
+
+                        // * CARGAMOS LA IMAGEN
+                        load(route_file);
+                    })
+                    .catch((err) => {
+                        // * ERROR AL SUBIR LA IMAGEN
+                        error("Ha ocurrido un error");
+                    });
+
+                return {
+                    abort: () => {
+                        abort();
+                    },
+                };
+            },
+
+            // * FUNCION QUE SE EJECUTA AL ELIMINAR UNA IMAGEN
+            revert: (
+                route_file, // * identificador de la base de datos
+                load, // * FUNCION DE CARGA DE LA IMAGEN
+                error // * FUNCION PARA ERROR AL SUBIR LA IMAGEN
+            ) => {
+                axios
+                    .delete(route_upload_img_delete, {
+                        params: {
+                            route_file: route_file, // * RUTA DE LA IMAGEN QUE QUEREMOS ELIMINAR
+                        },
+                    })
+                    .then(({ data }) => {
+                        // * TERMINAMOS LA CARGA DE ELIMINAR LA IMAGEN
+                        load();
+                    })
+                    .catch((err) => {
+                        // * ERROR AL ELIMINAR LA IMAGEN
+                        error("Ha ocurrido un error");
+                    });
+            },
+        },
+    };
+
+    // * AGREGAMOS EL OBJETO DE CONFIGURACION AL FilePond
+    FilePond.setOptions(options_fildpond);
 });

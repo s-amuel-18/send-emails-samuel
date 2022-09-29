@@ -194,6 +194,9 @@
     <script>
         const description_project = document.getElementById("description_project");
         const appData = @json($data['js'] ?? []);
+        const images_project = @json($data['images_project'] ?? []);
+        const route_upload_img = @json(route('project.upload_image'));
+        const route_upload_img_delete = @json(route('project.upload_image_delete'));
     </script>
 
     {{-- * axios --}}
@@ -223,73 +226,4 @@
 
     {{-- * funcion de validacion de formulario --}}
     <script src="{{ asset('js/projects/validation.js') }}"></script>
-
-    <script>
-        const fildpondElement = document.getElementById("filepond_test");
-        const pond = FilePond.create(fildpondElement)
-        const options_fildpond = {
-            server: {
-                process: (
-                    fieldName,
-                    file,
-                    metadata,
-                    load,
-                    error,
-                    progress,
-                    abort,
-                    transfer,
-                    options
-                ) => {
-
-                    // * creamos un form data para el envio de imagenes
-                    const formData = new FormData();
-
-                    formData.append("image", file, file.name);
-
-                    axios.post(@json(route('project.upload_image')), formData).then(({
-                        data
-                    }) => {
-                        const {
-                            route_file
-                        } = data;
-
-                        load(route_file);
-                    }).catch(err => {
-                        error("Ha ocurrido un error");
-                    });
-
-
-                    return {
-                        abort: () => {
-                            abort();
-                        }
-                    };
-                },
-
-                revert: (
-                    route_file, /* identificador de la base de datos */
-                    load,
-                    error
-                ) => {
-
-                    axios.delete(@json(route('project.upload_image_delete')), {
-                        params: {
-                            route_file: route_file
-                        }
-                    }).then(({
-                        data
-                    }) => {
-                        console.log(data);
-                        load();
-                    }).catch(err => {
-                        console.log(err);
-                        error("Ha ocurrido un error");
-                    });
-                },
-
-            },
-        };
-
-        FilePond.setOptions(options_fildpond);
-    </script>
 @endpush

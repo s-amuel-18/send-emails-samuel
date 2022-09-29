@@ -265,6 +265,9 @@ class ProjectController extends Controller
     // ! ESTO SE DEBE ELIMINAR LUEGO DE LAS PRUEBAS
     public function test_upload()
     {
+        // dd(asset('storage/projects/63359c83e82e51664457859-back.jpg'));
+        // dd(storage_path("public/projects/63359c83e82e51664457859-back.jpg"));
+        // dd(storage_path('storage/projects/63359c83e82e51664457859-back.jpg'));
         // * titulo de la seccion
         $data['title'] = "test";
 
@@ -277,6 +280,7 @@ class ProjectController extends Controller
         return view("admin.projects.test_upload", compact("data"));
     }
 
+    // ! FALTA POR COMENTAR Y MAS VALIDACIONES
     public function upload_image(Request $request)
     {
         $img = $request->file("image");
@@ -293,6 +297,7 @@ class ProjectController extends Controller
         ]);
     }
 
+    // ! FALTA POR COMENTAR Y MAS VALIDACIONES
     public function upload_image_delete(Request $request)
     {
         $route_file = $request->route_file;
