@@ -142,18 +142,35 @@ $(function () {
                 const formData = new FormData();
                 // * AGREGAMOS LA IMAGEN LA FORM DATA
                 formData.append("image", file, file.name);
+                formData.append("project_id", get_project_id());
 
                 axios
                     .post(route_upload_img, formData)
                     .then(({ data }) => {
                         // * RUTA DE LA IMAGEN
                         const { route_file } = data;
+                        const { project } = data;
+                        const { image_create } = data;
 
-                        // * CARGAMOS LA IMAGEN
-                        load(route_file);
+                        // * VALIDAMOS QUE SE HALLA ENVIADO DATOS DEL PROYECTO DESDE EL SERVIDOR
+                        if (project) {
+                            // * ACTUALIZAMOS EL ID DEL PROYECTO
+                            set_project_id(project.id); // ? ESTA FUNCION ESTÁ EN "public\js\projects\functions\functions.js"
+                        }
+
+                        // * VALIDAMOS QUE SE HALLA ENVIADO DATOS DE image_create DESDE EL SERVIDOR
+                        if (image_create) {
+                            // * CARGAMOS LA IMAGEN CON EL ID DEL PROYECTO
+                            load(image_create.id);
+                        } else {
+                            error("Ha ocurrido un error");
+                        }
+
+                        console.log(data);
                     })
                     .catch((err) => {
                         // * ERROR AL SUBIR LA IMAGEN
+                        console.log(err);
                         error("Ha ocurrido un error");
                     });
 
@@ -166,17 +183,18 @@ $(function () {
 
             // * FUNCION QUE SE EJECUTA AL ELIMINAR UNA IMAGEN
             revert: (
-                route_file, // * identificador de la base de datos
+                image_id, // * identificador de la base de datos
                 load, // * FUNCION DE CARGA DE LA IMAGEN
                 error // * FUNCION PARA ERROR AL SUBIR LA IMAGEN
             ) => {
                 axios
                     .delete(route_upload_img_delete, {
                         params: {
-                            route_file: route_file, // * RUTA DE LA IMAGEN QUE QUEREMOS ELIMINAR
+                            image_id, // * RUTA DE LA IMAGEN QUE QUEREMOS ELIMINAR
                         },
                     })
                     .then(({ data }) => {
+                        console.log(data);
                         // * TERMINAMOS LA CARGA DE ELIMINAR LA IMAGEN
                         load();
                     })

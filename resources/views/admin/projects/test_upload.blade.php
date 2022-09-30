@@ -45,19 +45,19 @@
                 <div class="card card-body">
                     <form class="form_disabled_button_send" action="{{ route('project.store') }}" method="POST"
                         id="form_new_project" enctype="multipart/form-data">
-
                         @csrf
+                        <input id="project_id" type="hidden" name="project_id" value="{{ $data['project_id'] ?? 0 }}">
+
                         <div class="row">
                             <div class="col-md-6">
 
                                 <div class="row">
-
                                     <div class="col-md-12">
                                         {{-- * nombre del proyecto --}}
                                         <div class="form-group">
                                             <label for="name_project">Nombre del proyecto</label>
-                                            <input id="name_project" class="form-control" type="text" name="name"
-                                                placeholder="Nombre del proyecto">
+                                            <input id="name_project" class="element_insert_data_async form-control"
+                                                type="text" name="name" placeholder="Nombre del proyecto">
                                         </div>
                                         {{-- * nombre del proyecto end --}}
                                     </div>
@@ -66,7 +66,7 @@
                                     <div class="col-12">
                                         <div class="form-group">
                                             <label for="categories_project">Categorias</label>
-                                            <select name="categories[]" id="categories" class="w-100 select2 form-control"
+                                            <select name="categories[]" id="categories" class=" w-100 select2 form-control"
                                                 multiple>
                                                 @foreach ($data['categories'] as $category)
                                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -79,7 +79,7 @@
 
                                 <div class="form-group">
                                     <label for="description_project">Description</label>
-                                    <textarea required class="form-control" name="description" id="description_project" rows="10"></textarea>
+                                    <textarea required class=" form-control" name="description" id="description_project" rows="10"></textarea>
                                 </div>
                             </div>
 
@@ -197,6 +197,7 @@
         const images_project = @json($data['images_project'] ?? []);
         const route_upload_img = @json(route('project.upload_image'));
         const route_upload_img_delete = @json(route('project.upload_image_delete'));
+        const route_change_or_create = @json(route('project.change_or_create_data_project'));
     </script>
 
     {{-- * axios --}}
@@ -223,7 +224,12 @@
 
     {{-- * funcion que nos permite crear y eliminar items helpers --}}
     <script src="{{ asset('js/projects/item_helper_actions.js') }}"></script>
+    <script src="{{ asset('js/projects/functions/functions.js') }}"></script>
 
     {{-- * funcion de validacion de formulario --}}
     <script src="{{ asset('js/projects/validation.js') }}"></script>
+
+    <script>
+        event_element_insert_data_async();
+    </script>
 @endpush

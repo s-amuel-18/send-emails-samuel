@@ -146,4 +146,5 @@ Route::prefix('proyectos')->middleware(["auth"])->group(function () {
     Route::put("/out_trash/{project}", [ProjectController::class, "out_trash"])->name("project.out_trash");
     Route::post("/upload_image", [ProjectController::class, "upload_image"])->name("project.upload_image");
     Route::delete("/upload_image", [ProjectController::class, "upload_image_delete"])->name("project.upload_image_delete");
+    Route::post("/crear-actualizar", [ProjectController::class, "change_or_create_data_project"])->name("project.change_or_create_data_project");
 });

@@ -101,6 +101,7 @@ class ProjectController extends Controller
     {
         // * validaciones
         $data = request()->validate([
+            "project_id" => "required",
             "name" => "required|string|max:191",
             "categories" => "required|array",
             "categories.*" => "exists:categories,id",
@@ -115,12 +116,20 @@ class ProjectController extends Controller
             ]
         ]);
 
-
-        // * CREACION DEL PROYECTO
-        $project = auth()->user()->projects()->create([
+        $data_insert = [
             "name" => $data["name"],
             "description" => $data["description"],
-        ]);
+        ];
+
+        if ($data["project_id"] == 0) {
+
+            // * CREACION DEL PROYECTO
+            $project = auth()->user()->projects()->create($data_insert);
+        } else {
+            $project = Project::findOrFail($data["project_id"]);
+            $data_insert["eraser"] = 0;
+            $project->update($data_insert);
+        }
 
         // * FUNCION QUE PERMITE REDIMENCIONAR LAS IMAGENES ENVIADAS Y AGREGARLAS AL PROYECTO
         $project->create_and_resize_images($request);
@@ -265,9 +274,6 @@ class ProjectController extends Controller
     // ! ESTO SE DEBE ELIMINAR LUEGO DE LAS PRUEBAS
     public function test_upload()
     {
-        // dd(asset('storage/projects/63359c83e82e51664457859-back.jpg'));
-        // dd(storage_path("public/projects/63359c83e82e51664457859-back.jpg"));
-        // dd(storage_path('storage/projects/63359c83e82e51664457859-back.jpg'));
         // * titulo de la seccion
         $data['title'] = "test";
 
@@ -280,32 +286,81 @@ class ProjectController extends Controller
         return view("admin.projects.test_upload", compact("data"));
     }
 
-    // ! FALTA POR COMENTAR Y MAS VALIDACIONES
+
     public function upload_image(Request $request)
     {
-        $img = $request->file("image");
+        // * VALIDAMOS LOS DATOS ENVIADOS
+        $data_valid = request()->validate([
+            "image" => "required|image|mimes:jpeg,png",
+            "project_id" => "required"
+        ]);
 
-        if ($img) {
-            $name_image = $img->getClientOriginalName();
+        $project_id = $data_valid["project_id"];
 
-            $new_name_image = uniqid() . now()->timestamp . "-" . $name_image;
-            $route_file = $img->storeAs("public/projects", $new_name_image);
+        // * EN CASO DE QUE EL ID DEL PROYECTO SEA 0 (NO SE TIENE UN PROYECTO) LO CREAMOS COMO UNO NUEVO
+        if ($project_id == 0) {
+            // * CREAMOS UN PROYECTO VACIO PARA POSTERIORMENTE ASOCIAR LAS IMAGENES ENVUADAS A ESTE PROYECTO
+            $project = auth()->user()->projects()->create([
+                "eraser" => 1
+            ]);
+        } else {
+            $project = Project::findOrFail($project_id);
         }
 
+        // * IMAGEN ENVIADA
+        $img = $request->file("image");
+
+        // * NOMBRE ORIGINAL DE LA IMAGEN
+        $name_image = $img->getClientOriginalName();
+
+        // * NUEVO NOMBRE DE LA IMAGEN (ESTO LO HACEMOS PARA QUE NO SE REPITAN LOS NOMBRES DE LAS IMAGENES)
+        $new_name_image = uniqid() . now()->timestamp . "-" . $name_image;
+
+        // * GUARDAMOS LA IMAGEN EN EL STOREAGE
+        $img->storeAs("public/projects", $new_name_image);
+        $route_file = "projects/" . $new_name_image;
+
+        // * PATH DEL ARCHIVO GURDADO
+        $storage_path = storage_path("app/public/" . $route_file);
+
+        // * REDIMENCIONAMOS LA IMG 
+        $img_front_fit = Image::make($storage_path)->fit(600, 360);
+
+        // * GUARDAMOS LA IMAGEN EN EL STORAGE
+        $img_front_fit->save();
+
+        // * CREAMOS EL REGISTRO DE LA IMG EN LA BASE DE DATOS
+        $image_create = $project->images()->create([
+            "url" => $route_file
+        ]);
+
         return response()->json([
-            "route_file" => "projects/" . $new_name_image ?? null
+            "route_file" => $route_file ?? null,
+            "project" => $project,
+            "image_create" => $image_create
         ]);
     }
 
-    // ! FALTA POR COMENTAR Y MAS VALIDACIONES
+
     public function upload_image_delete(Request $request)
     {
-        $route_file = $request->route_file;
+        // * VALIDAMOS LOS DATOS ENVIADOS
+        $data_valid = request()->validate([
+            "image_id" => "required|exists:images,id",
+        ]);
+
+        $image = ModelsImage::findOrFail($data_valid["image_id"]);
+        $route_file = $image->url;
+
+        if (!$route_file) return response()->json(null, 404);
 
         if (Storage::exists("public/" . $route_file)) {
 
             // * ELIMINAMOS IMAGEN
             Storage::delete("public/" . $route_file);
+
+            // * ELIMINAMOS EL REGISTRO DE LA BASE DE DATOS
+            $image->delete();
 
             return response()->json([
                 "message" =>    "Imagen eliminada"
@@ -315,5 +370,45 @@ class ProjectController extends Controller
         return response()->json([
             "message" => "No existe el archivo"
         ], 404);
+    }
+
+    public function change_or_create_data_project(Request $request)
+    {
+        // * METODOS DE VALIDACION
+        $data_valid = request()->validate([
+            "categories" => "nullable|array",
+            "categories.*" => "exists:categories,id",
+            "description" => "nullable",
+            "name" => "nullable",
+            "project_id" => "required"
+        ]);
+
+        // * EXTRAEMOS EL ID DEL PROYECTO 
+        // ? NOTA: este id puede ser un 0 o uno que ya exista en la base de datos, de esta forma sabemos si debemos crear o actualizar el proyecto
+        $project_id = $data_valid["project_id"];
+
+        // * EN CASO DE QUE EL ID DEL PROYECTO SEA 0 (NO SE TIENE UN PROYECTO) LO CREAMOS COMO UNO NUEVO
+        if ($project_id == 0) {
+            // * CREAMOS UN PROYECTO VACIO PARA POSTERIORMENTE ASOCIAR LAS IMAGENES ENVUADAS A ESTE PROYECTO
+            $project = auth()->user()->projects()->create([
+                "eraser" => 1,
+                "name" => $data_valid["name"] ?? "",
+                "description" => $data_valid["description"] ?? "",
+            ]);
+        } else {
+            // * FILTRAMOS EL PRPYECTO EN CASO DE QUE EL ID ENVIADO NO SEA 0 
+            $project = Project::findOrFail($project_id);
+        }
+
+
+        if ($data_valid["categories"] ?? null) {
+            // * ASOCIAMOS LAS CATEGORIAS ENVIADAS AL PROYECTO
+            $project->categories()->attach($data_valid["categories"]);
+        }
+
+        // * RESPONDEMOS CON LOS DATOS DEL PROYECTO
+        return response()->json([
+            "project" => $project
+        ]);
     }
 }

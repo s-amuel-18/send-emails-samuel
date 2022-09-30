@@ -24,7 +24,6 @@ $(function () {
         },
         errorElement: "span",
         errorPlacement: function (error, element) {
-            console.log(element);
             error.addClass("invalid-feedback");
             element.closest(".form-group").append(error);
         },
@@ -39,15 +38,5 @@ $(function () {
     // VALIDACION
     const form_valid = $("#form_new_project").validate(obj_config);
 
-    $(description_project).summernote({
-        callbacks: {
-            onChange: function (contents, $editable) {
-                $(description_project).val(
-                    $(description_project).summernote("isEmpty") ? "" : contents
-                );
-
-                form_valid.element($(description_project));
-            },
-        },
-    });
+    $(description_project).summernote();
 });

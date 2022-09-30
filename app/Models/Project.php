@@ -13,7 +13,7 @@ class Project extends Model
     use HasFactory;
 
     protected $fillable = [
-        "user_id", "name", "slug", "published", "image_front_page", "description", "trash"
+        "user_id", "name", "slug", "published", "image_front_page", "description", "trash", "eraser"
     ];
 
     /* 
@@ -98,7 +98,6 @@ class Project extends Model
     {
         if (!$request) return null;
         $image_front_page = $request->file("image_front_page");
-        $images = $request->file("images");
 
         $slug_name = $this->slug;
 
@@ -121,25 +120,27 @@ class Project extends Model
         }
 
         // * VALIDAMOS QUE LAS IMAGENES "images" SE HALLAN ENVIANDO EN EL OBJETO REQUEST
-        if ($images and count($images ?? []) > 0) {
-            foreach ($images as $img) {
-                // * REDIMENCIONAMOS LA IMG DE PORTADA
-                $img_project = Image::make($img)->fit(600, 360);
+        // ! ESTO SE QUEDA COMENTADO PORQUE YA SE GENERÓ UNA FUNCIONALIDAD MAS EFECTIVA, PERO NO SE QUIERE PERDER EL TRABAJO REALIZADP
+        // $images = $request->file("images");
+        // if ($images and count($images ?? []) > 0) {
+        //     foreach ($images as $img) {
+        //         // * REDIMENCIONAMOS LA IMG DE PORTADA
+        //         $img_project = Image::make($img)->fit(600, 360);
 
-                // * CREAMOS EL NOMBRE DE LA IMAGEN
-                $name_img_project = $slug_name . "-img-project-" . now()->timestamp . "-" . uniqid() . $this->id . ".jpg";
+        //         // * CREAMOS EL NOMBRE DE LA IMAGEN
+        //         $name_img_project = $slug_name . "-img-project-" . now()->timestamp . "-" . uniqid() . $this->id . ".jpg";
 
-                // * RUTA DE LA IMAGEN
-                $route_img_project = "storage/" . $name_img_project;
+        //         // * RUTA DE LA IMAGEN
+        //         $route_img_project = "storage/" . $name_img_project;
 
-                // * GUARDAMOS LA IMAGEN EN EL STORAGE
-                $img_project->save($route_img_project);
+        //         // * GUARDAMOS LA IMAGEN EN EL STORAGE
+        //         $img_project->save($route_img_project);
 
-                $img_insert = $this->images()->create([
-                    "url" => $route_img_project
-                ]);
-            }
-        }
+        //         $img_insert = $this->images()->create([
+        //             "url" => $route_img_project
+        //         ]);
+        //     }
+        // }
     }
 
     // * NOS PERMITE CREAR LOS ITEMS HELPER Y AÑADIRLOS AL PROYECTO
