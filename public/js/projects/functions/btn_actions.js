@@ -89,6 +89,8 @@ function event_delete_project(project_datatable) {
         // * ELIMINAMOS PROYECTO (PETICION HTTP)
         const delete_data = await delete_project(url);
 
+        set_count_status_projects(delete_data.data);
+
         // * SI SE ELIMINA CORRECTAMENTE
         if (delete_data.delete) {
             const row = btn.parentElement.parentElement;
@@ -144,6 +146,8 @@ function event_out_trash_project(project_datatable) {
 
         // * ELIMINAMOS PROYECTO (PETICION HTTP)
         const delete_data = await out_trash_project_async(url);
+        console.log(delete_data.data);
+        set_count_status_projects(delete_data.data);
 
         // * SI SE ELIMINA CORRECTAMENTE
         if (delete_data.delete) {

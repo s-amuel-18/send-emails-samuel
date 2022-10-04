@@ -16,7 +16,11 @@ $(function () {
                 required: true,
             },
             image_front_page: {
-                required: true,
+                required: (element) => {
+                    let img_front_exist =
+                        document.getElementById("img_front_exist");
+                    return !img_front_exist;
+                },
             },
             "images[]": {
                 required: true,

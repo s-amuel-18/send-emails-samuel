@@ -92,7 +92,7 @@ $(function () {
     const images_project_options = images_project.map((img_data) => {
         return {
             // * VALIDAMOS QUE TENGA UNA RUTA
-            source: img_data.url || null,
+            source: "/storage/" + img_data.url || null,
 
             options: {
                 metadata: {

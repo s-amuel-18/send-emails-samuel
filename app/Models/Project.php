@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Str;
 
 class Project extends Model
 {
@@ -67,7 +68,12 @@ class Project extends Model
 
     public function scopeTrash($q)
     {
-        return $q->where("eraser", 0)->where("trash", 1);
+        return $q->where("trash", 1);
+    }
+
+    public function scopeEraser($q)
+    {
+        return $q->where("eraser", 1)->where("trash", 0);
     }
 
     public function scopeWhereSlug($q, $slug)
@@ -103,17 +109,28 @@ class Project extends Model
 
         // * VALIDAMOS QUE LA IMAGEN "image_front_page" FUE  SUBIDA CORRECTAMENTE
         if ($image_front_page) {
-            // * REDIMENCIONAMOS LA IMG DE PORTADA
-            $img_front_fit = Image::make($image_front_page)->fit(300, 180);
 
-            // * CREAMOS EL NOMBRE DE LA IMAGEN
-            $name_img_front_fit = "storage/" . $slug_name . "-front-image-project-" . now()->timestamp . "-" . uniqid() . ".jpg";
+            // * NOMBRE ORIGINAL DE LA IMAGEN
+            $name_image = $image_front_page->getClientOriginalName();
+
+            // * NUEVO NOMBRE DE LA IMAGEN (ESTO LO HACEMOS PARA QUE NO SE REPITAN LOS NOMBRES DE LAS IMAGENES)
+            $new_name_image = uniqid() . now()->timestamp . "-" . $name_image;
+
+            // * GUARDAMOS LA IMAGEN EN EL STOREAGE
+            $image_front_page->storeAs("public/projects", $new_name_image);
+            $route_file = "projects/" . $new_name_image;
+
+            // * PATH DEL ARCHIVO GURDADO
+            $storage_path = storage_path("app/public/" . $route_file);
+
+            // * REDIMENCIONAMOS LA IMG 
+            $img_front_fit = Image::make($storage_path)->fit(600, 360);
 
             // * GUARDAMOS LA IMAGEN EN EL STORAGE
-            $img_front_fit->save($name_img_front_fit);
+            $img_front_fit->save();
 
             // * AGREGAMOS LA RUTA DE LA IMAGEN AL PROYECTO
-            $this->image_front_page = $name_img_front_fit;
+            $this->image_front_page = $route_file;
 
             // * GUARDAMOS TODOS LOS CAMBIOS
             $this->save();
@@ -146,6 +163,13 @@ class Project extends Model
     // * NOS PERMITE CREAR LOS ITEMS HELPER Y AÑADIRLOS AL PROYECTO
     public function create_items_helper($items)
     {
+        // * vemos si el proyecto cuenta con items asociados
+        // ? lo que se busca hacer es eliminar los items help que estén asociados al proyecto para posteriormente crear los nuevos items y asociarlos
+        $items_help_project = $this->itemHelp()->count();
+        if ($items_help_project > 0) {
+            $this->itemHelp()->delete();
+        }
+
         // * VALIDAMOS QUE HALLAN ITEMS HELPERS
         if (!$items or count($items) < 1) return false;
 
@@ -165,6 +189,27 @@ class Project extends Model
         });
 
         return $new_arr_items;
+    }
+
+    public function deleteFronImage()
+    {
+        $name_front_image = $this->originalNameFrontImage;
+
+        // * SI HAY UNA IMAGEN COMO BANNER DEL PROYECTO
+        if ($name_front_image) {
+
+            // * SI EXISTE UNA IMAGEN EN EL STORAGE
+            if (Storage::exists("public/" . $name_front_image)) {
+
+                // * ELIMINAMOS IMAGEN
+                Storage::delete("public/" . $name_front_image);
+
+                // * NULL FRONT IMAGE
+                $this->update([
+                    "image_front_page" => null
+                ]);
+            }
+        }
     }
 
     public function deleteAllImages()
@@ -202,6 +247,51 @@ class Project extends Model
                 }
             }
         });
+    }
+
+    public function create_slug()
+    {
+        // * VALIDACION PARA CREAR EL SLUG NAME POSTERIORMENTE
+        if ($this->name ?? false) {
+            // * ESTA VARIABLE NOS PERMITE AUMENTAR SU VALOR EN CASO DE QUE EL SLUG GENERADO YA ESTÉ EN USO
+            $loops = 0;
+
+            do {
+
+                // * SI LA VARIABLE AUXILIAR YA HA SIDO AUMENTADA GENERAREMOS UN SLUG MAS PRODUCIDO, DE FORMA QUE NO SE REPITAN SLUGS
+                if ($loops > 0) {
+
+                    // * GENERAMOS EL SLUG NAME MAS ESPECIFICO
+                    $slug_name = Str::slug($this->name) . "-" . uniqid();
+                } else {
+
+                    // * GENERAMOS EL SLUG NAME
+                    $slug_name = Str::slug($this->name);
+                }
+
+                // * CANTIDAD DE PROYETOS CON EL SLUG NAME CREADO
+                $projects_count = Project::whereSlug($slug_name)->count();
+
+                // * EN CASO DE QUE EXISTA ALGUN PROYECTO CON EL SLUG NAME GENERADO
+                if ($projects_count > 0) {
+                    // * AUMENTANIS EK VALOR DE LA VARIABLE AUXILIAR
+                    $loops += 1;
+                }
+            } while ($projects_count > 0);
+
+            // * AGREGAMOS EL SLUG AL PROYECTO
+            $this->slug = $slug_name;
+            $this->save();
+        }
+    }
+
+    static public function projectsStatus()
+    {
+        return [
+            "trash_projects" => Project::trash()->count(),
+            "eraser_projects" => Project::eraser()->count(),
+            "complete_projects" => Project::complete()->count(),
+        ];
     }
 
     /* 

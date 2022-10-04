@@ -17,21 +17,61 @@ class ProjectController extends Controller
      * @return \Illuminate\Http\Response
      */
     // dsadsadsa-front-image-project-1663876542-632cbdbeabc06.jpg>
-    public function index()
+    public function index(Request $request)
     {
-        // * titulo de la pagina
-        $data["title"] = "Proyectos";
 
-        // * cantidad de proyectos
-        $data['projects_count'] = Project::complete()->count();
-        // * tipo de eliminacion
-        $data["type_destroy"] = "trash";
+        if ($request["trash"]) {
+            // * titulo de la pagina
+            $data["title"] = "Papelera";
 
-        // * pagina actual
-        $data["page"] = "index";
+            // * tipo de eliminacion
+            $data["type_destroy"] = "delete";
 
-        // * proyectos
-        $data["projects"] = Project::complete()->get();
+            // * pagina actual
+            $data["page"] = "trash";
+
+            // * cantidad de proyectos
+            $data['projects_count'] = Project::trash()->count();
+
+            // * proyectos
+            $data["projects"] = Project::trash()->get();
+        } elseif ($request["eraser"]) {
+
+            // * titulo de la pagina
+            $data["title"] = "Borradores";
+
+            // * tipo de eliminacion
+            $data["type_destroy"] = "trash";
+
+            // * pagina actual
+            $data["page"] = "eraser";
+
+            // * cantidad de proyectos
+            $data['projects_count'] = Project::eraser()->count();
+
+            // * proyectos
+            $data["projects"] = Project::eraser()->get();
+        } else {
+
+            // * titulo de la pagina
+            $data["title"] = "Proyectos";
+
+            // * tipo de eliminacion
+            $data["type_destroy"] = "trash";
+
+            // * pagina actual
+            $data["page"] = "index";
+
+            // * cantidad de proyectos
+            $data['projects_count'] = Project::complete()->count();
+
+            // * proyectos
+            $data["projects"] = Project::complete()->get();
+        }
+
+        $data["trash_count"] = Project::trash()->count();
+        $data["eraser_count"] = Project::eraser()->count();
+        $data["index_count"] = Project::complete()->count();
 
         // * categoria de proyectos
         $data["categories"] = Category::project()->get();
@@ -106,14 +146,14 @@ class ProjectController extends Controller
             "categories" => "required|array",
             "categories.*" => "exists:categories,id",
             "description" => "required",
-            "image_front_page" => "required|image|mimes:jpeg,png,jpg|max:2048",
+            "image_front_page" => "required_if:img_front_exist,null|image|mimes:jpeg,png,jpg|max:2048",
             "item_help" => "nullable|array",
             "item_help.*" => "required",
-            "images" => "sometimes|required|array",
-            "images.*" => [
-                "image",
-                "mimes:jpeg,png",
-            ]
+            // "images" => "sometimes|required|array",
+            // "images.*" => [
+            //     "image",
+            //     "mimes:jpeg,png",
+            // ]
         ]);
 
         $data_insert = [
@@ -125,17 +165,27 @@ class ProjectController extends Controller
 
             // * CREACION DEL PROYECTO
             $project = auth()->user()->projects()->create($data_insert);
+
+            // * EN CASO DE QUE EL PROYECTO NO TENGA SLUG NAME LO CREAMOS
+            if (!$project->slug ?? null) {
+                $project->create_slug();
+            }
         } else {
             $project = Project::findOrFail($data["project_id"]);
             $data_insert["eraser"] = 0;
             $project->update($data_insert);
         }
 
+        if ($request["img_front_exist"] and $request->file("image_front_page")) {
+            $project->deleteFronImage();
+        }
+
         // * FUNCION QUE PERMITE REDIMENCIONAR LAS IMAGENES ENVIADAS Y AGREGARLAS AL PROYECTO
         $project->create_and_resize_images($request);
 
-        // * AGREGAMOS LAS CATEGORIAS AL PROYECTO
-        $project->categories()->attach($data["categories"]);
+        // * ASOCIAMOS LAS CATEGORIAS ENVIADAS AL PROYECTO
+        $project->categories()->sync($data["categories"]);
+
 
         // * VALIDAMOS QUE HALLAN ITEMS HELPERS
         if (count($data["item_help"] ?? []) > 0) {
@@ -164,7 +214,6 @@ class ProjectController extends Controller
             ->with("categories")
             ->with("itemHelp")
             ->firstOrFail();
-
         $data["title"] = $project->name;
         $data["project"] = $project;
 
@@ -180,7 +229,21 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        //
+        // * titulo de la seccion
+        $data['title'] = "Editar " . $project->name;
+        // * proyecto
+        $data['project'] = $project;
+
+        // * plud de categorias asociadas al proyecto
+        $data['pluck_categories'] = $project->categories->pluck("id")->all();
+
+        // * Categorias
+        $data["categories"] = Category::project()->get();
+
+        // * variables js
+        $data['js'] = [];
+
+        return view("admin.projects.test_upload", compact("data"));
     }
 
     /**
@@ -230,6 +293,7 @@ class ProjectController extends Controller
                 "message" => "El proyecto se ha restaurado correctamente.",
                 "type" => "success"
             ],
+            "projects_status" => Project::projectsStatus(),
             "element" => $project
         ];
 
@@ -240,6 +304,7 @@ class ProjectController extends Controller
     {
         $project->update([
             "trash" => 1,
+            "trash" => 1,
             "published" => 0
         ]);
 
@@ -248,7 +313,8 @@ class ProjectController extends Controller
                 "message" => "El proyecto se ha enviado a la papelera",
                 "type" => "success"
             ],
-            "element" => $project
+            "element" => $project,
+            "projects_status" => Project::projectsStatus(),
         ];
 
         return response()->json($response, 200);
@@ -265,7 +331,8 @@ class ProjectController extends Controller
                 "message" => "El proyecto se ha eliminado correctamente",
                 "type" => "success"
             ],
-            "element" => $project
+            "element" => $project,
+            "projects_status" => Project::projectsStatus(),
         ];
 
         return response()->json($response, 200);
@@ -386,7 +453,6 @@ class ProjectController extends Controller
         // * EXTRAEMOS EL ID DEL PROYECTO 
         // ? NOTA: este id puede ser un 0 o uno que ya exista en la base de datos, de esta forma sabemos si debemos crear o actualizar el proyecto
         $project_id = $data_valid["project_id"];
-
         // * EN CASO DE QUE EL ID DEL PROYECTO SEA 0 (NO SE TIENE UN PROYECTO) LO CREAMOS COMO UNO NUEVO
         if ($project_id == 0) {
             // * CREAMOS UN PROYECTO VACIO PARA POSTERIORMENTE ASOCIAR LAS IMAGENES ENVUADAS A ESTE PROYECTO
@@ -398,17 +464,21 @@ class ProjectController extends Controller
         } else {
             // * FILTRAMOS EL PRPYECTO EN CASO DE QUE EL ID ENVIADO NO SEA 0 
             $project = Project::findOrFail($project_id);
+            $project->update([
+                "name" => $data_valid["name"] ?? "",
+                "description" => $data_valid["description"] ?? "",
+            ]);
         }
 
 
         if ($data_valid["categories"] ?? null) {
             // * ASOCIAMOS LAS CATEGORIAS ENVIADAS AL PROYECTO
-            $project->categories()->attach($data_valid["categories"]);
+            $project->categories()->sync($data_valid["categories"]);
         }
 
         // * RESPONDEMOS CON LOS DATOS DEL PROYECTO
         return response()->json([
-            "project" => $project
+            "project" => $project,
         ]);
     }
 }

@@ -45,7 +45,7 @@
                             {{-- * items carousel --}}
                             @foreach ($data['project']->images as $i => $img)
                                 <div class="carousel-item {{ $i == 0 ? 'active' : '' }}">
-                                    <img class="d-block w-100" src="{{ asset($img->url) }}" alt="">
+                                    <img class="d-block w-100" src="{{ asset('storage/' . $img->url) }}" alt="">
                                 </div>
                             @endforeach
                             {{-- * items carousel end --}}

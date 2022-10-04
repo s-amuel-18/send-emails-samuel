@@ -17,6 +17,24 @@
 @endpush
 
 @section('content_2')
+    <div class="btn-group mb-3">
+        <a href="{{ route('project.index') }}"
+            class="mr-2 btn {{ $data['page'] == 'index' ? 'btn-primary' : 'btn-outline-primary' }}" type="button">
+            <i class="fas fa-home"></i><span class="d-none d-md-inline-block ml-1">Inicio</span>
+            <span id="complete_projects_count" class="badge">{{ $data['index_count'] }}</span>
+        </a>
+        <a href="{{ route('project.index') . '?eraser=1' }}"
+            class="mr-2 btn {{ $data['page'] == 'eraser' ? 'btn-secondary' : 'btn-outline-secondary' }}" type="button">
+            <i class="fas fa-eraser"></i><span class="d-none d-md-inline-block ml-1">Borrador</span>
+            <span id="eraser_projects_count" class="badge">{{ $data['eraser_count'] }}</span>
+        </a>
+        <a href="{{ route('project.index') . '?trash=1' }}"
+            class=" btn {{ $data['page'] == 'trash' ? 'btn-danger' : 'btn-outline-danger' }}" type="button">
+            <i class="fas fa-trash"></i><span class="d-none d-md-inline-block ml-1">Papelera</span>
+            <span id="trash_projects_count" class="badge">{{ $data['trash_count'] }}</span>
+        </a>
+    </div>
+
     @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
@@ -34,18 +52,7 @@
                     <h3 class="card-title">{{ $data['title'] ?? 'Proyectos' }}</h3>
                     <div class="card-tools">
 
-                        @if ($data['page'] != 'index')
-                            <a href="{{ route('project.index') }}" class="btn btn-outline-light text-primary btn-tool">
-                                <i class="fas fa-home"></i><span class="d-none d-md-inline-block ml-1">Inicio</span>
-                            </a>
-                        @endif
 
-                        @if ($data['page'] != 'trash')
-                            <a href="{{ route('project.trash_projects') }}"
-                                class="btn btn-outline-light text-danger btn-tool">
-                                <i class="fas fa-trash"></i><span class="d-none d-md-inline-block ml-1">Papelera</span>
-                            </a>
-                        @endif
 
                         @if ($data['categories'] ?? null)
                             <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#categories_modal">
@@ -101,7 +108,7 @@
                                                             @if (!$project->image_front_page)
                                                                 <i class="fas fa-image text-muted "></i>
                                                             @else
-                                                                <img src="{{ asset($project->image_front_page) }}"
+                                                                <img src="{{ asset('storage/' . $project->image_front_page) }}"
                                                                     class="w-100 h-100" alt="">
                                                             @endif
                                                         </div>
@@ -119,7 +126,7 @@
 
                                             {{-- * boton de publicacion --}}
                                             <td style="width: 110px">
-                                                <button {{ $project->trash ? 'disabled' : '' }}
+                                                <button {{ ($project->trash or $project->eraser) ? 'disabled' : '' }}
                                                     class="published_project btn-published btn {{ $project->published ? 'public' : '' }} btn-sm btn-rounded font-weight-bold"
                                                     type="button"
                                                     data-url="{{ route('project.published', ['project' => $project->id]) }}"
@@ -200,7 +207,8 @@
                                                         <i class="fa fa-eye"></i>
                                                     </a>
                                                 @endif
-                                                <a href="" class="btn btn-outline-success btn-sm">
+                                                <a href="{{ route('project.edit', ['project' => $project->id]) }}"
+                                                    class="btn btn-outline-success btn-sm">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
 
@@ -251,6 +259,11 @@
         const btns_delete_project = document.querySelectorAll(".btn_delete_project");
         const out_trash_project = document.querySelectorAll(".out_trash_project");
 
+        // * btns status projects count
+        const trash_projects_count = document.getElementById("trash_projects_count");
+        const eraser_projects_count = document.getElementById("eraser_projects_count");
+        const complete_projects_count = document.getElementById("complete_projects_count");
+
         const appData = @json($data['js'] ?? []);
         const type_destroy = @json($data['type_destroy'] ?? 'trash');
         const requestData = @json($data['request'] ?? []);
@@ -276,6 +289,7 @@
     <script src="{{ asset('js/requirements/categories/main.js') }}"></script>
 
     {{-- * funciones para los proyectos --}}
+    <script src="{{ asset('js/projects/functions/functions.js') }}"></script>
     <script src="{{ asset('js/projects/functions/btn_actions.js') }}"></script>
     <script src="{{ asset('js/projects/main.js') }}"></script>
     <script>

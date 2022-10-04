@@ -37,7 +37,7 @@ function event_element_insert_data_async() {
     if (element_insert_data_async.length < 1) return null;
 
     // * EVENTO CHANGE
-    $(element_insert_data_async).on("change", (e) => {
+    $("#name_project").on("change", (e) => {
         // * FUNCION QUE MANDA LOS DATOS DE LOS INPUTS
         post_data_project(element_insert_data_async);
     });
@@ -74,11 +74,11 @@ async function post_data_project(element_insert_data_async = null) {
         });
     // * AÑADIMOS EL DI DEL PROYECTO PARA SABER SI ACTUALIZAMOS O CREAMOS UN PROYECTO
     obj_params["project_id"] = get_project_id();
+
     try {
         // * SOLICITUD HTTP POST (ENVIAMOS LOS DATOS DE LOS CAMPOS)
         const { data } = await axios.post(route_change_or_create, obj_params);
         console.log(data);
-        return false;
         // * EXTRAEMOS EL ID DEL PROYECTO
         const project_id = data.project.id || null;
 
@@ -89,5 +89,19 @@ async function post_data_project(element_insert_data_async = null) {
         }
     } catch (error) {
         console.log(error);
+    }
+}
+
+function set_count_status_projects(data) {
+    if (
+        trash_projects_count &&
+        eraser_projects_count &&
+        complete_projects_count
+    ) {
+        trash_projects_count.textContent = data.projects_status.trash_projects;
+        eraser_projects_count.textContent =
+            data.projects_status.eraser_projects;
+        complete_projects_count.textContent =
+            data.projects_status.complete_projects;
     }
 }

@@ -11,6 +11,8 @@ class ItemHelp extends Model
 
     protected $fillable = ["name", "description", "template"];
 
+
+
     /* 
            db    888888 888888 88""Yb 88 88""Yb 88   88 888888 888888
           dPYb     88     88   88__dP 88 88__dP 88   88   88   88__
@@ -20,7 +22,6 @@ class ItemHelp extends Model
 
     public function getTemplateHtmlAttribute()
     {
-
         $template = str_replace("%item%", $this->description, $this->template);
         return $template;
     }
