@@ -318,13 +318,25 @@ return [
             'text'        => 'Servicios',
             'route'         => 'service.index',
             'icon'        => 'fa fa-hand-holding-usd',
-            /* 'can'        => 'service.index', */
         ],
         [
             'text'        => 'Proyectos (portafolio)',
-            'route'         => 'project.index',
             'icon'        => 'fa fa-folder',
-            /* 'can'        => 'service.index', */
+            'can'        => 'project.index',
+            'submenu' => [
+                [
+                    'text' => 'Administrar proyectos',
+                    'icon_color' => 'primary',
+                    'route'         => 'project.index',
+                    'can'        => 'project.index',
+                ],
+                [
+                    'text' => 'Nuevo proyecto',
+                    'icon_color' => 'success',
+                    'route'         => 'project.create',
+                    'can'        => 'project.create',
+                ],
+            ],
         ],
     ],
 

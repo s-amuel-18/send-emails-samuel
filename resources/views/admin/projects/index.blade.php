@@ -60,9 +60,12 @@
                                 <span class="d-none d-md-inline-block ml-1">Categorías</span>
                             </button>
                         @endif
-                        <a href="{{ route('project.create') }}" class="btn btn-outline-light btn-tool">
-                            <i class="fas fa-plus"></i><span class="d-none d-md-inline-block ml-1">Nuevo Proyecto </span>
-                        </a>
+
+                        @can('project.create')
+                            <a href="{{ route('project.create') }}" class="btn btn-outline-light btn-tool">
+                                <i class="fas fa-plus"></i><span class="d-none d-md-inline-block ml-1">Nuevo Proyecto </span>
+                            </a>
+                        @endcan
 
                     </div>
                 </div>
@@ -79,7 +82,9 @@
                                         <th>Usuario</th>
                                         <th>Image</th>
                                         <th>Nombre</th>
-                                        <th>Publico</th>
+                                        @can('project.published')
+                                            <th>Publico</th>
+                                        @endcan
                                         <th>Categoría</th>
                                         <th>Creacion</th>
                                         <th>Actualizacion</th>
@@ -102,7 +107,7 @@
 
                                             {{-- * img miniatura del proyecto --}}
                                             <td>
-                                                <a href="">
+                                                <a href="{{ route('project.show', ['slug_name' => $project->slug]) }}">
                                                     <div class="content_img_100x60 bg-gray-light">
                                                         <div class="content">
                                                             @if (!$project->image_front_page)
@@ -125,32 +130,35 @@
                                             </td>
 
                                             {{-- * boton de publicacion --}}
-                                            <td style="width: 110px">
-                                                <button {{ ($project->trash or $project->eraser) ? 'disabled' : '' }}
-                                                    class="published_project btn-published btn {{ $project->published ? 'public' : '' }} btn-sm btn-rounded font-weight-bold"
-                                                    type="button"
-                                                    data-url="{{ route('project.published', ['project' => $project->id]) }}"
-                                                    data-published="{{ $project->published }}">
+                                            @can('project.published')
+                                                <td style="width: 110px">
+                                                    <button {{ ($project->trash or $project->eraser) ? 'disabled' : '' }}
+                                                        class="published_project btn-published btn {{ $project->published ? 'public' : '' }} btn-sm  font-weight-bold"
+                                                        type="button"
+                                                        data-url="{{ route('project.published', ['project' => $project->id]) }}"
+                                                        data-published="{{ $project->published }}">
 
-                                                    <span class="normal_item">
-                                                        <span class="text-public">
-                                                            <i class="fa fa-check"></i>
-                                                            Publico
+                                                        <span class="normal_item">
+                                                            <span class="text-public">
+                                                                <i class="fa fa-check"></i>
+                                                                Publico
+                                                            </span>
+
+                                                            <span class="text-private">
+                                                                Privado
+                                                            </span>
+                                                        </span>
+                                                        <span class="load_item d-none">
+                                                            Cargando
+                                                            <span style="width: .9rem; height: .9rem;"
+                                                                class=" spinner-border spinner-border-sm" role="status">
+                                                            </span>
                                                         </span>
 
-                                                        <span class="text-private">
-                                                            Privado
-                                                        </span>
-                                                    </span>
-                                                    <span class="load_item d-none">
-                                                        Cargando
-                                                        <span style="width: .9rem; height: .9rem;"
-                                                            class=" spinner-border spinner-border-sm" role="status">
-                                                        </span>
-                                                    </span>
+                                                    </button>
 
-                                                </button>
-                                            </td>
+                                                </td>
+                                            @endcan
 
                                             {{-- * categorias --}}
                                             <td style=" white-space: normal;">
@@ -185,47 +193,61 @@
 
                                             {{-- * botones para ver y eliminar proyecto --}}
                                             <td>
-                                                @if ($data['page'] == 'trash')
-                                                    <button
-                                                        data-url="{{ route('project.out_trash', ['project' => $project->id]) }}"
-                                                        class="out_trash_project btn btn-outline-info btn-sm">
-                                                        <span class="normal_item">
-                                                            <i class="fas fa-trash-restore"></i>
+                                                {{-- * boton out trash --}}
+                                                @can('project.edit')
+                                                    @if ($data['page'] == 'trash')
+                                                        <button
+                                                            data-url="{{ route('project.out_trash', ['project' => $project->id]) }}"
+                                                            class="out_trash_project btn btn-outline-info btn-sm">
+                                                            <span class="normal_item">
+                                                                <i class="fas fa-trash-restore"></i>
 
+                                                            </span>
+                                                            <span class="load_item d-none">
+                                                                <span style="width: .9rem; height: .9rem;"
+                                                                    class="text-info spinner-border spinner-border-sm"
+                                                                    role="status">
+                                                                </span>
+                                                            </span>
+                                                        </button>
+                                                    @endif
+                                                @endcan
+
+                                                @can('project.index')
+                                                    {{-- * boton show --}}
+                                                    @if ($project->slug ?? null)
+                                                        <a href="{{ route('project.show', ['slug_name' => $project->slug]) }}"
+                                                            class="btn btn-outline-primary btn-sm">
+                                                            <i class="fa fa-eye"></i>
+                                                        </a>
+                                                    @endif
+                                                @endcan
+
+                                                @can('project.edit')
+                                                    {{-- * boton edit --}}
+                                                    <a href="{{ route('project.edit', ['project' => $project->id]) }}"
+                                                        class="btn btn-outline-success btn-sm">
+                                                        <i class="fa fa-edit"></i>
+                                                    </a>
+                                                @endcan
+
+                                                @can('project.destroy')
+                                                    {{-- * boton delete --}}
+                                                    <button data-id="{{ $project->id }}"
+                                                        data-url="{{ $data['type_destroy'] == 'delete' ? $project->routeDelete : $project->routeTrash }}"
+                                                        class="btn_delete_project btn btn-outline-danger btn-sm" type="button">
+
+                                                        <span class="normal_item">
+                                                            <i class="fa fa-trash"></i>
                                                         </span>
                                                         <span class="load_item d-none">
                                                             <span style="width: .9rem; height: .9rem;"
-                                                                class="text-info spinner-border spinner-border-sm"
+                                                                class="text-danger spinner-border spinner-border-sm"
                                                                 role="status">
                                                             </span>
                                                         </span>
                                                     </button>
-                                                @endif
-                                                @if ($project->slug ?? null)
-                                                    <a href="{{ route('project.show', ['slug_name' => $project->slug]) }}"
-                                                        class="btn btn-outline-primary btn-sm">
-                                                        <i class="fa fa-eye"></i>
-                                                    </a>
-                                                @endif
-                                                <a href="{{ route('project.edit', ['project' => $project->id]) }}"
-                                                    class="btn btn-outline-success btn-sm">
-                                                    <i class="fa fa-edit"></i>
-                                                </a>
-
-                                                <button data-id="{{ $project->id }}"
-                                                    data-url="{{ $data['type_destroy'] == 'delete' ? $project->routeDelete : $project->routeTrash }}"
-                                                    class="btn_delete_project btn btn-outline-danger btn-sm" type="button">
-
-                                                    <span class="normal_item">
-                                                        <i class="fa fa-trash"></i>
-                                                    </span>
-                                                    <span class="load_item d-none">
-                                                        <span style="width: .9rem; height: .9rem;"
-                                                            class="text-danger spinner-border spinner-border-sm"
-                                                            role="status">
-                                                        </span>
-                                                    </span>
-                                                </button>
+                                                @endcan
                                             </td>
                                         </tr>
                                     @endforeach

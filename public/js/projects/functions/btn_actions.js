@@ -25,8 +25,9 @@ async function published_axios(url, params) {
 
         return data.record;
     } catch (error) {
-        let { message } = err.response.data.message;
-        toastr[type](message || "La actualización se realizó con exito");
+        let message = error.response.data.message;
+
+        toastr["error"](message || "Ha ocurrido un error");
 
         return null;
     }
@@ -48,11 +49,14 @@ function published() {
         load_btn(btn, true);
 
         const resp = await published_axios(url, params);
+
+        load_btn(btn, false);
+
+        if (!resp) return null;
+
         const publisher = resp.published;
 
         published_element(btn, publisher || 0);
-
-        load_btn(btn, false);
     });
 }
 
@@ -60,6 +64,7 @@ function published() {
 function event_delete_project(project_datatable) {
     $(btns_delete_project).on("click", async function (e) {
         const btn = e.delegateTarget;
+        const url_redirect = btn.dataset.redirect;
         const id = btn.dataset.id;
         const url = btn.dataset.url;
 
@@ -83,19 +88,28 @@ function event_delete_project(project_datatable) {
             });
 
             // * VALIDACION EN CASO DE QUE SE CONFIRME
-            if (!confirm.isConfirmed) return null;
+            if (!confirm.isConfirmed) {
+                load_btn(btn, false);
+                return null;
+            }
         }
 
         // * ELIMINAMOS PROYECTO (PETICION HTTP)
         const delete_data = await delete_project(url);
 
-        set_count_status_projects(delete_data.data);
-
         // * SI SE ELIMINA CORRECTAMENTE
         if (delete_data.delete) {
-            const row = btn.parentElement.parentElement;
-            // * FUNCION PARA ELIMINAR FILA DE LA TABLA DATATABLE
-            project_datatable.row(row).remove().draw();
+            // * si el parametro existe project_datatable
+            if (project_datatable) {
+                const row = btn.parentElement.parentElement;
+                // * FUNCION PARA ELIMINAR FILA DE LA TABLA DATATABLE
+                project_datatable.row(row).remove().draw();
+                set_count_status_projects(delete_data.data);
+            }
+
+            if (url_redirect) {
+                window.location.href = url_redirect;
+            }
 
             // * ALERTA DE PROYECTO ELIMINADO CORRECTAMENE
             toastr[delete_data.type_message || "success"](delete_data.message);
@@ -146,7 +160,7 @@ function event_out_trash_project(project_datatable) {
 
         // * ELIMINAMOS PROYECTO (PETICION HTTP)
         const delete_data = await out_trash_project_async(url);
-        console.log(delete_data.data);
+
         set_count_status_projects(delete_data.data);
 
         // * SI SE ELIMINA CORRECTAMENTE

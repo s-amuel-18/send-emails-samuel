@@ -128,7 +128,7 @@ class ProjectController extends Controller
         // ? variables js
         $data['js'] = [];
 
-        return view("admin.projects.create", compact("data"));
+        return view("admin.projects.create_and_update", compact("data"));
     }
 
     /**
@@ -243,7 +243,7 @@ class ProjectController extends Controller
         // * variables js
         $data['js'] = [];
 
-        return view("admin.projects.test_upload", compact("data"));
+        return view("admin.projects.create_and_update", compact("data"));
     }
 
     /**
@@ -260,6 +260,12 @@ class ProjectController extends Controller
 
     public function published(Project $project, Request $riquest)
     {
+        if (!$project->published and $project->eraser) {
+            return response()->json([
+                "message" => "No se puede puede publicar un proyecto incompleto."
+            ], 500);
+        }
+
         $data = request()->validate([
             "published" => "required|numeric|min:0|max:1"
         ]);
@@ -338,20 +344,6 @@ class ProjectController extends Controller
         return response()->json($response, 200);
     }
 
-    // ! ESTO SE DEBE ELIMINAR LUEGO DE LAS PRUEBAS
-    public function test_upload()
-    {
-        // * titulo de la seccion
-        $data['title'] = "test";
-
-        // * Categorias
-        $data["categories"] = Category::project()->get();
-
-        // * variables js
-        $data['js'] = [];
-
-        return view("admin.projects.test_upload", compact("data"));
-    }
 
 
     public function upload_image(Request $request)

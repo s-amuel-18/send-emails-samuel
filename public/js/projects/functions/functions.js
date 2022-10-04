@@ -89,14 +89,15 @@ async function post_data_project(element_insert_data_async = null) {
         }
     } catch (error) {
         console.log(error);
+        toastr.error(error.response.data.message || "Ha ocurrido un error");
     }
 }
 
 function set_count_status_projects(data) {
     if (
-        trash_projects_count &&
-        eraser_projects_count &&
-        complete_projects_count
+        (trash_projects_count || null) &&
+        (eraser_projects_count || null) &&
+        (complete_projects_count || null)
     ) {
         trash_projects_count.textContent = data.projects_status.trash_projects;
         eraser_projects_count.textContent =

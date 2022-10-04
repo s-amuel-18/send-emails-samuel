@@ -131,21 +131,64 @@ Route::prefix('requerimientos')->middleware(["auth"])->group(function () {
 });
 
 // * Proyectos
-Route::prefix('proyectos')->middleware(["auth"])->group(function () {
-    // * index proyecto
-    Route::get("/", [ProjectController::class, "index"])->name("project.index");
-    // Route::get("/crear", [ProjectController::class, "create"])->name("project.create");
-    // ! ESTO SE DEBE ELIMINAR LUEGO DE LAS PRUEBAS
-    Route::get("/crear", [ProjectController::class, "test_upload"])->name("project.create");
-    Route::get("/editar/{project}", [ProjectController::class, "edit"])->name("project.edit");
-    Route::put("/published/{project}", [ProjectController::class, "published"])->name("project.published");
-    Route::post("/store", [ProjectController::class, "store"])->name("project.store");
-    Route::get("/show/{slug_name}", [ProjectController::class, "show"])->name("project.show");
-    Route::delete("/delete/{project}", [ProjectController::class, "destroy"])->name("project.destroy");
-    Route::delete("/trash/{project}", [ProjectController::class, "trash"])->name("project.trash");
-    Route::get("/trash", [ProjectController::class, "trash_projects"])->name("project.trash_projects");
-    Route::put("/out_trash/{project}", [ProjectController::class, "out_trash"])->name("project.out_trash");
-    Route::post("/upload_image", [ProjectController::class, "upload_image"])->name("project.upload_image");
-    Route::delete("/upload_image", [ProjectController::class, "upload_image_delete"])->name("project.upload_image_delete");
-    Route::post("/crear-actualizar", [ProjectController::class, "change_or_create_data_project"])->name("project.change_or_create_data_project");
-});
+Route::prefix('proyectos')->middleware(["auth"])
+    ->middleware("can:project.index")
+    ->group(function () {
+        // * index proyecto
+        Route::get("/", [ProjectController::class, "index"])->name("project.index");
+
+        Route::get(
+            "/crear",
+            [ProjectController::class, "create"]
+        )->middleware("can:project.create")->name("project.create");
+
+        Route::get(
+            "/show/{slug_name}",
+            [ProjectController::class, "show"]
+        )->name("project.show");
+
+        Route::get(
+            "/editar/{project}",
+            [ProjectController::class, "edit"]
+        )->middleware("can:project.edit")->name("project.edit");
+
+        Route::put(
+            "/published/{project}",
+            [ProjectController::class, "published"]
+        )->middleware("can:project.published")->name("project.published");
+
+        Route::post(
+            "/store",
+            [ProjectController::class, "store"]
+        )->middleware("can:project.create")->name("project.store");
+
+        Route::delete(
+            "/delete/{project}",
+            [ProjectController::class, "destroy"]
+        )->middleware("can:project.destroy")->name("project.destroy");
+
+        Route::delete(
+            "/trash/{project}",
+            [ProjectController::class, "trash"]
+        )->middleware("can:project.destroy")->name("project.trash");
+
+        Route::put(
+            "/out_trash/{project}",
+            [ProjectController::class, "out_trash"]
+        )->middleware("can:project.edit")->name("project.out_trash");
+
+        Route::post(
+            "/upload_image",
+            [ProjectController::class, "upload_image"]
+        )->middleware("can:project.create")->name("project.upload_image");
+
+        Route::delete(
+            "/upload_image",
+            [ProjectController::class, "upload_image_delete"]
+        )->middleware("can:project.destroy")->name("project.upload_image_delete");
+
+        Route::post(
+            "/crear-actualizar",
+            [ProjectController::class, "change_or_create_data_project"]
+        )->middleware("can:project.create")->name("project.change_or_create_data_project");
+    });
