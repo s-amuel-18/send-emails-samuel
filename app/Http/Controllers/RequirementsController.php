@@ -28,6 +28,8 @@ class RequirementsController extends Controller
 
     public function datatable(Request $request)
     {
+        $category_valid = Category::find($request["id_category"] ?? 0);
+
         $query_user = (new Requirements())->datatableRequirementsQuery();
 
         $totalFilteredRecord = $totalDataRecord = $draw_val = "";
@@ -59,6 +61,23 @@ class RequirementsController extends Controller
                 ->orderBy($order_val, $dir_val);
 
 
+            if ($category_valid) {
+                if ($category_valid) {
+                    $data_return->where("req.category_id", $category_valid->id);
+                }
+            }
+
+            $data_return_count = (new Requirements())->datatableRequirementsQuery();
+
+
+            if ($category_valid) {
+                if ($category_valid) {
+                    $data_return_count->where("req.category_id", $category_valid->id);
+                }
+            }
+
+            $totalFilteredRecord = $data_return_count->count();
+
             $data_return = $data_return->limit($limit_val)->get();
         } else {
             $search_text = $request["search"]["value"];
@@ -75,6 +94,12 @@ class RequirementsController extends Controller
                 ->offset($start_val)
                 ->orderBy($order_val, $dir_val);
 
+            if ($category_valid) {
+                if ($category_valid) {
+                    $data_return->where("req.category_id", $category_valid->id);
+                }
+            }
+
             $data_return = $data_return->limit($limit_val)->get();
 
             $totalFilteredRecord = (new Requirements())->datatableRequirementsQuery()
@@ -85,8 +110,15 @@ class RequirementsController extends Controller
                         ->orWhere("cat.name", "like", "%{$search_text}%")
                         ->orWhere("req.url", "like", "%{$search_text}%")
                         ->orWhere("req.created_at", "like", "%{$search_text}%");
-                })
-                ->count();
+                });
+
+            if ($category_valid) {
+
+                if ($category_valid) {
+                    $totalFilteredRecord->where("req.category_id", $category_valid->id);
+                }
+            }
+            $totalFilteredRecord = $totalFilteredRecord->count();
         }
 
         $data_val = array();

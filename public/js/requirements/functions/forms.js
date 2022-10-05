@@ -38,18 +38,21 @@ function submit_form_requirements(form, alert_element = null) {
             .then((resp) => {
                 const { data } = resp;
                 console.log(data);
-                if (insert_alert_requirements) {
-                    const message = data.message;
-                    let template_alert = alert_message(message, "success");
-                    insert_alert_requirements.innerHTML = template_alert;
-                }
+
+                const message = data.message;
+                toastr.success(message || "Registrado correctamente");
 
                 datatable.ajax.reload();
 
                 load_btn(submiter, false);
 
+                $("#requirements_modal").modal("hide");
+                $("#requirements_modal_edit").modal("hide");
+
                 $("#edit_select_category_id").val("").trigger("change");
+
                 form.reset();
+
                 $(summernote).summernote("reset");
             })
             .catch((err) => {

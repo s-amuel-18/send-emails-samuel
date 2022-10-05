@@ -170,8 +170,22 @@ $(function () {
                     })
                     .catch((err) => {
                         // * ERROR AL SUBIR LA IMAGEN
-                        console.log(err);
-                        error("Ha ocurrido un error");
+                        const data = err.response.data;
+                        const message = data.message;
+                        let errors = "";
+
+                        for (const key in data.errors) {
+                            if (Object.hasOwnProperty.call(data.errors, key)) {
+                                const element = data.errors[key];
+                                element.forEach((el) => {
+                                    errors += el + "\n";
+                                });
+                            }
+                        }
+                        toastr.error(
+                            message + ", " + errors || "Ha ocurrido un error"
+                        );
+                        error("Ha ocurrido un error, " + errors);
                     });
 
                 return {

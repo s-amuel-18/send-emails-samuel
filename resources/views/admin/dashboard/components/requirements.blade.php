@@ -40,7 +40,7 @@
                         style="width: 100%">
                         <option value="">Filtro por categorias</option>
                         @foreach ($data['requirements_categories'] as $cat)
-                            <option value="{{ $cat->name }}">{{ $cat->name }}</option>
+                            <option value="{{ $cat->id }}">{{ $cat->name }}</option>
                         @endforeach
                     </select>
 
@@ -111,8 +111,15 @@
             "lengthChange": true,
             "processing": true,
             "serverSide": true,
+            "retrieve": false,
             "searching": true,
-            "ajax": appData["url_datatable_requirements"],
+            "ajax": {
+                "url": appData["url_datatable_requirements"],
+                "data": function(data) {
+                    console.log($(filter_for_category).val());
+                    data.id_category = $(filter_for_category).val() || null;
+                }
+            },
             "columns": [{
                     data: "id"
                 },
@@ -162,13 +169,18 @@
             $(summernote).summernote()
             $(summernote_edit_requirements).summernote()
 
-            // datatabke init
+            // * datatabke init
             datatable = $(table).DataTable(datatableOptions);
 
             // filter for categorr
             $(filter_for_category).on("change", e => {
                 const value = e.target.value;
-                datatable.search(value).draw();
+
+                // datatable.ajax.reload();
+                if ($(filter_for_category).val()) {
+                    datatable.ajax.reload();
+                }
+
             })
         });
 

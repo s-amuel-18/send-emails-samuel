@@ -78,6 +78,7 @@
                                 class="w-100 datatable table table-light table-striped table-hover text-nowrap table-valign-middle">
                                 <thead class="">
                                     <tr>
+                                        <th></th>
                                         <th>ID</th>
                                         <th>Usuario</th>
                                         <th>Image</th>
@@ -94,8 +95,20 @@
                                 <tbody>
                                     @foreach ($data['projects'] as $project)
                                         <tr>
+                                            <td>
+                                                @if ($project->messagesWarning)
+                                                    <i data-toggle="tooltip" data-placement="top"
+                                                        title="{{ $project->messagesWarning }}"
+                                                        class="fa fa-exclamation-circle text-danger"
+                                                        style="font-size: 20px"></i>
+                                                @endif
+                                            </td>
+
                                             {{-- * id del proyecto --}}
-                                            <td>{{ $project->id }}</td>
+                                            <td>
+                                                {{ $project->id }}
+
+                                            </td>
 
                                             {{-- * usuario creador --}}
                                             <td style="width: 200px">
@@ -107,7 +120,8 @@
 
                                             {{-- * img miniatura del proyecto --}}
                                             <td>
-                                                <a href="{{ route('project.show', ['slug_name' => $project->slug]) }}">
+                                                <a
+                                                    href="{{ $project->slug ? route('project.show', ['slug_name' => $project->slug]) : route('project.index') }}">
                                                     <div class="content_img_100x60 bg-gray-light">
                                                         <div class="content">
                                                             @if (!$project->image_front_page)

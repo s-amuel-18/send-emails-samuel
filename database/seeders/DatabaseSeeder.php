@@ -45,7 +45,7 @@ class DatabaseSeeder extends Seeder
         // BodyEmail::factory(10)->create();
         // Contact_email::factory(1000)->create();
         // Category::factory(10)->create();
-        // Requirements::factory(50)->create();
+        Requirements::factory(50)->create();
         // $this->call(EnvioEmailSeeder::class);
         // CategoryService::factory(5)->create();
         // Service::factory(10)->create();

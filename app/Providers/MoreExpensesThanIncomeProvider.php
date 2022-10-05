@@ -26,7 +26,7 @@ class MoreExpensesThanIncomeProvider extends ServiceProvider
      */
     public function boot()
     {
-        View::composer('*', function ($view) {
+        View::composer(['admin.dashboard.dashboard', "admin.managment.index"], function ($view) {
             $user = auth()->user();
             if ($user and $user->can("managment.index")) {
                 $netIncome = Income::netIncome();

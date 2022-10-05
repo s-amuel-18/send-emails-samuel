@@ -20,6 +20,7 @@ $(function () {
 
     $(form_create_category).on("submit", async (e) => {
         e.preventDefault();
+
         const form = e.target;
 
         if (!$(form).valid()) return false;

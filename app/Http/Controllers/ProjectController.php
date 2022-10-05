@@ -350,7 +350,7 @@ class ProjectController extends Controller
     {
         // * VALIDAMOS LOS DATOS ENVIADOS
         $data_valid = request()->validate([
-            "image" => "required|image|mimes:jpeg,png",
+            "image" => "required|image|mimes:jpeg,png|max:2000",
             "project_id" => "required"
         ]);
 

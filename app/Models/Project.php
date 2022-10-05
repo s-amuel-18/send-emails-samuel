@@ -294,6 +294,22 @@ class Project extends Model
         ];
     }
 
+    public function getMessagesWarningAttribute()
+    {
+        $arr_messages = [];
+        !$this->slug ? array_push($arr_messages, "El slug name es invalido, actualiza tu proyecto <br>") : null;
+
+        if (count($arr_messages) < 1) return null;
+
+        $messages  = "";
+
+        foreach ($arr_messages as $message) {
+            $messages .= $message;
+        }
+
+        return (($messages != "") or ($messages ?? null)) ? $messages : null;
+    }
+
     /* 
         888888 88   88 88b 88  dP""b8 88  dP"Yb  88b 88 888888 .dP"Y8     888888 88 88b 88
         88__   88   88 88Yb88 dP   `" 88 dP   Yb 88Yb88 88__   `Ybo."     88__   88 88Yb88

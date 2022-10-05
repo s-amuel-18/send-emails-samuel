@@ -30,6 +30,9 @@ class ProjectObserver
      */
     public function updated(Project $project)
     {
+        if (!$project->slug) {
+            $project->create_slug();
+        }
     }
 
     /**
