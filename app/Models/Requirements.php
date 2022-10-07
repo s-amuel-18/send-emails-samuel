@@ -34,6 +34,7 @@ class Requirements extends Model
                 "req.name AS req_name",
                 "req.description AS req_description",
                 "req.url AS req_url",
+                "req.private",
                 "req.created_at AS req_created_at",
                 "req.updated_at AS req_update_at",
                 "us.username AS us_username",
