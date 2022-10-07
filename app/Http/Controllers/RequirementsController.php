@@ -29,6 +29,7 @@ class RequirementsController extends Controller
     public function datatable(Request $request)
     {
         $category_valid = Category::find($request["id_category"] ?? 0);
+        $filter_private = $request["filter_private"] ?? 0;
 
         $query_user = (new Requirements())->datatableRequirementsQuery();
 
@@ -60,20 +61,17 @@ class RequirementsController extends Controller
             $data_return = $query_user->offset($start_val)
                 ->orderBy($order_val, $dir_val);
 
-
+            $data_return_count = (new Requirements())->datatableRequirementsQuery();
+            // * Si se quiere filtrar por categorias (registros)
             if ($category_valid) {
-                if ($category_valid) {
-                    $data_return->where("req.category_id", $category_valid->id);
-                }
+                $data_return->where("req.category_id", $category_valid->id);
+                $data_return_count->where("req.category_id", $category_valid->id);
             }
 
-            $data_return_count = (new Requirements())->datatableRequirementsQuery();
-
-
-            if ($category_valid) {
-                if ($category_valid) {
-                    $data_return_count->where("req.category_id", $category_valid->id);
-                }
+            // * Si se quiere filtrar por registros privados (registros)
+            if ($filter_private == 1) {
+                $data_return->where("req.private", 1);
+                $data_return_count->where("req.private", 1);
             }
 
             $totalFilteredRecord = $data_return_count->count();
@@ -94,13 +92,7 @@ class RequirementsController extends Controller
                 ->offset($start_val)
                 ->orderBy($order_val, $dir_val);
 
-            if ($category_valid) {
-                if ($category_valid) {
-                    $data_return->where("req.category_id", $category_valid->id);
-                }
-            }
 
-            $data_return = $data_return->limit($limit_val)->get();
 
             $totalFilteredRecord = (new Requirements())->datatableRequirementsQuery()
                 ->where(function ($q) use ($search_text) {
@@ -111,13 +103,20 @@ class RequirementsController extends Controller
                         ->orWhere("req.url", "like", "%{$search_text}%")
                         ->orWhere("req.created_at", "like", "%{$search_text}%");
                 });
-
+            // * Si se quiere filtrar por categorias 
             if ($category_valid) {
-
-                if ($category_valid) {
-                    $totalFilteredRecord->where("req.category_id", $category_valid->id);
-                }
+                $data_return->where("req.category_id", $category_valid->id);
+                $totalFilteredRecord->where("req.category_id", $category_valid->id);
             }
+
+            // * Si se quiere filtrar por privado 
+            if ($filter_private == 1) {
+                $data_return->where("req.private", 1);
+                $totalFilteredRecord->where("req.private", 1);
+            }
+
+
+            $data_return = $data_return->limit($limit_val)->get();
             $totalFilteredRecord = $totalFilteredRecord->count();
         }
 

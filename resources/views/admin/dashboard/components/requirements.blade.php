@@ -33,19 +33,43 @@
     <div class="card-body table-responsive">
 
         @if ($data['requirements_count'] > 0)
-            <div class="d-flex justify-content-end mb-3">
-                <div class="col-md-3 offset-md-9" id="content_select_category">
-                    <select data-placeholder="Filtro por categorias"
-                        class="w-100 select2 form-control select2_categories" name="state" id="filter_for_category"
-                        style="width: 100%">
-                        <option value="">Filtro por categorias</option>
-                        @foreach ($data['requirements_categories'] as $cat)
-                            <option value="{{ $cat->id }}">{{ $cat->name }}</option>
-                        @endforeach
-                    </select>
+            <form action="" id="form_filter_requirements">
+                <div class="row no-gutters mb-3 mb-md-0">
+                    {{-- * filtro de Registros privados --}}
 
+                    <div class="col-md-8 offset-md-0">
+                        <div class="form-group d-flex justify-content-end align-items-center" style="height: 40px">
+
+                            <div class="form-check px-4">
+                                <input class="form-check-input" type="radio" name="private_status"
+                                    id="private_status_all" checked="" value="0">
+                                <label class="form-check-label" for="private_status_all">Mostrar todos</label>
+                            </div>
+
+                            <div class="form-check px-4">
+                                <input class="form-check-input" type="radio" name="private_status"
+                                    id="private_status_private" value="1">
+                                <label class="form-check-label" for="private_status_private">Privados</label>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    {{-- * categorías --}}
+                    <div class="col-md-4" id="content_select_category">
+                        <select data-placeholder="Filtro por categorias"
+                            class="w-100 select2 form-control select2_categories" name="state"
+                            id="filter_for_category" style="width: 100%">
+                            <option value="">Filtro por categorias</option>
+                            <option value="0">Todas las categorias</option>
+                            @foreach ($data['requirements_categories'] as $cat)
+                                <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                            @endforeach
+                        </select>
+
+                    </div>
                 </div>
-            </div>
+            </form>
 
             <table id="table_requirements"
                 class="w-100 table table-light table-striped table-hover text-nowrap table-valign-middle">
@@ -91,6 +115,7 @@
         const form_edit_requirement = document.getElementById("form_edit_requirement");
         const edit_select_category_id = document.getElementById("edit_select_category_id");
         const user_logged = @json(auth()->user());
+        const form_filter_requirements = document.getElementById("form_filter_requirements");
 
         let requirements_categories = @json($data['requirements_categories']);
 
@@ -116,7 +141,8 @@
             "ajax": {
                 "url": appData["url_datatable_requirements"],
                 "data": function(data) {
-                    console.log($(filter_for_category).val());
+
+                    data.filter_private = form_filter_requirements.private_status.value || 0;
                     data.id_category = $(filter_for_category).val() || null;
                 }
             },
@@ -181,6 +207,11 @@
                     datatable.ajax.reload();
                 }
 
+            })
+            // filter for categorr
+            $(form_filter_requirements.private_status).on("change", e => {
+                const value = e.target.value;
+                datatable.ajax.reload();
             })
         });
 
