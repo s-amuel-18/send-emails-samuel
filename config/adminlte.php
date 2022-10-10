@@ -338,6 +338,11 @@ return [
                 ],
             ],
         ],
+        [
+            'text'        => 'Configuracion',
+            'route'         => 'settings.index',
+            'icon'        => 'fa fa-cog',
+        ],
     ],
 
     /*

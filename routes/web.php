@@ -25,12 +25,14 @@ use App\Http\Controllers\RequirementsController;
 // * use App\Http\Controllers\contact_email\Email_send;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SpentsController;
 use App\Mail\ServicioMaillable;
 use App\Models\BodyEmail;
 use App\Models\RecomendacionMejora;
 use App\Models\Service;
 use Illuminate\Support\Facades\Mail;
+use PhpOffice\PhpSpreadsheet\Writer\Ods\Settings;
 
 /*
 |--------------------------------------------------------------------------
@@ -191,4 +193,10 @@ Route::prefix('proyectos')->middleware(["auth"])
             "/crear-actualizar",
             [ProjectController::class, "change_or_create_data_project"]
         )->middleware("can:project.create")->name("project.change_or_create_data_project");
+    });
+
+// * configuracion
+Route::prefix("configuracion")->middleware("auth")
+    ->group(function () {
+        Route::get("/", [SettingController::class, "index"])->name("settings.index");
     });
