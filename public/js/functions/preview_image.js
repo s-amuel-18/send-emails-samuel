@@ -18,6 +18,9 @@ function event_change_imput_file(form, tagImage) {
     // * evento de cambio de imagen
     $(input_file).on("change", (e) => {
         const input = e.target;
+
+        if (!input.value) return null;
+
         // * extraemos el data que contiene el id del form
         const idForm = input.dataset.id_form || null;
         // * extraemos el data que contiene el id de la img donde se va a previsualizar la imagen
@@ -39,7 +42,7 @@ function event_change_imput_file(form, tagImage) {
         const img_load = tagImage.dataset.load_img || "";
 
         // * llamamos a la funcion que nos entrega la url de la imagen
-        let img = create_image(form, "image_front_page") || img_load;
+        let img = create_image(form, "image") || img_load;
 
         // * agregamos la url de la imagen al scr
         tagImage.setAttribute("src", img);

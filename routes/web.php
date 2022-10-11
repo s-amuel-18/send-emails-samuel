@@ -198,5 +198,10 @@ Route::prefix('proyectos')->middleware(["auth"])
 // * configuracion
 Route::prefix("configuracion")->middleware("auth")
     ->group(function () {
+        // * vista settings
         Route::get("/", [SettingController::class, "index"])->name("settings.index");
+
+        // * subir imagen logo async
+        Route::post("/upload_logo_async", [SettingController::class, "upload_logo_async"])
+            ->name("settings.upload_logo_async");
     });

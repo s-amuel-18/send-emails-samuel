@@ -11,8 +11,8 @@
 
                         <div class="preview-image">
                             <img data-load_img="{{ asset('images/helpers/img_gris.png') }}"
-                                src="{{ asset('images/helpers/img_gris.png') }}" id="{{ $idImg }}"
-                                alt="subir imagen">
+                                src="{{ $delafultImage ?? null ? $delafultImage : asset('images/helpers/img_gris.png') }}"
+                                id="{{ $idImg }}" alt="subir imagen">
                         </div>
                     </div>
                 </div>
@@ -21,7 +21,7 @@
                     <p>{{ $description ?? '' }}</p>
                     <div class="">
                         <input data-id_form="{{ $idForm }}" data-id_img="{{ $idImg }}" required
-                            accept="image/png, image/jpg, image/jpeg" type="file" name="image_front_page"
+                            accept="image/png, image/jpg, image/jpeg" type="file" name="image"
                             class="listener_input_file d-none" id="{{ $idInput }}">
 
                         <label for="{{ $idInput }}" class="btn bg-purple">

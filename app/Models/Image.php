@@ -31,4 +31,9 @@ class Image extends Model
          dP__Yb    88     88   88"Yb  88 88""Yb Y8   8P   88   88""       88""   88 88 Y88
         dP""""Yb   88     88   88  Yb 88 88oodP `YbodP'   88   888888     88     88 88  Y8
       */
+
+
+    //   * FUNCTIONS 
+
+    //   * FUNCTIONS END
 }

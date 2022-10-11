@@ -525,6 +525,21 @@ return [
                 ],
             ],
         ],
+        'Bootstrap-iconpicker' => [
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor/bootstrap-iconpicker/css/bootstrap-iconpicker.min.css',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/bootstrap-iconpicker/js/bootstrap-iconpicker.bundle.min.js',
+                ],
+            ],
+        ],
     ],
 
     /*
