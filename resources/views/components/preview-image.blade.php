@@ -27,7 +27,9 @@
                         <label for="{{ $idInput }}" class="btn bg-purple">
                             <i class="fa fa-file-image"></i> Subir imagen
                         </label>
-
+                        <button disabled class="d-none load_btn btn bg-purple" type="button">
+                            <i class="fa fa-file-image"></i> Enviando...
+                        </button>
                     </div>
 
                 </div>

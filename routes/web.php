@@ -204,4 +204,20 @@ Route::prefix("configuracion")->middleware("auth")
         // * subir imagen logo async
         Route::post("/upload_logo_async", [SettingController::class, "upload_logo_async"])
             ->name("settings.upload_logo_async");
+
+        // * subir imagen principal async
+        Route::post("/upload_img_primary_async", [SettingController::class, "upload_img_primary_async"])
+            ->name("settings.upload_img_primary_async");
+
+        // * subir datos de informacion principal del sitio (async)
+        Route::post("/info_primary_async", [SettingController::class, "info_primary_async"])
+            ->name("settings.info_primary_async");
+
+        // * subir info de contacto de la empresa (async)
+        Route::post("/contact_info_async", [SettingController::class, "contact_info_async"])
+            ->name("settings.contact_info_async");
+
+        // * registro de redes sociales
+        Route::post("/create_social_media_async", [SettingController::class, "create_social_media_async"])
+            ->name("settings.create_social_media_async");
     });
