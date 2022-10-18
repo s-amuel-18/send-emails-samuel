@@ -1,9 +1,8 @@
 @extends('layouts.app')
 @section('plugins.Datatables', true)
+@section('plugins.Bootstrap-iconpicker', true)
 
-@push('css')
-    <link rel="stylesheet" href="{{ asset('Admin/css/bootstrap-iconpicker.min.css') }} ">
-@endpush
+
 @section('title', $data['title'])
 
 @section('content_header')
@@ -108,6 +107,7 @@
                 <div class="modal-body  ">
                     <form class="input-group">
                         <input type="text" class="form-control" placeholder="Nombre de la categoria">
+
                         <span class="input-group-append mx-3">
                             <button id="iconpicker" class="btn btn-outline-secondary" data-search="true"
                                 data-search-text="Buscar icono" data-iconset="fontawesome5" data-rows="4" data-cols="6"
@@ -126,9 +126,6 @@
 
 
     @push('js')
-        <script src="{{ asset('Admin/js/bootstrap-iconpicker.bundle.min.js') }}"></script>
-        <script src="{{ asset('Admin/js/iconpicker-costum.js') }}"></script>
-
         <script>
             $(".table").DataTable();
         </script>

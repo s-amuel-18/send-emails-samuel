@@ -338,6 +338,17 @@ return [
                 ],
             ],
         ],
+        [
+            'text'        => 'Testimonios',
+            'route'         => 'testimony.index',
+            'icon'        => 'fa fa-quote-left',
+        ],
+        [
+            'text'        => 'Configuracion',
+            'route'         => 'settings.index',
+            'icon'        => 'fa fa-cog',
+            'can'        => 'settings.index',
+        ],
     ],
 
     /*
@@ -517,6 +528,31 @@ return [
                     'type' => 'js',
                     'asset' => false,
                     'location' => '//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js',
+                ],
+            ],
+        ],
+        'Bootstrap-iconpicker' => [
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor/bootstrap-iconpicker/css/bootstrap-iconpicker.min.css',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/bootstrap-iconpicker/js/bootstrap-iconpicker.bundle.min.js',
+                ],
+            ],
+        ],
+        'bs-custom-file-input' => [
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/bs-custom-file-input/bs-custom-file-input.min.js',
                 ],
             ],
         ],
