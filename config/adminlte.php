@@ -339,9 +339,15 @@ return [
             ],
         ],
         [
+            'text'        => 'Testimonios',
+            'route'         => 'testimony.index',
+            'icon'        => 'fa fa-quote-left',
+        ],
+        [
             'text'        => 'Configuracion',
             'route'         => 'settings.index',
             'icon'        => 'fa fa-cog',
+            'can'        => 'settings.index',
         ],
     ],
 

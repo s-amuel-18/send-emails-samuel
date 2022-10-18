@@ -27,10 +27,12 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SpentsController;
+use App\Http\Controllers\TestimonyController;
 use App\Mail\ServicioMaillable;
 use App\Models\BodyEmail;
 use App\Models\RecomendacionMejora;
 use App\Models\Service;
+use App\Models\Testimony;
 use Illuminate\Support\Facades\Mail;
 use PhpOffice\PhpSpreadsheet\Writer\Ods\Settings;
 
@@ -196,7 +198,9 @@ Route::prefix('proyectos')->middleware(["auth"])
     });
 
 // * configuracion
-Route::prefix("configuracion")->middleware("auth")
+Route::prefix("configuracion")
+    ->middleware("auth")
+    ->middleware("can:settings.index")
     ->group(function () {
         // * vista settings
         Route::get("/", [SettingController::class, "index"])->name("settings.index");
@@ -220,4 +224,34 @@ Route::prefix("configuracion")->middleware("auth")
         // * registro de redes sociales
         Route::post("/create_social_media_async", [SettingController::class, "create_social_media_async"])
             ->name("settings.create_social_media_async");
+
+        // * actualizacion de redes sociales
+        Route::put("/update_social_media_async/{social_media}", [SettingController::class, "update_social_media_async"])
+            ->name("settings.update_social_media_async");
+
+        // * eliminar redes sociales
+        Route::delete("/delete_social_media_async/{social_media}", [SettingController::class, "delete_social_media_async"])
+            ->name("settings.delete_social_media_async");
+
+        // * get redes sociales
+        Route::get("/get_social_media_async/{social_media}", [SettingController::class, "get_social_media_async"])
+            ->name("settings.get_social_media_async");
+    });
+
+
+// * configuracion
+Route::prefix("testimonios")
+    ->middleware("auth")
+    ->group(function () {
+        // * vista testimonios
+        Route::get("/", [TestimonyController::class, "index"])->name("testimony.index");
+
+        // * vista de creacion de testimonio
+        Route::get("/crear", [TestimonyController::class, "create"])->name("testimony.create");
+
+        // * funcion async para publicar testimonio
+        Route::put("/publicar/{testimony}", [TestimonyController::class, "published"])->name("testimony.published");
+
+        // * eliminar testimonio async
+        Route::delete("/eliminar/{testimony}", [TestimonyController::class, "destroy"])->name("testimony.destroy");
     });

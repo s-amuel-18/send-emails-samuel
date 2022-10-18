@@ -1,3 +1,48 @@
+.user-anonymous {
+    background: rgb(191, 191, 191);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.user-anonymous-40 {
+    width: 40px;
+    height: 40px;
+}
+
+.user-anonymous-60 {
+    width: 60px;
+    height: 60px;
+}
+
+.user-anonymous-80 {
+    width: 80px;
+    height: 80px;
+}
+
+.user-anonymous-100 {
+    width: 100px;
+    height: 100px;
+}
+
+.user-anonymous i {
+    color: #fff;
+    font-size: 14px;
+}
+
+.user-anonymous.user-anonymous-40 i {
+    font-size: 18px;
+}
+
+.user-anonymous.user-anonymous-60 i {
+    font-size: 22px;
+}
+
+
 .btn-published {
     background-color: transparent;
     border: 2px solid #0d6efd;
@@ -78,4 +123,33 @@
     max-width: 100%;
     max-height: 100%;
     object-fit: cover;
+}
+
+.card-columns-custom {
+    column-gap: 14px !important;
+}
+
+@media (min-width: 576px) {
+    .card-columns-custom {
+        -webkit-column-count: 2;
+        -moz-column-count: 2;
+        column-count: 2;
+    }
+}
+
+@media (min-width: 768px) {
+    .card-columns-custom {
+        -webkit-column-count: 3;
+        -moz-column-count: 3;
+        column-count: 3;
+
+    }
+}
+
+@media (min-width: 1200px) {
+    .card-columns-custom {
+        -webkit-column-count: 4;
+        -moz-column-count: 4;
+        column-count: 4;
+    }
 }

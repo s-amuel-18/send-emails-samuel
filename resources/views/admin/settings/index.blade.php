@@ -170,7 +170,9 @@
 
                 <div class="card card-body">
 
-                    @include('admin.settings.modules.social_media')
+                    @include('admin.settings.modules.social_media', [
+                        'social_medias' => $data['social_medias'],
+                    ])
 
                 </div>
             </div>
@@ -271,7 +273,7 @@
 
 @push('js')
     <script>
-        const data_server = @json($data['js']);
+        const data_server = @json($data['js'] ?? []);
     </script>
 
     {{-- * axios --}}

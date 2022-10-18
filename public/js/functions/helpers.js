@@ -127,3 +127,40 @@ function edit_inline_input() {
         input.value = value_init; // * asignamos ese valor incial al input en caso de que no se halla actualizado.
     });
 }
+
+function pagination_async(
+    selector_element = null,
+    function_them = null,
+    function_catch = null
+) {
+    if (selector_element) return null;
+
+    const container_pagination = document.querySelector(selector_element);
+
+    if (!container_pagination) {
+        console.error(
+            "No se encontró elemento con selector 'selector_element'"
+        );
+    }
+
+    $(container_pagination).on("click", (e) => {
+        if (
+            e.target.classList.contains("page-link") &&
+            !e.target.classList.contains("active")
+        ) {
+            e.preventDefault();
+
+            const btn = e.target;
+            const url = btn.href;
+
+            axios
+                .get(url)
+                .then((resp) => {
+                    function_them(resp);
+                })
+                .catch((err) => {
+                    function_catch(err);
+                });
+        }
+    });
+}

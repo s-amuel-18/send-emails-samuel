@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ContactInfo;
 use App\Models\InfoPrimary;
 use App\Models\Logo;
+use App\Models\SocialMedia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
@@ -17,7 +18,7 @@ class SettingController extends Controller
         $data["logo_img"] = Logo::first();
         $data["info_primary"] = InfoPrimary::first();
         $data["contact_info"] = ContactInfo::first();
-        // dd($data["contact_info"]->toArray());
+        $data["social_medias"] = SocialMedia::complete()->get();
 
         $data["title"] = "Configuraciónes del sistema";
 
@@ -212,5 +213,64 @@ class SettingController extends Controller
 
     public function create_social_media_async()
     {
+        $data_valid = request()->validate([
+            "url" => "required|string|url|max:191|unique:social_media,url",
+            "icon" => "required|string|max:191",
+        ]);
+
+        $data_insert = [
+            "url" => $data_valid["url"],
+            "icon" => $data_valid["icon"],
+        ];
+
+        $social_media = SocialMedia::create($data_insert);
+        $social_media["routeUpdate"] = $social_media->routeUpdate;
+        $social_media["routeDelete"] = $social_media->routeDelete;
+        $social_media["routeGetSocialMedia"] = $social_media->routeGetSocialMedia;
+
+        return response()->json([
+            "social_media" => $social_media,
+            "message" => "La red social se ha registrado correctamente."
+        ]);
+    }
+
+    public function get_social_media_async(SocialMedia $social_media)
+    {
+        $social_media["routeUpdate"] = $social_media->routeUpdate;
+        $social_media["routeDelete"] = $social_media->routeDelete;
+        $social_media["routeGetSocialMedia"] = $social_media->routeGetSocialMedia;
+
+        return response()->json([
+            "social_media" => $social_media
+        ]);
+    }
+
+    public function update_social_media_async(SocialMedia $social_media)
+    {
+        $data_valid = request()->validate([
+            "url" => "required|string|url|max:191|unique:social_media,url," . $social_media->id . ",id",
+            "icon" => "required|string|max:191",
+        ]);
+
+        $data_insert = [
+            "url" => $data_valid["url"],
+            "icon" => $data_valid["icon"],
+        ];
+
+        $social_media->update($data_insert);
+
+        return response()->json([
+            "social_media" => $social_media,
+            "message" => "Actualizado correctamente"
+        ]);
+    }
+
+    public function delete_social_media_async(SocialMedia $social_media)
+    {
+        $social_media->delete();
+
+        return response()->json([
+            "message" => "Red social eliminada correctamente",
+        ]);
     }
 }
