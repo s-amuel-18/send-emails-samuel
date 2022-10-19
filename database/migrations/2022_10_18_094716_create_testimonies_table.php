@@ -29,13 +29,13 @@ class CreateTestimoniesTable extends Migration
 
             $table->string("position")->nullable();
 
-            $table->tinyInteger('rating')->default(0);
+            $table->tinyInteger('rating')->nullable();
 
-            $table->string('title');
+            $table->string('title')->nullable();
 
-            $table->text('review');
+            $table->text('review')->nullable();
 
-            $table->boolean('published');
+            $table->boolean('published')->default(0);
 
             $table->softDeletes();
 

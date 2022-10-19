@@ -249,9 +249,19 @@ Route::prefix("testimonios")
         // * vista de creacion de testimonio
         Route::get("/crear", [TestimonyController::class, "create"])->name("testimony.create");
 
+        // * vista de actualizacion de testimonio
+        Route::get("/editar/{testimony}", [TestimonyController::class, "edit"])->name("testimony.edit");
+
+        // * Creacion de testimonio
+        Route::post("/crear", [TestimonyController::class, "store"])->name("testimony.store");
+
         // * funcion async para publicar testimonio
         Route::put("/publicar/{testimony}", [TestimonyController::class, "published"])->name("testimony.published");
+
+        // * funcion async para publicar testimonio
+        Route::put("/acturalizar/{testimony}", [TestimonyController::class, "update"])->name("testimony.update");
 
         // * eliminar testimonio async
         Route::delete("/eliminar/{testimony}", [TestimonyController::class, "destroy"])->name("testimony.destroy");
     });
+Route::get("testimonio/{token}", [TestimonyController::class, "with_token"])->name("testimony.token");

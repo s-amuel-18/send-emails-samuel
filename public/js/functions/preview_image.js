@@ -19,8 +19,6 @@ function event_change_imput_file(form, tagImage) {
     $(input_file).on("change", (e) => {
         const input = e.target;
 
-        if (!input.value) return null;
-
         // * extraemos el data que contiene el id del form
         const idForm = input.dataset.id_form || null;
         // * extraemos el data que contiene el id de la img donde se va a previsualizar la imagen
@@ -31,6 +29,7 @@ function event_change_imput_file(form, tagImage) {
 
         const form = document.querySelector("#" + idForm);
         const tagImage = document.querySelector("#" + idImg);
+        const parentImgTag = tagImage.parentElement;
 
         // * validamos que los elementos realmente existan en el html
         if (!form || !tagImage) return null;
@@ -41,11 +40,27 @@ function event_change_imput_file(form, tagImage) {
         // * extraemos el data load_img
         const img_load = tagImage.dataset.load_img || "";
 
+        if (!input.value) {
+            if (
+                tagImage.classList.contains("img-preview") &&
+                parentImgTag.classList.contains("img-preview-user")
+            ) {
+                parentImgTag.classList.remove("img-insert");
+            }
+        }
+
         // * llamamos a la funcion que nos entrega la url de la imagen
         let img = create_image(form, "image") || img_load;
 
         // * agregamos la url de la imagen al scr
-        tagImage.setAttribute("src", img);
+        tagImage.setAttribute("src", input.value ? img : img_load);
+
+        if (
+            tagImage.classList.contains("img-preview") &&
+            parentImgTag.classList.contains("img-preview-user")
+        ) {
+            parentImgTag.classList.add("img-insert");
+        }
     });
 }
 

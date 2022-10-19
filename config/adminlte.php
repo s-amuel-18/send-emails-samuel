@@ -336,12 +336,26 @@ return [
                     'route'         => 'project.create',
                     'can'        => 'project.create',
                 ],
+
             ],
         ],
         [
-            'text'        => 'Testimonios',
+            'text'        => 'Testimonio',
             'route'         => 'testimony.index',
             'icon'        => 'fa fa-quote-left',
+            'submenu' => [
+                [
+                    'text' => 'Testimonios',
+                    'icon_color' => 'primary',
+                    'route'         => 'testimony.index',
+                ],
+                [
+                    'text' => 'Nuevo testimonio',
+                    'icon_color' => 'success',
+                    'route'         => 'testimony.create',
+                ],
+
+            ],
         ],
         [
             'text'        => 'Configuracion',

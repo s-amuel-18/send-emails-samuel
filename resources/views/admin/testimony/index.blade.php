@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('plugins.Sweetalert2', true)
 
 @section('title', $data['title'] ?? 'Testimonios')
 
@@ -29,9 +30,10 @@
         <div class="card card-body">
             <div class="d-flex justify-content-end">
                 <div class="mb-3">
-                    <form action="" class="form-inline">
+                    <form action="{{ route('testimony.index') }}" class="form-inline">
                         <div class="mr-2">
-                            <input type="search" placeholder="Buscar" class="form-control ">
+                            <input type="search" placeholder="Buscar" class="form-control" name="search"
+                                value="{{ request()->search ?? '' }}">
                         </div>
                         <button class="btn btn-primary" type="submit">
                             buscar
@@ -50,7 +52,7 @@
                                 <div class="pr-2">
                                     @if ($testimony->image)
                                         <img width="40px" class="rounded-circle"
-                                            src="{{ asset('storage/' . $testimony->image) }}" alt="">
+                                            src="{{ asset('storage/' . $testimony->image->url) }}" alt="">
                                     @else
                                         <div class="user-anonymous user-anonymous-40">
                                             <i class="fa fa-user"></i>
@@ -73,6 +75,12 @@
                             <x-rating-stars rating="{{ $testimony->rating }}" />
 
                             <p class="card-text">{{ $testimony->review }}</p>
+
+                            <span class="text-muted">
+                                @include('admin.contact_email.components.datatable.created_at', [
+                                    'created_parser' => $testimony->created_at,
+                                ])
+                            </span>
                         </div>
 
                         <div class="card-footer">
@@ -106,9 +114,12 @@
                                 </div>
 
                                 <div class="">
-                                    <button class="btn btn-outline-success btn-sm" type="button">
+
+                                    <a href="{{ route('testimony.edit', ['testimony' => $testimony->id]) }}"
+                                        class="btn btn-outline-success btn-sm" type="button">
                                         <i class="fa fa-edit"></i>
-                                    </button>
+                                    </a>
+
                                     <button class="btn btn-outline-danger btn-sm"
                                         data-url="{{ route('testimony.destroy', ['testimony' => $testimony]) }}"
                                         type="button" onclick="delete_testimony(this)">
@@ -156,7 +167,8 @@
 
     <script>
         $(function() {
-            pagination_async("#pagination_testimony");
+            $('[data-toggle="tooltip"]').tooltip()
+            // pagination_async("#pagination_testimony");
             published();
             rating.create({
                 'selector': '#rating',

@@ -8,8 +8,27 @@ function delete_testimony_item_html(btn = null) {
     container_items.removeChild(item);
 }
 
-function delete_testimony(btn = null) {
+async function delete_testimony(btn = null) {
     if (!btn) return null;
+
+    // * ALERTA DE CONFIRMACION
+    const confirm = await Swal.fire({
+        title: "¿Realmente deseas eliminar este testimonio?",
+        text: "Al eliminar este testimonio no podrás recuperarlo, ¿realmente deseas eliminar este testimonio?",
+        icon: "warning",
+        showCancelButton: true,
+        customClass: {
+            confirmButton: "bg-primary",
+            cancelButton: "bg-light text-dark",
+        },
+        confirmButtonText: "Si, eliminar",
+        cancelButtonText: "Canceclar",
+    });
+
+    // * VALIDACION EN CASO DE QUE SE CONFIRME
+    if (!confirm.isConfirmed) {
+        return null;
+    }
 
     btn.disabled = true;
 
@@ -21,7 +40,7 @@ function delete_testimony(btn = null) {
             const { data } = resp;
             const { message } = data;
 
-            toastr.success(message || "Registrado correctamente");
+            toastr.success(message || "Eliminado correctamente");
 
             btn.disabled = false;
 

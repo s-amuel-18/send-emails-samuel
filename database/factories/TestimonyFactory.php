@@ -18,7 +18,14 @@ class TestimonyFactory extends Factory
 
     public function definition()
     {
+        do {
+            $uuid = rand(11111111, 99999999);
+
+            $uuid_exist = Testimony::where("uuid", $uuid)->count();
+        } while ($uuid_exist >= 1);
+
         return [
+            "uuid" => $uuid,
             "user_id" => User::all()->random()->id,
             "name" => $this->faker->name(),
             "position" => "Ceo Empresa",

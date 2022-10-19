@@ -60,6 +60,11 @@ class User extends Authenticatable
         return $this->hasMany(Contact_email::class, "user_id");
     }
 
+    public function testimonies()
+    {
+        return $this->hasMany(Testimony::class, "user_id");
+    }
+
     public function emailEnviado()
     {
         return $this->belongsToMany(Contact_email::class)->where("type", Contact_email::MAIL)->withPivot('created_at');
