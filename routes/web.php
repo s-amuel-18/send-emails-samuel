@@ -264,4 +264,10 @@ Route::prefix("testimonios")
         // * eliminar testimonio async
         Route::delete("/eliminar/{testimony}", [TestimonyController::class, "destroy"])->name("testimony.destroy");
     });
+
+// * mensaje de agradacemiento testimonio
+Route::get("testimonio/mensaje", [TestimonyController::class, "message"])->name("testimony.message");
 Route::get("testimonio/{token}", [TestimonyController::class, "with_token"])->name("testimony.token");
+
+// * crear testimonio solicitado
+Route::put("testimonio/{token}", [TestimonyController::class, "update_with_token"])->name("testimony.update_with_token");

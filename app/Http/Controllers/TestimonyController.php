@@ -43,6 +43,7 @@ class TestimonyController extends Controller
     {
         $data["testimony"] = $testimony;
         $data["js"] = [];
+        $data["route_form"] = route("testimony.update", ["testimony" => $data["testimony"]->id]);
 
         return view("admin.testimony.update", compact("data"));
     }
@@ -52,6 +53,7 @@ class TestimonyController extends Controller
 
         $data["testimony"] = Testimony::where("token", $token)->firstOrFail();
         $data["token"] = $token;
+        $data["route_form"] = route("testimony.update_with_token", ["token" => $data["testimony"]->token]);
 
         $data["js"] = [];
 
@@ -147,6 +149,24 @@ class TestimonyController extends Controller
         return redirect()->route("testimony.index")->with("message", $message);
     }
 
+    public function update_with_token($token, TestimonyRequest $request)
+    {
+        $testimony = Testimony::where("token", $token)->firstOrFail();
+
+        $data_insert = [
+            "name" => $request["name"],
+            "position" => $request["position"],
+            "rating" => $request["rating"],
+            "title" => $request["title"],
+            "review" => $request["review"],
+            "token" => null,
+        ];
+
+        $testimony->update($data_insert);
+
+        return redirect()->route("testimony.message");
+    }
+
 
     public function published(Testimony $testimony, Request $riquest)
     {
@@ -179,5 +199,11 @@ class TestimonyController extends Controller
             "message" => "El testimonio se ha eliminado correctamente.",
             "testimony" => $testimony
         ]);
+    }
+
+    public function message()
+    {
+        $data["js"] = [];
+        return view("messages.tesimony_request", compact("data"));
     }
 }
