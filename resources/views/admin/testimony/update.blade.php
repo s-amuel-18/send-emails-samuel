@@ -28,9 +28,8 @@
                     </div>
 
                     <div class="card card-body">
-                        <form method="POST"
-                            action="{{ route('testimony.update', ['testimony' => $data['testimony']->id]) }}"
-                            id="form_create_testimony" enctype="multipart/form-data" class="form_disabled_button_send">
+                        <form method="POST" action="{{ $data['route_form'] }}" id="form_create_testimony"
+                            enctype="multipart/form-data" class="form_disabled_button_send">
                             <div class="row">
                                 @csrf
                                 @method('put')
