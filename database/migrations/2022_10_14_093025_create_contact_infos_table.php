@@ -20,6 +20,8 @@ class CreateContactInfosTable extends Migration
             $table->string("location_alt")->nullable();
             $table->string("phone_number")->nullable();
             $table->string("phone_number_alt")->nullable();
+            $table->string("whatsapp_url")->nullable();
+            $table->string("whatsapp_url_alt")->nullable();
             $table->string("email")->unique()->nullable();
             $table->string("email_alt")->unique()->nullable();
             $table->softDeletes();

@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use Symfony\Polyfill\Intl\Idn\Info;
+use Illuminate\Support\Str;
 
 class SettingController extends Controller
 {
@@ -43,11 +44,8 @@ class SettingController extends Controller
         // * IMAGEN ENVIADA
         $img = $request->file("image");
 
-        // * NOMBRE ORIGINAL DE LA IMAGEN
-        $name_image = $img->getClientOriginalName();
-
         // * NUEVO NOMBRE DE LA IMAGEN (ESTO LO HACEMOS PARA QUE NO SE REPITAN LOS NOMBRES DE LAS IMAGENES)
-        $new_name_image = uniqid() . now()->timestamp . "-" . $name_image;
+        $new_name_image = uniqid() . now()->timestamp . ".png";
 
         // * GUARDAMOS LA IMAGEN EN EL STOREAGE
         $img->storeAs("public/logos", $new_name_image);
@@ -100,11 +98,8 @@ class SettingController extends Controller
         // * IMAGEN ENVIADA
         $img = $request->file("image");
 
-        // * NOMBRE ORIGINAL DE LA IMAGEN
-        $name_image = $img->getClientOriginalName();
-
         // * NUEVO NOMBRE DE LA IMAGEN (ESTO LO HACEMOS PARA QUE NO SE REPITAN LOS NOMBRES DE LAS IMAGENES)
-        $new_name_image = uniqid() . now()->timestamp . "-" . $name_image;
+        $new_name_image = uniqid() . now()->timestamp . ".png";
 
         // * GUARDAMOS LA IMAGEN EN EL STOREAGE
         $img->storeAs("public/site_image", $new_name_image);
@@ -190,13 +185,15 @@ class SettingController extends Controller
         $data_valid = request()->validate([
             "location" => "required|string|max:191",
             "email" => "required|email|unique:contact_infos,email," . ($contact_info->id ?? 0)  . ",id|max:191",
-            "phone" => "required|string|max:191"
+            "phone" => "required|string|max:191",
+            "whatsapp_url" => "required|url|string|max:191"
         ]);
 
         $data_insert = [
             "location" => $data_valid["location"],
             "email" => $data_valid["email"],
             "phone_number" => $data_valid["phone"],
+            "whatsapp_url" => $data_valid["whatsapp_url"],
         ];
 
         if ($contact_info) {

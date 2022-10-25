@@ -256,6 +256,7 @@
         const route_upload_img = @json(route('project.upload_image'));
         const route_upload_img_delete = @json(route('project.upload_image_delete'));
         const route_change_or_create = @json(route('project.change_or_create_data_project'));
+        const asset_route = @json(asset(''));
     </script>
 
     {{-- * axios --}}

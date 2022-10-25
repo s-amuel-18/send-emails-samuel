@@ -73,10 +73,10 @@
 
             </div>
             <div class="col-md-8">
-                @if ($data['project']->images->count() > 0)
+                @if ($data['project']->imagesExist->count() > 0)
                     <div id="carousel_project" class="carousel slide" data-ride="carousel">
                         <ol class="carousel-indicators">
-                            @foreach ($data['project']->images as $i => $img)
+                            @foreach ($data['project']->imagesExist as $i => $img)
                                 <li class="{{ $i == 0 ? 'active' : '' }}" data-target="#carousel_project"
                                     data-slide-to="{{ $i }}"></li>
                             @endforeach
@@ -84,7 +84,7 @@
                         <div class="carousel-inner">
 
                             {{-- * items carousel --}}
-                            @foreach ($data['project']->images as $i => $img)
+                            @foreach ($data['project']->imagesExist as $i => $img)
                                 <div class="carousel-item {{ $i == 0 ? 'active' : '' }}">
                                     <img class="d-block w-100" src="{{ asset('storage/' . $img->url) }}" alt="">
                                 </div>

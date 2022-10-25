@@ -66,6 +66,11 @@ class Project extends Model
         return $q->where("eraser", 0)->where("trash", 0);
     }
 
+    public function scopePublished($q)
+    {
+        return $this->complete()->where("published", 1);
+    }
+
     public function scopeTrash($q)
     {
         return $q->where("trash", 1);
@@ -110,11 +115,8 @@ class Project extends Model
         // * VALIDAMOS QUE LA IMAGEN "image_front_page" FUE  SUBIDA CORRECTAMENTE
         if ($image_front_page) {
 
-            // * NOMBRE ORIGINAL DE LA IMAGEN
-            $name_image = $image_front_page->getClientOriginalName();
-
             // * NUEVO NOMBRE DE LA IMAGEN (ESTO LO HACEMOS PARA QUE NO SE REPITAN LOS NOMBRES DE LAS IMAGENES)
-            $new_name_image = uniqid() . now()->timestamp . "-" . $name_image;
+            $new_name_image = uniqid() . now()->timestamp . ".png";
 
             // * GUARDAMOS LA IMAGEN EN EL STOREAGE
             $image_front_page->storeAs("public/projects", $new_name_image);
@@ -310,6 +312,7 @@ class Project extends Model
         return (($messages != "") or ($messages ?? null)) ? $messages : null;
     }
 
+
     /* 
         888888 88   88 88b 88  dP""b8 88  dP"Yb  88b 88 888888 .dP"Y8     888888 88 88b 88
         88__   88   88 88Yb88 dP   `" 88 dP   Yb 88Yb88 88__   `Ybo."     88__   88 88Yb88
@@ -323,6 +326,13 @@ class Project extends Model
          dP__Yb    88     88   88"Yb  88 88""Yb Y8   8P   88   88""
         dP""""Yb   88     88   88  Yb 88 88oodP `YbodP'   88   888888
      */
+
+    public function getImagesExistAttribute()
+    {
+        return  $this->images->filter(function ($img) {
+            return Storage::exists("public/" . $img->url) ? $img : false;
+        });
+    }
 
     public function getRouteTrashAttribute()
     {

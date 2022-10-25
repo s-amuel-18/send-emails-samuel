@@ -45,6 +45,11 @@ class Testimony extends Model
             ->whereNotNull("review");
     }
 
+    public function scopePublished($q)
+    {
+        return $this->complete()->where("published", 1);
+    }
+
     public function scopeSearch($q, $search)
     {
         return $q->where(function ($query) use ($search) {

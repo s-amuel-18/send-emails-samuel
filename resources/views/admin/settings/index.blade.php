@@ -97,6 +97,21 @@
                                     </div>
 
                                 </div>
+                                <div class="form-group">
+                                    <div class="input-group ">
+                                        <input type="text" name="whatsapp_url" class="form-control "
+                                            placeholder="Ubicacion" autofocus=""
+                                            value="{{ $data['contact_info']->whatsapp_url ?? '' }}">
+
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <span class="fab fa-whatsapp"></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
 
                                 <div class="d-flex justify-content-end">
                                     <button id="form_submit_info_contact" class="btn bg-purple font-weight-bold"

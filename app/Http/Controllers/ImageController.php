@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Str;
 
 class ImageController extends Controller
 {
@@ -23,11 +24,8 @@ class ImageController extends Controller
         // * IMAGEN ENVIADA
         $img = $request->file("image");
 
-        // * NOMBRE ORIGINAL DE LA IMAGEN
-        $name_image = $img->getClientOriginalName();
-
         // * NUEVO NOMBRE DE LA IMAGEN (ESTO LO HACEMOS PARA QUE NO SE REPITAN LOS NOMBRES DE LAS IMAGENES)
-        $new_name_image = uniqid() . now()->timestamp . "-" . $name_image;
+        $new_name_image = uniqid() . now()->timestamp . ".png";
 
         // * GUARDAMOS LA IMAGEN EN EL STOREAGE
         $img->storeAs("public/images", $new_name_image);

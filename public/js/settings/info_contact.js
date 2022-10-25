@@ -22,6 +22,10 @@ $(function () {
             phone: {
                 required: true,
             },
+            whatsapp_url: {
+                required: true,
+                url: true,
+            },
         },
         errorElement: "span",
         errorPlacement: function (error, element) {
@@ -50,6 +54,7 @@ $(function () {
             location: form.location.value,
             email: form.email.value,
             phone: form.phone.value,
+            whatsapp_url: form.whatsapp_url.value,
         };
 
         axios

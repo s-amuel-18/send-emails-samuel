@@ -13,24 +13,30 @@
 <div class="card card-light">
     <div class="card-header">
         <h3 class="card-title">Requerimientos</h3>
-        <div class="card-tools">
-            <button class="btn btn-notification btn-warning btn-sm" data-toggle="modal" data-target="#categories_modal"
-                type="button">
-                <i class="fa fa-plus"></i>
-                <span class="d-none d-md-inline-block ml-1">
-                    Nueva Categoría
-                </span>
-            </button>
-            <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#requirements_modal" type="button">
-                <i class="fa fa-plus"></i>
-                <span class="d-none d-md-inline-block ml-1">
-                    Nuevo Requerimiento
-                </span>
-            </button>
-        </div>
+        {{-- <div class="card-tools">
+            
+        </div> --}}
     </div>
 
     <div class="card-body table-responsive">
+        <div class="d-flex justify-content-end mb-3">
+            <div class="">
+                <button class="btn btn-notification btn-warning btn-sm" data-toggle="modal" data-target="#categories_modal"
+                    type="button">
+                    <i class="fa fa-plus"></i>
+                    <span class=" ml-1">
+                        Nueva Categoría
+                    </span>
+                </button>
+                <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#requirements_modal"
+                    type="button">
+                    <i class="fa fa-plus"></i>
+                    <span class=" ml-1">
+                        Nuevo Requerimiento
+                    </span>
+                </button>
+            </div>
+        </div>
 
         @if ($data['requirements_count'] > 0)
             <form action="" id="form_filter_requirements">

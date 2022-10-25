@@ -101,7 +101,7 @@ $(function () {
             },
         };
     });
-
+    console.log(images_project_options);
     // * INPUT SUBIDA DE IMAGEN
     const fildpondElement = document.getElementById("filepond_test");
 

@@ -11,6 +11,13 @@ class ContactInfo extends Model
 
     protected $fillable = [
         "location", "location_alt", "phone_number", "phone_number_alt", "email",
-        "email_alt"
+        "email_alt", "whatsapp_url"
     ];
+
+    // * scopes
+    public function scopeComplete($q)
+    {
+        return $q->whereNotNull("location")->whereNotNull("phone_number")->whereNotNull("email");
+    }
+    // * scopes end
 }

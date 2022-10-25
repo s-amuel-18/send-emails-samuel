@@ -6,8 +6,10 @@ use App\Models\Category;
 use App\Models\Image as ModelsImage;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Str;
 
 class ProjectController extends Controller
 {
@@ -146,14 +148,9 @@ class ProjectController extends Controller
             "categories" => "required|array",
             "categories.*" => "exists:categories,id",
             "description" => "required",
-            "image_front_page" => "required_if:img_front_exist,null|image|mimes:jpeg,png,jpg|max:2048",
+            "image_front_page" => "required_if:img_front_exist,null|image|mimes:jpeg,png,jpg|max:4000",
             "item_help" => "nullable|array",
             "item_help.*" => "required",
-            // "images" => "sometimes|required|array",
-            // "images.*" => [
-            //     "image",
-            //     "mimes:jpeg,png",
-            // ]
         ]);
 
         $data_insert = [
@@ -214,6 +211,7 @@ class ProjectController extends Controller
             ->with("categories")
             ->with("itemHelp")
             ->firstOrFail();
+        dd($project->imagesExist);
         $data["title"] = $project->name;
         $data["project"] = $project;
 
@@ -253,10 +251,7 @@ class ProjectController extends Controller
      * @param  \App\Models\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Project $project)
-    {
-        //
-    }
+
 
     public function published(Project $project, Request $riquest)
     {
@@ -350,7 +345,7 @@ class ProjectController extends Controller
     {
         // * VALIDAMOS LOS DATOS ENVIADOS
         $data_valid = request()->validate([
-            "image" => "required|image|mimes:jpeg,png|max:2000",
+            "image" => "required|image|mimes:jpeg,png|max:4000",
             "project_id" => "required"
         ]);
 
@@ -369,11 +364,8 @@ class ProjectController extends Controller
         // * IMAGEN ENVIADA
         $img = $request->file("image");
 
-        // * NOMBRE ORIGINAL DE LA IMAGEN
-        $name_image = $img->getClientOriginalName();
-
         // * NUEVO NOMBRE DE LA IMAGEN (ESTO LO HACEMOS PARA QUE NO SE REPITAN LOS NOMBRES DE LAS IMAGENES)
-        $new_name_image = uniqid() . now()->timestamp . "-" . $name_image;
+        $new_name_image = uniqid() . now()->timestamp . ".png";
 
         // * GUARDAMOS LA IMAGEN EN EL STOREAGE
         $img->storeAs("public/projects", $new_name_image);

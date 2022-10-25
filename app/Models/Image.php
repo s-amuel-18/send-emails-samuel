@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Intervention\Image\Facades\Image as ItenrventionImage;
+use Illuminate\Support\Str;
 
 class Image extends Model
 {
@@ -40,11 +41,8 @@ class Image extends Model
   {
     if (!$img or !$folder) return null;
 
-    // * NOMBRE ORIGINAL DE LA IMAGEN
-    $name_image = $img->getClientOriginalName();
-
     // * NUEVO NOMBRE DE LA IMAGEN (ESTO LO HACEMOS PARA QUE NO SE REPITAN LOS NOMBRES DE LAS IMAGENES)
-    $new_name_image = uniqid() . now()->timestamp . "-" . $name_image;
+    $new_name_image = uniqid() . now()->timestamp . ".png";
 
     // * GUARDAMOS LA IMAGEN EN EL STOREAGE
     $img->storeAs("public/{$folder}", $new_name_image);
