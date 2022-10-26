@@ -39,30 +39,25 @@
 
     <title>Fluxel Code | Samuel Graterol</title>
 
-    <!-- STYLES -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
-        rel="stylesheet">
+    <style>
+        .lorader-first {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 999;
+        }
+    </style>
 
-
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets-portfolio/css/bootstrap.min.css') }}" />
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets-portfolio/lib/fontawesome/css/all.min.css') }}" />
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets-portfolio/css/plugins.css') }}" />
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets-portfolio/css/dark.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('assets-portfolio/css/style.css') }}" />
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets-portfolio/lib/justlazy/justlazy.css') }}" />
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets-portfolio/css/main.css') }}" />
-    <!--[if lt IE 9]> <script type="text/javascript" src="js/modernizr.custom.js"></script> <![endif]-->
-    <!-- /STYLES -->
-    @stack('css')
+
 </head>
 
 <body class="pt-5 pt-md-0">
+    {{-- <div class="lorader-first" id="lorader_first"></div> --}}
 
-    <!-- PRELOADER -->
     <div id="preloader">
         <div class="loader_line"></div>
     </div>
@@ -76,7 +71,7 @@
             <div class="mobile_menu_inner">
                 <div class="mobile_in">
                     <div class="logo">
-                        <a href="#"><img src="{{ asset('assets-portfolio/img/logo/logo.png') }}"
+                        <a href="{{ route('home') }}#"><img src="{{ asset('front/Vectores/Logo/Artboard 36.png') }}"
                                 alt="" /></a>
                     </div>
                     <div class="trigger">
@@ -91,11 +86,11 @@
             <div class="dropdown">
                 <div class="dropdown_inner">
                     <ul class="anchor_nav">
-                        <li class="current"><a href="#home">Inicio</a></li>
-                        <li><a href="#about">Sobre Mi</a></li>
-                        <li><a href="#portfolio">Portafolio</a></li>
-                        <li><a href="#service">Servicios</a></li>
-                        <li><a href="#contact">Contacto</a></li>
+                        <li class="current"><a href="{{ route('home') }}#home">Inicio</a></li>
+                        <li><a href="{{ route('home') }}#about">Sobre Mi</a></li>
+                        <li><a href="{{ route('home') }}#portfolio">Portafolio</a></li>
+                        <li><a href="{{ route('home') }}#testimonies">Testimonios</a></li>
+                        <li><a href="{{ route('home') }}#contact">Contacto</a></li>
                         <li class="download_cv"><a href="{{ asset('assets-portfolio/img/cv/1.jpg') }}"
                                 download><span>Descargar CV</span></a></li>
                     </ul>
@@ -109,16 +104,16 @@
             <div class="container">
                 <div class="inner">
                     <div class="logo">
-                        <a href="#"><img src="{{ asset('assets-portfolio/img/logo/logo.png') }}"
+                        <a href="{{ route('home') }}#"><img src="{{ asset('front/Vectores/Logo/Artboard 36.png') }}"
                                 alt="" /></a>
                     </div>
                     <div class="menu">
                         <ul class="anchor_nav">
-                            <li class="current"><a href="#home">Inicio</a></li>
-                            <li><a href="#about">Sobre Mi</a></li>
-                            <li><a href="#portfolio">Portafolio</a></li>
-                            <li><a href="#service">Servicios</a></li>
-                            <li><a href="#contact">Contacto</a></li>
+                            <li class="current"><a href="{{ route('home') }}#home">Inicio</a></li>
+                            <li><a href="{{ route('home') }}#about">Sobre Mi</a></li>
+                            <li><a href="{{ route('home') }}#portfolio">Portafolio</a></li>
+                            <li><a href="{{ route('home') }}#testimonies">Testimonios</a></li>
+                            <li><a href="{{ route('home') }}#contact">Contacto</a></li>
                             <li class="download_cv"><a href="{{ asset('assets-portfolio/img/cv/1.jpg') }}"
                                     download><span>Descargar CV</span></a>
                             </li>
@@ -152,18 +147,43 @@
         <!-- /CURSOR -->
 
         <!-- TOTOP -->
-        <div class="progressbar">
-            <a href="#"><span class="text">To Top</span></a>
+        {{-- <div class="progressbar">
+            <a href="{{ route('home') }}#"><span class="text">To Top</span></a>
             <span class="line"></span>
-        </div>
+        </div> --}}
         <!-- /TOTOP -->
 
     </div>
     <!-- / WRAPPER ALL -->
 
+
+    <!-- STYLES -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets-portfolio/css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets-portfolio/lib/fontawesome/css/all.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets-portfolio/css/plugins.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets-portfolio/css/dark.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets-portfolio/css/style.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets-portfolio/lib/justlazy/justlazy.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets-portfolio/css/main.css') }}" />
+
+
+    <!--[if lt IE 9]> <script type="text/javascript" src="js/modernizr.custom.js"></script> <![endif]-->
+    <!-- /STYLES -->
+    @stack('css')
+
     <!-- SCRIPTS -->
     <script src="{{ asset('assets-portfolio/js/jquery.js') }}"></script>
-    <script src="{{ asset('assets-portfolio/js/bootstrap.js') }}"></script>
+    {{-- <script src="{{ asset('assets-portfolio/js/bootstrap.js') }}"></script> --}}
+    <script src="{{ asset('front/js/plugins/popper.min.js') }}"></script>
+    <script src="{{ asset('front/js/bootstrap.min.js') }}"></script>
+    <!-- Bootstrap 4.1.3 -->
     <script src="{{ asset('assets-portfolio/lib/justlazy/justlazy.min.js') }}"></script>
     <!--[if lt IE 10]> <script type="text/javascript" src="js/ie8.js"></script> <![endif]-->
     <script src="{{ asset('assets-portfolio/js/plugins.js') }}"></script>

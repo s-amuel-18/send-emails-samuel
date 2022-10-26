@@ -32,10 +32,12 @@
 html {
 	overflow-x: hidden;
 	padding: 0px;
+	scroll-behavior: smooth;
 	/* margin: 0px */
 }
 
 body {
+
 	overflow-x: hidden;
 	width: 100%;
 	/* font-family: 'Open Sans', sans-serif; */
@@ -658,7 +660,8 @@ h6 {
 	float: left;
 }
 
-.dizme_tm_button a {
+.dizme_tm_button .button-custom {
+	cursor: pointer;
 	text-decoration: none;
 	color: #fff;
 	display: inline-block;
@@ -669,6 +672,11 @@ h6 {
 	padding: 14px 48px 13px 48px;
 	position: relative;
 	overflow: hidden;
+}
+
+.dizme_tm_button .button-custom:disabled {
+	opacity: .5;
+	cursor: auto;
 }
 
 .dizme_tm_button span {
@@ -682,7 +690,7 @@ h6 {
 	transition: all .3s ease;
 }
 
-.dizme_tm_button a:before {
+.dizme_tm_button .button-custom:before {
 	position: absolute;
 	content: "";
 	z-index: 0;
@@ -699,18 +707,18 @@ h6 {
 	transition: all .3s ease;
 }
 
-.dizme_tm_button a:hover:before {
+.dizme_tm_button .button-custom:hover:before {
 	height: 0;
 }
 
-.dizme_tm_button a:hover span {
+.dizme_tm_button .button-custom:hover span {
 	color: #000;
 }
 
 .dizme_tm_hero .social {
 	padding-left: 27px;
 	position: relative;
-	top: -4px;
+	/* top: -4px; */
 }
 
 .dizme_tm_hero .social ul {
@@ -3129,7 +3137,7 @@ input[type=number] {
 		font-size: 16px;
 	}
 
-	.dizme_tm_button a {
+	.dizme_tm_button .button-custom {
 		padding: 9px 35px 8px 35px;
 	}
 
@@ -3465,7 +3473,7 @@ input[type=number] {
 	}
 
 	.dizme_tm_down {
-		bottom: 20px;
+		bottom: 0;
 	}
 
 	.dizme_tm_process ul {

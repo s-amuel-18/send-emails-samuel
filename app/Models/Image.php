@@ -27,6 +27,8 @@ class Image extends Model
     return $this->url ? str_replace("storage/", "", $this->url) : null;
   }
 
+
+
   /* 
            db    888888 888888 88""Yb 88 88""Yb 88   88 888888 888888     888888 88 88b 88
           dPYb     88     88   88__dP 88 88__dP 88   88   88   88__       88__   88 88Yb88

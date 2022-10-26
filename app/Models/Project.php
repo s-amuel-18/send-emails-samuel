@@ -61,6 +61,16 @@ class Project extends Model
         8bodP'  YboodP  YbodP  88     888888        
     */
 
+    public function scopeNotNull($q)
+    {
+        return $q->published()
+            ->whereNotNull("name")
+            ->whereNotNull("slug")
+            ->whereNotNull("image_front_page")
+            ->whereNotNull("description")
+            ->whereHas("images", null, ">", 0);
+    }
+
     public function scopeComplete($q)
     {
         return $q->where("eraser", 0)->where("trash", 0);
@@ -103,6 +113,17 @@ class Project extends Model
         88""   Y8   8P 88 Y88 Yb      88 Yb   dP 88 Y88 88""   o.`Y8b
         88     `YbodP' 88  Y8  YboodP 88  YbodP  88  Y8 888888 8bodP'
       */
+
+    public function scopeGetWithImagesExist($q)
+    {
+        $projects = $q->get();
+        return $projects->filter(function ($project) {
+            $images = $project->imagesExist;
+            $frontImages = $project->frontImageExist;
+
+            return $images->count() > 0 and $frontImages ? $project : false;
+        });
+    }
 
     // * NOS PERMITE CREAR LAS IMAGENES Y REDIMENCIONARLAS (LAS AÑADE AL PROYECTO) 
     public function create_and_resize_images($request /* esta variable viene de formulario de envio */)
@@ -327,11 +348,24 @@ class Project extends Model
         dP""""Yb   88     88   88  Yb 88 88oodP `YbodP'   88   888888
      */
 
+    public function getFrontImageExistAttribute()
+    {
+
+        return Storage::exists("public/" . $this->image_front_page) ? $this->image_front_page : null;
+    }
+
     public function getImagesExistAttribute()
     {
-        return  $this->images->filter(function ($img) {
-            return Storage::exists("public/" . $img->url) ? $img : false;
-        });
+        $img_arr = collect([]);
+
+        foreach ($this->images as  $img) {
+            $exist_img = Storage::exists("public/" . $img->url) ? $img : false;
+            if ($exist_img) {
+                $img_arr->push($exist_img);
+            }
+        }
+
+        return $img_arr;
     }
 
     public function getRouteTrashAttribute()

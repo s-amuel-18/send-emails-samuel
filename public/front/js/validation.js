@@ -25,6 +25,7 @@ $(function () {
                 required: "Introduzca el mensaje a enviar",
             },
         },
+        errorClass: "text-danger",
+        errorElement: "small",
     });
 });
-

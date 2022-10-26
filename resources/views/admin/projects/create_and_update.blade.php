@@ -252,7 +252,7 @@
     <script>
         const description_project = document.getElementById("description_project");
         const appData = @json($data['js'] ?? []);
-        const images_project = @json($data['project']->images ?? []);
+        const images_project = @json($data['project']->imagesExist ?? []);
         const route_upload_img = @json(route('project.upload_image'));
         const route_upload_img_delete = @json(route('project.upload_image_delete'));
         const route_change_or_create = @json(route('project.change_or_create_data_project'));

@@ -294,7 +294,7 @@ class EmailSendController extends Controller
 
             $response = [
                 "success_email_send" => true,
-                "message" => "<strong>Correo enviado correctamente!</strong> el equipo de fluxel code se pondrá en contacto contigo lo antes posible, gracias por tu mensaje."
+                "message" => "<strong>¡Gracias por contactarme!</strong> Me estaré poniendo en contacto contigo lo mas pronto posible."
             ];
 
             return response()->json($response, 200);

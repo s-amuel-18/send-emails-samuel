@@ -1,11 +1,14 @@
 @extends('front.layouts.app-portfolio')
+
+@push('css')
+@endpush
 <!-- HERO -->
 <div class="dizme_tm_section" id="home">
     <div class="dizme_tm_hero">
         <div class="background" data-img-url="{{ asset('assets-portfolio/img/banners/back.png') }}">
         </div>
         <div class="container">
-            <div class="content">
+            <div class="content ">
                 <div class="details">
                     <div class="hello">
                         <h3 class="orangeText">Hola, soy</h3>
@@ -23,17 +26,19 @@
                             desarrollador muy completo y dedicado a su trabajo.</p>
                     </div>
                     <div class="button">
-                        <div class="dizme_tm_button">
-                            <a class="anchor" href="#about">
+                        <div class="dizme_tm_button ">
+                            <a class="anchor button-custom" href="{{ route('home') }}#about">{{--  --}}
                                 <span>Sobre Mi</span>
                             </a>
                         </div>
                         <div class="social">
-                            <ul>
-                                <li><a href="#"><i class="icon-facebook-1"></i></a></li>
-                                <li><a href="#"><i class="icon-twitter-1"></i></a></li>
-                                <li><a href="#"><i class="icon-linkedin-1"></i></a></li>
-                                <li><a href="#"><i class="icon-behance"></i></a></li>
+                            <ul class="d-flex align-items-center">
+                                @foreach ($data['social_media'] ?? [] as $social)
+                                    <li class="mr-3">
+                                        <a target="_blanck" href="{{ $social->url }}"><i
+                                                class="h5 mb-0 {{ $social->icon }}""></i></a>
+                                    </li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>
@@ -61,7 +66,7 @@
             </div>
         </div>
         <div class="dizme_tm_down">
-            <a class="anchor" href="#about">
+            <a class="anchor" href="{{ route('home') }}#about">
                 <svg width="26px" height="100%" viewBox="0 0 247 390" version="1.1"
                     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                     style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
@@ -127,8 +132,7 @@
                         <div class="list_inner">
                             <div class="icon">
                                 <span>
-                                    <img class="brush"
-                                        src="{{ asset('assets-portfolio/img/brushes/process/3.png') }}"
+                                    <img class="brush" src="{{ asset('assets-portfolio/img/brushes/process/3.png') }}"
                                         alt="" />
                                     <img class="svg"
                                         src="{{ asset('assets-portfolio/img/svg/process/teacher-color.png') }}"
@@ -192,7 +196,8 @@
                             dos puntos clave, tanto en mi desarrollo personal como laboral.</p>
                     </div>
                     <div class="dizme_tm_button wow fadeInUp" data-wow-duration="1s">
-                        <a class="anchor" href="#contact"><span>Contactame</span></a>
+                        <a class="button-custom anchor"
+                            href="{{ route('home') }}#contact"><span>Contactame</span></a>
                     </div>
                 </div>
             </div>
@@ -226,11 +231,21 @@
                                         <a href="">
                                             <div class="content-lazy-load-img content_img_100x60">
                                                 <div class="content">
-                                                    <span
-                                                        data-src="{{ asset('storage/' . $project->image_front_page) }}"
-                                                        data-alt="some alt text" class="content_img_100x60 lazy-load">
-                                                        <div class="content bg-gray-light"></div>
-                                                    </span>
+                                                    @if ($project->frontImageExist)
+                                                        <span
+                                                            data-src="{{ asset('storage/' . $project->frontImageExist) }}"
+                                                            data-alt="some alt text"
+                                                            class="content_img_100x60 lazy-load">
+                                                            <div class="content bg-gray-light"></div>
+                                                        </span>
+                                                    @else
+                                                        <div
+                                                            class="h-100 w-100 bg-gray-light d-flex justify-content-center align-items-center">
+                                                            <i class="fa fa-image text-muted h1"
+                                                                aria-hidden="true"></i>
+                                                        </div>
+                                                    @endif
+
 
                                                 </div>
                                             </div>
@@ -238,9 +253,10 @@
                                     </div>
                                     <div class="details">
                                         <span class="category">
-                                            <a href="#">{{ $project->categories()->first()->name }}</a></span>
+                                            <a
+                                                href="{{ route('home') }}#">{{ $project->categories()->first()->name }}</a></span>
                                         <h3 class="title">
-                                            <a href="#">
+                                            <a href="{{ route('home') }}#">
                                                 {{ $project->name }}
                                             </a>
                                         </h3>
@@ -354,7 +370,7 @@
 
 @if ($data['testimonies']->count() > 0)
     <!-- TESTIMONIALS -->
-    <div class="dizme_tm_section pt-5 mt-4">
+    <div class="dizme_tm_section pt-5 mt-4" id="testimonies">
         <div class="dizme_tm_testimonials">
             <div class="dizme_tm_main_title" data-align="center">
                 <span>Testimonio</span>
@@ -455,7 +471,7 @@
                                 data-alt="Logo empresa" class="lazy-load content_img_100x30 ">
                                 <div class="content bg-gray-light"></div>
                             </div>
-                            <a class="dizme_tm_full_link" a href="#"></a>
+                            <a class="dizme_tm_full_link" href="{{ route('home') }}#"></a>
                         </div>
                     </li>
                     <li class="wow fadeIn d-flex align-items-center" data-wow-duration="1s" data-wow-delay="0.2s">
@@ -464,7 +480,7 @@
                                 data-alt="Logo empresa" class="lazy-load content_img_100x30 ">
                                 <div class="content bg-gray-light"></div>
                             </div>
-                            <a class="dizme_tm_full_link" a href="#"></a>
+                            <a class="dizme_tm_full_link" href="{{ route('home') }}#"></a>
                         </div>
                     </li>
                     <li class="wow fadeIn d-flex align-items-center" data-wow-duration="1s" data-wow-delay="0.2s">
@@ -473,7 +489,7 @@
                                 data-alt="Logo empresa" class="lazy-load content_img_100x30 ">
                                 <div class="content bg-gray-light"></div>
                             </div>
-                            <a class="dizme_tm_full_link" a href="#"></a>
+                            <a class="dizme_tm_full_link" href="{{ route('home') }}#"></a>
                         </div>
                     </li>
                     <li class="wow fadeIn d-flex align-items-center" data-wow-duration="1s" data-wow-delay="0.2s">
@@ -482,7 +498,7 @@
                                 data-alt="Logo empresa" class="lazy-load content_img_100x30 ">
                                 <div class="content bg-gray-light"></div>
                             </div>
-                            <a class="dizme_tm_full_link" a href="#"></a>
+                            <a class="dizme_tm_full_link" href="{{ route('home') }}#"></a>
                         </div>
                     </li>
                 </ul>
@@ -544,7 +560,7 @@
                                         <div class="short">
                                             <h3>Correo electrónico</h3>
                                             <span><a
-                                                    href="#">{{ $data['contact_info']->email ?? null }}</a></span>
+                                                    href="{{ route('home') }}#">{{ $data['contact_info']->email ?? null }}</a></span>
                                         </div>
                                     </div>
                                 </li>
@@ -556,25 +572,30 @@
                 <div class="{{ $data['contact_info'] ?? null ? 'right' : 'w-100' }} right wow fadeInRight"
                     data-wow-duration="1s">
                     <div class="fields">
-                        <form action="/" method="post" class="contact_form" id="contact_form"
-                            autocomplete="off">
+                        <div id="insert_alert"></div>
+                        <form method="post" class="contact_form" id="form_contact" autocomplete="off">
                             <div class="returnmessage"
                                 data-success="Your message has been received, We will contact you soon."></div>
                             <div class="empty_notice"><span>Please Fill Required Fields</span></div>
                             <div class="input_list">
                                 <ul>
-                                    <li><input id="name" type="text" placeholder="Your Name" /></li>
-                                    <li><input id="email" type="text" placeholder="Your Email" /></li>
+                                    <li><input id="name" name="nombre" type="text" placeholder="Nombre" />
+                                    </li>
+                                    <li><input id="email" name="email" type="text"
+                                            placeholder="Correo Electrónico" /></li>
                                     <!-- <li><input id="phone" type="number" placeholder="Your Phone" /></li>
            <li><input id="subject" type="text" placeholder="Subject" /></li> -->
                                 </ul>
                             </div>
                             <div class="message_area">
-                                <textarea id="message" placeholder="Write your message here"></textarea>
+                                <textarea name="comment" id="message" placeholder="Escribe tu mensaje"></textarea>
                             </div>
                             <div class="dizme_tm_button d-flex justify-content-end">
                                 <span>
-                                    <a id="send_message" href="#"><span>Contactar ahora</span></a>
+                                    {{-- <button class="btn btn-primary" disabled type="button">Text</button> --}}
+                                    <button type="submit" class="button-custom" id="send_message"><span>Contactar
+                                            ahora</span>
+                                    </button>
                                 </span>
                             </div>
                         </form>
@@ -592,3 +613,18 @@
     </div>
 </div>
 <!-- /CONTACT -->
+
+@push('js')
+    <script>
+        let dataServer = @json($data['js']);
+    </script>
+    {{-- * axios --}}
+    <script src="{{ asset('js/Plugins/axios.min.js') }}"></script>
+    {{-- * jquery validator --}}
+    <script src="{{ asset('vendor/jquery-validation/jquery.validate.min.js') }}"></script>
+    <script src="{{ asset('vendor/jquery-validation/additional-methods.min.js') }}"></script>
+    <script src="{{ asset('vendor/jquery-validation/localization/messages_es.min.js') }}"></script>
+    <script src="{{ asset('front/js/validation.js') }}"></script>
+    {{-- * funcion de form --}}
+    <script src="{{ asset('front/js/recaptcha.js') }}"></script>
+@endpush

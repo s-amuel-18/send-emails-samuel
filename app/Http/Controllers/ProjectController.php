@@ -211,7 +211,7 @@ class ProjectController extends Controller
             ->with("categories")
             ->with("itemHelp")
             ->firstOrFail();
-        dd($project->imagesExist);
+        // dd($project->imagesExist->toArray());
         $data["title"] = $project->name;
         $data["project"] = $project;
 

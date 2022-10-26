@@ -124,10 +124,10 @@
                                                     href="{{ $project->slug ? route('project.show', ['slug_name' => $project->slug]) : route('project.index') }}">
                                                     <div class="content_img_100x60 bg-gray-light">
                                                         <div class="content">
-                                                            @if (!$project->image_front_page)
+                                                            @if (!$project->frontImageExist)
                                                                 <i class="fas fa-image text-muted "></i>
                                                             @else
-                                                                <img src="{{ asset('storage/' . $project->image_front_page) }}"
+                                                                <img src="{{ asset('storage/' . $project->frontImageExist) }}"
                                                                     class="w-100 h-100" alt="">
                                                             @endif
                                                         </div>

@@ -84,10 +84,22 @@
                         <div class="carousel-inner">
 
                             {{-- * items carousel --}}
+                            @php
+                                $aux_img = 0;
+                            @endphp
                             @foreach ($data['project']->imagesExist as $i => $img)
-                                <div class="carousel-item {{ $i == 0 ? 'active' : '' }}">
-                                    <img class="d-block w-100" src="{{ asset('storage/' . $img->url) }}" alt="">
+                                <div class="carousel-item {{ $aux_img == 0 ? 'active' : '' }}">
+                                    <div class="content_img_100x60">
+                                        <div class="content bg-gray-light">
+                                            {{-- @dump(asset('storage/' . $img->url)) --}}
+                                            <img class="d-block w-100" src="{{ asset('storage/' . $img->url) }}"
+                                                alt="">
+                                        </div>
+                                    </div>
                                 </div>
+                                @php
+                                    $aux_img += 1;
+                                @endphp
                             @endforeach
                             {{-- * items carousel end --}}
 
