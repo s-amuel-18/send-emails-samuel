@@ -185,7 +185,7 @@
                 </div>
                 <div class="right">
                     <div class="title wow fadeInUp" data-wow-duration="1s">
-                        <span>Mas Sobre mi</span>
+                        <span>Más Sobre mi</span>
                         <h3>Soy autodidacta, siempre en búsqueda de nuevos retos</h3>
                     </div>
                     <div class="text wow fadeInUp" data-wow-duration="1s">
@@ -219,7 +219,7 @@
             <div class="container">
                 <div class="dizme_tm_main_title" data-align="center">
                     <span>Mis proyectos asombrosos</span>
-                    <h3>Proyectos más recientes, ¿quieres ver mas?
+                    <h3>Proyectos recientes, ¿quieres ver más?
                         Contáctame.</h3>
                 </div>
                 <div class="news_list portfolio-container">
@@ -288,7 +288,7 @@
                     <div class="dizme_tm_main_title wow fadeInUp" data-wow-duration="1s" data-align="left">
                         <span>Programar es mi día a día</span>
                         <h3>Desarrollo habilidades para mantenerme actualizado</h3>
-                        <p>Me especializo en las tecnologías mas solicitadas del mercado, constante mente
+                        <p>Me especializo en las tecnologías más solicitadas del mercado, constante mente
                             investigo nuevas herramientas que me ayuden en mis desarrollos y disfruto del
                             proceso de aprendizaje, así que me adapto fácilmente a nuevos lenguajes de
                             programación.</p>
