@@ -39,4 +39,27 @@ class FrontController extends Controller
         ];
         return view("front.portfolio", compact("data"));
     }
+
+    public function project($slug)
+    {
+        $project = Project::whereSlug($slug)
+            ->notNull()
+            // ->with("images")
+            ->with("categories")
+            ->with("itemHelp")
+            ->firstOrFail();
+
+        $project_id = $project->id;
+
+        $data["last projects"] = Project::notNull()
+            ->orderBy("created_at", "DESC")
+            ->take(7)
+            ->getWithImagesExist()
+            ->take(3);
+
+        $data["project"] = $project;
+        $data["contact_info"] = ContactInfo::complete()->whereNotNull("whatsapp_url")->first();
+
+        return view("front.projects.portfolio-prject", compact("data"));
+    }
 }

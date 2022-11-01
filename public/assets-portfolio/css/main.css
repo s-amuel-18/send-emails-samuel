@@ -157,8 +157,8 @@ img {
 .carousel-custom .carousel-indicators li.active {
     width: 10px;
     height: 10px;
-    margin-left: 10px;
-    margin-right: 10px;
+    /* margin-left: 10px; */
+    /* margin-right: 10px; */
 }
 
 .bg-gray-light {

@@ -172,6 +172,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('assets-portfolio/css/style.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('assets-portfolio/lib/justlazy/justlazy.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('assets-portfolio/css/main.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/main.css') }}" />
 
 
     <!--[if lt IE 9]> <script type="text/javascript" src="js/modernizr.custom.js"></script> <![endif]-->

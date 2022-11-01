@@ -228,7 +228,7 @@
                             <li class="p-3 col-sm-6 col-lg-4 wow fadeInUp w-100" data-wow-duration="1s">
                                 <div class="list_inner">
                                     <div class="image">
-                                        <a href="">
+                                        <a href="{{ route('project.front.show', ['slug' => $project->slug]) }}">
                                             <div class="content-lazy-load-img content_img_100x60">
                                                 <div class="content">
                                                     @if ($project->frontImageExist)
@@ -253,10 +253,9 @@
                                     </div>
                                     <div class="details">
                                         <span class="category">
-                                            <a
-                                                href="{{ route('home') }}#">{{ $project->categories()->first()->name }}</a></span>
+                                            <a href="">{{ $project->categories()->first()->name }}</a></span>
                                         <h3 class="title">
-                                            <a href="{{ route('home') }}#">
+                                            <a href="{{ route('project.front.show', ['slug' => $project->slug]) }}">
                                                 {{ $project->name }}
                                             </a>
                                         </h3>
@@ -467,7 +466,7 @@
                 <ul>
                     <li class="wow fadeIn d-flex align-items-center" data-wow-duration="1s" data-wow-delay="0.2s">
                         <div class="list_inner px-2">
-                            <div data-src="{{ asset('assets-portfolio/img/partners/dark/1.png') }}"
+                            <div data-src="{{ asset('assets-portfolio/img/logos-emoresas/fumimark_logo.png') }}"
                                 data-alt="Logo empresa" class="lazy-load content_img_100x30 ">
                                 <div class="content bg-gray-light"></div>
                             </div>
@@ -476,7 +475,7 @@
                     </li>
                     <li class="wow fadeIn d-flex align-items-center" data-wow-duration="1s" data-wow-delay="0.2s">
                         <div class="list_inner px-2">
-                            <div data-src="{{ asset('assets-portfolio/img/partners/dark/2.png') }}"
+                            <div data-src="{{ asset('assets-portfolio/img/logos-emoresas/logo-3x.png') }}"
                                 data-alt="Logo empresa" class="lazy-load content_img_100x30 ">
                                 <div class="content bg-gray-light"></div>
                             </div>
@@ -485,7 +484,7 @@
                     </li>
                     <li class="wow fadeIn d-flex align-items-center" data-wow-duration="1s" data-wow-delay="0.2s">
                         <div class="list_inner px-2">
-                            <div data-src="{{ asset('assets-portfolio/img/partners/dark/3.png') }}"
+                            <div data-src="{{ asset('assets-portfolio/img/logos-emoresas/poder-judicial-virtual2.png') }}"
                                 data-alt="Logo empresa" class="lazy-load content_img_100x30 ">
                                 <div class="content bg-gray-light"></div>
                             </div>
@@ -494,7 +493,7 @@
                     </li>
                     <li class="wow fadeIn d-flex align-items-center" data-wow-duration="1s" data-wow-delay="0.2s">
                         <div class="list_inner px-2">
-                            <div data-src="{{ asset('assets-portfolio/img/partners/dark/4.png') }}"
+                            <div data-src="{{ asset('assets-portfolio/img/logos-emoresas/logo-avi.svg') }}"
                                 data-alt="Logo empresa" class="lazy-load content_img_100x30 ">
                                 <div class="content bg-gray-light"></div>
                             </div>
@@ -612,6 +611,12 @@
                 src="{{ asset('assets-portfolio/img/brushes/contact/1.png') }}" alt="" /></div>
     </div>
 </div>
+
+@if ($data['contact_info']->whatsapp_url ?? null)
+    <a target="_blanck" href="{{ $data['contact_info']->whatsapp_url }}" class="btn btn_fixed whatsapp">
+        <i class="fab fa-whatsapp" aria-hidden="true"></i>
+    </a>
+@endif
 <!-- /CONTACT -->
 
 @push('js')

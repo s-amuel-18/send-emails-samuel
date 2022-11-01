@@ -99,6 +99,8 @@ class Project extends Model
         return $q->where("slug", $slug);
     }
 
+
+
     /* 
         .dP"Y8  dP""b8  dP"Yb  88""Yb 888888     888888 88 88b 88
         `Ybo." dP   `" dP   Yb 88__dP 88__       88__   88 88Yb88
@@ -124,6 +126,7 @@ class Project extends Model
             return $images->count() > 0 and $frontImages ? $project : false;
         });
     }
+
 
     // * NOS PERMITE CREAR LAS IMAGENES Y REDIMENCIONARLAS (LAS AÑADE AL PROYECTO) 
     public function create_and_resize_images($request /* esta variable viene de formulario de envio */)
