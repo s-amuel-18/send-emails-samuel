@@ -17,6 +17,7 @@ class CreateLogosTable extends Migration
             $table->id();
             $table->bigInteger("user_id")->default(0)->index();
             $table->text("url")->nullable();
+            $table->boolean("published")->default(0);
             $table->softDeletes();
             $table->timestamps();
         });

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\ContactInfo;
+use App\Models\InfoPrimary;
+use App\Models\Logo;
 use App\Models\Project;
 use App\Models\SocialMedia;
 use App\Models\Testimony;
@@ -15,12 +17,14 @@ class FrontController extends Controller
         $count_testimonies = 7;
 
         $data["projects"] = Project::notNull()
+            ->published()
             ->orderBy("created_at", "DESC")
-            ->take(10)
+            // ->take(6)
+            // ->get();
             ->getWithImagesExist()
             ->take(6);
+        // dd($data["projects"]);
         $data["testimonies"] = Testimony::published()->orderBy("created_at", "DESC")->with("image")->take($count_testimonies)->get();
-        $data["contact_info"] = ContactInfo::complete()->whereNotNull("whatsapp_url")->first();
 
         $image_user_default = asset('assets-portfolio/img/icons-proming/profile.png');
 
@@ -44,16 +48,18 @@ class FrontController extends Controller
     {
         $project = Project::whereSlug($slug)
             ->notNull()
+            ->published()
             // ->with("images")
             ->with("categories")
             ->with("itemHelp")
             ->firstOrFail();
-
+        // dd($project->toArray());
         $project_id = $project->id;
 
-        $data["last projects"] = Project::notNull()
+        $data["last_projects"] = Project::notNull()
+            ->published()
             ->orderBy("created_at", "DESC")
-            ->take(7)
+            ->where("id", "<>", $project_id)
             ->getWithImagesExist()
             ->take(3);
 

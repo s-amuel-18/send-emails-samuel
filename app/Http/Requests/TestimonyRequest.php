@@ -29,7 +29,7 @@ class TestimonyRequest extends FormRequest
             "rating" => "required|numeric",
             "title" => "required|string|max:191",
             "review" => "required|string",
-            "image" => "nullable|image|mimes:jpeg,png|max:4000",
+            "image" => "nullable|image|mimes:jpeg,png|max:6000",
         ];
     }
 }

@@ -63,12 +63,14 @@ class Project extends Model
 
     public function scopeNotNull($q)
     {
-        return $q->published()
-            ->whereNotNull("name")
-            ->whereNotNull("slug")
-            ->whereNotNull("image_front_page")
-            ->whereNotNull("description")
-            ->whereHas("images", null, ">", 0);
+        return $q->where(function ($q) {
+            return $q/* ->published() */
+                ->whereNotNull("name")
+                ->whereNotNull("slug")
+                ->whereNotNull("image_front_page")
+                ->whereNotNull("description")
+                ->whereHas("images", null, ">", 0);
+        });
     }
 
     public function scopeComplete($q)
@@ -118,10 +120,15 @@ class Project extends Model
 
     public function scopeGetWithImagesExist($q)
     {
+        // dd($q->get());
         $projects = $q->get();
         return $projects->filter(function ($project) {
             $images = $project->imagesExist;
             $frontImages = $project->frontImageExist;
+            // dump($images->count());
+            // dump($frontImages);
+            // dump($project->published);
+            // dump($project->name);
 
             return $images->count() > 0 and $frontImages ? $project : false;
         });
@@ -323,7 +330,11 @@ class Project extends Model
     public function getMessagesWarningAttribute()
     {
         $arr_messages = [];
-        !$this->slug ? array_push($arr_messages, "El slug name es invalido, actualiza tu proyecto <br>") : null;
+        !$this->slug ? array_push($arr_messages, "El slug name es invalido, actualiza tu proyecto. ") : null;
+
+        if ($this->images()->count() < 1 || !$this->frontImageExist) {
+            array_push($arr_messages, "Agrega imagenes al proyecto. ");
+        }
 
         if (count($arr_messages) < 1) return null;
 

@@ -10,21 +10,30 @@
         <div class="container">
             <div class="content ">
                 <div class="details">
-                    <div class="hello">
-                        <h3 class="orangeText">Hola, soy</h3>
-                    </div>
+                    @if (!($info_page['info_primary']->title ?? null))
+                        <div class="hello">
+                            <h3 class="orangeText">Hola, soy</h3>
+                        </div>
+                    @endif
                     <div class="name">
-                        <h3>Samuel Graterol</h3>
+                        <h3>{{ $info_page['info_primary']->title ?? 'Samuel Graterol' }}</h3>
                     </div>
-                    <div class="job">
-                        <p>Un <span class="purpleText">Programador </span> de <span class="purpleText">Venezuela,
-                                Caracas</span></p>
-                    </div>
+
+                    @if (!($info_page['info_primary']->description ?? null))
+                        <div class="job">
+                            <p>Un <span class="purpleText">Programador </span> de <span class="purpleText">Venezuela,
+                                    Caracas</span></p>
+                        </div>
+                    @endif
                     <div class="text">
-                        <p>Con más de tres años desarrollando
-                            sitios web y dos años realizando sistemas de todo tipo, puedo decir que soy un
-                            desarrollador muy completo y dedicado a su trabajo.</p>
+                        <p>
+                            {{ $info_page['info_primary']->description ??
+                                "Con más de tres años desarrollando
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        sitios web y dos años realizando sistemas de todo tipo, puedo decir que soy un
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        desarrollador muy completo y dedicado a su trabajo." }}
+                        </p>
                     </div>
+
                     <div class="button">
                         <div class="dizme_tm_button ">
                             <a class="anchor button-custom" href="{{ route('home') }}#about">{{--  --}}
@@ -46,7 +55,7 @@
                 <div class="avatar">
                     <div class="image">
 
-                        <img data-src="{{ asset('assets-portfolio/img/fotos-samuel/avatar.png') }}"
+                        <img data-src="{{ asset($info_page['route_avatar'] ?? 'assets-portfolio/img/fotos-samuel/avatar.png') }}"
                             data-alt="some alt text" class="lazy-load"
                             src="{{ asset('assets-portfolio/img/fotos-samuel/avatar-load.png') }}" alt="" />
                         <span class="skills laravel anim_moveBottom">
@@ -289,8 +298,7 @@
                         <h3>Desarrollo habilidades para mantenerme actualizado</h3>
                         <p>Me especializo en las tecnologías más solicitadas del mercado, constante mente
                             investigo nuevas herramientas que me ayuden en mis desarrollos y disfruto del
-                            proceso de aprendizaje, así que me adapto fácilmente a nuevos lenguajes de
-                            programación.</p>
+                            proceso de aprendizaje.</p>
                     </div>
                     <div class="dodo_progress wow fadeInUp" data-wow-duration="1s">
                         <div class="row no-gutters">
@@ -388,7 +396,15 @@
                                             alt="" />
                                     </div>
                                     <div class="text">
-                                        <p>{!! $testimony->review !!}</p>
+                                        <p>
+                                            {!! Str::words($testimony->review, 30) !!}
+                                            @if (str_word_count($testimony->review) > 30)
+                                                <a class="show_testimony_btn"
+                                                    data-url="{{ route('testimony.show', ['testimony' => $testimony->id]) }}"
+                                                    href="" data-toggle="modal" data-target="#testimony">leer
+                                                    mas</a>
+                                            @endif
+                                        </p>
                                     </div>
                                     <div class="short">
                                         <div class="image">
@@ -470,7 +486,8 @@
                                 data-alt="Logo empresa" class="lazy-load content_img_100x30 ">
                                 <div class="content bg-gray-light"></div>
                             </div>
-                            <a class="dizme_tm_full_link" href="{{ route('home') }}#"></a>
+                            <a target="_blanck" class="dizme_tm_full_link"
+                                href="https://fumimark.fluxelcode.com/"></a>
                         </div>
                     </li>
                     <li class="wow fadeIn d-flex align-items-center" data-wow-duration="1s" data-wow-delay="0.2s">
@@ -479,7 +496,8 @@
                                 data-alt="Logo empresa" class="lazy-load content_img_100x30 ">
                                 <div class="content bg-gray-light"></div>
                             </div>
-                            <a class="dizme_tm_full_link" href="{{ route('home') }}#"></a>
+                            <a target="_blanck" class="dizme_tm_full_link"
+                                href="https://www.tecno-red.com.ve/website/"></a>
                         </div>
                     </li>
                     <li class="wow fadeIn d-flex align-items-center" data-wow-duration="1s" data-wow-delay="0.2s">
@@ -488,7 +506,8 @@
                                 data-alt="Logo empresa" class="lazy-load content_img_100x30 ">
                                 <div class="content bg-gray-light"></div>
                             </div>
-                            <a class="dizme_tm_full_link" href="{{ route('home') }}#"></a>
+                            <a target="_blanck" class="dizme_tm_full_link"
+                                href="https://www.poderjudicialvirtual.com/"></a>
                         </div>
                     </li>
                     <li class="wow fadeIn d-flex align-items-center" data-wow-duration="1s" data-wow-delay="0.2s">
@@ -497,7 +516,7 @@
                                 data-alt="Logo empresa" class="lazy-load content_img_100x30 ">
                                 <div class="content bg-gray-light"></div>
                             </div>
-                            <a class="dizme_tm_full_link" href="{{ route('home') }}#"></a>
+                            <a target="_blanck" class="dizme_tm_full_link" href="https://avimarkstudio.com/"></a>
                         </div>
                     </li>
                 </ul>
@@ -516,50 +535,56 @@
             <div class="dizme_tm_main_title" data-align="center">
                 <span>Contáctame</span>
                 <h3>¿Tienes un proyecto en mente?</h3>
-                <p>Podemos reunirnos y discutir sobre tus requerimientos, contácteme.</p>
+                <p>Podemos llevarlo a cabo hoy mismo, contáctame.</p>
             </div>
             <div class="contact_inner">
-                @if ($data['contact_info'] ?? null)
+                @if ($info_page['contact_info'] ?? null)
                     <div class="left wow fadeInLeft" data-wow-duration="1s">
-                        <ul>
-                            @if ($data['contact_info']->location ?? null)
+                        <ul class="">
+                            @if ($info_page['contact_info']->location ?? null)
                                 <li>
                                     <div class="list_inner">
-                                        <div class="icon orangeBackground">
-                                            <i class="icon-location orangeText"></i>
+                                        <div class="">
+                                            <div class="icon orangeBackground">
+                                                <i class="icon-location orangeText"></i>
+                                            </div>
                                         </div>
                                         <div class="short">
                                             <h3>Dirección</h3>
-                                            <span>{{ $data['contact_info']->location ?? '' }}</span>
+                                            <p>{{ $info_page['contact_info']->location }}</p>
                                         </div>
                                     </div>
                                 </li>
                             @endif
 
-                            @if ($data['contact_info']->phone_number ?? null)
+                            @if ($info_page['contact_info']->phone_number ?? null)
                                 <li>
                                     <div class="list_inner">
-                                        <div class="icon purpleBackground">
-                                            <i class="icon-phone purpleText"></i>
+                                        <div class="">
+                                            <div class="icon purpleBackground">
+                                                <i class="icon-phone purpleText"></i>
+                                            </div>
                                         </div>
                                         <div class="short">
                                             <h3>Teléfono</h3>
-                                            <span>{{ $data['contact_info']->phone_number ?? null }}</span>
+                                            <span>{{ $info_page['contact_info']->phone_number ?? null }}</span>
                                         </div>
                                     </div>
                                 </li>
                             @endif
 
-                            @if ($data['contact_info']->email ?? null)
+                            @if ($info_page['contact_info']->email ?? null)
                                 <li>
                                     <div class="list_inner">
-                                        <div class="icon greenBackground">
-                                            <i class="icon-mail-1 greenText"></i>
+                                        <div class="">
+                                            <div class="icon greenBackground">
+                                                <i class="icon-mail-1 greenText"></i>
+                                            </div>
                                         </div>
                                         <div class="short">
                                             <h3>Correo electrónico</h3>
                                             <span><a
-                                                    href="{{ route('home') }}#">{{ $data['contact_info']->email ?? null }}</a></span>
+                                                    href="{{ route('home') }}#">{{ $info_page['contact_info']->email ?? null }}</a></span>
                                         </div>
                                     </div>
                                 </li>
@@ -612,13 +637,8 @@
     </div>
 </div>
 
-@if ($data['contact_info']->whatsapp_url ?? null)
-    <a target="_blanck" href="{{ $data['contact_info']->whatsapp_url }}" class="btn btn_fixed whatsapp">
-        <i class="fab fa-whatsapp" aria-hidden="true"></i>
-    </a>
-@endif
-<!-- /CONTACT -->
 
+<!-- /CONTACT -->
 @push('js')
     <script>
         let dataServer = @json($data['js']);

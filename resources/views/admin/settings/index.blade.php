@@ -32,6 +32,14 @@
                     <x-preview-image delafultImage="{{ $data['logo_img']->logoRouteStorage ?? null }}"
                         idForm='form_upload_logo' idImg='preview_logo' idInput='input_logo' title="Logo del sitio web"
                         description='La imagen que se suba se estará usando como logo del sitio web' />
+
+                    <div class="mt-3 custom-control custom-checkbox">
+                        <input {{ $data['logo_img']->published ?? null ? 'checked' : '' }}
+                            data-url="{{ route('settings.publish_logo_async') }}"
+                            class="published_item custom-control-input" type="checkbox" id="published_logo" name="private"
+                            value="1">
+                        <label for="published_logo" class="custom-control-label">Publicar logo</label>
+                    </div>
                 </div>
             </div>
 
@@ -166,11 +174,19 @@
 
                         </div>
 
-
                         <div class="form-group">
                             <label for="desc_site">Descripción principal (opcional)</label>
 
                             <textarea name="description" id="desc_site" class="event_input_change_info_primary form-control" rows="4">{{ $data['info_primary']->description ?? '' }}</textarea>
+                        </div>
+
+                        <div class="custom-control custom-checkbox">
+                            <input {{ $data['info_primary']->published ?? null ? 'checked' : '' }}
+                                data-url="{{ route('settings.published_info_primary_async') }}"
+                                class="published_item custom-control-input" type="checkbox" id="published_info"
+                                name="private" value="1">
+                            <label for="published_info" class=" custom-control-label">Publicar
+                                información</label>
                         </div>
 
                     </form>
@@ -314,6 +330,7 @@
 
     {{-- * funciones para crear, eliminar y actualizar redes sociales  --}}
     <script src="{{ asset('js/settings/social_media.js') }}"></script>
+    <script src="{{ asset('js/settings/main.js') }}"></script>
 
     <script>
         $(function() {

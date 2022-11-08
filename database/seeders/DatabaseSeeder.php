@@ -11,6 +11,7 @@ use App\Models\Category;
 use App\Models\CategoryService;
 use App\Models\Contact_email;
 use App\Models\Income;
+use App\Models\Project;
 use App\Models\Requirements;
 use App\Models\Service;
 use App\Models\Spents;
@@ -46,8 +47,9 @@ class DatabaseSeeder extends Seeder
         // BodyEmail::factory(10)->create();
         // Contact_email::factory(1000)->create();
         // Category::factory(10)->create();
-        Requirements::factory(50)->create();
+        // Requirements::factory(50)->create();
         Testimony::factory(20)->create();
+        Project::factory(20)->create();
         // $this->call(EnvioEmailSeeder::class);
         // CategoryService::factory(5)->create();
         // Service::factory(10)->create();

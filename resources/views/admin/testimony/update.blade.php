@@ -37,8 +37,10 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="name_testimony">Nombre y apellido</label>
-                                        <input id="name_testimony" placeholder="Nombre y apellido" class="form-control"
-                                            type="text" name="name" value="{{ $data['testimony']->name }}">
+                                        <input id="name_testimony" placeholder="Nombre y apellido"
+                                            class="form-control @error('name') is-invalid @enderror" type="text"
+                                            name="name"
+                                            value="{{ old('name') ? old('name') : $data['testimony']->name }}">
                                     </div>
                                 </div>
 
@@ -46,8 +48,10 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="position_testimony">Puesto de trabajo</label>
-                                        <input id="position_testimony" placeholder="CEO de xxx xxxxx" class="form-control"
-                                            type="text" name="position" value="{{ $data['testimony']->position }}">
+                                        <input id="position_testimony" placeholder="CEO de xxx xxxxx"
+                                            class="form-control @error('position') is-invalid @enderror" type="text"
+                                            name="position"
+                                            value="{{ old('position') ? old('position') : $data['testimony']->position }}">
                                     </div>
                                 </div>
 
@@ -63,8 +67,10 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="title_testimony">Titulo</label>
-                                        <input id="title_testimony" placeholder="Buen trabajador" class="form-control"
-                                            type="text" name="title" value="{{ $data['testimony']->title }}">
+                                        <input id="title_testimony" placeholder="Buen trabajador"
+                                            class="form-control @error('title') is-invalid @enderror" type="text"
+                                            name="title"
+                                            value="{{ old('title') ? old('title') : $data['testimony']->title }}">
                                     </div>
                                 </div>
 
@@ -72,35 +78,34 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="review_testimony">Reseña</label>
-                                        <textarea class="form-control" name="review" id="review_testimony" rows="5"
-                                            placeholder="Buen trabajador y excelente persona…">{{ $data['testimony']->review }}</textarea>
+                                        <textarea class="form-control @error('review') is-invalid @enderror" name="review" id="review_testimony" rows="5"
+                                            placeholder="Buen trabajador y excelente persona…">{{ old('review') ? old('review') : $data['testimony']->review }}</textarea>
                                     </div>
                                 </div>
 
-                                @if (!($data['token'] ?? null))
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <div
-                                                class="img-preview-user img-preview-user-80 {{ $data['testimony']->image->route ?? null ? 'img-insert' : '' }} ">
-                                                <label for="img_preview_testimonio"
-                                                    class="label-preview-img bg-purple cursor-pointer">
-                                                    <i class="fa fa-plus" aria-hidden="true"></i>
-                                                </label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div
+                                            class="img-preview-user img-preview-user-80 {{ $data['testimony']->image->route ?? null ? 'img-insert' : '' }} ">
+                                            <label for="img_preview_testimonio"
+                                                class="label-preview-img bg-purple cursor-pointer">
+                                                <i class="fa fa-plus" aria-hidden="true"></i>
+                                            </label>
 
-                                                <img src="{{ $data['testimony']->image->route ?? null }}" alt=""
-                                                    class="img-preview" id="img_preview_testimoner">
+                                            <img src="{{ $data['testimony']->image->route ?? null }}" alt=""
+                                                class="img-preview" id="img_preview_testimoner">
 
-                                                <div class="user-anonymous ">
-                                                    <i class="fa fa-user"></i>
-                                                </div>
+                                            <div class="user-anonymous ">
+                                                <i class="fa fa-user"></i>
                                             </div>
-                                            <input id="img_preview_testimonio" data-id_form="form_create_testimony"
-                                                data-id_img="img_preview_testimoner"
-                                                accept="image/png, image/jpg, image/jpeg" type="file" name="image"
-                                                class="listener_input_file d-none">
                                         </div>
+                                        <input id="img_preview_testimonio" data-id_form="form_create_testimony"
+                                            data-id_img="img_preview_testimoner" accept="image/png, image/jpg, image/jpeg"
+                                            type="file" name="image" class="listener_input_file d-none">
                                     </div>
-                                @endif
+                                </div>
+                                {{-- @if (!($data['token'] ?? null))
+                                @endif --}}
                             </div>
 
                             <div class="d-flex justify-content-end">

@@ -84,6 +84,32 @@ class SettingController extends Controller
         ]);
     }
 
+    public function publish_logo_async(Request $request)
+    {
+        $data_valid = request()->validate([
+            "published" => "required"
+        ]);
+
+        $logo = Logo::first();
+
+        if (!$logo) {
+            return response()->json([
+                "message" => "No se encontró algun logo para publicar, adjunta una imagen."
+            ], 404);
+        }
+
+        $published = $data_valid["published"];
+        $logo->update([
+            "published" => $published,
+        ]);
+
+        $public = $published ? "publicado" : "privatizado";
+
+        return response()->json([
+            "message" => "Logo {$public} correctamente."
+        ]);
+    }
+
     public function upload_img_primary_async(Request $request)
     {
         // * VALIDAMOS LOS DATOS ENVIADOS
@@ -175,6 +201,32 @@ class SettingController extends Controller
         return response()->json([
             "info_primary" => $info_primary,
             "message" => "Se ha registrado correctamente"
+        ]);
+    }
+
+    public function published_info_primary_async(Type $var = null)
+    {
+        $data_valid = request()->validate([
+            "published" => "required"
+        ]);
+
+        $info_primary = InfoPrimary::first();
+
+        if (!$info_primary) {
+            return response()->json([
+                "message" => "No hay información registrada, registra un titulo o una descripcion."
+            ], 404);
+        }
+
+        $published = $data_valid["published"];
+        $info_primary->update([
+            "published" => $published,
+        ]);
+
+        $public = $published ? "publicada" : "privatizada";
+
+        return response()->json([
+            "message" => "Información {$public} correctamente"
         ]);
     }
 

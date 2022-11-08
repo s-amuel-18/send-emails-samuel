@@ -37,13 +37,13 @@
                             enctype="multipart/form-data" class="form_disabled_button_send">
                             <div class="row">
                                 @csrf
-
                                 {{-- * Nombre --}}
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="name_testimony">Nombre y apellido</label>
-                                        <input id="name_testimony" placeholder="Nombre y apellido" class="form-control"
-                                            type="text" name="name">
+                                        <input id="name_testimony" placeholder="Nombre y apellido"
+                                            class="form-control @error('name') is-invalid @enderror" type="text"
+                                            name="name" value="{{ old('name') }}">
                                     </div>
                                 </div>
 
@@ -51,8 +51,9 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="position_testimony">Puesto de trabajo</label>
-                                        <input id="position_testimony" placeholder="CEO de xxx xxxxx" class="form-control"
-                                            type="text" name="position">
+                                        <input id="position_testimony" placeholder="CEO de xxx xxxxx"
+                                            class="form-control @error('position') is-invalid @enderror" type="text"
+                                            name="position" value="{{ old('position') }}">
                                     </div>
                                 </div>
 
@@ -68,8 +69,9 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="title_testimony">Titulo</label>
-                                        <input id="title_testimony" placeholder="Buen trabajador" class="form-control"
-                                            type="text" name="title">
+                                        <input id="title_testimony" placeholder="Buen trabajador"
+                                            class="form-control @error('title') is-invalid @enderror" type="text"
+                                            name="title" value="{{ old('title') }}">
                                     </div>
                                 </div>
 
@@ -77,11 +79,10 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="review_testimony">Reseña</label>
-                                        <textarea class="form-control" name="review" id="review_testimony" rows="5"
-                                            placeholder="Buen trabajador y excelente persona…"></textarea>
+                                        <textarea class="form-control @error('review') is-invalid @enderror" name="review" id="review_testimony" rows="5"
+                                            placeholder="Buen trabajador y excelente persona…">{{ old('review') }}</textarea>
                                     </div>
                                 </div>
-
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <div class="img-preview-user img-preview-user-80">
@@ -125,11 +126,6 @@
                         @if ($data['testimony_request'] ?? null)
                             <div class="">
                                 <h5>Solicitar testimonio</h5>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem dolore ex eius
-                                    laboriosam
-                                    maxime, molestiae sunt soluta sint maiores veritatis ipsum pariatur numquam ipsam
-                                    assumenda
-                                    sequi obcaecati illo exercitationem aliquid!</p>
 
                                 <div class="d-flex">
                                     <input id="copy_url_tetimony" class="form-control flex-basis" type="text" readonly
@@ -143,19 +139,6 @@
                             </div>
                         @endif
 
-                        <form action="" class="mt-4">
-                            <h5 class="mb-3">Enviar solicitud de testimonio</h5>
-
-                            <div class="form-group">
-                                <label for="email_request_testimony">Correo electronico</label>
-                                <input id="email_request_testimony" class="form-control" type="email" name="email"
-                                    placeholder="Correo electronico Destinatario">
-                            </div>
-
-                            <div class="d-flex justify-content-end">
-                                <button class="btn bg-purple" type="submit">Enviar solicitud</button>
-                            </div>
-                        </form>
                     </div>
                 </div>
             </div>

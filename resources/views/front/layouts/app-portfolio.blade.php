@@ -66,13 +66,16 @@
     <!-- WRAPPER ALL -->
     <div class="dizme_tm_all_wrap" data-magic-cursor="show">
 
+
         <!-- MOBILE MENU -->
         <div class="dizme_tm_mobile_menu">
             <div class="mobile_menu_inner">
                 <div class="mobile_in">
                     <div class="logo">
-                        <a href="{{ route('home') }}#"><img src="{{ asset('front/Vectores/Logo/Artboard 36.png') }}"
-                                alt="" /></a>
+                        <a href="{{ route('home') }}#">
+                            <img src="{{ asset($info_page['route_logo'] ?? 'front/Vectores/Logo/Artboard 36.png') }}"
+                                alt="" />
+                        </a>
                     </div>
                     <div class="trigger">
                         <div class="hamburger hamburger--slider">
@@ -91,7 +94,7 @@
                         <li><a href="{{ route('home') }}#portfolio">Portafolio</a></li>
                         <li><a href="{{ route('home') }}#testimonies">Testimonios</a></li>
                         <li><a href="{{ route('home') }}#contact">Contacto</a></li>
-                        <li class="download_cv"><a href="{{ asset('assets-portfolio/img/cv/1.jpg') }}"
+                        <li class="download_cv"><a href="{{ asset('pdf/Samuel-Graterol-Curricullum-Vitae.pdf') }}"
                                 download><span>Descargar CV</span></a></li>
                     </ul>
                 </div>
@@ -104,8 +107,10 @@
             <div class="container">
                 <div class="inner">
                     <div class="logo">
-                        <a href="{{ route('home') }}#"><img src="{{ asset('front/Vectores/Logo/Artboard 36.png') }}"
-                                alt="" /></a>
+                        <a href="{{ route('home') }}#">
+                            <img src="{{ asset($info_page['route_logo'] ?? 'front/Vectores/Logo/Artboard 36.png') }}"
+                                alt="" />
+                        </a>
                     </div>
                     <div class="menu">
                         <ul class="anchor_nav">
@@ -114,7 +119,7 @@
                             <li><a href="{{ route('home') }}#portfolio">Portafolio</a></li>
                             <li><a href="{{ route('home') }}#testimonies">Testimonios</a></li>
                             <li><a href="{{ route('home') }}#contact">Contacto</a></li>
-                            <li class="download_cv"><a href="{{ asset('assets-portfolio/img/cv/1.jpg') }}"
+                            <li class="download_cv"><a href="{{ asset('pdf/Samuel-Graterol-Curricullum-Vitae.pdf') }} "
                                     download><span>Descargar CV</span></a>
                             </li>
                         </ul>
@@ -127,6 +132,11 @@
 
         @yield('content')
 
+        @if ($info_page['contact_info']->whatsapp_url ?? null)
+            <a target="_blanck" href="{{ $info_page['contact_info']->whatsapp_url }}" class="btn btn_fixed whatsapp">
+                <i class="fab fa-whatsapp" aria-hidden="true"></i>
+            </a>
+        @endif
         <!-- COPYRIGHT -->
         <div class="dizme_tm_section">
             <div class="dizme_tm_copyright">
@@ -155,6 +165,24 @@
 
     </div>
     <!-- / WRAPPER ALL -->
+
+
+    <div id="testimony" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="testimony_modal"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="testimony_modal">Testimonio</h5>
+                    <button class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="insert_review"></p>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <!-- STYLES -->
@@ -189,6 +217,9 @@
     <!--[if lt IE 10]> <script type="text/javascript" src="js/ie8.js"></script> <![endif]-->
     <script src="{{ asset('assets-portfolio/js/plugins.js') }}"></script>
     <script src="{{ asset('assets-portfolio/js/init.js') }}"></script>
+    {{-- * mostrar testimonio en modal --}}
+    <script src="{{ asset('js/testimony/show_testimony.js') }}"></script>
+
 
     <script>
         Justlazy.registerLazyLoadByClass("lazy-load");

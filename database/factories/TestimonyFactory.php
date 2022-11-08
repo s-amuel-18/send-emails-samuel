@@ -31,7 +31,7 @@ class TestimonyFactory extends Factory
             "position" => "Ceo Empresa",
             "rating" => rand(1, 5),
             "title" => $this->faker->text(20),
-            "review" => $this->faker->sentence(15),
+            "review" => $this->faker->sentence(1000),
             "published" => rand(0, 1),
         ];
     }

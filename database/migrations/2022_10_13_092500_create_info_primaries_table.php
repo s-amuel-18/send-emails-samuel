@@ -19,6 +19,7 @@ class CreateInfoPrimariesTable extends Migration
             $table->text("url")->nullable();
             $table->string("title")->nullable();
             $table->text("description")->nullable();
+            $table->boolean("published")->default(0);
             $table->softDeletes();
             $table->timestamps();
         });

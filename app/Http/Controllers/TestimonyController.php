@@ -39,6 +39,13 @@ class TestimonyController extends Controller
         return view("admin.testimony.create", compact("data"));
     }
 
+    public function show(Testimony $testimony)
+    {
+        return response()->json([
+            "testimony" => $testimony
+        ]);
+    }
+
     public function edit(Testimony $testimony)
     {
         $data["testimony"] = $testimony;

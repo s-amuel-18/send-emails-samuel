@@ -183,6 +183,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\MoreExpensesThanIncomeProvider::class,
         App\Providers\DailyShipmentsProvider::class,
+        App\Providers\FrontProvider::class,
     ],
 
     /*

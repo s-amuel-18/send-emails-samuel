@@ -211,6 +211,9 @@ Route::prefix("configuracion")
         // * subir imagen logo async
         Route::post("/upload_logo_async", [SettingController::class, "upload_logo_async"])
             ->name("settings.upload_logo_async");
+        // * publicar logo async
+        Route::post("/publish_logo_async", [SettingController::class, "publish_logo_async"])
+            ->name("settings.publish_logo_async");
 
         // * subir imagen principal async
         Route::post("/upload_img_primary_async", [SettingController::class, "upload_img_primary_async"])
@@ -219,6 +222,8 @@ Route::prefix("configuracion")
         // * subir datos de informacion principal del sitio (async)
         Route::post("/info_primary_async", [SettingController::class, "info_primary_async"])
             ->name("settings.info_primary_async");
+        Route::post("/published_info_primary_async", [SettingController::class, "published_info_primary_async"])
+            ->name("settings.published_info_primary_async");
 
         // * subir info de contacto de la empresa (async)
         Route::post("/contact_info_async", [SettingController::class, "contact_info_async"])
@@ -242,7 +247,7 @@ Route::prefix("configuracion")
     });
 
 
-// * configuracion
+// * testimonios
 Route::prefix("testimonios")
     ->middleware("auth")
     ->group(function () {
@@ -269,6 +274,7 @@ Route::prefix("testimonios")
     });
 
 // * mensaje de agradacemiento testimonio
+Route::get("/testimonio/{testimony}", [TestimonyController::class, "show"])->name("testimony.show");
 Route::get("testimonio/mensaje", [TestimonyController::class, "message"])->name("testimony.message");
 Route::get("testimonio/{token}", [TestimonyController::class, "with_token"])->name("testimony.token");
 
