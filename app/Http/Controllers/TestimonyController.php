@@ -57,7 +57,7 @@ class TestimonyController extends Controller
 
     public function with_token($token = null)
     {
-
+        // dd($token);
         $data["testimony"] = Testimony::where("token", $token)->firstOrFail();
         $data["token"] = $token;
         $data["route_form"] = route("testimony.update_with_token", ["token" => $data["testimony"]->token]);
@@ -170,6 +170,34 @@ class TestimonyController extends Controller
         ];
 
         $testimony->update($data_insert);
+        $file_img = $request->file("image");
+        if ($file_img) {
+            $image_testimony = $testimony->image;
+            if ($image_testimony) {
+
+                if (Storage::exists("public/" . $image_testimony->url)) {
+
+                    // * ELIMINAMOS IMAGEN
+                    Storage::delete("public/" . $image_testimony->url);
+
+                    // * ELIMINAMOS EL REGISTRO DE LA BASE DE DATOS
+                    $image_testimony->delete();
+                }
+            }
+
+            $resize = [
+                "fit" => [
+                    "fit_x" => 200,
+                    "fit_y" => 200
+                ],
+            ];
+
+
+            $url_img = ModelImage::store_image($file_img, $resize, "testimonies");
+            $testimony->image()->create([
+                "url" => $url_img
+            ]);
+        }
 
         return redirect()->route("testimony.message");
     }

@@ -58,7 +58,7 @@
                                 </div>
 
                                 {{-- * clasificación --}}
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="title_testimony">Puntuación</label>
                                         <div id="rating" class="mt-md-2"></div>
@@ -66,14 +66,14 @@
                                 </div>
 
                                 {{-- * Titulo --}}
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="title_testimony">Titulo</label>
                                         <input id="title_testimony" placeholder="Buen trabajador"
                                             class="form-control @error('title') is-invalid @enderror" type="text"
                                             name="title" value="{{ old('title') }}">
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 {{-- * Descriptcion --}}
                                 <div class="col-md-12">

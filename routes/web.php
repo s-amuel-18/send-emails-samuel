@@ -47,7 +47,15 @@ use PhpOffice\PhpSpreadsheet\Writer\Ods\Settings;
 |
 */
 
-Auth::routes(["register" => false]);
+Auth::routes(
+    [
+        "password.reset" => false,
+        "register" => false,
+        "reset" => false,
+        "confirm" => false,
+        "email" => false,
+    ]
+);
 
 // * front
 Route::get('/', [FrontController::class, 'index'])->name('home');
@@ -274,7 +282,7 @@ Route::prefix("testimonios")
     });
 
 // * mensaje de agradacemiento testimonio
-Route::get("/testimonio/{testimony}", [TestimonyController::class, "show"])->name("testimony.show");
+Route::get("/testimonio/{testimony}/show", [TestimonyController::class, "show"])->name("testimony.show");
 Route::get("testimonio/mensaje", [TestimonyController::class, "message"])->name("testimony.message");
 Route::get("testimonio/{token}", [TestimonyController::class, "with_token"])->name("testimony.token");
 

@@ -4,15 +4,13 @@
 
 @section('content_2')
     <div style="background-color: rgb(245, 245, 245);">
-        <div class="container d-flex justify-content-center align-items-center " style="height: 100vh">
-            <div class="">
+        <div class=" container d-flex justify-content-center align-items-center " style="height: 100vh">
+            <div class="w-100">
                 <div class="p-4 p-md-5 bg-white col-md-6 offset-md-3 text-center shadow">
                     <i class="text-success display-1 far fa-check-circle" aria-hidden="true"></i>
                     {{-- <i class="fas fa-check-circle-o" aria-hidden="true"></i> --}}
-                    <h1 class="font-weight-bold h2 my-3 text-muted">¡Testimonio registrado con éxito!</h1>
-                    <p class="text-muted"> Gracias a la información registrada se podrá validar con datos reales la
-                        experiencia y responsabilidad de Samuel Graterol, de esta forma se pueden reflejar las aptitudes del
-                        solicitante.</p>
+                    <h1 class="font-weight-bold h2 my-3 text-muted">¡Gracias por tu testimonio!</h1>
+                    <p class="text-muted">Tu testimonio se ha registrado con existo.</p>
 
                     <div class="">
                         <a href="{{ route('home') }}" class="btn bg-purple" style="" type="button">Entendido</a>

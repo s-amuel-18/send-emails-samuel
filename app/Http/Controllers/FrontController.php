@@ -48,12 +48,9 @@ class FrontController extends Controller
     {
         $project = Project::whereSlug($slug)
             ->notNull()
-            ->published()
-            // ->with("images")
             ->with("categories")
             ->with("itemHelp")
             ->firstOrFail();
-        // dd($project->toArray());
         $project_id = $project->id;
 
         $data["last_projects"] = Project::notNull()
