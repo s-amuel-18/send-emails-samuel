@@ -9,11 +9,14 @@ use App\Models\Project;
 use App\Models\SocialMedia;
 use App\Models\Testimony;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 
 class FrontController extends Controller
 {
     public function index()
     {
+        // Artisan::call("migrate");       
+
         $count_testimonies = 7;
 
         $data["projects"] = Project::notNull()
