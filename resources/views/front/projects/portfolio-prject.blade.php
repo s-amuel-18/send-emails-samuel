@@ -48,8 +48,8 @@
         <div class="col-md-4 p-3 ">
             @foreach ($data['project']->itemHelp as $item)
                 <div class="mb-3 ">
-                    <h4 class="h5">{{ $itemHelp->name }}</h4>
-                    <p>{!! $itemHelp->templateHtml !!}</p>
+                    <h4 class="h5">{{ $item->name }}</h4>
+                    <p>{!! $item->templateHtml !!}</p>
                 </div>
             @endforeach
         </div>
