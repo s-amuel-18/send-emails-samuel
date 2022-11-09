@@ -277,6 +277,9 @@ Route::prefix("testimonios")
         // * funcion async para publicar testimonio
         Route::put("/acturalizar/{testimony}", [TestimonyController::class, "update"])->name("testimony.update");
 
+        // * funcion async para actualizar el estatus del testimonio (en caso de que ya se halla enviado a alguien)
+        Route::put("/acturalizar/{testimony}/estatus", [TestimonyController::class, "update_send"])->name("testimony.update_send");
+
         // * eliminar testimonio async
         Route::delete("/eliminar/{testimony}", [TestimonyController::class, "destroy"])->name("testimony.destroy");
     });

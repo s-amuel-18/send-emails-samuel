@@ -131,8 +131,10 @@
                                     <input id="copy_url_tetimony" class="form-control flex-basis" type="text" readonly
                                         value="{{ route('testimony.token', ['token' => $data['testimony_request']->token]) }}">
 
-                                    <button id="btn_copy" class="btn btn-success" type="button"
-                                        data-clipboard-target="#copy_url_tetimony">
+                                    <button
+                                        data-url="{{ route('testimony.update_send', ['testimony' => $data['testimony_request']->id]) }}"
+                                        onclick="copy_url_testimony(this)" id="btn_copy" class="btn btn-success"
+                                        type="button" data-clipboard-target="#copy_url_tetimony">
                                         <i class="far fa-copy"></i>
                                     </button>
                                 </div>
@@ -172,6 +174,9 @@
 
     {{-- * validacion de formulario --}}
     <script src="{{ asset('js/testimony/validation.js') }}"></script>
+
+    {{-- * funciones para manipular los testimonios --}}
+    <script src="{{ asset('js/testimony/btn_actions.js') }}"></script>
 
     <script>
         $(function() {

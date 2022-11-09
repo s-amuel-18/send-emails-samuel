@@ -241,4 +241,26 @@ class TestimonyController extends Controller
         $data["js"] = [];
         return view("messages.tesimony_request", compact("data"));
     }
+
+    public function update_send(Testimony $testimony, Request $request)
+    {
+        $testimony->update([
+            "status_send" => 1
+        ]);
+
+        $data["testimony_request"] = Testimony::requestTestimony()->first();
+        $data["testimony_request"]->route_update_send = route(
+            "testimony.update_send",
+            ["testimony" => $data["testimony_request"]->id]
+        );
+        $data["testimony_request"]->route_testimony_token = route(
+            "testimony.token",
+            ["token" => $data["testimony_request"]->token]
+        );
+
+        return response()->json([
+            "message" => "Testimonio enviado correctamente",
+            "testimony_request" => $data["testimony_request"]
+        ]);
+    }
 }

@@ -23,6 +23,7 @@ class Testimony extends Model
         "title",
         "review",
         "published",
+        "status_send",
     ];
 
     // * relaciones
@@ -63,7 +64,7 @@ class Testimony extends Model
 
     public function scopeRequestTestimony($q)
     {
-        $testimony_token = self::whereNotNull("token")->count();
+        $testimony_token = self::whereNotNull("token")->where("status_send", 0)->count();
 
         if ($testimony_token == 0) {
             Testimony::create([
@@ -71,7 +72,7 @@ class Testimony extends Model
             ]);
         }
 
-        return $q->whereNotNull("token");
+        return $q->whereNotNull("token")->where("status_send", 0);
     }
     // * scopes
 }
