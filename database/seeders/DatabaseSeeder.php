@@ -49,7 +49,7 @@ class DatabaseSeeder extends Seeder
         // Category::factory(10)->create();
         // Requirements::factory(50)->create();
         // Testimony::factory(20)->create();
-        // Project::factory(20)->create();
+        Project::factory(20)->create();
         // $this->call(EnvioEmailSeeder::class);
         // CategoryService::factory(5)->create();
         // Service::factory(10)->create();

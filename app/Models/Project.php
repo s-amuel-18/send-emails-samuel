@@ -66,7 +66,6 @@ class Project extends Model
         return $q->where(function ($q) {
             return $q/* ->published() */
                 ->published()
-                // ->where("published", 1)
                 ->whereNotNull("name")
                 ->whereNotNull("slug")
                 ->whereNotNull("image_front_page")
@@ -82,7 +81,7 @@ class Project extends Model
 
     public function scopePublished($q)
     {
-        return $this->where(function ($que) {
+        return $q->where(function ($que) {
             $que->where("published", 1)->complete();
         });
     }

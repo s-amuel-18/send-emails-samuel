@@ -54,6 +54,7 @@ class FrontController extends Controller
             ->with("categories")
             ->with("itemHelp")
             ->firstOrFail();
+
         $project_id = $project->id;
 
         $data["last_projects"] = Project::notNull()
