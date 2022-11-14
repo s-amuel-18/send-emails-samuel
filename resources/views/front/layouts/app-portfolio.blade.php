@@ -9,30 +9,30 @@
 
     <!-- Search Engine -->
     <meta name="description"
-        content=" Somos una agencia de profesionales experimentados en el diseño y desarrollo de interfaces web, donde nuestra principal objetivo es impulsar las ventas de tu negocio, dando una presencia con alta visibilidad en el campo de marketing digital de manera efectiva.">
+        content=" Soy Samuel Graterol, un programador con mas de tres años de experiencia en el desarrollo web.">
     <meta name="keywords"
         content="Diseño web, Desarrollo de sistemas, Creacion de paginas web, Landing page, Maquetación" />
     <meta name="image" content="{{ asset('images/logo/Fluxel_logo_meta.png') }}">
     <meta name="copyright" content="Fluxel-code" />
     <meta name="Revisit-after" content="10 days">
     <!-- Schema.org for Google -->
-    <meta itemprop="name" content="Fluxel Code">
+    <meta itemprop="name" content="Fluxel Code | Samuel Graterol">
     <meta itemprop="description"
-        content=" Somos una agencia de profesionales experimentados en el diseño y desarrollo de interfaces web, donde nuestra principal objetivo es impulsar las ventas de tu negocio, dando una presencia con alta visibilidad en el campo de marketing digital de manera efectiva.">
+        content=" Soy Samuel Graterol, un programador con mas de tres años de experiencia en el desarrollo web.">
     <meta itemprop="image" content="{{ asset('images/logo/Fluxel_logo_meta.png') }}">
     <!-- Twitter -->
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Fluxel Code">
+    <meta name="twitter:title" content="Fluxel Code | Samuel Graterol">
     <meta name="twitter:description"
-        content=" Somos una agencia de profesionales experimentados en el diseño y desarrollo de interfaces web, donde nuestra principal objetivo es impulsar las ventas de tu negocio, dando una presencia con alta visibilidad en el campo de marketing digital de manera efectiva.">
+        content=" Soy Samuel Graterol, un programador con mas de tres años de experiencia en el desarrollo web.">
     <meta name="twitter:image:src" content="{{ asset('images/logo/Fluxel_logo_meta.png') }}">
     <!-- Open Graph general (Facebook, Pinterest & Google+) -->
-    <meta name="og:title" content="Fluxel Code">
+    <meta name="og:title" content="Fluxel Code | Samuel Graterol">
     <meta name="og:description"
-        content=" Somos una agencia de profesionales experimentados en el diseño y desarrollo de interfaces web, donde nuestra principal objetivo es impulsar las ventas de tu negocio, dando una presencia con alta visibilidad en el campo de marketing digital de manera efectiva.">
+        content=" Soy Samuel Graterol, un programador con mas de tres años de experiencia en el desarrollo web.">
     <meta name="og:image" content="{{ asset('images/logo/Fluxel_logo_meta.png') }}">
     <meta name="og:url" content="https://www.fluxelcode.com">
-    <meta name="og:site_name" content="Fluxel Code">
+    <meta name="og:site_name" content="Fluxel Code | Samuel Graterol">
     <meta name="og:type" content="website">
 
     <link rel="icon" href="{{ asset('images/logo/fluxel_code.png') }}" type="image/x-icon">
