@@ -29,8 +29,8 @@
                         <p>
                             {{ $info_page['info_primary']->description ??
                                 "Con más de tres años desarrollando
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        sitios web y dos años realizando sistemas de todo tipo, puedo decir que soy un
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        desarrollador muy completo y dedicado a su trabajo." }}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                sitios web y dos años realizando sistemas de todo tipo, puedo decir que soy un
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                desarrollador muy completo y dedicado a su trabajo." }}
                         </p>
                     </div>
 
@@ -150,11 +150,11 @@
                                 </span>
                             </div>
                             <div class="title">
-                                <h3 class="text-capitalize">Instructor</h3>
+                                <ªh3 class="text-capitalize">Instructor</ªh3>
                             </div>
                             <div class="text">
-                                <p>Comparto mis conocimientos, me preocupa realmente la educación, si puedo
-                                    ayudar a alguien en su preparación lo haré.</p>
+                                <p>Comparto mis conocimientos con mis colegas y ayudo a las personas en su desarrollo
+                                    profesional.</p>
                             </div>
                         </div>
                     </li>
@@ -206,7 +206,7 @@
                     </div>
                     <div class="dizme_tm_button wow fadeInUp" data-wow-duration="1s">
                         <a class="button-custom anchor"
-                            href="{{ route('home') }}#contact"><span>Contactame</span></a>
+                            href="{{ route('home') }}#contact"><span>Contáctame</span></a>
                     </div>
                 </div>
             </div>
