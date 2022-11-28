@@ -156,7 +156,7 @@ function template_category_item(data) {
 
 async function post_category(url = null, data, type = "create") {
     if (!url) return false;
-
+    console.log(data);
     await axios
         .post(url, data)
         .then((resp) => {
@@ -219,7 +219,7 @@ function update_category() {
         const url = input.dataset.url;
         const name = input.value;
         // console.log({ name });
-        await post_category(url, { name, id }, "update");
+        await post_category(url, { name, id, type: category_type }, "update");
     });
 
     $(inputs_name_category).on("blur", (e) => {

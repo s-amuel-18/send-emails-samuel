@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Queue\Console\RetryBatchCommand;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use PharIo\Manifest\Requirement;
 
 class RequirementsController extends Controller
@@ -278,14 +279,26 @@ class RequirementsController extends Controller
     public function category_store(Request $request)
     {
         $data = request()->validate([
-            "name" => "required|unique:categories,name|max:100|string",
+            // "name" => "required|unique:categories,name|max:100|string",
+            "name" => "required|max:100|string",
         ]);
+
+        $name_categorie = $data["name"];
+        $categorie_type = $request["type"] ?? Requirements::class;
+
+        $exist_categorie = Category::where("catgoriable_type", $categorie_type)
+            ->where("name", $name_categorie)
+            ->count();
+
+        if ($exist_categorie > 0) {
+            return response()->json(["message" => "El nombre de la categoría ya está registrado."], 403);
+        }
 
         $name = $data["name"];
 
         $category = auth()->user()->categories()->create([
             "name" => $name, "catgoriable_type" => Requirements::class,
-            "catgoriable_type" => $request["type"] ?? Requirements::class,
+            "catgoriable_type" => $categorie_type,
         ]);
 
         $response_data = [
@@ -302,10 +315,21 @@ class RequirementsController extends Controller
         $category = Category::findOrFail($id);
 
         $data = request()->validate([
-            "name" => "required|unique:categories,name," . $id . ",id|max:100|string",
+            // "name" => "required|unique:categories,name," . $id . ",id|max:100|string",
+            "name" => "required|max:100|string",
         ]);
 
         $name = $data["name"];
+        $categorie_type = $request["type"] ?? Requirements::class;
+        Log::debug($request["type"] ?? "null");
+        $exist_categorie = Category::where("catgoriable_type", $categorie_type)
+            ->where("name", $name)
+            ->where("id", "<>", $id)
+            ->first();
+
+        if ($exist_categorie) {
+            return response()->json(["message" => "El nombre de la categoría ya está registrado."], 403);
+        }
 
 
         $category->update(["name" => $name]);
