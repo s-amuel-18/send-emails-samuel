@@ -297,7 +297,7 @@ class RequirementsController extends Controller
         $name = $data["name"];
 
         $category = auth()->user()->categories()->create([
-            "name" => $name, "catgoriable_type" => Requirements::class,
+            "name" => $name,
             "catgoriable_type" => $categorie_type,
         ]);
 
@@ -321,7 +321,7 @@ class RequirementsController extends Controller
 
         $name = $data["name"];
         $categorie_type = $request["type"] ?? Requirements::class;
-        Log::debug($request["type"] ?? "null");
+
         $exist_categorie = Category::where("catgoriable_type", $categorie_type)
             ->where("name", $name)
             ->where("id", "<>", $id)
