@@ -45,4 +45,9 @@ class Category extends Model
     {
         return $q->where("catgoriable_type", Project::class);
     }
+
+    public function scopeNote($q)
+    {
+        return $q->where("catgoriable_type", Note::class);
+    }
 }
