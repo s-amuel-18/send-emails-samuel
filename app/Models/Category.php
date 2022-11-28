@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Mockery\Matcher\Not;
 
 class Category extends Model
 {
@@ -12,6 +13,11 @@ class Category extends Model
     protected $fillable = [
         "name", "user_id", "catgoriable_type"
     ];
+
+    public function notes()
+    {
+        return $this->hasMany(Note::class, "category_id");
+    }
 
     public function scopeRequirements($q)
     {

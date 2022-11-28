@@ -19,6 +19,7 @@ class CreateNotesTable extends Migration
 
             // * usuario creador
             $table->bigInteger("user_id")->default(0)->index();
+            $table->bigInteger("category_id")->default(0)->index();
 
             // * nombre de la nota
             $table->string("name")->nullable();
@@ -28,6 +29,9 @@ class CreateNotesTable extends Migration
 
             // * papelera
             $table->boolean("trash")->default(0);
+
+            // * favorito
+            $table->boolean("favorite")->default(0);
 
             $table->softDeletes();
 
