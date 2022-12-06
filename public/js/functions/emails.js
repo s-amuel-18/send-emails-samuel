@@ -60,7 +60,7 @@ async function send_emails(url = null, params, submiter = null) {
             insert_text_error.textContent = "";
         }
 
-        if (data.success_email_send) {
+        if (data.success_email_send && data.emails_not_sent > 0) {
             if (send_emails_progress && data.percentage) {
                 send_emails_progress.style.width = data.percentage + "%";
             }
