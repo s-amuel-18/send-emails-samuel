@@ -289,7 +289,13 @@
                 "fixedHeader": true,
                 "serverSide": true,
                 "searching": true,
-                "ajax": appData["url_datatable"],
+                "ajax": {
+                    "url": appData["url_datatable"],
+                    "data": function(data) {
+                        data.username = requestData["username"] ?? null;
+                        data.date_filter = requestData["date_filter"] ?? null;
+                    }
+                },
                 "columns": [{
                         data: "id"
                     },

@@ -52,7 +52,8 @@
                                 </div>
                             </td>
                             <td>
-                                <a href="{{ route('contact_email.index', ['search' => $usr->username]) }}">
+                                <a
+                                    href="{{ route('contact_email.index', ['username' => $usr->username, 'date_filter' => now()->format('Y-m-d')]) }}">
                                     <span style="font-size: 14px"
                                         class="badge  badge-{{ $usr->emails_registros_count > 0 ? 'success' : 'danger' }}">{{ $usr->emails_registros_count }}</span>
                                 </a>
