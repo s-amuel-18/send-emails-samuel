@@ -17,22 +17,28 @@
             </div>
         </div>
 
-        <div class="card-body table-responsive">
+        <div class="card-body table-responsive card_view_more-">
             <table id="table_users"
                 class="w-100 datatable table table-light table-striped table-hover text-nowrap table-valign-middle">
                 <thead class="">
                     <tr>
-                        <th>ID</th>
+                        {{-- <th>ID</th> --}}
                         <th>username</th>
                         <th>Cantidad</th>
-                        <th>Correos Enviados</th>
+                        <th>
+
+                            <span data-placement="top" data-toggle="tooltip" title="Correos enviados">
+                                C/E
+                            </span>
+
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
 
                     @foreach ($usr_registros_hoy as $i => $usr)
                         <tr>
-                            <td>{{ $usr->id }}</td>
+                            {{-- <td>{{ $usr->id }}</td> --}}
                             <td>
                                 <div class="d-flex align-items-center">
                                     <div style="width: 27px; height: 27px;"
@@ -52,7 +58,8 @@
                                 </a>
                             </td>
                             <td>
-                                <a href="{{ route('contact_email.shipping_history', ['search' => $usr->username]) }}">
+                                <a
+                                    href="{{ route('contact_email.shipping_history', ['username' => $usr->username, 'date' => now()->format('Y-m-d')]) }}">
                                     <span class="badge bg-purple"
                                         style="font-size: 14px">{{ $usr->email_enviado_count }}</span>
                                 </a>

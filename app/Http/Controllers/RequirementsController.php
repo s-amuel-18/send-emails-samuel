@@ -161,7 +161,9 @@ class RequirementsController extends Controller
                 $delete_btn = (string) response()->view("admin.requirements.components.btn_delete", [
                     "id" => $requirement->req_id,
                 ])->original;
-                $sum_btns = $details_btn . $edit_btn . $delete_btn;
+                $btn_url = (string) response()->view("admin.contact_email.components.datatable.web", ["url" => $requirement->req_url])->original;
+                $sum_btns = $btn_url . $details_btn . $edit_btn . $delete_btn;
+                $sum_btns =  (string) response()->view("admin.contact_email.components.datatable.content-flex-end", ["html_content" => $sum_btns, "gap" => 5])->original;
 
                 return [
                     "id" => $requirement->req_id,
@@ -171,10 +173,10 @@ class RequirementsController extends Controller
                     ])->original,
                     "name" => (string) response()->view("admin.contact_email.components.datatable.name_enterprice", [
                         "name" => $requirement->req_name,
-                        "limit_name" => 20,
+                        "limit_name" => 25,
                     ])->original,
                     "category" => $badgr_category,
-                    "url" => (string) response()->view("admin.contact_email.components.datatable.web", ["url" => $requirement->req_url])->original,
+                    // "url" => $btn_url,
                     "details" => $sum_btns,
                     // "edit_btn" => (string) response()->view("admin.requirements.components.btn_edit")->original,
                     // "delete_btn" => (string) response()->view("admin.requirements.components.btn_delete", $details_params)->original,
@@ -193,8 +195,6 @@ class RequirementsController extends Controller
         );
 
         return $get_json_data;
-
-        return "dsa";
     }
 
     /**

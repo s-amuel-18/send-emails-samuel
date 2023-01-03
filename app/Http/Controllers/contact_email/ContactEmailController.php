@@ -480,6 +480,8 @@ class ContactEmailController extends Controller
 
     public function shipping_history_datatable(Request $request)
     {
+        $date_filter = $request["date_filter"] ? Carbon::now()->parse($request["date_filter"]) : null;
+
         $query_user = (new Contact_email())->datatableEmailsSendQuery();
 
         $totalFilteredRecord = $totalDataRecord = $draw_val = "";
@@ -509,7 +511,16 @@ class ContactEmailController extends Controller
             $data_return = $query_user->offset($start_val)
                 ->orderBy($order_val, $dir_val);
 
+            $data_return_count = (new Contact_email())->datatableEmailsSendQuery();
 
+            // * Si se quiere filtrar por fecha)
+            if ($date_filter) {
+                $data_return->whereDate("contact_email_user.created_at", $date_filter);
+                $data_return_count->whereDate("contact_email_user.created_at", $date_filter);
+            }
+
+            // * datos de salida
+            $totalFilteredRecord = $data_return_count->count();
             $data_return = $data_return->limit($limit_val)->get();
         } else {
             $search_text = $request["search"]["value"];
@@ -525,8 +536,6 @@ class ContactEmailController extends Controller
                 ->offset($start_val)
                 ->orderBy($order_val, $dir_val);
 
-            $data_return = $data_return->limit($limit_val)->get();
-
             $totalFilteredRecord = (new Contact_email())->datatableEmailsSendQuery()
                 ->where(function ($q) use ($search_text) {
                     $q->where("contact_email_user.created_at", "like", "%{$search_text}%")
@@ -534,8 +543,17 @@ class ContactEmailController extends Controller
                         ->orWhere("contact_email_user.subject", "like", "%{$search_text}%")
                         ->orWhere("contact_email_user.group_send", "like", "%{$search_text}%")
                         ->orWhere("cm.email", "like", "%{$search_text}%");
-                })
-                ->count();
+                });
+
+            // * Si se quiere filtrar por fecha)
+            if ($date_filter) {
+                $data_return->whereDate("contact_email_user.created_at", $date_filter);
+                $totalFilteredRecord->whereDate("contact_email_user.created_at", $date_filter);
+            }
+
+            // * datos salida
+            $data_return = $data_return->limit($limit_val)->get();
+            $totalFilteredRecord = $totalFilteredRecord->count();
         }
 
         $data_val = array();

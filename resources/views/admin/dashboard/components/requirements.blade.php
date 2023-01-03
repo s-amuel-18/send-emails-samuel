@@ -12,29 +12,28 @@
 
 <div class="card card-light">
     <div class="card-header">
-        <h3 class="card-title">Requerimientos</h3>
-        {{-- <div class="card-tools">
-            
-        </div> --}}
+        <h3 class="card-title mb-3 mb-sm-0">Requerimientos</h3>
+        <div class="card-tools float-left float-sm-right ">
+            <button class="btn btn-notification btn-warning btn-sm" data-toggle="modal" data-target="#categories_modal"
+                type="button">
+                <i class="fa fa-plus"></i>
+                <span class=" ml-1">
+                    Categoría
+                </span>
+            </button>
+            <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#requirements_modal" type="button">
+                <i class="fa fa-plus"></i>
+                <span class=" ml-1">
+                    Requerimiento
+                </span>
+            </button>
+        </div>
     </div>
 
     <div class="card-body table-responsive">
         <div class="d-flex justify-content-end mb-3">
             <div class="">
-                <button class="btn btn-notification btn-warning btn-sm" data-toggle="modal" data-target="#categories_modal"
-                    type="button">
-                    <i class="fa fa-plus"></i>
-                    <span class=" ml-1">
-                        Nueva Categoría
-                    </span>
-                </button>
-                <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#requirements_modal"
-                    type="button">
-                    <i class="fa fa-plus"></i>
-                    <span class=" ml-1">
-                        Nuevo Requerimiento
-                    </span>
-                </button>
+
             </div>
         </div>
 
@@ -81,12 +80,12 @@
                 class="w-100 table table-light table-striped table-hover text-nowrap table-valign-middle">
                 <thead class="">
                     <tr>
-                        <th>ID</th>
+                        {{-- <th>ID</th> --}}
                         <th>Fecha</th>
                         <th>Usuario</th>
                         <th>Nombre</th>
                         <th>Categoría</th>
-                        <th>Url Referencia</th>
+                        {{-- <th>Url Referencia</th> --}}
                         <th></th>
                         {{-- <th></th>
                         <th></th> --}}
@@ -153,9 +152,6 @@
                 }
             },
             "columns": [{
-                    data: "id"
-                },
-                {
                     data: "created_at"
                 },
                 {
@@ -167,9 +163,10 @@
                 {
                     data: "category"
                 },
-                {
-                    data: "url"
-                },
+                /* 
+                                {
+                                    data: "url"
+                                }, */
                 {
                     data: "details"
                 },

@@ -37,7 +37,6 @@ function submit_form_requirements(form, alert_element = null) {
             .post(url_store, obj_params)
             .then((resp) => {
                 const { data } = resp;
-                console.log(data);
 
                 const message = data.message;
                 toastr.success(message || "Registrado correctamente");
@@ -52,8 +51,8 @@ function submit_form_requirements(form, alert_element = null) {
                 $("#edit_select_category_id").val("").trigger("change");
 
                 form.reset();
-
                 $(summernote).summernote("reset");
+                insert_alert_requirements.innerHTML = "";
             })
             .catch((err) => {
                 const data = err.response.data;

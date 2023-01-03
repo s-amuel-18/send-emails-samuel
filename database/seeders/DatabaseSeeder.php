@@ -45,9 +45,9 @@ class DatabaseSeeder extends Seeder
         // Income::factory(3)->create();
         // Spents::factory(5)->create();
         // BodyEmail::factory(10)->create();
-        // Contact_email::factory(1000)->create();
-        // Category::factory(10)->create();
-        // Requirements::factory(50)->create();
+        Contact_email::factory(1000)->create();
+        Category::factory(50)->create();
+        Requirements::factory(50)->create();
         // Testimony::factory(20)->create();
         Project::factory(20)->create();
         // $this->call(EnvioEmailSeeder::class);
@@ -55,5 +55,6 @@ class DatabaseSeeder extends Seeder
         // Service::factory(10)->create();
         // Factory::factoryForModel("App\Models\Body_email");
 
+        $this->call(MailsSendHistory::class);
     }
 }

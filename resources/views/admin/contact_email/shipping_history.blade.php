@@ -114,7 +114,14 @@
             "processing": true,
             "serverSide": true,
             "searching": true,
-            "ajax": appData["url_datatable"],
+            "ajax": {
+                "url": appData["url_datatable"],
+                "data": function(data) {
+
+                    data.date_filter = requestData["date"] ?? null;
+                    data.username = requestData["username"] ?? null;
+                }
+            },
             "columns": [{
                     data: "created_at"
                 },
