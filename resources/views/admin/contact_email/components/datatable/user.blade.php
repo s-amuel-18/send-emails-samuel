@@ -1,9 +1,9 @@
 @if (isset($email->username) or isset($user->username))
     <div class="d-flex align-items-center">
-        <div style="width: 27px; height: 27px;"
-            class="mr-2 bg-{{ isset($email->color_by_user) ? $email->color_by_user : $user->color }} d-flex justify-content-center align-items-center rounded-circle"
+        <div style="width: {{ $size['width'] ?? '27px' }} ; height: {{ $size['height'] ?? '27px' }};"
+            class="{{ $name ?? null and 'mr-2' }} bg-{{ isset($email->color_by_user) ? $email->color_by_user : $user->color }} d-flex justify-content-center align-items-center rounded-circle"
             data-placement="top" data-toggle="tooltip" data-placement="top"
-            title="{{ isset($email->username) ? $email->username : $user->username }}">
+            {{ $tooltip ?? false and 'title="' . (isset($email->username) ? $email->username : $user->username) . '"' }}>
             <i class="fa fa-user" style="font-size: 12px"></i>
         </div>
 

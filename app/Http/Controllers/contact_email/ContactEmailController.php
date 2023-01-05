@@ -62,6 +62,8 @@ class ContactEmailController extends Controller
         $contact_emails_today_count = Contact_email::today()->count();
 
         $data["request"] = $request->all();
+        $data["users_with_record"] = User::whereHas("emails_registros", null, ">", 0)->get();
+
 
         $data["js"] = [
             "url_datatable" => route("contact_email.datatable"),
