@@ -64,10 +64,18 @@ class ContactEmailController extends Controller
         $data["request"] = $request->all();
         $data["users_with_record"] = User::whereHas("emails_registros", null, ">", 0)->get();
 
-
         $data["js"] = [
             "url_datatable" => route("contact_email.datatable"),
         ];
+        if ($request["date_filter"]) {
+            try {
+                $data["js"]["date_filter_parse"] = Carbon::now()->parse($request["date_filter"]);
+            } catch (\Throwable $e) {
+                $data["js"]["date_filter_parse"] = null;
+            }
+        }
+
+
 
         return view("admin.contact_email.index", compact("contact_emails_all_counts", "contact_emails_today_count", "data"));
     }
