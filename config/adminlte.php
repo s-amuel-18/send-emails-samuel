@@ -318,6 +318,7 @@ return [
             'text'        => 'Servicios',
             'route'         => 'service.index',
             'icon'        => 'fa fa-hand-holding-usd',
+            'can'        => 'service.index',
         ],
         [
             'text'        => 'Proyectos (portafolio)',
@@ -343,16 +344,19 @@ return [
             'text'        => 'Testimonio',
             'route'         => 'testimony.index',
             'icon'        => 'fa fa-quote-left',
+            'can'        => 'testimony.index',
             'submenu' => [
                 [
                     'text' => 'Testimonios',
                     'icon_color' => 'primary',
                     'route'         => 'testimony.index',
+                    'can'        => 'testimony.index',
                 ],
                 [
                     'text' => 'Nuevo testimonio',
                     'icon_color' => 'success',
                     'route'         => 'testimony.create',
+                    'can'        => 'testimony.index',
                 ],
 
             ],
@@ -560,6 +564,78 @@ return [
                 ],
             ],
         ],
+        'Moment' => [
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/moment/moment.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/moment/moment-with-locales.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/moment/locales.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/moment/locale/es-mx.js',
+                ],
+            ],
+        ],
+        'Tempusdominus-bootstrap-4' => [
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js',
+                ],
+            ],
+        ],
+
+        'Daterangepicker' => [
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor/daterangepicker/daterangepicker.css',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/daterangepicker/daterangepicker.js',
+                ],
+            ],
+        ],
+        'Inputmask' => [
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/inputmask/inputmask.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/inputmask/jquery.inputmask.min.js',
+                ],
+            ],
+        ],
+
         'bs-custom-file-input' => [
             'active' => false,
             'files' => [

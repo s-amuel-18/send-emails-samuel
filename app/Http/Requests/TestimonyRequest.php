@@ -26,7 +26,7 @@ class TestimonyRequest extends FormRequest
         return [
             "name" => "required|string|max:191",
             "position" => "required|string|max:191",
-            "rating" => "required|numeric",
+            // "rating" => "required|numeric",
             // "title" => "required|string|max:191",
             "review" => "required|string",
             "image" => "nullable|image|mimes:jpeg,png|max:6000",

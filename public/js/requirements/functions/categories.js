@@ -104,7 +104,7 @@ function template_category_item(data) {
             <div class="element_category_normal element_show_normal_${id}">
 
                 <input data-value_init="${name}" data-id="${id}" data-url="http://127.0.0.1:8000/requerimientos/categoria/actualizar/${id}" type="text"
-                    class="input_name_category form-control-category form-control form-control-sm" value="${name}">
+                    class="input_name_category form-control-category form-control form-control-sm-" value="${name}">
             </div>
 
             <div style="display: none" class="element_category_delete element_show_delete_${id}">
@@ -114,7 +114,7 @@ function template_category_item(data) {
         <td style="width: fit-content" class="p-2">
             <div class="element_category_normal element_show_normal_${id}">
                 <div class=" d-flex justify-content-end ">
-                    <button data-id="${id}" type="button" class="btn btn-outline-danger btn-sm category_delete"
+                    <button data-id="${id}" type="button" class="btn btn-outline-danger btn-sm- category_delete"
                         id="category_${id}" style="border-width: 0">
                         <span class="normal_item">
                             <i class="fa fa-trash"></i>
@@ -131,7 +131,7 @@ function template_category_item(data) {
             <div class="element_category_delete element_show_delete_${id}" style="display: none;">
                 <div class="d-flex justify-content-end">
                     <button data-id="${id}" data-url="http://127.0.0.1:8000/requerimientos/categoria/${id}/eliminar"
-                        style="border-width: 0" class="btn btn-outline-success btn-sm mr-1 confir_delete_category"
+                        style="border-width: 0" class="btn btn-outline-success btn-sm- mr-1 confir_delete_category"
                         type="button">
                         <span class="normal_item">
                             <i class="fa fa-check"></i>
@@ -143,7 +143,7 @@ function template_category_item(data) {
                         </span>
                     </button>
                     <button data-id="${id}" style="border-width: 0"
-                        class="btn btn-outline-danger btn-sm cancel_delete_category" type="button">
+                        class="btn btn-outline-danger btn-sm- cancel_delete_category" type="button">
                         <i class="fa fa-times"></i>
                     </button>
                 </div>

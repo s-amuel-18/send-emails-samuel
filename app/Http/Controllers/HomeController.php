@@ -67,17 +67,10 @@ class HomeController extends Controller
             ->withCount(["emailEnviado" => function ($q) {
                 return $q->whereDate("contact_email_user.created_at", Carbon::today());
             }])
-            ->orderBy("emails_registros_count", "DESC")
             ->orderBy("email_enviado_count", "DESC")
+            ->orderBy("emails_registros_count", "DESC")
             ->get();
 
-
-        // if (auth()->user()->can("managment.index")) {
-        //     $data["netIncome"] = Income::netIncome();
-        //     $data["grossIncome"] = Income::grossIncome();
-        //     $data["totalSpents"] = Spents::totalSpents();
-        //     $data["dailyEarnings"] = Income::dailyEarnings();
-        // }
 
         $data['requirements_count'] = 1;
         $data["requirements"] = Requirements::get();
@@ -89,7 +82,6 @@ class HomeController extends Controller
             "url_store_requirement" => route("requirements.store"),
             "url_destroy_requirement" => route("requirements.destroy"),
         ];
-        // dd($data["requirements"]);
 
         return view('admin.dashboard.dashboard', compact("data", "total_registros", "registros_de_hoy", "correos_sin_enviar", "enviados_hoy", "usr_registros_hoy", "date", "registros_de_hoy_take", "pays_time"));
     }

@@ -26,8 +26,8 @@ class ManagementController extends Controller
 
         $data["pays_time"] =  $calculate_spents;
 
-        $data["income"] = Income::orderByDesc("price")->get();
-        $data["spents"] = Spents::orderByDesc("price")->get();
+        $data["income"] = Income::orderByDesc("billing_time_id")->get();
+        $data["spents"] = Spents::orderByDesc("billing_time_id")->get();
         $data["title"] = "Administracion De Ingresos";
         $data["netIncome"] = Income::netIncome();
         $data["grossIncome"] = Income::grossIncome();

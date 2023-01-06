@@ -63,5 +63,14 @@ class RoleSeeder extends Seeder
 
         // * permisos para la configuracion del sistema
         Permission::create(["name" => "settings.index", "description" => "Configurar del sistema"])->syncRoles([$rol1]);
+
+        // * permisos para crear requerimientos
+        Permission::create(["name" => "requirements.store", "description" => "Crear requerimientos"])->syncRoles([$rol1]);
+
+        // * ver testimonios
+        Permission::create(["name" => "testimony.index", "description" => "Ver testimonios"])->syncRoles([$rol1]);
+
+        // * ver servicios
+        Permission::create(["name" => "service.index", "description" => "Ver servicios"])->syncRoles([$rol1]);
     }
 }
