@@ -10,7 +10,9 @@ use App\Models\BodyEmail;
 use App\Models\Category;
 use App\Models\CategoryService;
 use App\Models\Contact_email;
+use App\Models\HistoryPay;
 use App\Models\Income;
+use App\Models\Pay;
 use App\Models\Project;
 use App\Models\Requirements;
 use App\Models\Service;
@@ -35,7 +37,7 @@ class DatabaseSeeder extends Seeder
 
 
         $this->call(RoleSeeder::class);
-        \App\Models\User::factory(9)->create();
+        // \App\Models\User::factory(9)->create();
         $this->call(UserSeeder::class);
         $this->call(BillingTimeSeeder::class);
         // \App\Models\Project::factory(20)->create();
@@ -50,6 +52,8 @@ class DatabaseSeeder extends Seeder
         Requirements::factory(50)->create();
         // Testimony::factory(20)->create();
         Project::factory(20)->create();
+        Pay::factory(3)->create();
+        HistoryPay::factory(20)->create();
         // $this->call(EnvioEmailSeeder::class);
         // CategoryService::factory(5)->create();
         // Service::factory(10)->create();

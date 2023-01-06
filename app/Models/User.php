@@ -90,6 +90,15 @@ class User extends Authenticatable
         return $this->hasMany(Project::class);
     }
 
+    public function pay()
+    {
+        return $this->hasMany(Pay::class, "user_id");
+    }
+
+    public function historyPay()
+    {
+        return $this->hasMany(HistoryPay::class, "user_id");
+    }
     public function notes()
     {
         return $this->hasMany(Note::class);
