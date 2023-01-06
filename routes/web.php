@@ -112,7 +112,7 @@ Route::middleware(["can:managment.index", "auth"])->group(function () {
 Route::resource("recomendaciones", RecomendacionMejoraController::class)->middleware("auth")->names("recomendacion");
 
 // * servicios
-Route::resource("servicios", ServiceController::class)->except("show")->middleware("auth")->names("service");
+Route::resource("servicios", ServiceController::class)->except("show")->middleware(["auth", "can:service.index"])->names("service");
 
 
 // * preview email fluxel
@@ -131,7 +131,7 @@ Route::get("emails/export/excel", [ExcelExportController::class, "contactEmail"]
 Route::post("emails/import/excel", [ExcelImportController::class, "contactEmail"])->middleware("auth")->name("contactEmail.import_excel");
 
 // * requerimientos
-Route::prefix('requerimientos')->middleware(["auth"])->group(function () {
+Route::prefix('requerimientos')->middleware(["auth", "can:requirements.store"])->group(function () {
     // * requirements
     Route::get("/datatable", [RequirementsController::class, "datatable"])->name("requirements.datatable");
     Route::get("/{id}", [RequirementsController::class, "get_requirement"])->name("requirements.get_requirement");
@@ -208,6 +208,7 @@ Route::prefix('proyectos')->middleware(["auth"])
         )->middleware("can:project.create")->name("project.change_or_create_data_project");
     });
 
+
 // * configuracion
 Route::prefix("configuracion")
     ->middleware("auth")
@@ -257,7 +258,7 @@ Route::prefix("configuracion")
 
 // * testimonios
 Route::prefix("testimonios")
-    ->middleware("auth")
+    ->middleware(["auth", "can:testimony.index"])
     ->group(function () {
         // * vista testimonios
         Route::get("/", [TestimonyController::class, "index"])->name("testimony.index");

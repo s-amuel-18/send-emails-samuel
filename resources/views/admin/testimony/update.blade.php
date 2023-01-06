@@ -56,12 +56,12 @@
                                 </div>
 
                                 {{-- * clasificación --}}
-                                <div class="col-md-12">
+                                {{-- <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="title_testimony">Puntuación</label>
                                         <div id="rating" class="mt-md-2"></div>
                                     </div>
-                                </div>
+                                </div> --}}
 
 
 

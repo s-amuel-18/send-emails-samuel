@@ -70,7 +70,7 @@
 
                 <div class="card card-body">
                     <div class="d-flex justify-content-end flex-wrap flex-column flex-md-row gap-5px align-items-md-center">
-                        <div class="d-flex gap-5px flex-wrap py-2 ">
+                        <div class="d-flex gap-5px flex-wrap py-2 justify-content-end">
                             <div class="">
                                 <label for="user-filter-0" class="label_active cursor-pointer d-block mb-0"
                                     data-placement="top" data-toggle="tooltip" title="Mostrar todos los usuarios">
@@ -90,6 +90,7 @@
                                         data-toggle="tooltip" title="{{ $user->username }}">
                                         @include('admin.contact_email.components.datatable.user', [
                                             'user' => $user,
+                                            'tooltip' => false,
                                             'size' => [
                                                 'width' => '30px',
                                                 'height' => '30px',
@@ -153,7 +154,7 @@
                                 class="w-100 table table-light table-striped table-hover text-nowrap table-valign-middle">
                                 <thead class="">
                                     <tr>
-                                        <th>ID</th>
+                                        {{-- <th>ID</th> --}}
                                         <th>Usuario</th>
                                         <th>Empresa</th>
                                         <th>Email</th>
@@ -229,7 +230,7 @@
                 },
                 "dataType": "json",
                 "order": [
-                    [9, "DESC"]
+                    [8, "DESC"]
                 ],
                 "responsive": true,
                 "scrollX": true,
@@ -253,9 +254,10 @@
                         // console.log($('#date_filter').data().datetimepicker._datesFormatted[0]);
                     }
                 },
-                "columns": [{
-                        data: "id"
-                    },
+                "columns": [
+                    /* {
+                                            data: "id"
+                                        }, */
                     {
                         data: "username"
                     },

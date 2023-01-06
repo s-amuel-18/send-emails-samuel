@@ -14,9 +14,9 @@ $(function () {
             position: {
                 required: true,
             },
-            rating: {
-                required: true,
-            },
+            // rating: {
+            //     required: true,
+            // },
             title: {
                 required: true,
             },

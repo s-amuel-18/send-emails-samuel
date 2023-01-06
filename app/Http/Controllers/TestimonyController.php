@@ -78,7 +78,7 @@ class TestimonyController extends Controller
         ];
 
         $testimony = auth()->user()->testimonies()->create($data_insert);
-
+        // dd($testimony);
         $file_img = $request->file("image");
 
         if ($file_img) {

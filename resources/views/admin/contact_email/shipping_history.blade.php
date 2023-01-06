@@ -1,5 +1,8 @@
 @extends('layouts.app')
 @section('plugins.Datatables', true)
+@section('plugins.Moment', true)
+@section('plugins.Inputmask', true)
+@section('plugins.Tempusdominus-bootstrap-4', true)
 
 @section('title', $data['title'])
 
@@ -32,6 +35,60 @@
                 </div>
 
                 <div class="card card-body">
+                    <div class="d-flex justify-content-end flex-wrap flex-column flex-md-row gap-5px align-items-md-center">
+                        <div class="d-flex gap-5px flex-wrap py-2 ">
+                            <div class="">
+                                <label for="user-filter-0" class="label_active cursor-pointer d-block mb-0"
+                                    data-placement="top" data-toggle="tooltip" title="Mostrar todos los usuarios">
+
+                                    <div style="width: 30px ; height: 30px;"
+                                        class=" bg-light d-flex justify-content-center align-items-center rounded-circle">
+                                        <i class="fa fa-users" style="font-size: 12px"></i>
+                                    </div>
+                                    <input value="" class="d-none" type="radio" name="user-filter"
+                                        id="user-filter-0" checked>
+                                </label>
+                            </div>
+                            @foreach ($data['users_with_sent_email'] as $user)
+                                <div class="">
+                                    <label for="user-filter-{{ $user->id }}"
+                                        class="label_active cursor-pointer d-block mb-0" data-placement="top"
+                                        data-toggle="tooltip" title="{{ $user->username }}">
+                                        @include('admin.contact_email.components.datatable.user', [
+                                            'user' => $user,
+                                            'size' => [
+                                                'width' => '30px',
+                                                'height' => '30px',
+                                            ],
+                                        ])
+                                        <input value="{{ $user->username }}" class="d-none" type="radio"
+                                            name="user-filter" id="user-filter-{{ $user->id }}"
+                                            {{ ($data['request']['username'] ?? null) == $user->username ? 'checked' : '' }}>
+                                    </label>
+                                </div>
+                            @endforeach
+                            {{-- {{ $data['request']['username'] }} --}}
+                        </div>
+
+                        <div class="d-flex justify-content-end py-2 ">
+                            {{-- * filtro por fecha --}}
+                            <div class="mr-2">
+                                <div class="input-group date" id="date_filter" data-target-input="nearest">
+                                    <input type="text" class="d-none- form-control form-control-sm datetimepicker-input"
+                                        data-target="#date_filter" data-inputmask-alias="datetime"
+                                        data-inputmask-inputformat="dd/mm/yyyy" data-mask />
+
+                                    <div class="input-group-append" data-target="#date_filter" data-toggle="datetimepicker">
+                                        <div class="input-group-text">
+                                            <i class="fa fa-calendar-alt"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
                     @if ($data['shipping_history_count'] > 0)
                         <div class="">
                             <table id="table_contact_emails"
@@ -40,8 +97,8 @@
                                     <tr>
                                         <th>Fecha</th>
                                         <th>Usuario</th>
-                                        <th>Email</th>
-                                        <th>Subject</th>
+                                        <th>Correo electrónico</th>
+                                        <th>Asunto</th>
                                         <th>Grupo De Envio</th>
                                         <th>Detalles</th>
                                     </tr>
@@ -118,8 +175,11 @@
                 "url": appData["url_datatable"],
                 "data": function(data) {
 
-                    data.date_filter = requestData["date"] ?? null;
-                    data.username = requestData["username"] ?? null;
+                    data.username = $(`input[name="user-filter"]:checked`).val() ?? null;
+                    data.email = requestData["email"] ?? null;
+                    // data.date_filter = requestData["date_filter"] ?? null;
+                    data.date_filter = $('#date_filter').data().datetimepicker._datesFormatted[0] ??
+                        null;
                 }
             },
             "columns": [{
@@ -151,7 +211,22 @@
         }
 
         $(function() {
+            var now = new Date();
+            $('#date_filter').datetimepicker({
+                format: 'DD/MM/YYYY',
+                defaultDate: appData.date_filter_parse || null,
+            });
+
             const datatable = $(table).DataTable(datatableOptions);
+
+            $(`input[name="user-filter"]`).on("change", e => {
+                // alert("dsa");
+                datatable.ajax.reload();
+            })
+            $('#date_filter').on("change.datetimepicker", e => {
+                // console.log(e.date);
+                datatable.ajax.reload();
+            })
         });
 
         $(table).on("draw.dt", e => {

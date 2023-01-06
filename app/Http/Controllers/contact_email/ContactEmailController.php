@@ -75,8 +75,6 @@ class ContactEmailController extends Controller
             }
         }
 
-
-
         return view("admin.contact_email.index", compact("contact_emails_all_counts", "contact_emails_today_count", "data"));
     }
 
@@ -331,17 +329,17 @@ class ContactEmailController extends Controller
         $totalFilteredRecord = $totalDataRecord = $draw_val = "";
 
         $columns_list = array(
-            0 => "contact_emails.id",
-            1 => "us.username",
-            2 => "contact_emails.nombre_empresa",
-            3 => "contact_emails.email",
-            4 => "envios_count",
-            5 => "contact_emails.url",
-            6 => "contact_emails.whatsapp",
-            7 => "contact_emails.facebook",
-            8 => "contact_emails.instagram",
-            9 => "contact_emails.created_at",
-            10 => "contact_emails.updated_at",
+            // 0 => "contact_emails.id",
+            0 => "us.username",
+            1 => "contact_emails.nombre_empresa",
+            2 => "contact_emails.email",
+            3 => "envios_count",
+            4 => "contact_emails.url",
+            5 => "contact_emails.whatsapp",
+            6 => "contact_emails.facebook",
+            7 => "contact_emails.instagram",
+            8 => "contact_emails.created_at",
+            9 => "contact_emails.updated_at",
         );
 
         $totalDataRecord = Contact_email::whereNull("deleted_at")->count();
@@ -435,6 +433,8 @@ class ContactEmailController extends Controller
 
         if (!empty($data_return)) {
             $data_val = $data_return->map(function ($email) {
+                $email->contact_created_parce = Carbon::now()->parse($email->contact_created);
+
                 if ($email->username) {
                     $email->color_by_user = User::find($email->user_id)->color_by_id();
                 } else {
@@ -488,7 +488,7 @@ class ContactEmailController extends Controller
                 return [
                     "id" => $email->contact_id,
                     "nombre_empresa" => (string) response()->view("admin.contact_email.components.datatable.name_enterprice", ["name" => $email->nombre_empresa, "limit_name" => 15])->original,
-                    "username" => (string) response()->view("admin.contact_email.components.datatable.user", compact("email"))->original,
+                    "username" => (string) response()->view("admin.contact_email.components.datatable.user", ["email" => $email])->original,
                     "email" => $html_email,
                     "url" => (string) response()->view("admin.contact_email.components.datatable.web", compact("email"))->original,
                     "envios" => (string) response()->view("admin.contact_email.components.datatable.count_ship_mails", compact("email"))->original,
@@ -523,6 +523,17 @@ class ContactEmailController extends Controller
             "url_datatable" => route("contact_email.shipping_history_datatable"),
         ];
 
+        $data["request"] = $request->all();
+        $data["users_with_sent_email"] = User::whereHas("emailEnviado", null, ">", 0)->get();
+
+        if ($request["date_filter"]) {
+            try {
+                $data["js"]["date_filter_parse"] = Carbon::now()->parse($request["date_filter"]);
+            } catch (\Throwable $e) {
+                $data["js"]["date_filter_parse"] = null;
+            }
+        }
+        // dd($data["js"]);
         return view("admin.contact_email.shipping_history", compact("data"));
     }
 
@@ -581,6 +592,12 @@ class ContactEmailController extends Controller
                 $data_return_count->where("contact_email_user.user_id", $username->id);
             }
 
+            // * Si se quiere filtrar por email)
+            if ($request["email"] ?? null) {
+                $data_return->where("cm.email", $request["email"]);
+                $data_return_count->where("cm.email", $request["email"]);
+            }
+
             // * datos de salida
             $totalFilteredRecord = $data_return_count->count();
             $data_return = $data_return->limit($limit_val)->get();
@@ -618,6 +635,12 @@ class ContactEmailController extends Controller
             if ($username) {
                 $data_return->where("contact_email_user.user_id", $username->id);
                 $totalFilteredRecord->where("contact_email_user.user_id", $username->id);
+            }
+
+            // * Si se quiere filtrar por email)
+            if ($request["email"] ?? null) {
+                $data_return->where("cm.email", $request["email"]);
+                $totalFilteredRecord->where("cm.email", $request["email"]);
             }
 
             // * datos salida

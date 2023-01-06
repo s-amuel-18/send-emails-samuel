@@ -18,12 +18,12 @@
         </div>
 
         <div class="card-body table-responsive card_view_more-">
-            <table id="table_users"
+            <table id="table_users-"
                 class="w-100 datatable table table-light table-striped table-hover text-nowrap table-valign-middle">
                 <thead class="">
                     <tr>
                         {{-- <th>ID</th> --}}
-                        <th>username</th>
+                        <th>usuario</th>
                         <th>Cantidad</th>
                         <th>
 
@@ -40,16 +40,10 @@
                         <tr>
                             {{-- <td>{{ $usr->id }}</td> --}}
                             <td>
-                                <div class="d-flex align-items-center">
-                                    <div style="width: 27px; height: 27px;"
-                                        class="mr-2 bg-{{ $usr->color }} d-flex justify-content-center align-items-center rounded-circle">
-                                        <i class="fa fa-user" style="font-size: 12px"></i>
-                                    </div>
-                                    <div class="">
-                                        {{ $usr->username }}
-                                    </div>
-
-                                </div>
+                                @include('admin.contact_email.components.datatable.user', [
+                                    'user' => $usr,
+                                    // 'name' => true,
+                                ])
                             </td>
                             <td>
                                 <a
@@ -60,7 +54,7 @@
                             </td>
                             <td>
                                 <a
-                                    href="{{ route('contact_email.shipping_history', ['username' => $usr->username, 'date' => now()->format('Y-m-d')]) }}">
+                                    href="{{ route('contact_email.shipping_history', ['username' => $usr->username, 'date_filter' => now()->format('Y-m-d')]) }}">
                                     <span class="badge bg-purple"
                                         style="font-size: 14px">{{ $usr->email_enviado_count }}</span>
                                 </a>

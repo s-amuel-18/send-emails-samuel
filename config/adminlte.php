@@ -318,6 +318,7 @@ return [
             'text'        => 'Servicios',
             'route'         => 'service.index',
             'icon'        => 'fa fa-hand-holding-usd',
+            'can'        => 'service.index',
         ],
         [
             'text'        => 'Proyectos (portafolio)',
@@ -343,16 +344,19 @@ return [
             'text'        => 'Testimonio',
             'route'         => 'testimony.index',
             'icon'        => 'fa fa-quote-left',
+            'can'        => 'testimony.index',
             'submenu' => [
                 [
                     'text' => 'Testimonios',
                     'icon_color' => 'primary',
                     'route'         => 'testimony.index',
+                    'can'        => 'testimony.index',
                 ],
                 [
                     'text' => 'Nuevo testimonio',
                     'icon_color' => 'success',
                     'route'         => 'testimony.create',
+                    'can'        => 'testimony.index',
                 ],
 
             ],
