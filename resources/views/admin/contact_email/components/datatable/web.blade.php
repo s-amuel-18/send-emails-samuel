@@ -4,5 +4,7 @@
         <i class="fas fa-external-link-alt"></i>
     </a>
 @else
-    -----
+    {{-- <button class="btn bg-secondary btn-sm" data-toggle="tooltip" data-placement="top" disabled>
+        <i class="fas fa-external-link-alt"></i>
+    </button> --}}
 @endif

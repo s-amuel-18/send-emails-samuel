@@ -31,80 +31,80 @@
         </style>
     @endpush
 
-    <div class="callout callout-warning {{ $puedo_enviar_emails['puedo_enviar_emails'] ? '' : 'd-none' }}"
-        id="select_alert_new_email">
-        <h5 class="text-capitalize">¡Ya puedes enviar nuevos emails!</h5>
-        <p>Ya transcurrió el tiempo necesario para que puedas enviar nuevos emails, el limite de envios diarios es de
-            100
-            emails,
-            @if ($puedo_enviar_emails['lastEmailSend'])
-                <b>Ultimo Correo Enviado {{ $puedo_enviar_emails['lastEmailSend'] }}</b>
-            @endif
-        </p>
+    @if ($puedo_enviar_emails['count_emails_register'] > 0)
+        <div class="callout callout-warning {{ $puedo_enviar_emails['puedo_enviar_emails'] ? '' : 'd-none' }}"
+            id="select_alert_new_email">
+            <h5 class="text-capitalize">¡Ya puedes enviar nuevos emails!</h5>
+            <p>Ya transcurrió el tiempo necesario para que puedas enviar nuevos emails, el limite de envios diarios es de
+                100
+                emails,
+                @if ($puedo_enviar_emails['lastEmailSend'])
+                    <b>Ultimo Correo Enviado {{ $puedo_enviar_emails['lastEmailSend'] }}</b>
+                @endif
+            </p>
+            @if ($puedo_enviar_emails['bodyEmails']->count() > 0)
+                <form action="" id="form_send_emails">
+                    <div class="text-danger mb-3" id="insert_text_error">
 
-        @if ($puedo_enviar_emails['bodyEmails']->count() > 0)
-            <form action="" id="form_send_emails">
-                <div class="text-danger mb-3" id="insert_text_error">
-
-                </div>
-
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group mb-md-0">
-                            <label for="subject">Asunto *</label>
-                            <input id="subject" class="form-control form-control-sm" type="text" name="subject"
-                                placeholder="Asunto">
-                        </div>
                     </div>
-                    <div class="col-md-4 ">
-                        <div class="form-group mb-md-0">
-                            <label for="body_email">Cuerpo de mensaje *</label>
 
-                            <div class="">
-
-                                <select name="body_email" class="select2 form-control form-control-sm" id="body_email"
-                                    name="body_email">
-                                    <option value="">-- Seleccionar Cuerpo De Email</option>
-
-                                    @foreach ($puedo_enviar_emails['bodyEmails'] as $body)
-                                        <option value="{{ $body->id }}">{{ $body->nombre }}</option>
-                                    @endforeach
-                                </select>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group mb-md-0">
+                                <label for="subject">Asunto *</label>
+                                <input id="subject" class="form-control form-control-sm" type="text" name="subject"
+                                    placeholder="Asunto">
                             </div>
                         </div>
+                        <div class="col-md-4 ">
+                            <div class="form-group mb-md-0">
+                                <label for="body_email">Cuerpo de mensaje *</label>
 
-                    </div>
-                    <div class="col-md-4 d-flex align-items-end">
-                        <div class="">
-                            <button class="btn btn-info btn-sm" type="submit">Enviar Emails</button>
-                            <a href="{{ route('envio_email.index') }}">
-                                <button class="btn btn-light btn-sm" type="button">Redactar Email detallado</button>
-                            </a>
+                                <div class="">
+
+                                    <select name="body_email" class="select2 form-control form-control-sm" id="body_email"
+                                        name="body_email">
+                                        <option value="">-- Seleccionar Cuerpo De Email</option>
+
+                                        @foreach ($puedo_enviar_emails['bodyEmails'] as $body)
+                                            <option value="{{ $body->id }}">{{ $body->nombre }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
 
                         </div>
+                        <div class="col-md-4 d-flex align-items-end">
+                            <div class="">
+                                <button class="btn btn-info btn-sm" type="submit">Enviar Emails</button>
+                                <a href="{{ route('envio_email.index') }}">
+                                    <button class="btn btn-light btn-sm" type="button">Redactar Email detallado</button>
+                                </a>
+
+                            </div>
+                        </div>
                     </div>
+
+                </form>
+            @else
+                <div class="text-danger">
+                    <h5 class="h6">No tienes cuerpos de emails registrados <a
+                            href="{{ route('bodyEmail.create') }}">cuerpo de email</a>
+                    </h5>
                 </div>
+            @endif
 
-            </form>
-        @elseif($puedo_enviar_emails['count_emails_register'] > 0)
-        @else
-            <div class="text-danger">
-                <h5 class="h6">No tienes emails registrados <a href="{{ route('contact_email.store') }}">Crea
-                        nuevo email</a>
-                </h5>
-            </div>
-        @endif
-
-
-    </div>
-    <div id="content_counter" class="row {{ $puedo_enviar_emails['puedo_enviar_emails'] ? 'd-none' : '' }}">
-        <div class="col-md-3 pb-3">
-            <h5>Tiempo Restante</h5>
-            <div class=" cuenta d-flex" id="cuenta">
-            </div>
 
         </div>
-    </div>
+        <div id="content_counter" class="row {{ $puedo_enviar_emails['puedo_enviar_emails'] ? 'd-none' : '' }}">
+            <div class="col-md-3 pb-3">
+                <h5>Tiempo Restante</h5>
+                <div class=" cuenta d-flex" id="cuenta">
+                </div>
+
+            </div>
+        </div>
+    @endif
 @endcan
 
 @push('js')

@@ -49,14 +49,16 @@
 
     <div class="row">
         @can('user.index')
-            <div class="col-md-4 table-responsive">
+            <div class="col-md-3 table-responsive">
                 @include('admin.dashboard.components.users')
             </div>
         @endcan
 
-        <div class="col-md-8 table-responsive">
-            @include('admin.dashboard.components.requirements')
-        </div>
+        @can('requirements.store')
+            <div class="col-md-9 table-responsive">
+                @include('admin.dashboard.components.requirements')
+            </div>
+        @endcan
 
 
     </div>

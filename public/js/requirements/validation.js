@@ -15,7 +15,7 @@ $(function () {
                 required: true,
             },
             url: {
-                required: true,
+                required: false,
                 url: true,
             },
         },

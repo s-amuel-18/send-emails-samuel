@@ -2,6 +2,9 @@
 @section('plugins.Datatables', true)
 @section('plugins.Sweetalert2', true)
 @section('plugins.Toastr', true)
+@section('plugins.Moment', true)
+@section('plugins.Inputmask', true)
+@section('plugins.Tempusdominus-bootstrap-4', true)
 
 @section('title', 'Administrador de Emails')
 
@@ -28,28 +31,7 @@
             </ul>
         </div>
     @endif
-    {{-- <style>
-        @media screen and (max-width: 400px) {
-
-            li.page-item {
-
-                display: none;
-            }
-
-            .page-item:first-child,
-            .page-item:nth-child(2),
-            .page-item:nth-last-child(2),
-            .page-item:last-child,
-            .page-item.active,
-            .page-item.disabled {
-
-                display: block;
-            }
-        }
-    </style> --}}
     <div class="row">
-        {{-- <div class="row"> --}}
-
         <div class="col-12 col-md-3">
             <div class="card card-outline card-primary">
                 <div class="card-header">
@@ -87,32 +69,83 @@
                 </div>
 
                 <div class="card card-body">
-                    <div class="d-flex justify-content-end ">
+                    <div class="d-flex justify-content-end flex-wrap flex-column flex-md-row gap-5px align-items-md-center">
+                        <div class="d-flex gap-5px flex-wrap py-2 justify-content-end">
+                            <div class="">
+                                <label for="user-filter-0" class="label_active cursor-pointer d-block mb-0"
+                                    data-placement="top" data-toggle="tooltip" title="Mostrar todos los usuarios">
 
-
-                        <form action="{{ route('contactEmail.import_excel') }}" enctype="multipart/form-data" method="POST"
-                            id="form_import_excel">
-
-                            <input type="file" name="excel_file" accept=".xlsx, .Xls, .csv" id="excel_file"
-                                class="d-none">
-
-                            @csrf
-
-                            <label for="excel_file" class="btn btn-secondary btn-sm mr-2">
-                                <i class="fa fa-file-import"></i>
-                                <span class="d-none d-md-inline">Importar
-                                    Excel</span>
-                            </label>
-
-                        </form>
-                        <div class="">
-
-                            <a href="{{ route('contactEmail.export_excel') }}" class="btn btn-success  btn-sm mr-2"
-                                type="button">
-                                <i class="fa fa-file-excel"></i>
-                                <span class="d-none d-md-inline">Exportar
-                                    Excel</span></a>
+                                    <div style="width: 30px ; height: 30px;"
+                                        class=" bg-light d-flex justify-content-center align-items-center rounded-circle">
+                                        <i class="fa fa-users" style="font-size: 12px"></i>
+                                    </div>
+                                    <input value="" class="d-none" type="radio" name="user-filter"
+                                        id="user-filter-0" checked>
+                                </label>
+                            </div>
+                            @foreach ($data['users_with_record'] as $user)
+                                <div class="">
+                                    <label for="user-filter-{{ $user->id }}"
+                                        class="label_active cursor-pointer d-block mb-0" data-placement="top"
+                                        data-toggle="tooltip" title="{{ $user->username }}">
+                                        @include('admin.contact_email.components.datatable.user', [
+                                            'user' => $user,
+                                            'tooltip' => false,
+                                            'size' => [
+                                                'width' => '30px',
+                                                'height' => '30px',
+                                            ],
+                                        ])
+                                        <input value="{{ $user->username }}" class="d-none" type="radio"
+                                            name="user-filter" id="user-filter-{{ $user->id }}"
+                                            {{ ($data['request']['username'] ?? null) == $user->username ? 'checked' : '' }}>
+                                    </label>
+                                </div>
+                            @endforeach
+                            {{-- {{ $data['request']['username'] }} --}}
                         </div>
+
+                        <div class="d-flex justify-content-end py-2 ">
+                            {{-- * filtro por fecha --}}
+                            <div class="mr-2">
+                                <div class="input-group date" id="date_filter" data-target-input="nearest">
+                                    <input type="text" class="d-none- form-control form-control-sm datetimepicker-input"
+                                        data-target="#date_filter" data-inputmask-alias="datetime"
+                                        data-inputmask-inputformat="dd/mm/yyyy" data-mask />
+
+                                    <div class="input-group-append" data-target="#date_filter" data-toggle="datetimepicker">
+                                        <div class="input-group-text">
+                                            <i class="fa fa-calendar-alt"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <form action="{{ route('contactEmail.import_excel') }}" enctype="multipart/form-data"
+                                method="POST" id="form_import_excel">
+
+                                <input type="file" name="excel_file" accept=".xlsx, .Xls, .csv" id="excel_file"
+                                    class="d-none">
+
+                                @csrf
+
+                                <label for="excel_file" class="btn btn-secondary btn-sm mr-2 mb-0">
+                                    <i class="fa fa-file-import"></i>
+                                    <span class="d-none d-md-inline">Importar
+                                        Excel</span>
+                                </label>
+
+                            </form>
+                            <div class="">
+
+                                <a href="{{ route('contactEmail.export_excel') }}" class="btn btn-success  btn-sm mr-2"
+                                    type="button">
+                                    <i class="fa fa-file-excel"></i>
+                                    <span class="d-none d-md-inline">Exportar
+                                        Excel</span></a>
+                            </div>
+                        </div>
+
                     </div>
 
                     @if ($contact_emails_all_counts > 0)
@@ -121,7 +154,7 @@
                                 class="w-100 table table-light table-striped table-hover text-nowrap table-valign-middle">
                                 <thead class="">
                                     <tr>
-                                        <th>ID</th>
+                                        {{-- <th>ID</th> --}}
                                         <th>Usuario</th>
                                         <th>Empresa</th>
                                         <th>Email</th>
@@ -135,104 +168,7 @@
                                         <th>btns</th>
                                     </tr>
                                 </thead>
-                                {{-- <tbody>
-
-                                    @foreach ($contact_emails as $i => $email)
-                                        <tr>
-                                            <td> {{ $email->id }} </td>
-                                            <td> {{ Str::limit($email->nombre_empresa, 15, '...') }} </td>
-                                            <td>
-                                                @if ($email->usuario)
-                                                    <div style="width: 27px; height: 27px;"
-                                                        class="bg-{{ $email->usuario->color_by_id() }} d-flex justify-content-center align-items-center rounded-circle"
-                                                        data-placement="top" data-toggle="tooltip" data-placement="top"
-                                                        title="{{ $email->usuario->username }}">
-                                                        <i class="fa fa-user" style="font-size: 12px"></i>
-                                                    </div>
-                                                @else
-                                                    <div style="width: 27px; height: 27px;"
-                                                        class="bg-danger d-flex justify-content-center align-items-center rounded-circle">
-                                                        <i class="fa fa-times" style="font-size: 12px"></i>
-                                                    </div>
-                                                @endif
-
-                                            <td>
-                                                <span
-                                                    class="badge badge-{{ $email->envios_count > 0 ? 'success' : 'danger' }}">{{ $email->envios_count > 0 ? 'Enviado' : 'Sin Enviar' }}</span>
-                                            </td>
-                                            <td>
-
-                                                @if ($email->email)
-                                                    <span>{{ $email->email }}</span>
-                                                @else
-                                                    <b class="text-danger">Sin Email</b>
-                                                @endif
-                                            </td>
-                                            <td>
-                                                <span
-                                                    class="badge badge-{{ $email->envios_count > 0 ? 'success' : 'danger' }}">{{ $email->envios_count }}</span>
-                                            </td>
-                                            <td>
-                                                @if ($email->url)
-                                                    <a data-toggle="tooltip" data-placement="top"
-                                                        href="{{ $email->url }}">{{ Str::limit($email->url, 30) }}</a>
-                                                @else
-                                                    -------
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if ($email->whatsapp)
-                                                    <a data-toggle="tooltip" data-placement="top"
-                                                        href="{{ $email->whatsapp }}">{{ Str::limit($email->whatsapp, 30) }}</a>
-                                                @else
-                                                    -------
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if ($email->facebook)
-                                                    <a data-toggle="tooltip" data-placement="top"
-                                                        href="{{ $email->facebook }}">{{ Str::limit($email->facebook, 30) }}</a>
-                                                @else
-                                                    -------
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if ($email->instagram)
-                                                    <a data-toggle="tooltip" data-placement="top"
-                                                        href="{{ $email->instagram }}">{{ Str::limit($email->instagram, 30) }}</a>
-                                                @else
-                                                    -------
-                                                @endif
-                                            </td>
-                                            <td>
-                                                {{ $email->created_at->diffForHumans() }}
-                                            </td>
-                                            <td style="width: 110px">
-                                                <a href="{{ route('contact_email.edit', ['contact_email' => $email->id]) }}"
-                                                    class="btn btn-outline-success btn-sm">
-                                                    <i class="fa fa-edit"></i>
-                                                </a>
-
-                                                <form class="d-inline"
-                                                    onsubmit="return confirm('Realmente Deseas Eliminar Este Email')"
-                                                    action="{{ route('contact_email.destroy', ['contact_email' => $email->id]) }}"
-                                                    method="POST">
-
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-outline-danger btn-sm">
-                                                        <i class="fa fa-trash"></i>
-                                                    </button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-
-                                </tbody> --}}
                             </table>
-                            {{-- <div class="mt-3 d-flex justify-content-end">
-                                {{ $contact_emails->onEachSide(0)->links() }}
-                            </div> --}}
                         </div>
                     @else
                         <div class="alert alert-light" role="alert">
@@ -241,10 +177,6 @@
                                 Contacto</a>
                         </div>
                     @endif
-
-
-
-
                 </div>
             </div>
         </div>
@@ -266,6 +198,28 @@
         const requestData = @json($data['request']);
 
         $(function() {
+            // $('[data-mask]').inputmask()
+            // $('#date_filter').daterangepicker()
+            // $('[data-mask]').inputmask()
+            var now = new Date();
+            $('#date_filter').datetimepicker({
+                format: 'DD/MM/YYYY',
+                defaultDate: appData.date_filter_parse || null,
+            });
+
+            // dtp = $('#date_filter').datetimepicker({
+            //     locale: 'de',
+            //     // format: 'L',
+            //     //format: 'DD.MM.YYYY',
+            //     calendarWeeks: true,
+            //     showTodayButton: true,
+            //     defaultDate: now
+            // });
+            // $('#date_filter').on('dp.change', function(e) {
+            //     var tmpdate = e.date._d.toISOString();
+            //     console.log(tmpdate);
+            // });
+
             $(excel_file).on("change", e => {
                 form_import_excel.submit();
             })
@@ -276,7 +230,7 @@
                 },
                 "dataType": "json",
                 "order": [
-                    [9, "DESC"]
+                    [8, "DESC"]
                 ],
                 "responsive": true,
                 "scrollX": true,
@@ -289,10 +243,21 @@
                 "fixedHeader": true,
                 "serverSide": true,
                 "searching": true,
-                "ajax": appData["url_datatable"],
-                "columns": [{
-                        data: "id"
-                    },
+                "ajax": {
+                    "url": appData["url_datatable"],
+                    "data": function(data) {
+                        // console.log($(`input[name="user-filter"]:checked`).val());
+                        data.username = $(`input[name="user-filter"]:checked`).val() ?? null;
+                        // data.date_filter = requestData["date_filter"] ?? null;
+                        data.date_filter = $('#date_filter').data().datetimepicker._datesFormatted[0] ??
+                            null;
+                        // console.log($('#date_filter').data().datetimepicker._datesFormatted[0]);
+                    }
+                },
+                "columns": [
+                    /* {
+                                            data: "id"
+                                        }, */
                     {
                         data: "username"
                     },
@@ -336,6 +301,15 @@
             }
 
             const datatable = $(table).DataTable(datatableConfig);
+            $(`input[name="user-filter"]`).on("change", e => {
+                // alert("dsa");
+                datatable.ajax.reload();
+            })
+            $('#date_filter').on("change.datetimepicker", e => {
+                // console.log(e.date);
+                datatable.ajax.reload();
+            })
+
         })
 
         $(table).on("draw.dt", e => {

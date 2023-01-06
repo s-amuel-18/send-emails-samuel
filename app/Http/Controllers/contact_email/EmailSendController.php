@@ -5,6 +5,7 @@ namespace App\Http\Controllers\contact_email;
 use App\Exports\ContactEmailExport;
 use App\Http\Controllers\Controller;
 use App\Mail\ServicioMaillable;
+use App\Mail\SimpleContactMaillable;
 use App\Models\BodyEmail;
 use App\Models\Contact_email;
 use App\Models\EmailEnviado;
@@ -106,7 +107,8 @@ class EmailSendController extends Controller
             }
 
 
-            $correo = new ServicioMaillable($info);
+            // $correo = new ServicioMaillable($info);
+            $correo = new SimpleContactMaillable($info["subject"], $info["body"]);
             Mail::to(trim($email))->send($correo);
 
             $emailsToSend = auth()->user()->correos_por_enviar_hoy();
@@ -130,6 +132,7 @@ class EmailSendController extends Controller
 
             return redirect()->back()->with("message", $message);
         } catch (\Throwable $th) {
+            dd($th);
             $send_today = auth()->user()->emailsSent24HoursAgo();
             $message = [
                 "color" => "danger",
@@ -208,7 +211,8 @@ class EmailSendController extends Controller
         ]);
 
         try {
-            $correo = new ServicioMaillable($info);
+            // $correo = new ServicioMaillable($info);
+            $correo = new SimpleContactMaillable($info["subject"], $info["body"]);
             Mail::to(trim($emailsNotSend->email))->send($correo);
 
             $emailsToSend = auth()->user()->correos_por_enviar_hoy();
@@ -223,11 +227,14 @@ class EmailSendController extends Controller
 
             $percentage = $send_today ? (($send_today * 100) / Contact_email::DAILY_EMAIL_LIMIT) : 0;
 
+            $emailsNotSent = Contact_email::sinEnviar()->count();
+
             return [
                 "success_email_send" => true,
                 "emails_to_send" => $emailsToSend,
                 "emails_sent_today" => $send_today,
                 "percentage" => $percentage,
+                "emails_not_sent" => $emailsNotSent,
                 "message" => [
                     "type" => "success",
                     "message" => "Email enviado correctamente"

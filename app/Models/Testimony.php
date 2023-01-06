@@ -42,7 +42,7 @@ class Testimony extends Model
     public function scopeComplete($q)
     {
         return $q->whereNotNull("name")
-            ->whereNotNull("rating")
+            // ->whereNotNull("rating")
             ->whereNotNull("review");
     }
 

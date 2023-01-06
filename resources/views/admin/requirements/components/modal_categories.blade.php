@@ -19,7 +19,7 @@
 
 <div id="categories_modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="Categorias" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
+        <div class="modal-content" style="max-height: 90vh; overflow: hidden;">
             <div class="modal-header">
                 <h5 class="modal-title" id="Categorias">Categorías</h5>
                 <button class="close" data-dismiss="modal" aria-label="Close">
@@ -32,13 +32,13 @@
                         <form action="{{ route('requirements.category_store') }}" method="POST"
                             id="form_create_category">
                             @csrf
-                            <input class="form-control form-control-sm" type="text" name="name"
+                            <input class="form-control form-control-sm-" type="text" name="name"
                                 placeholder="Nombre de la categoría">
                         </form>
                     </div>
                     <div class="px-2">
                         <button id="submit_form_create_category" form="form_create_category"
-                            class="btn btn-outline-primary btn-sm" type="submit">
+                            class="btn btn-outline-primary btn-sm-" type="submit">
                             <span class="normal_item">
                                 <i class="fa fa-plus"></i>
                             </span>
@@ -61,7 +61,7 @@
                                         <input data-id="{{ $category->id }}"
                                             data-url="{{ route('requirements.category_update', ['id' => $category->id ?? 0]) }}"
                                             data-value_init="{{ $category->name ?? false }}" type="text"
-                                            class="input_name_category form-control-category form-control form-control-sm"
+                                            class="input_name_category form-control-category form-control form-control-sm-"
                                             value="{{ $category->name ?? false }}">
                                     </div>
 
@@ -74,8 +74,8 @@
                                     <div class="element_category_normal element_show_normal_{{ $category->id }}">
                                         <div class=" d-flex justify-content-end ">
                                             <x-delete class="category_delete" style="border-width: 0"
-                                                id="category_{{ $category->id }}" type="button" size="sm"
-                                                dataid="{{ $category->id }}" />
+                                                id="category_{{ $category->id }}" type="button"
+                                                dataid="{{ $category->id }}" size="" />
                                         </div>
                                     </div>
 
@@ -85,7 +85,7 @@
                                             <button data-id="{{ $category->id }}"
                                                 data-url="{{ route('requirements.category_delete', ['id' => $category->id]) }}"
                                                 style="border-width: 0"
-                                                class="btn btn-outline-success btn-sm mr-1 confir_delete_category"
+                                                class="btn btn-outline-success btn-sm- mr-1 confir_delete_category"
                                                 type="button">
                                                 <span class="normal_item">
                                                     <i class="fa fa-check"></i>
@@ -98,7 +98,7 @@
                                                 </span>
                                             </button>
                                             <button data-id="{{ $category->id }}" style="border-width: 0"
-                                                class="btn btn-outline-danger btn-sm cancel_delete_category"
+                                                class="btn btn-outline-danger btn-sm- cancel_delete_category"
                                                 type="button">
                                                 <i class="fa fa-times"></i>
                                             </button>

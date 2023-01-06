@@ -27,20 +27,6 @@
     </div>
 
     <div class="row">
-        @foreach ($data['pays_time'] as $pay)
-            <div class="col-md-3 col-6">
-
-                <div class="card card-outline card-secondary">
-                    <div class="card-header">
-                        <h3 class="card-title">{{ $pay->name }}: <b>{{ $pay->spemts_sum_price ?? 0 }}$</b></h3>
-
-                        <!-- /.card-tools -->
-                    </div>
-                    <!-- /.card-header -->
-                </div>
-
-            </div>
-        @endforeach
 
         <div class="col-12 col-lg-3">
             <div class="info-box">
@@ -83,6 +69,51 @@
             </div>
         </div>
 
+        <div class="col-md-12">
+            <div class="card card-light">
+                <div class="card-header">
+                    <h3 class="card-title">Pagos</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row no-gutters">
+                        <div class="col-md-6">
+                            <table class="table table-light text-center font-weight-bold">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>Diarios</th>
+                                        <th>Semanales</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>${{ $data['pays_time']['day'] }}</td>
+                                        <td>${{ $data['pays_time']['week'] }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-6">
+                            <table class="table table-light text-center font-weight-bold">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>Quincenales</th>
+                                        <th>Mensuales</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>${{ $data['pays_time']['fortnight'] }}</td>
+                                        <td>${{ $data['pays_time']['month'] }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
 
         <div class="col-md-6">
             <div class="card card-primary">

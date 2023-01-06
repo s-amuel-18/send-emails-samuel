@@ -14,6 +14,9 @@ class AddTypeToContactEmailUser extends Migration
     public function up()
     {
         Schema::table('contact_email_user', function (Blueprint $table) {
+            // * tipo de email enviado, pueden ser:
+            // * tipo mail, whatsapp, instagram, facebook
+            // * esto lo hacemos para tener una separación de los contactos y a donde se han contactado
             $table->integer("type")->default(0);
         });
     }

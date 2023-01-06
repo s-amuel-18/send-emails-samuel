@@ -73,7 +73,7 @@ class DailyShipmentsProvider extends ServiceProvider
                 "puedo_enviar_emails" => $puedo_enviar,
                 "timesLastEmail" => $timesLastEmail ?? null,
                 "bodyEmails" => $bodyEmails,
-                "count_emails_register" => Contact_email::count(),
+                "count_emails_register" => Contact_email::whereHas("envios", null, "=", 0)->count(),
                 "lastEmailSend" => isset($lastEmailSend->created_at) ? Carbon::parse($lastEmailSend->created_at)->diffForHumans() : "SIN ENVIAR",
             ]);
         });

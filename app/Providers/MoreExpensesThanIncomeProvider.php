@@ -26,7 +26,8 @@ class MoreExpensesThanIncomeProvider extends ServiceProvider
      */
     public function boot()
     {
-        View::composer(['admin.dashboard.dashboard', "admin.managment.index"], function ($view) {
+        // ! esta funcionalidad enviaba mensajes que realmente no eran necesarios, en caso de que se quiera mostrar los mensajes nuevamente solo se deben descomentar las vistas que están dentro del array
+        View::composer([/* 'admin.dashboard.dashboard', "admin.managment.index" */], function ($view) {
             $user = auth()->user();
             if ($user and $user->can("managment.index")) {
                 $netIncome = Income::netIncome();

@@ -11,9 +11,23 @@ class ManagementController extends Controller
 {
     public function index()
     {
-        $data["pays_time"] =  BillingTime::withSum("spemts", "price")->get();
-        $data["income"] = Income::orderByDesc("price")->get();
-        $data["spents"] = Spents::orderByDesc("price")->get();
+        $pays_time = BillingTime::withSum("spemts", "price")->get();
+
+        $pays_time->each(function ($spent) {
+            $spent->calculate = $spent->calculate;
+        });
+
+        $calculate_spents = [
+            "day" => $pays_time->sum("calculate.day"),
+            "week" => $pays_time->sum("calculate.week"),
+            "fortnight" => $pays_time->sum("calculate.fortnight"),
+            "month" => $pays_time->sum("calculate.month"),
+        ];
+
+        $data["pays_time"] =  $calculate_spents;
+
+        $data["income"] = Income::orderByDesc("billing_time_id")->get();
+        $data["spents"] = Spents::orderByDesc("billing_time_id")->get();
         $data["title"] = "Administracion De Ingresos";
         $data["netIncome"] = Income::netIncome();
         $data["grossIncome"] = Income::grossIncome();

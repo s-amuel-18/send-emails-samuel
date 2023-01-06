@@ -26,7 +26,7 @@ class RequirementsRequest extends FormRequest
         return [
             "name" => "required|max:255|string",
             "category_id" => "required|exists:categories,id",
-            "url" => "required|url",
+            "url" => "nullable|url",
             "description" => "nullable|string",
             "private" => "nullable|numeric|min:0|max:1",
         ];
