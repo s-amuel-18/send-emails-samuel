@@ -16,12 +16,12 @@ class PayFactory extends Factory
      */
     public function definition()
     {
-        $type = Arr::random([Pay::DEBT_TYPE, Pay::DEBT_TYPE], 1)[0];
+        $type = Arr::random([Pay::LOAN_TYPE, Pay::DEBT_TYPE], 1)[0];
 
         return [
             "user_id" => User::all()->random()->id,
-            "name" => $this->faker->sentence(),
-            "payment_amount" => $this->faker->randomFloat('2', 0, 2),
+            "name" => $this->faker->name(),
+            "payment_amount" => $this->faker->randomFloat('2', 100, 2),
             "description" => $this->faker->text(50),
             "type" =>  $type,
         ];

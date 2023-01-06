@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\api\AuthController;
+use App\Http\Controllers\API\PayController;
 use App\Http\Controllers\api\SubjectController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -49,4 +50,20 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::delete("/subject/notes/{note}/delete", [SubjectController::class, "note_delete"])
         ->name("note.delete"); // * eliminar nota
+
+
+    // * pagos
+    Route::prefix("payments")->group(function () {
+        // * index /payments
+        Route::get("/", [PayController::class, "index"])->name("pay.index");
+        // * /payments/store
+        Route::post("/store", [PayController::class, "store"])->name("pay.store");
+        // * /payments/show
+        Route::get("/{pay}", [PayController::class, "show"])
+            ->name("pay.show");
+        // * /payments/update/
+        Route::put("/{pay}/update", [PayController::class, "update"])->name("pay.update");
+        // * /payments/destroy/
+        Route::delete("/{pay}/destroy", [PayController::class, "destroy"])->name("pay.destroy");
+    });
 });

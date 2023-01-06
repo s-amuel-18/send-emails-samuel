@@ -26,4 +26,9 @@ class Pay extends Model
     {
         return $this->hasMany(HistoryPay::class, "pay_id");
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, "user_id");
+    }
 }

@@ -52,8 +52,8 @@ class DatabaseSeeder extends Seeder
         Requirements::factory(50)->create();
         // Testimony::factory(20)->create();
         Project::factory(20)->create();
-        Pay::factory(3)->create();
-        HistoryPay::factory(20)->create();
+        Pay::factory(10)->create();
+        HistoryPay::factory(40)->create();
         // $this->call(EnvioEmailSeeder::class);
         // CategoryService::factory(5)->create();
         // Service::factory(10)->create();

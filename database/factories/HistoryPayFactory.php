@@ -21,7 +21,7 @@ class HistoryPayFactory extends Factory
         return [
             "user_id" => User::all()->random()->id,
             "pay_id" => Pay::all()->random()->id,
-            "payment_amount" => $this->faker->randomFloat('2', 0, 2),
+            "payment_amount" => $this->faker->randomFloat('2', 100, 2),
             "description" => $this->faker->text(50),
             "type" =>  $type,
         ];

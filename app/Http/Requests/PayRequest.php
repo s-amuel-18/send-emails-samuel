@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Pay;
 use Illuminate\Foundation\Http\FormRequest;
 
-class TestimonyRequest extends FormRequest
+class PayRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,13 +24,14 @@ class TestimonyRequest extends FormRequest
      */
     public function rules()
     {
+        $types = implode(",", [Pay::LOAN_TYPE, Pay::DEBT_TYPE]);
+        // dd($types);
         return [
             "name" => "required|string|max:191",
-            "position" => "required|string|max:191",
-            // "rating" => "required|numeric",
-            // "title" => "required|string|max:191",
-            "review" => "required|string",
+            "payment_amount" => "required|numeric",
             "image" => "nullable|image|mimes:jpeg,png,jpg|max:6000",
+            "description" => "nullable|string",
+            "type" => "required|in:" . $types
         ];
     }
 }
