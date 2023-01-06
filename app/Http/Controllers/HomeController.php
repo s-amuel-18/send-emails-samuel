@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Spatie\Permission\Models\Role;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\App;
 use PharIo\Manifest\Requirement;
 
@@ -38,7 +39,7 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-
+        // dd();
         $data = [];
 
         $pays_time = BillingTime::withSum("spemts", "price")->get();
