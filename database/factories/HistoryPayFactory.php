@@ -20,7 +20,7 @@ class HistoryPayFactory extends Factory
         $type = Arr::random([HistoryPay::ADD_TYPE, HistoryPay::SUBTRACT_TYPE], 1)[0];
         return [
             "user_id" => User::all()->random()->id,
-            "pay_id" => Pay::all()->random()->id,
+            // "pay_id" => Pay::all()->random()->id,
             "payment_amount" => $this->faker->randomFloat('2', 100, 2),
             "description" => $this->faker->text(50),
             "type" =>  $type,

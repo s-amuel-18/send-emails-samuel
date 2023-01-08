@@ -2,10 +2,11 @@
 
 namespace App\Http\Requests;
 
+use App\Models\HistoryPay;
 use App\Models\Pay;
 use Illuminate\Foundation\Http\FormRequest;
 
-class PayRequest extends FormRequest
+class HistoryPayRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +15,12 @@ class PayRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        // * validamos que el pago al que está asociado el historial halla sido creado por el mismo usuario
+        $pay_id = $this->input("pay_id");
+        $pay = Pay::find($pay_id);
+        $sameUserPay =  $this->user()->can("view", $pay);
+
+        return $sameUserPay;
     }
 
     /**
@@ -24,14 +30,13 @@ class PayRequest extends FormRequest
      */
     public function rules()
     {
-        $types = implode(",", [Pay::LOAN_TYPE, Pay::DEBT_TYPE]);
-        // dd($types);
+        $types = implode(",", [HistoryPay::ADD_TYPE, HistoryPay::SUBTRACT_TYPE]);
+
         return [
-            "name" => "required|string|max:191",
+            "pay_id" => "required|exists:pays,id",
             "payment_amount" => "required|numeric",
             "description" => "nullable|string",
             "type" => "required|in:" . $types,
-            "image" => "nullable|image|mimes:jpeg,png,jpg|max:6000",
         ];
     }
 }

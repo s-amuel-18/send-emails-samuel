@@ -20,11 +20,11 @@ class CreateHistoryPayTable extends Migration
 
             $table->bigInteger("user_id")->default(0)->index();
 
-            $table->bigInteger("pay_id")->default(0)->index();
+            // $table->bigInteger("pay_id")->default(0)->index();
 
             $table->float("payment_amount")->default(0);
 
-            $table->text("description")->nullable(0);
+            $table->text("description")->nullable();
 
             $table->tinyInteger("type")->default(0);
 

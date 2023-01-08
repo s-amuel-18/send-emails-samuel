@@ -31,4 +31,22 @@ class Pay extends Model
     {
         return $this->belongsTo(User::class, "user_id");
     }
+
+    // * atributos
+    public function getTypeStringAttribute()
+    {
+        $arr_types = [
+            $this::DEBT_TYPE => "deuda",
+            $this::LOAN_TYPE => "prestamo",
+        ];
+
+        $type_string = $arr_types[$this->type] ?? null;
+
+        return $type_string;
+    }
+
+    public function getRouteImageAttribute()
+    {
+        return $this->image_url ? asset('storage/' . $this->image_url) : null;
+    }
 }
