@@ -3,23 +3,19 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\Pivot;
+use Illuminate\Database\Eloquent\Model;
 
-class HistoryPay extends Pivot
+class HistoryPayments extends Model
 {
     use HasFactory;
     protected $fillable = [
         "user_id",
-        // "pay_id",
+        "pay_id",
         "payment_amount",
         "description",
         "type"
     ];
-    protected $casts = [
-        'id' => 'string'
-    ];
-    protected $primaryKey = "id";
-    protected $guarded = ['id'];
+
     // ? estados dos constantes (add_TYPE SUBTRACT_TYPE) nos van a permitir identificar el tipo de registro que se pagó, es decir si se pidio prestado o se pago parte de la deuda
     // * tipo agregar
     const ADD_TYPE = 1;

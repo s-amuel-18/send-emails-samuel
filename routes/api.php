@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\API\HistoryPayController;
+use App\Http\Controllers\API\HistoryPaymentsController;
 use App\Http\Controllers\API\PayController;
 use App\Http\Controllers\api\SubjectController;
 use Illuminate\Http\Request;
@@ -71,13 +72,13 @@ Route::middleware('auth:sanctum')->group(function () {
     // * jistorial de pagos
     Route::prefix("history-payments")->group(function () {
         // * /history-payments/store
-        Route::post("/store", [HistoryPayController::class, "store"])->name("history_pay.store");
+        Route::post("/store", [HistoryPaymentsController::class, "store"])->name("history_pay.store");
         // * /history-payments/show
-        Route::get("/{historyPay}", [HistoryPayController::class, "show"])
+        Route::get("/{historyPay}", [HistoryPaymentsController::class, "show"])
             ->name("history_pay.show");
         // * /history-payments/1/update/
-        Route::post("/{historyPay}/update", [HistoryPayController::class, "update"])->name("history_pay.update");
+        Route::post("/{historyPay}/update", [HistoryPaymentsController::class, "update"])->name("history_pay.update");
         // * /history-payments/1/destroy/
-        Route::delete("/{historyPay}/destroy", [HistoryPayController::class, "destroy"])->name("history_pay.destroy");
+        Route::delete("/{historyPay}/destroy", [HistoryPaymentsController::class, "destroy"])->name("history_pay.destroy");
     });
 });

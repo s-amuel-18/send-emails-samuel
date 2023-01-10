@@ -2,11 +2,11 @@
 
 namespace App\Http\Requests;
 
-use App\Models\HistoryPay;
+use App\Models\HistoryPayments;
 use App\Models\Pay;
 use Illuminate\Foundation\Http\FormRequest;
 
-class HistoryPayRequest extends FormRequest
+class HistoryPaymentsRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -30,7 +30,7 @@ class HistoryPayRequest extends FormRequest
      */
     public function rules()
     {
-        $types = implode(",", [HistoryPay::ADD_TYPE, HistoryPay::SUBTRACT_TYPE]);
+        $types = implode(",", [HistoryPayments::ADD_TYPE, HistoryPayments::SUBTRACT_TYPE]);
 
         return [
             "pay_id" => "required|exists:pays,id",
