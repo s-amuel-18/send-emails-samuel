@@ -30,6 +30,7 @@ class HistoryPaymentsPolicy
      */
     public function view(User $user, HistoryPayments $historyPayments)
     {
+        // dd($historyPayments->user_id);
         return $user->id === $historyPayments->user_id;
     }
 

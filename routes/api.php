@@ -74,11 +74,11 @@ Route::middleware('auth:sanctum')->group(function () {
         // * /history-payments/store
         Route::post("/store", [HistoryPaymentsController::class, "store"])->name("history_pay.store");
         // * /history-payments/show
-        Route::get("/{historyPay}", [HistoryPaymentsController::class, "show"])
+        Route::get("/{historyPayments}", [HistoryPaymentsController::class, "show"])
             ->name("history_pay.show");
         // * /history-payments/1/update/
-        Route::post("/{historyPay}/update", [HistoryPaymentsController::class, "update"])->name("history_pay.update");
+        Route::post("/{historyPayments}/update", [HistoryPaymentsController::class, "update"])->name("history_pay.update");
         // * /history-payments/1/destroy/
-        Route::delete("/{historyPay}/destroy", [HistoryPaymentsController::class, "destroy"])->name("history_pay.destroy");
+        Route::delete("/{historyPayments}/destroy", [HistoryPaymentsController::class, "destroy"])->name("history_pay.destroy");
     });
 });

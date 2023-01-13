@@ -178,6 +178,7 @@ class ContactEmailController extends Controller
      */
     public function edit(Contact_email $contact_email)
     {
+        // dd(Contact_email::all()->random()->update(["estado", 1]));
         return view("admin.contact_email.edit", compact("contact_email"));
     }
 
@@ -202,8 +203,6 @@ class ContactEmailController extends Controller
 
         $valid_email = Contact_email::select("id")->where("email", "=", $data["email"])->get();
 
-        // dd($valid_email->count());
-
         if ($valid_email->count() != 0 and ($valid_email[0]->id != $contact_email->id)) {
             $message = [
                 "message" => "El Email ya existe.",
@@ -220,9 +219,6 @@ class ContactEmailController extends Controller
         $contact_email->instagram = $data["instagram"];
         $contact_email->facebook = $data["facebook"];
         $contact_email->descripcion = $data["descripcion"];
-
-
-
         $contact_email->save();
 
         $message = [

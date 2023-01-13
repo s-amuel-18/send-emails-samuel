@@ -47,7 +47,7 @@ class DatabaseSeeder extends Seeder
         Income::factory(3)->create();
         Spents::factory(5)->create();
         // BodyEmail::factory(10)->create();
-        Contact_email::factory(1000)->create();
+        Contact_email::factory(10)->create();
         Category::factory(50)->create();
         Requirements::factory(50)->create();
         // Testimony::factory(20)->create();

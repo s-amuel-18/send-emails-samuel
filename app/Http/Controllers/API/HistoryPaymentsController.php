@@ -36,7 +36,8 @@ class HistoryPaymentsController extends Controller
      */
     public function show(HistoryPayments $historyPayments)
     {
-        // return ()
+        $this->authorize("view", $historyPayments);
+        return (new HistoryPaymentsResource($historyPayments));
     }
 
     /**
@@ -46,9 +47,22 @@ class HistoryPaymentsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(HistoryPaymentsRequest $request, HistoryPayments $historyPayments)
     {
-        //
+        $this->authorize("view", $historyPayments);
+
+        $data_insert = [
+            "pay_id" => $request["pay_id"],
+            "payment_amount" => $request["payment_amount"],
+            "description" => $request["description"],
+            "type" => $request["type"],
+        ];
+
+        $historyPayments->update($data_insert);
+
+        return (new HistoryPaymentsResource($historyPayments))->additional([
+            "message" => $historyPayments->messageType("se ha actualizado correctamente.")
+        ]);
     }
 
     /**
@@ -57,8 +71,12 @@ class HistoryPaymentsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(HistoryPayments $historyPayments)
     {
-        //
+        $this->authorize("view", $historyPayments);
+        $historyPayments->delete();
+        return (new HistoryPaymentsResource($historyPayments))->additional([
+            "message" => $historyPayments->messageType("se ha eliminado correctamente.")
+        ]);
     }
 }
