@@ -30,7 +30,7 @@
         </div>
     </div>
 
-    <div class="card-body table-responsive">
+    <div class="card-body table-responsive pt-0">
         <div class="d-flex justify-content-end mb-3">
             <div class="">
 
@@ -42,7 +42,7 @@
                 <div class="row no-gutters mb-3 mb-md-0">
                     {{-- * filtro de Registros privados --}}
 
-                    <div class="col-md-8 offset-md-0">
+                    <div class="col-md-6 offset-md-0 ">
                         <div class="form-group d-flex justify-content-end align-items-center" style="height: 40px">
 
                             <div class="form-check px-4">
@@ -61,7 +61,7 @@
                     </div>
 
                     {{-- * categorías --}}
-                    <div class="col-md-4" id="content_select_category">
+                    <div class="col-md-3" id="content_select_category">
                         <select data-placeholder="Filtro por categorias"
                             class="w-100 select2 form-control select2_categories" name="state"
                             id="filter_for_category" style="width: 100%">
@@ -71,6 +71,12 @@
                                 <option value="{{ $cat->id }}">{{ $cat->name }}</option>
                             @endforeach
                         </select>
+
+                    </div>
+
+                    {{-- * Search --}}
+                    <div class="col-md-3 px-3">
+                        <input type="search" class="form-control" placeholder="Buscar" id="search_requirement">
 
                     </div>
                 </div>
@@ -138,11 +144,14 @@
             "bPaginate": true,
             "sPaginationType": "numbers",
             "pageLength": 5,
-            "lengthChange": true,
+            "lengthChange": false,
+            // "lengthChange": true,
             "processing": true,
             "serverSide": true,
             "retrieve": false,
-            "searching": true,
+            // "searching": false,
+            "sDom": "<div class='d-flex'>lrtip</div>",
+            // "searching": true,
             "ajax": {
                 "url": appData["url_datatable_requirements"],
                 "data": function(data) {
@@ -200,6 +209,11 @@
 
             // * datatabke init
             datatable = $(table).DataTable(datatableOptions);
+
+            $('#search_requirement').on('keyup', function() {
+                // alert("dsa");
+                datatable.search(this.value).draw();
+            });
 
             // filter for categorr
             $(filter_for_category).on("change", e => {

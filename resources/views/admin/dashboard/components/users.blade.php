@@ -17,7 +17,7 @@
             </div>
         </div>
 
-        <div class="card-body table-responsive card_view_more-">
+        <div class="card-body table-responsive card_view_more- pt-0">
             <table id="table_users-"
                 class="w-100 datatable table table-light table-striped table-hover text-nowrap table-valign-middle">
                 <thead class="">
@@ -78,11 +78,14 @@
                     "responsive": true,
                     "scrollX": true,
                     "bPaginate": true,
+
                     "sPaginationType": "numbers",
                     "order": [
                         [1, "DESC"]
                     ],
                 });
+
+
             });
         </script>
     @endpush
