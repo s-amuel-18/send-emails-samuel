@@ -227,14 +227,14 @@ class EmailSendController extends Controller
 
             $percentage = $send_today ? (($send_today * 100) / Contact_email::DAILY_EMAIL_LIMIT) : 0;
 
-            $emailsNotSent = Contact_email::sinEnviar()->count();
+            $emailsNotSentCount = Contact_email::sinEnviar()->count();
 
             return [
                 "success_email_send" => true,
                 "emails_to_send" => $emailsToSend,
                 "emails_sent_today" => $send_today,
                 "percentage" => $percentage,
-                "emails_not_sent" => $emailsNotSent,
+                "emails_not_sent" => $emailsNotSentCount,
                 "message" => [
                     "type" => "success",
                     "message" => "Email enviado correctamente"

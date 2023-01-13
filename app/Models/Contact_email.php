@@ -265,4 +265,9 @@ class Contact_email extends Model
             ->where("type", $this::MAIL)
             ->whereNull("contact_email_user.deleted_at");
     }
+
+    public function getEmailWasSentAttribute()
+    {
+        return $this->envios()->count();
+    }
 }

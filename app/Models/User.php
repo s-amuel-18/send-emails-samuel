@@ -95,9 +95,9 @@ class User extends Authenticatable
         return $this->hasMany(Pay::class, "user_id");
     }
 
-    public function historyPay()
+    public function history_pay()
     {
-        return $this->hasMany(HistoryPay::class, "user_id");
+        return $this->hasMany(HistoryPayments::class, "user_id");
     }
     public function notes()
     {

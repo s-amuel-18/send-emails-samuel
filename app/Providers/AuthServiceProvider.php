@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\Category;
 use App\Models\Requirements;
 use App\Policies\NotePolicy;
+use App\Policies\PayPolicy;
 use App\Policies\RequirementsPolicy;
 use App\Policies\SubjectPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -20,6 +21,7 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         // 'App\Models\Model' => 'App\Policies\ModelPolicy',
         Requirements::class => RequirementsPolicy::class,
+        Pay::class => PayPolicy::class,
         Category::class => SubjectPolicy::class,
         Note::class => NotePolicy::class
     ];
