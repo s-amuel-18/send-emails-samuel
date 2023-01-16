@@ -150,7 +150,7 @@
             "serverSide": true,
             "retrieve": false,
             // "searching": false,
-            "sDom": "<div class='d-flex'>lrtip</div>",
+            "sDom": "lrtip",
             // "searching": true,
             "ajax": {
                 "url": appData["url_datatable_requirements"],
