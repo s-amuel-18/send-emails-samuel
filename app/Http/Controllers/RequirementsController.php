@@ -37,12 +37,11 @@ class RequirementsController extends Controller
         $totalFilteredRecord = $totalDataRecord = $draw_val = "";
 
         $columns_list = array(
-            0 => "req.id",
-            1 => "req.created_at",
-            2 => "us.username",
-            3 => "req.name",
-            4 => "cat.name",
-            5 => "req.url",
+            0 => "req.created_at",
+            1 => "us.username",
+            2 => "req.name",
+            3 => "cat.name",
+            4 => "req.url",
         );
 
         $totalDataRecord = DB::table("requirements")->whereNull("requirements.deleted_at")->count();

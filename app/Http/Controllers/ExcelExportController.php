@@ -7,6 +7,13 @@ use Illuminate\Http\Request;
 
 class ExcelExportController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware("can:contact_email.estadisticas")->only(
+            "contactEmail"
+        );
+    }
+
     public function contactEmail(Request $request)
     {
         $search = $request["search"];

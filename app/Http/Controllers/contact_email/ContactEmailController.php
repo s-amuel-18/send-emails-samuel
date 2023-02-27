@@ -33,7 +33,9 @@ class ContactEmailController extends Controller
             "get_details_shippung",
             "alternative_contact"
         );
-        $this->middleware("can:contact_email.estadisticas")->only("estadisticas");
+        $this->middleware("can:contact_email.estadisticas")->only(
+            "estadisticas"
+        );
         $this->middleware("can:contact_email.create")->only("create", "store");
         $this->middleware("can:contact_email.edit")->only("edit", "update", "update_email_async");
         $this->middleware("can:contact_email.destroy")->only("destroy");
@@ -178,7 +180,6 @@ class ContactEmailController extends Controller
      */
     public function edit(Contact_email $contact_email)
     {
-        // dd(Contact_email::all()->random()->update(["estado", 1]));
         return view("admin.contact_email.edit", compact("contact_email"));
     }
 

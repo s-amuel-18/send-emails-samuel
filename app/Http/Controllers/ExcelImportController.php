@@ -8,6 +8,13 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class ExcelImportController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware("can:contact_email.estadisticas")->only(
+            "contactEmail"
+        );
+    }
+
     public function contactEmail(Request $request)
     {
         $data = request()->validate([

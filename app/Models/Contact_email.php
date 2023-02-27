@@ -217,7 +217,10 @@ class Contact_email extends Model
 
     public function datatableContactEmailQuery()
     {
-        return Contact_email::select(
+        $user = auth()->user();
+        $rol_estadisticas = $user->can("contact_email.estadisticas");
+
+        $query = Contact_email::select(
             "contact_emails.id AS contact_id",
             "contact_emails.url",
             "contact_emails.nombre_empresa",
@@ -239,6 +242,12 @@ class Contact_email extends Model
                 $j->on("contact_emails.user_id", "=", "us.id")
                     ->whereNotNull("us.created_at");
             });
+
+        if (!$rol_estadisticas) {
+            $query->where("contact_emails.user_id", $user->id);
+        }
+
+        return $query;
     }
 
     public function datatableEmailsSendQuery()
