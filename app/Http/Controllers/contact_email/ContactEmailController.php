@@ -58,6 +58,9 @@ class ContactEmailController extends Controller
         ];
 
         $contact_emails_query = Contact_email::orderBy("envios_count", "ASC");
+        if (!auth()->user()->can("contact_email.estadisticas")) {
+            $contact_emails_query->where("user_id", auth()->user()->id);
+        }
 
         $contact_emails_all_counts = $contact_emails_query->count();
 
