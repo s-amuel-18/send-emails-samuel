@@ -18,11 +18,11 @@
             <div class="card card-light">
                 <div class="card-header">
                     <h3 class="card-title">Formulario Nuevo Email</h3>
-
                 </div>
 
                 <div class="card-body ">
-                    <form class="form_disabled_button_send" action="{{ route('contact_email.store') }}" method="POST">
+                    <form id="create_contact" class="form_disabled_button_send" action="{{ route('contact_email.store') }}"
+                        method="POST">
 
                         @csrf
                         <div class="row">
@@ -90,8 +90,8 @@
                                     {{-- email --}}
                                     <div class="col-md-6">
                                         <div class="input-group mb-3 ">
-                                            <input type="email" name="email"
-                                                class="form-control @error('email') is-invalid @enderror"
+                                            <input id="contact_email" type="email" name="email"
+                                                class=" form-control @error('email') is-invalid @enderror"
                                                 value="{{ old('email') }}" placeholder="Correo Electronico" autofocus>
 
                                             <div class="input-group-append">
@@ -100,11 +100,14 @@
                                                 </div>
                                             </div>
 
-                                            @error('email')
-                                                <span class="invalid-feedback" role="alert">
+                                            <span id="error_msg_email"
+                                                class="invalid-feedback d-none @error('email') d-block @enderror"
+                                                role="alert">
+                                                @error('email')
                                                     <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
+                                                @enderror
+                                            </span>
+
                                         </div>
                                     </div>
 
@@ -189,7 +192,7 @@
                             </div>
 
                             <div class="col-12 d-flex justify-content-end">
-                                <button class="btn bg-purple btn-sm" type="submit">
+                                <button class="btn bg-purple btn-sm" type="submit" id="submit_contact_form">
                                     <i class="fas fa-mail-bulk"></i> Crear Nuevo Registro
                                 </button>
                             </div>
@@ -209,6 +212,11 @@
 
 
 @push('js')
+    <script>
+        const appData = @json($data['js'] ?? []);
+    </script>
+    <script src="{{ asset('js/Plugins/axios.min.js') }}"></script>
     <script src="{{ asset('js/Plugins/countrySelect.min.js') }}"></script>
     <script src="{{ asset('front/js/plugins/countryselect main.js') }}"></script>
+    <script src="{{ asset('js/emails/contact_email/create_record.js') }}"></script>
 @endpush

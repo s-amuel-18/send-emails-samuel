@@ -137,8 +137,11 @@ class ContactEmailController extends Controller
     public function create()
     {
         $contact_emails_today_count = auth()->user()->emails_registros()->whereDate("created_at", Carbon::today())->count();
+        $data["js"] = [
+            "url_exist_email" => route("contact_email.email_exist")
+        ];
 
-        return view("admin.contact_email.create", compact("contact_emails_today_count"));
+        return view("admin.contact_email.create", compact("contact_emails_today_count", "data"));
     }
 
     /**
@@ -149,7 +152,6 @@ class ContactEmailController extends Controller
      */
     public function store(Request $request)
     {
-
         $data = request()->validate([
             'nombre_empresa' => "nullable|string|max:255",
             'email' => "required_if:whatsapp,null|nullable|string|max:255|email|unique:contact_emails",
@@ -740,5 +742,27 @@ class ContactEmailController extends Controller
                 "count_shipping" => $contact_email->type_alternative($data["type"])->count()
             ]
         );
+    }
+
+    public function email_exist()
+    {
+        $data_valid = request()->validate([
+            "email" => "required|email"
+        ]);
+
+        $info = Contact_email::select([
+            "nombre_empresa",
+            "url",
+            "email",
+            "estado",
+            "whatsapp",
+            "instagram",
+            "facebook",
+            "descripcion",
+        ])->where("email", $data_valid["email"])->first();
+
+        return response()->json([
+            "contact_data" => $info
+        ]);
     }
 }

@@ -77,6 +77,7 @@ Route::get('/contact-email/historial-envios/datatable', [ContactEmailController:
 Route::get('/contact-email/historial-envios/{id}', [ContactEmailController::class, 'get_details_shippung'])->middleware("auth")->name('contact_email.shipping_details');
 Route::post('/contact-email/contacto-alternativo/{contact_email}', [ContactEmailController::class, 'alternative_contact'])->middleware("auth")->name('contact_email.alternative_contact');
 Route::patch('/contact-email/actualizar-email/{contact_email}', [ContactEmailController::class, 'update_email_async'])->middleware("auth")->name('contact_email.update_email_async');
+Route::get('/contact-email/existe-email', [ContactEmailController::class, 'email_exist'])->middleware("auth")->name('contact_email.email_exist');
 
 // * body
 Route::resource("body-email", BodyEmailController::class)->except("show")->middleware("auth")->names("bodyEmail");
