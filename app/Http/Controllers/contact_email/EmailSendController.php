@@ -200,7 +200,7 @@ class EmailSendController extends Controller
         }
 
         $emailsNotSend = Contact_email::sinEnviar()
-            ->orderBy("created_at", "ASC")
+            ->orderBy("id", "ASC")
             ->first();
 
         $info["subject"] =  $data["subject"];

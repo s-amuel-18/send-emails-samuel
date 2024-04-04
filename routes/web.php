@@ -58,8 +58,8 @@ Auth::routes(
 );
 
 // * front
-Route::get('/', [FrontController::class, 'index'])->name('home');
-Route::get('/proyecto/{slug}', [FrontController::class, 'project'])->name('project.front.show');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->middleware('auth')->name('home');
+// Route::get('/proyecto/{slug}', [FrontController::class, 'project'])->name('project.front.show');
 
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->middleware('auth')
     ->name('home.index');

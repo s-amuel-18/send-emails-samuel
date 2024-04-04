@@ -6,6 +6,7 @@ use App\Mail\ServicioMaillable;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -15,6 +16,7 @@ class Contact_email extends Model
     public const PAGINATE = 10;
 
     use HasFactory;
+    use SoftDeletes;
 
     public const DAILY_EMAIL_LIMIT = 100;
     // types contact

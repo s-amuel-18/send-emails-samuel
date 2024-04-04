@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 // use App\Models\Contact_email;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 class ContactEmailController extends Controller
@@ -44,6 +45,22 @@ class ContactEmailController extends Controller
 
     public function index(Request $request)
     {
+
+        $validator = Validator::make($request->all(), [
+            "date_filter" => "required|date",
+            "username" => "required|string",
+        ]);
+
+        $query = $request->all();
+        $failedFields = $validator->errors()->getMessages();
+
+
+        foreach ($failedFields as $field => $rules) {
+            $query[$field] = null;
+        }
+
+
+
         $colors = [
             "blue",
             "indigo",
@@ -72,13 +89,11 @@ class ContactEmailController extends Controller
         $data["js"] = [
             "url_datatable" => route("contact_email.datatable"),
         ];
-        if ($request["date_filter"]) {
-            try {
-                $data["js"]["date_filter_parse"] = Carbon::now()->parse($request["date_filter"]);
-            } catch (\Throwable $e) {
-                $data["js"]["date_filter_parse"] = null;
-            }
-        }
+        $data["js"]["date_filter_parse"] =
+            $query["date_filter"]
+            ? Carbon::now()->parse($query["date_filter"])
+            : null;
+
 
         return view("admin.contact_email.index", compact("contact_emails_all_counts", "contact_emails_today_count", "data"));
     }
