@@ -10,9 +10,12 @@ use Illuminate\Http\Request;
 // use Illuminate\Http\Request;
 // use App\Models\Contact_email;
 use Carbon\Carbon;
+use Hamcrest\Type\IsBoolean;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+
+use function PHPUnit\Framework\isNull;
 
 class ContactEmailController extends Controller
 {
@@ -328,25 +331,25 @@ class ContactEmailController extends Controller
 
     public function datatable(Request $request)
     {
-        try {
-            $date_filter = $request["date_filter"] ? Carbon::now()->parse($request["date_filter"]) : null;
-        } catch (\Throwable $th) {
-            $date_filter = null;
-        }
+        $query = $request->validate([
+            "date_filter" => ["nullable", "date"],
+            "username" => ["nullable", "string"],
+            "shipping_filter" => ["nullable", "boolean",],
+        ]);
 
-        $filter_user = $request["username"] ?? null
-            ?  User::where("username", $request["username"])->first()
+        $shipping_filter = !is_null($query["shipping_filter"]) ? !!$query["shipping_filter"] : null;
+
+        $date_filter = $query["date_filter"] ? Carbon::now()->parse($query["date_filter"]) : null;
+
+        $filter_user = $query["username"]
+            ?  User::where("username", $query["username"])->first()
             : null;
 
-
         $query_user = (new Contact_email())->datatableContactEmailQuery();
-
-        $query_user_count = $query_user;
 
         $totalFilteredRecord = $totalDataRecord = $draw_val = "";
 
         $columns_list = array(
-            // 0 => "contact_emails.id",
             0 => "us.username",
             1 => "contact_emails.nombre_empresa",
             2 => "contact_emails.email",
@@ -361,8 +364,6 @@ class ContactEmailController extends Controller
 
         $totalDataRecord = Contact_email::whereNull("deleted_at")->count();
 
-
-
         $totalFilteredRecord = $totalDataRecord;
 
         $limit_val = $request["length"];
@@ -371,51 +372,33 @@ class ContactEmailController extends Controller
 
         $dir_val = $request["order"][0]["dir"];
 
+        $data_return = $query_user->offset($start_val)
+            ->orderBy($order_val, $dir_val)
+            ->limit($limit_val);
+        $totalFilteredRecord = (new Contact_email())->datatableContactEmailQuery();
 
-        if (empty($request["search"]["value"])) {
-            $data_return = $query_user->offset($start_val)
-                ->orderBy($order_val, $dir_val);
+        if ($filter_user) {
+            $data_return->where("contact_emails.user_id", $filter_user->id);
+            $totalFilteredRecord->where("contact_emails.user_id", $filter_user->id);
+        }
 
-            $data_return_count = (new Contact_email())->datatableContactEmailQuery();
+        if ($date_filter) {
+            $data_return->whereDate("contact_emails.created_at", $date_filter);
+            $totalFilteredRecord->whereDate("contact_emails.created_at", $date_filter);
+        }
 
-            // * Si se quiere filtrar por nombre de usuario
-            if ($filter_user) {
-                $data_return->where("contact_emails.user_id", $filter_user->id);
-                $data_return_count->where("contact_emails.user_id", $filter_user->id);
-            }
+        if (!is_null($shipping_filter)) {
+            $conditional = $shipping_filter ? ">" : "=";
 
-            // * Si se quiere filtrar fecha
-            if ($date_filter) {
-                $data_return->whereDate("contact_emails.created_at", $date_filter);
-                $data_return_count->whereDate("contact_emails.created_at", $date_filter);
-            }
+            // ->('envios_count', '>', 1)
+            $data_return->having("envios_count", $conditional, 0);
+            $totalFilteredRecord->having("envios_count", $conditional, 0);
+        }
 
-            $totalFilteredRecord = $data_return_count->count();
-            $data_return = $data_return->limit($limit_val)->get();
-        } else {
+        if (!empty($request["search"]["value"])) {
             $search_text = $request["search"]["value"];
 
-            $data_return =  $query_user
-                ->where(function ($q) use ($search_text) {
-                    $q->where("contact_emails.id", "like", "%{$search_text}%")
-                        ->orWhere("contact_emails.nombre_empresa", "like", "%{$search_text}%")
-                        ->orWhere("us.username", "like", "%{$search_text}%")
-                        ->orWhere("contact_emails.email", "like", "%{$search_text}%")
-                        ->orWhereHas("envios", null, "like", "%{$search_text}%")
-                        ->orWhere("contact_emails.url", "like", "%{$search_text}%")
-                        ->orWhere("contact_emails.whatsapp", "like", "%{$search_text}%")
-                        ->orWhere("contact_emails.facebook", "like", "%{$search_text}%")
-                        ->orWhere("contact_emails.instagram", "like", "%{$search_text}%")
-                        ->orWhere("contact_emails.created_at", "like", "%{$search_text}%")
-                        ->orWhere("contact_emails.updated_at", "like", "%{$search_text}%");
-                })
-                ->offset($start_val)
-                ->orderBy($order_val, $dir_val);
-
-
-
-
-            $totalFilteredRecord = (new Contact_email())->datatableContactEmailQuery()
+            $data_return =  $data_return
                 ->where(function ($q) use ($search_text) {
                     $q->where("contact_emails.id", "like", "%{$search_text}%")
                         ->orWhere("contact_emails.nombre_empresa", "like", "%{$search_text}%")
@@ -430,21 +413,24 @@ class ContactEmailController extends Controller
                         ->orWhere("contact_emails.updated_at", "like", "%{$search_text}%");
                 });
 
-            // * Si se quiere filtrar por nombre de usuario
-            if ($filter_user) {
-                $data_return->where("contact_emails.user_id", $filter_user->id);
-                $totalFilteredRecord->where("contact_emails.user_id", $filter_user->id);
-            }
-
-            // * Si se quiere filtrar fecha
-            if ($date_filter) {
-                $data_return->whereDate("contact_emails.created_at", $date_filter);
-                $totalFilteredRecord->whereDate("contact_emails.created_at", $date_filter);
-            }
-
-            $data_return = $data_return->limit($limit_val)->get();
-            $totalFilteredRecord = $totalFilteredRecord->count();
+            $totalFilteredRecord = $totalFilteredRecord
+                ->where(function ($q) use ($search_text) {
+                    $q->where("contact_emails.id", "like", "%{$search_text}%")
+                        ->orWhere("contact_emails.nombre_empresa", "like", "%{$search_text}%")
+                        ->orWhere("us.username", "like", "%{$search_text}%")
+                        ->orWhere("contact_emails.email", "like", "%{$search_text}%")
+                        ->orWhereHas("envios", null, "like", "%{$search_text}%")
+                        ->orWhere("contact_emails.url", "like", "%{$search_text}%")
+                        ->orWhere("contact_emails.whatsapp", "like", "%{$search_text}%")
+                        ->orWhere("contact_emails.facebook", "like", "%{$search_text}%")
+                        ->orWhere("contact_emails.instagram", "like", "%{$search_text}%")
+                        ->orWhere("contact_emails.created_at", "like", "%{$search_text}%")
+                        ->orWhere("contact_emails.updated_at", "like", "%{$search_text}%");
+                });
         }
+
+        $data_return = $data_return->get();
+        $totalFilteredRecord = $totalFilteredRecord->count();
 
         $data_val = array();
 

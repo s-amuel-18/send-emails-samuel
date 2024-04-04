@@ -71,7 +71,16 @@
                 <div class="card card-body">
                     <div class="d-flex justify-content-end flex-wrap flex-column flex-md-row gap-5px align-items-md-center">
                         @if (auth()->user()->can('contact_email.estadisticas'))
+                            <div class="px-md-2">
+                                <select name="" id="shipping_filter" class="form-control">
+                                    <option value="">Todos</option>
+                                    <option value="1">Enviados</option>
+                                    <option value="0">Sin enviar</option>
+                                </select>
+                            </div>
+
                             <div class="d-flex gap-5px flex-wrap py-2 justify-content-end">
+
                                 <div class="">
                                     <label for="user-filter-0" class="label_active cursor-pointer d-block mb-0"
                                         data-placement="top" data-toggle="tooltip" title="Mostrar todos los usuarios">
@@ -201,27 +210,12 @@
         const requestData = @json($data['request']);
 
         $(function() {
-            // $('[data-mask]').inputmask()
-            // $('#date_filter').daterangepicker()
-            // $('[data-mask]').inputmask()
             var now = new Date();
             $('#date_filter').datetimepicker({
                 format: 'DD/MM/YYYY',
                 defaultDate: appData.date_filter_parse || null,
             });
 
-            // dtp = $('#date_filter').datetimepicker({
-            //     locale: 'de',
-            //     // format: 'L',
-            //     //format: 'DD.MM.YYYY',
-            //     calendarWeeks: true,
-            //     showTodayButton: true,
-            //     defaultDate: now
-            // });
-            // $('#date_filter').on('dp.change', function(e) {
-            //     var tmpdate = e.date._d.toISOString();
-            //     console.log(tmpdate);
-            // });
 
             $(excel_file).on("change", e => {
                 form_import_excel.submit();
@@ -251,18 +245,16 @@
                     "data": function(data) {
                         $dateFilter = $('#date_filter').data();
                         $dateFilter = $dateFilter ? $dateFilter.datetimepicker._datesFormatted[0] : null;
-                        // console.log($(`input[name="user-filter"]:checked`).val());
-                        data.username = $(`input[name="user-filter"]:checked`).val() ?? null;
-                        // data.date_filter = requestData["date_filter"] ?? null;
-                        data.date_filter = $dateFilter ?? null;
-                        // console.log($('#date_filter').data().datetimepicker._datesFormatted[0]);
+                        data.date_filter = $dateFilter || null;
+
+                        data.username = $(`input[name="user-filter"]:checked`).val() || null;
+
+                        data.shipping_filter = $(`#shipping_filter`).val() || null;
+
+
                     }
                 },
-                "columns": [
-                    /* {
-                                            data: "id"
-                                        }, */
-                    {
+                "columns": [{
                         data: "username"
                     },
                     {
@@ -305,14 +297,9 @@
             }
 
             const datatable = $(table).DataTable(datatableConfig);
-            $(`input[name="user-filter"]`).on("change", e => {
-                // alert("dsa");
-                datatable.ajax.reload();
-            })
-            $('#date_filter').on("change.datetimepicker", e => {
-                // console.log(e.date);
-                datatable.ajax.reload();
-            })
+            $(`input[name="user-filter"]`).on("change", e => datatable.ajax.reload())
+            $('#date_filter').on("change.datetimepicker", e => datatable.ajax.reload())
+            $(`#shipping_filter`).on("change", e => datatable.ajax.reload())
 
         })
 
