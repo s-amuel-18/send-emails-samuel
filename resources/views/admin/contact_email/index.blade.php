@@ -234,7 +234,7 @@
                 // "pagingType": "full",
                 "bPaginate": true,
                 "sPaginationType": "numbers",
-                "pageLength": 10,
+                "pageLength": 5,
                 "lengthChange": true,
                 "processing": true,
                 "fixedHeader": true,
